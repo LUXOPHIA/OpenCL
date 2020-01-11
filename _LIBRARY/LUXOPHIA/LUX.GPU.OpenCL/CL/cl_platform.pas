@@ -1,4 +1,6 @@
-/**********************************************************************************
+﻿unit cl_platform;
+
+(***********************************************************************************
  * Copyright (c) 2008-2018 The Khronos Group Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -24,16 +26,16 @@
  * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
- **********************************************************************************/
+ **********************************************************************************)
 
-#ifndef __CL_PLATFORM_H
-#define __CL_PLATFORM_H
+interface //#################################################################### ■
 
-#include <CL/cl_version.h>
+uses LUX.Code.C,
+     cl_version;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+//#ifdef __cplusplus
+//extern "C" {
+//#endif
 
 #if defined(_WIN32)
     #define CL_API_ENTRY
@@ -45,13 +47,13 @@ extern "C" {
     #define CL_CALLBACK
 #endif
 
-/*
+(*
  * Deprecation flags refer to the last version of the header in which the
  * feature was not deprecated.
  *
  * E.g. VERSION_1_1_DEPRECATED means the feature is present in 1.1 without
  * deprecation but is deprecated in versions later than 1.1.
- */
+ *)
 
 #define CL_EXTENSION_WEAK_LINK
 #define CL_API_SUFFIX__VERSION_1_0
@@ -121,7 +123,7 @@ extern "C" {
 
 #if (defined (_WIN32) && defined(_MSC_VER))
 
-/* scalar types  */
+(* scalar types  *)
 typedef signed   __int8         cl_char;
 typedef unsigned __int8         cl_uchar;
 typedef signed   __int16        cl_short;
@@ -135,7 +137,7 @@ typedef unsigned __int16        cl_half;
 typedef float                   cl_float;
 typedef double                  cl_double;
 
-/* Macro names and corresponding values defined by OpenCL */
+(* Macro names and corresponding values defined by OpenCL *)
 #define CL_CHAR_BIT         8
 #define CL_SCHAR_MAX        127
 #define CL_SCHAR_MIN        (-127-1)
@@ -223,7 +225,7 @@ typedef double                  cl_double;
 
 #include <stdint.h>
 
-/* scalar types  */
+(* scalar types  *)
 typedef int8_t          cl_char;
 typedef uint8_t         cl_uchar;
 typedef int16_t         cl_short;
@@ -237,7 +239,7 @@ typedef uint16_t        cl_half;
 typedef float           cl_float;
 typedef double          cl_double;
 
-/* Macro names and corresponding values defined by OpenCL */
+(* Macro names and corresponding values defined by OpenCL *)
 #define CL_CHAR_BIT         8
 #define CL_SCHAR_MAX        127
 #define CL_SCHAR_MIN        (-127-1)
@@ -332,12 +334,12 @@ typedef double          cl_double;
 
 #include <stddef.h>
 
-/* Mirror types to GL types. Mirror types allow us to avoid deciding which 87s to load based on whether we are using GL or GLES here. */
+(* Mirror types to GL types. Mirror types allow us to avoid deciding which 87s to load based on whether we are using GL or GLES here. *)
 typedef unsigned int cl_GLuint;
 typedef int          cl_GLint;
 typedef unsigned int cl_GLenum;
 
-/*
+(*
  * Vector types
  *
  *  Note:   OpenCL requires that all types be naturally aligned.
@@ -351,11 +353,11 @@ typedef unsigned int cl_GLenum;
  *          the start of the struct must itself be 16-byte aligned.
  *
  *          Maintaining proper alignment is the user's responsibility.
- */
+ *)
 
-/* Define basic vector types */
+(* Define basic vector types *)
 #if defined( __VEC__ )
-   #include <altivec.h>   /* may be omitted depending on compiler. AltiVec spec provides no way to detect whether the header is required. */
+   #include <altivec.h>   (* may be omitted depending on compiler. AltiVec spec provides no way to detect whether the header is required. *)
    typedef __vector unsigned char     __cl_uchar16;
    typedef __vector signed char       __cl_char16;
    typedef __vector unsigned short    __cl_ushort8;
@@ -475,7 +477,7 @@ typedef unsigned int cl_GLenum;
     #define __CL_DOUBLE4__  1
 #endif
 
-/* Define capabilities for anonymous struct members. */
+(* Define capabilities for anonymous struct members. *)
 #if !defined(__cplusplus) && defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
 #define  __CL_HAS_ANON_STRUCT__ 1
 #define  __CL_ANON_STRUCT__
@@ -484,12 +486,12 @@ typedef unsigned int cl_GLenum;
 #define  __CL_ANON_STRUCT__ __extension__
 #elif defined( _WIN32) && defined(_MSC_VER)
     #if _MSC_VER >= 1500
-   /* Microsoft Developer Studio 2008 supports anonymous structs, but
-    * complains by default. */
+   (* Microsoft Developer Studio 2008 supports anonymous structs, but
+    * complains by default. *)
     #define  __CL_HAS_ANON_STRUCT__ 1
     #define  __CL_ANON_STRUCT__
-   /* Disable warning C4201: nonstandard extension used : nameless
-    * struct/union */
+   (* Disable warning C4201: nonstandard extension used : nameless
+    * struct/union *)
     #pragma warning( push )
     #pragma warning( disable : 4201 )
     #endif
@@ -498,31 +500,31 @@ typedef unsigned int cl_GLenum;
 #define  __CL_ANON_STRUCT__
 #endif
 
-/* Define alignment keys */
+(* Define alignment keys *)
 #if defined( __GNUC__ )
     #define CL_ALIGNED(_x)          __attribute__ ((aligned(_x)))
 #elif defined( _WIN32) && (_MSC_VER)
-    /* Alignment keys neutered on windows because MSVC can't swallow function arguments with alignment requirements     */
-    /* http://msdn.microsoft.com/en-us/library/373ak2y1%28VS.71%29.aspx                                                 */
-    /* #include <crtdefs.h>                                                                                             */
-    /* #define CL_ALIGNED(_x)          _CRT_ALIGN(_x)                                                                   */
+    (* Alignment keys neutered on windows because MSVC can't swallow function arguments with alignment requirements     *)
+    (* http://msdn.microsoft.com/en-us/library/373ak2y1%28VS.71%29.aspx                                                 *)
+    (* #include <crtdefs.h>                                                                                             *)
+    (* #define CL_ALIGNED(_x)          _CRT_ALIGN(_x)                                                                   *)
     #define CL_ALIGNED(_x)
 #else
    #warning  Need to implement some method to align data here
    #define  CL_ALIGNED(_x)
 #endif
 
-/* Indicate whether .xyzw, .s0123 and .hi.lo are supported */
+(* Indicate whether .xyzw, .s0123 and .hi.lo are supported *)
 #if __CL_HAS_ANON_STRUCT__
-    /* .xyzw and .s0123...{f|F} are supported */
+    (* .xyzw and .s0123...{f|F} are supported *)
     #define CL_HAS_NAMED_VECTOR_FIELDS 1
-    /* .hi and .lo are supported */
+    (* .hi and .lo are supported *)
     #define CL_HAS_HI_LO_VECTOR_FIELDS 1
 #endif
 
-/* Define cl_vector types */
+(* Define cl_vector types *)
 
-/* ---- cl_charn ---- */
+(* ---- cl_charn ---- *)
 typedef union
 {
     cl_char  CL_ALIGNED(2) s[2];
@@ -552,7 +554,7 @@ typedef union
 #endif
 }cl_char4;
 
-/* cl_char3 is identical in size, alignment and behavior to cl_char4. See section 6.1.5. */
+(* cl_char3 is identical in size, alignment and behavior to cl_char4. See section 6.1.5. *)
 typedef  cl_char4  cl_char3;
 
 typedef union
@@ -597,7 +599,7 @@ typedef union
 }cl_char16;
 
 
-/* ---- cl_ucharn ---- */
+(* ---- cl_ucharn ---- *)
 typedef union
 {
     cl_uchar  CL_ALIGNED(2) s[2];
@@ -627,7 +629,7 @@ typedef union
 #endif
 }cl_uchar4;
 
-/* cl_uchar3 is identical in size, alignment and behavior to cl_uchar4. See section 6.1.5. */
+(* cl_uchar3 is identical in size, alignment and behavior to cl_uchar4. See section 6.1.5. *)
 typedef  cl_uchar4  cl_uchar3;
 
 typedef union
@@ -672,7 +674,7 @@ typedef union
 }cl_uchar16;
 
 
-/* ---- cl_shortn ---- */
+(* ---- cl_shortn ---- *)
 typedef union
 {
     cl_short  CL_ALIGNED(4) s[2];
@@ -702,7 +704,7 @@ typedef union
 #endif
 }cl_short4;
 
-/* cl_short3 is identical in size, alignment and behavior to cl_short4. See section 6.1.5. */
+(* cl_short3 is identical in size, alignment and behavior to cl_short4. See section 6.1.5. *)
 typedef  cl_short4  cl_short3;
 
 typedef union
@@ -747,7 +749,7 @@ typedef union
 }cl_short16;
 
 
-/* ---- cl_ushortn ---- */
+(* ---- cl_ushortn ---- *)
 typedef union
 {
     cl_ushort  CL_ALIGNED(4) s[2];
@@ -777,7 +779,7 @@ typedef union
 #endif
 }cl_ushort4;
 
-/* cl_ushort3 is identical in size, alignment and behavior to cl_ushort4. See section 6.1.5. */
+(* cl_ushort3 is identical in size, alignment and behavior to cl_ushort4. See section 6.1.5. *)
 typedef  cl_ushort4  cl_ushort3;
 
 typedef union
@@ -822,7 +824,7 @@ typedef union
 }cl_ushort16;
 
 
-/* ---- cl_halfn ---- */
+(* ---- cl_halfn ---- *)
 typedef union
 {
     cl_half  CL_ALIGNED(4) s[2];
@@ -852,7 +854,7 @@ typedef union
 #endif
 }cl_half4;
 
-/* cl_half3 is identical in size, alignment and behavior to cl_half4. See section 6.1.5. */
+(* cl_half3 is identical in size, alignment and behavior to cl_half4. See section 6.1.5. *)
 typedef  cl_half4  cl_half3;
 
 typedef union
@@ -896,7 +898,7 @@ typedef union
 #endif
 }cl_half16;
 
-/* ---- cl_intn ---- */
+(* ---- cl_intn ---- *)
 typedef union
 {
     cl_int  CL_ALIGNED(8) s[2];
@@ -926,7 +928,7 @@ typedef union
 #endif
 }cl_int4;
 
-/* cl_int3 is identical in size, alignment and behavior to cl_int4. See section 6.1.5. */
+(* cl_int3 is identical in size, alignment and behavior to cl_int4. See section 6.1.5. *)
 typedef  cl_int4  cl_int3;
 
 typedef union
@@ -971,7 +973,7 @@ typedef union
 }cl_int16;
 
 
-/* ---- cl_uintn ---- */
+(* ---- cl_uintn ---- *)
 typedef union
 {
     cl_uint  CL_ALIGNED(8) s[2];
@@ -1001,7 +1003,7 @@ typedef union
 #endif
 }cl_uint4;
 
-/* cl_uint3 is identical in size, alignment and behavior to cl_uint4. See section 6.1.5. */
+(* cl_uint3 is identical in size, alignment and behavior to cl_uint4. See section 6.1.5. *)
 typedef  cl_uint4  cl_uint3;
 
 typedef union
@@ -1045,7 +1047,7 @@ typedef union
 #endif
 }cl_uint16;
 
-/* ---- cl_longn ---- */
+(* ---- cl_longn ---- *)
 typedef union
 {
     cl_long  CL_ALIGNED(16) s[2];
@@ -1075,7 +1077,7 @@ typedef union
 #endif
 }cl_long4;
 
-/* cl_long3 is identical in size, alignment and behavior to cl_long4. See section 6.1.5. */
+(* cl_long3 is identical in size, alignment and behavior to cl_long4. See section 6.1.5. *)
 typedef  cl_long4  cl_long3;
 
 typedef union
@@ -1120,7 +1122,7 @@ typedef union
 }cl_long16;
 
 
-/* ---- cl_ulongn ---- */
+(* ---- cl_ulongn ---- *)
 typedef union
 {
     cl_ulong  CL_ALIGNED(16) s[2];
@@ -1150,7 +1152,7 @@ typedef union
 #endif
 }cl_ulong4;
 
-/* cl_ulong3 is identical in size, alignment and behavior to cl_ulong4. See section 6.1.5. */
+(* cl_ulong3 is identical in size, alignment and behavior to cl_ulong4. See section 6.1.5. *)
 typedef  cl_ulong4  cl_ulong3;
 
 typedef union
@@ -1195,7 +1197,7 @@ typedef union
 }cl_ulong16;
 
 
-/* --- cl_floatn ---- */
+(* --- cl_floatn ---- *)
 
 typedef union
 {
@@ -1226,7 +1228,7 @@ typedef union
 #endif
 }cl_float4;
 
-/* cl_float3 is identical in size, alignment and behavior to cl_float4. See section 6.1.5. */
+(* cl_float3 is identical in size, alignment and behavior to cl_float4. See section 6.1.5. *)
 typedef  cl_float4  cl_float3;
 
 typedef union
@@ -1270,7 +1272,7 @@ typedef union
 #endif
 }cl_float16;
 
-/* --- cl_doublen ---- */
+(* --- cl_doublen ---- *)
 
 typedef union
 {
@@ -1301,7 +1303,7 @@ typedef union
 #endif
 }cl_double4;
 
-/* cl_double3 is identical in size, alignment and behavior to cl_double4. See section 6.1.5. */
+(* cl_double3 is identical in size, alignment and behavior to cl_double4. See section 6.1.5. *)
 typedef  cl_double4  cl_double3;
 
 typedef union
@@ -1345,7 +1347,7 @@ typedef union
 #endif
 }cl_double16;
 
-/* Macro to facilitate debugging
+(* Macro to facilitate debugging
  * Usage:
  *   Place CL_PROGRAM_STRING_DEBUG_INFO on the line before the first line of your source.
  *   The first line ends with:   CL_PROGRAM_STRING_DEBUG_INFO \"
@@ -1364,14 +1366,14 @@ typedef union
  *
  * This should correctly set up the line, (column) and file information for your source
  * string so you can do source level debugging.
- */
+ *)
 #define  __CL_STRINGIFY( _x )               # _x
 #define  _CL_STRINGIFY( _x )                __CL_STRINGIFY( _x )
 #define  CL_PROGRAM_STRING_DEBUG_INFO       "#line "  _CL_STRINGIFY(__LINE__) " \"" __FILE__ "\" \n\n"
 
-#ifdef __cplusplus
-}
-#endif
+//#ifdef __cplusplus
+//}
+//#endif
 
 #undef __CL_HAS_ANON_STRUCT__
 #undef __CL_ANON_STRUCT__
@@ -1381,4 +1383,6 @@ typedef union
     #endif
 #endif
 
-#endif  /* __CL_PLATFORM_H  */
+implementation //############################################################### ■
+
+end. //######################################################################### ■
