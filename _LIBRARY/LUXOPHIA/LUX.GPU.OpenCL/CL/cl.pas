@@ -44,76 +44,76 @@ typedef struct _cl_kernel *         cl_kernel;
 typedef struct _cl_event *          cl_event;
 typedef struct _cl_sampler *        cl_sampler;
 
-typedef cl_uint             cl_bool;                     (* WARNING!  Unlike cl_ types in cl_platform.h, cl_bool is not guaranteed to be the same size as the bool in kernels. *)
-typedef cl_ulong            cl_bitfield;
-typedef cl_bitfield         cl_device_type;
-typedef cl_uint             cl_platform_info;
-typedef cl_uint             cl_device_info;
-typedef cl_bitfield         cl_device_fp_config;
-typedef cl_uint             cl_device_mem_cache_type;
-typedef cl_uint             cl_device_local_mem_type;
-typedef cl_bitfield         cl_device_exec_capabilities;
+type T_cl_bool                         = T_cl_uint;                     (* WARNING!  Unlike cl_ types in cl_platform.h, cl_bool is not guaranteed to be the same size as the bool in kernels. *)
+type T_cl_bitfield                     = T_cl_ulong;
+type T_cl_device_type                  = T_cl_bitfield;
+type T_cl_platform_info                = T_cl_uint;
+type T_cl_device_info                  = T_cl_uint;
+type T_cl_device_fp_config             = T_cl_bitfield;
+type T_cl_device_mem_cache_type        = T_cl_uint;
+type T_cl_device_local_mem_type        = T_cl_uint;
+type T_cl_device_exec_capabilities     = T_cl_bitfield;
 {$IFDEF CL_VERSION_2_0 }
-typedef cl_bitfield         cl_device_svm_capabilities;
+type T_cl_device_svm_capabilities      = T_cl_bitfield;
 {$ENDIF}
-typedef cl_bitfield         cl_command_queue_properties;
+type T_cl_command_queue_properties     = T_cl_bitfield;
 {$IFDEF CL_VERSION_1_2 }
-typedef intptr_t            cl_device_partition_property;
-typedef cl_bitfield         cl_device_affinity_domain;
+type T_cl_device_partition_property    = T_intptr_t;
+type T_cl_device_affinity_domain       = T_cl_bitfield;
 {$ENDIF}
 
-typedef intptr_t            cl_context_properties;
-typedef cl_uint             cl_context_info;
+type T_cl_context_properties           = T_intptr_t;
+type T_cl_context_info                 = T_cl_uint;
 {$IFDEF CL_VERSION_2_0 }
-typedef cl_bitfield         cl_queue_properties;
+type T_cl_queue_properties             = T_cl_bitfield;
 {$ENDIF}
-typedef cl_uint             cl_command_queue_info;
-typedef cl_uint             cl_channel_order;
-typedef cl_uint             cl_channel_type;
-typedef cl_bitfield         cl_mem_flags;
+type T_cl_command_queue_info           = T_cl_uint;
+type T_cl_channel_order                = T_cl_uint;
+type T_cl_channel_type                 = T_cl_uint;
+type T_cl_mem_flags                    = T_cl_bitfield;
 {$IFDEF CL_VERSION_2_0 }
-typedef cl_bitfield         cl_svm_mem_flags;
+type T_cl_svm_mem_flags                = T_cl_bitfield;
 {$ENDIF}
-typedef cl_uint             cl_mem_object_type;
-typedef cl_uint             cl_mem_info;
+type T_cl_mem_object_type              = T_cl_uint;
+type T_cl_mem_info                     = T_cl_uint;
 {$IFDEF CL_VERSION_1_2 }
-typedef cl_bitfield         cl_mem_migration_flags;
+type T_cl_mem_migration_flags          = T_cl_bitfield;
 {$ENDIF}
-typedef cl_uint             cl_image_info;
+type T_cl_image_info                   = T_cl_uint;
 {$IFDEF CL_VERSION_1_1 }
-typedef cl_uint             cl_buffer_create_type;
+type T_cl_buffer_create_type           = T_cl_uint;
 {$ENDIF}
-typedef cl_uint             cl_addressing_mode;
-typedef cl_uint             cl_filter_mode;
-typedef cl_uint             cl_sampler_info;
-typedef cl_bitfield         cl_map_flags;
+type T_cl_addressing_mode              = T_cl_uint;
+type T_cl_filter_mode                  = T_cl_uint;
+type T_cl_sampler_info                 = T_cl_uint;
+type T_cl_map_flags                    = T_cl_bitfield;
 {$IFDEF CL_VERSION_2_0 }
-typedef intptr_t            cl_pipe_properties;
-typedef cl_uint             cl_pipe_info;
+type T_cl_pipe_properties              = T_intptr_t;
+type T_cl_pipe_info                    = T_cl_uint;
 {$ENDIF}
-typedef cl_uint             cl_program_info;
-typedef cl_uint             cl_program_build_info;
+type T_cl_program_info                 = T_cl_uint;
+type T_cl_program_build_info           = T_cl_uint;
 {$IFDEF CL_VERSION_1_2 }
-typedef cl_uint             cl_program_binary_type;
+type T_cl_program_binary_type          = T_cl_uint;
 {$ENDIF}
-typedef cl_int              cl_build_status;
-typedef cl_uint             cl_kernel_info;
+type T_cl_build_status                 = T_cl_int;
+type T_cl_kernel_info                  = T_cl_uint;
 {$IFDEF CL_VERSION_1_2 }
-typedef cl_uint             cl_kernel_arg_info;
-typedef cl_uint             cl_kernel_arg_address_qualifier;
-typedef cl_uint             cl_kernel_arg_access_qualifier;
-typedef cl_bitfield         cl_kernel_arg_type_qualifier;
+type T_cl_kernel_arg_info              = T_cl_uint;
+type T_cl_kernel_arg_address_qualifier = T_cl_uint;
+type T_cl_kernel_arg_access_qualifier  = T_cl_uint;
+type T_cl_kernel_arg_type_qualifier    = T_cl_bitfield;
 {$ENDIF}
-typedef cl_uint             cl_kernel_work_group_info;
+type T_cl_kernel_work_group_info       = T_cl_uint;
 {$IFDEF CL_VERSION_2_1 }
-typedef cl_uint             cl_kernel_sub_group_info;
+type T_cl_kernel_sub_group_info        = T_cl_uint;
 {$ENDIF}
-typedef cl_uint             cl_event_info;
-typedef cl_uint             cl_command_type;
-typedef cl_uint             cl_profiling_info;
+type T_cl_event_info                   = T_cl_uint;
+type T_cl_command_type                 = T_cl_uint;
+type T_cl_profiling_info               = T_cl_uint;
 {$IFDEF CL_VERSION_2_0 }
-typedef cl_bitfield         cl_sampler_properties;
-typedef cl_uint             cl_kernel_exec_info;
+type T_cl_sampler_properties           = T_cl_bitfield;
+type T_cl_kernel_exec_info             = T_cl_uint;
 {$ENDIF}
 
 typedef struct _cl_image_format {
