@@ -1,4 +1,6 @@
-/*******************************************************************************
+﻿unit cl_version;
+
+(*******************************************************************************
  * Copyright (c) 2018 The Khronos Group Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -24,63 +26,59 @@
  * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
- ******************************************************************************/
+ ******************************************************************************)
 
-#ifndef __CL_VERSION_H
-#define __CL_VERSION_H
+interface //#################################################################### ■
 
-/* Detect which version to target */
-#if !defined(CL_TARGET_OPENCL_VERSION)
-#pragma message("cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 220 (OpenCL 2.2)")
-#define CL_TARGET_OPENCL_VERSION 220
-#endif
-#if CL_TARGET_OPENCL_VERSION != 100 && \
-    CL_TARGET_OPENCL_VERSION != 110 && \
-    CL_TARGET_OPENCL_VERSION != 120 && \
-    CL_TARGET_OPENCL_VERSION != 200 && \
-    CL_TARGET_OPENCL_VERSION != 210 && \
-    CL_TARGET_OPENCL_VERSION != 220
-#pragma message("cl_version: CL_TARGET_OPENCL_VERSION is not a valid value (100, 110, 120, 200, 210, 220). Defaulting to 220 (OpenCL 2.2)")
-#undef CL_TARGET_OPENCL_VERSION
-#define CL_TARGET_OPENCL_VERSION 220
-#endif
+(* Detect which version to target *)
+{$IF not defined(CL_TARGET_OPENCL_VERSION) }
+{$MESSAGE 'cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 220 (OpenCL 2.2)' }
+const CL_TARGET_OPENCL_VERSION = 220;
+{$ENDIF}
+{$IF ( CL_TARGET_OPENCL_VERSION <> 100 ) and ( CL_TARGET_OPENCL_VERSION <> 110 ) and ( CL_TARGET_OPENCL_VERSION <> 120 ) and ( CL_TARGET_OPENCL_VERSION <> 200 ) and ( CL_TARGET_OPENCL_VERSION <> 210 ) and ( CL_TARGET_OPENCL_VERSION <> 220 ) }
+{$MESSAGE 'cl_version: CL_TARGET_OPENCL_VERSION is not a valid value (100, 110, 120, 200, 210, 220). Defaulting to 220 (OpenCL 2.2)' }
+{#UNDEF CL_TARGET_OPENCL_VERSION }
+const CL_TARGET_OPENCL_VERSION = 220;
+{$ENDIF}
 
 
-/* OpenCL Version */
-#if CL_TARGET_OPENCL_VERSION >= 220 && !defined(CL_VERSION_2_2)
-#define CL_VERSION_2_2  1
-#endif
-#if CL_TARGET_OPENCL_VERSION >= 210 && !defined(CL_VERSION_2_1)
-#define CL_VERSION_2_1  1
-#endif
-#if CL_TARGET_OPENCL_VERSION >= 200 && !defined(CL_VERSION_2_0)
-#define CL_VERSION_2_0  1
-#endif
-#if CL_TARGET_OPENCL_VERSION >= 120 && !defined(CL_VERSION_1_2)
-#define CL_VERSION_1_2  1
-#endif
-#if CL_TARGET_OPENCL_VERSION >= 110 && !defined(CL_VERSION_1_1)
-#define CL_VERSION_1_1  1
-#endif
-#if CL_TARGET_OPENCL_VERSION >= 100 && !defined(CL_VERSION_1_0)
-#define CL_VERSION_1_0  1
-#endif
+(* OpenCL Version *)
+{$IF ( CL_TARGET_OPENCL_VERSION >= 220 ) and not defined(CL_VERSION_2_2) }
+const CL_VERSION_2_2  = 1;
+{$ENDIF}
+{$IF ( CL_TARGET_OPENCL_VERSION >= 210 ) and not defined(CL_VERSION_2_1) }
+const CL_VERSION_2_1  = 1;
+{$ENDIF}
+{$IF ( CL_TARGET_OPENCL_VERSION >= 200 ) and not defined(CL_VERSION_2_0) }
+const CL_VERSION_2_0  = 1;
+{$ENDIF}
+{$IF ( CL_TARGET_OPENCL_VERSION >= 120 ) and not defined(CL_VERSION_1_2) }
+const CL_VERSION_1_2  = 1;
+{$ENDIF}
+{$IF ( CL_TARGET_OPENCL_VERSION >= 110 ) and not defined(CL_VERSION_1_1) }
+const CL_VERSION_1_1  = 1;
+{$ENDIF}
+{$IF ( CL_TARGET_OPENCL_VERSION >= 100 ) and not defined(CL_VERSION_1_0) }
+const CL_VERSION_1_0  = 1;
+{$ENDIF}
 
-/* Allow deprecated APIs for older OpenCL versions. */
-#if CL_TARGET_OPENCL_VERSION <= 210 && !defined(CL_USE_DEPRECATED_OPENCL_2_1_APIS)
-#define CL_USE_DEPRECATED_OPENCL_2_1_APIS
-#endif
-#if CL_TARGET_OPENCL_VERSION <= 200 && !defined(CL_USE_DEPRECATED_OPENCL_2_0_APIS)
-#define CL_USE_DEPRECATED_OPENCL_2_0_APIS
-#endif
-#if CL_TARGET_OPENCL_VERSION <= 120 && !defined(CL_USE_DEPRECATED_OPENCL_1_2_APIS)
-#define CL_USE_DEPRECATED_OPENCL_1_2_APIS
-#endif
-#if CL_TARGET_OPENCL_VERSION <= 110 && !defined(CL_USE_DEPRECATED_OPENCL_1_1_APIS)
-#define CL_USE_DEPRECATED_OPENCL_1_1_APIS
-#endif
-#if CL_TARGET_OPENCL_VERSION <= 100 && !defined(CL_USE_DEPRECATED_OPENCL_1_0_APIS)
-#define CL_USE_DEPRECATED_OPENCL_1_0_APIS
-#endif
+(* Allow deprecated APIs for older OpenCL versions. *)
+{$IF ( CL_TARGET_OPENCL_VERSION <= 210 ) and not defined(CL_USE_DEPRECATED_OPENCL_2_1_APIS) }
+{$DEFINE CL_USE_DEPRECATED_OPENCL_2_1_APIS }
+{$ENDIF}
+{$IF ( CL_TARGET_OPENCL_VERSION <= 200 ) and not defined(CL_USE_DEPRECATED_OPENCL_2_0_APIS) }
+{$DEFINE CL_USE_DEPRECATED_OPENCL_2_0_APIS }
+{$ENDIF}
+{$IF ( CL_TARGET_OPENCL_VERSION <= 120 ) and not defined(CL_USE_DEPRECATED_OPENCL_1_2_APIS) }
+{$DEFINE CL_USE_DEPRECATED_OPENCL_1_2_APIS }
+{$ENDIF}
+{$IF ( CL_TARGET_OPENCL_VERSION <= 110 ) and not defined(CL_USE_DEPRECATED_OPENCL_1_1_APIS) }
+{$DEFINE CL_USE_DEPRECATED_OPENCL_1_1_APIS }
+{$ENDIF}
+{$IF ( CL_TARGET_OPENCL_VERSION <= 100 ) and not defined(CL_USE_DEPRECATED_OPENCL_1_0_APIS) }
+{$DEFINE CL_USE_DEPRECATED_OPENCL_1_0_APIS }
+{$ENDIF}
 
-#endif  /* __CL_VERSION_H */
+implementation //############################################################### ■
+
+end. //######################################################################### ■
