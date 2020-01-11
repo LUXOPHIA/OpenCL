@@ -53,65 +53,65 @@ typedef cl_bitfield         cl_device_fp_config;
 typedef cl_uint             cl_device_mem_cache_type;
 typedef cl_uint             cl_device_local_mem_type;
 typedef cl_bitfield         cl_device_exec_capabilities;
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 typedef cl_bitfield         cl_device_svm_capabilities;
 {$ENDIF}
 typedef cl_bitfield         cl_command_queue_properties;
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 typedef intptr_t            cl_device_partition_property;
 typedef cl_bitfield         cl_device_affinity_domain;
 {$ENDIF}
 
 typedef intptr_t            cl_context_properties;
 typedef cl_uint             cl_context_info;
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 typedef cl_bitfield         cl_queue_properties;
 {$ENDIF}
 typedef cl_uint             cl_command_queue_info;
 typedef cl_uint             cl_channel_order;
 typedef cl_uint             cl_channel_type;
 typedef cl_bitfield         cl_mem_flags;
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 typedef cl_bitfield         cl_svm_mem_flags;
 {$ENDIF}
 typedef cl_uint             cl_mem_object_type;
 typedef cl_uint             cl_mem_info;
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 typedef cl_bitfield         cl_mem_migration_flags;
 {$ENDIF}
 typedef cl_uint             cl_image_info;
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 typedef cl_uint             cl_buffer_create_type;
 {$ENDIF}
 typedef cl_uint             cl_addressing_mode;
 typedef cl_uint             cl_filter_mode;
 typedef cl_uint             cl_sampler_info;
 typedef cl_bitfield         cl_map_flags;
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 typedef intptr_t            cl_pipe_properties;
 typedef cl_uint             cl_pipe_info;
 {$ENDIF}
 typedef cl_uint             cl_program_info;
 typedef cl_uint             cl_program_build_info;
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 typedef cl_uint             cl_program_binary_type;
 {$ENDIF}
 typedef cl_int              cl_build_status;
 typedef cl_uint             cl_kernel_info;
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 typedef cl_uint             cl_kernel_arg_info;
 typedef cl_uint             cl_kernel_arg_address_qualifier;
 typedef cl_uint             cl_kernel_arg_access_qualifier;
 typedef cl_bitfield         cl_kernel_arg_type_qualifier;
 {$ENDIF}
 typedef cl_uint             cl_kernel_work_group_info;
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 typedef cl_uint             cl_kernel_sub_group_info;
 {$ENDIF}
 typedef cl_uint             cl_event_info;
 typedef cl_uint             cl_command_type;
 typedef cl_uint             cl_profiling_info;
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 typedef cl_bitfield         cl_sampler_properties;
 typedef cl_uint             cl_kernel_exec_info;
 {$ENDIF}
@@ -121,7 +121,7 @@ typedef struct _cl_image_format {
     cl_channel_type         image_channel_data_type;
 } cl_image_format;
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 typedef struct _cl_image_desc {
     cl_mem_object_type      image_type;
@@ -133,21 +133,21 @@ typedef struct _cl_image_desc {
     size_t                  image_slice_pitch;
     cl_uint                 num_mip_levels;
     cl_uint                 num_samples;
-#ifdef CL_VERSION_2_0
-#ifdef __GNUC__
+{$IFDEF CL_VERSION_2_0 }
+{$IFDEF __GNUC__ }
     __extension__   (* Prevents warnings about anonymous union in -pedantic builds *)
 {$ENDIF}
-#ifdef _MSC_VER
+{$IFDEF _MSC_VER }
 #pragma warning( push )
 #pragma warning( disable : 4201 ) (* Prevents warning about nameless struct/union in /W4 /Za builds *)
 {$ENDIF}
     union {
 {$ENDIF}
       cl_mem                  buffer;
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
       cl_mem                  mem_object;
     };
-#ifdef _MSC_VER
+{$IFDEF _MSC_VER }
 #pragma warning( pop )
 {$ENDIF}
 {$ENDIF}
@@ -155,7 +155,7 @@ typedef struct _cl_image_desc {
 
 {$ENDIF}
 
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 
 typedef struct _cl_buffer_region {
     size_t                  origin;
@@ -180,11 +180,11 @@ typedef struct _cl_buffer_region {
 #define CL_IMAGE_FORMAT_NOT_SUPPORTED               -10
 #define CL_BUILD_PROGRAM_FAILURE                    -11
 #define CL_MAP_FAILURE                              -12
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 #define CL_MISALIGNED_SUB_BUFFER_OFFSET             -13
 #define CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST -14
 {$ENDIF}
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_COMPILE_PROGRAM_FAILURE                  -15
 #define CL_LINKER_NOT_AVAILABLE                     -16
 #define CL_LINK_PROGRAM_FAILURE                     -17
@@ -226,20 +226,20 @@ typedef struct _cl_buffer_region {
 #define CL_INVALID_BUFFER_SIZE                      -61
 #define CL_INVALID_MIP_LEVEL                        -62
 #define CL_INVALID_GLOBAL_WORK_SIZE                 -63
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 #define CL_INVALID_PROPERTY                         -64
 {$ENDIF}
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_INVALID_IMAGE_DESCRIPTOR                 -65
 #define CL_INVALID_COMPILER_OPTIONS                 -66
 #define CL_INVALID_LINKER_OPTIONS                   -67
 #define CL_INVALID_DEVICE_PARTITION_COUNT           -68
 {$ENDIF}
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_INVALID_PIPE_SIZE                        -69
 #define CL_INVALID_DEVICE_QUEUE                     -70
 {$ENDIF}
-#ifdef CL_VERSION_2_2
+{$IFDEF CL_VERSION_2_2 }
 #define CL_INVALID_SPEC_ID                          -71
 #define CL_MAX_SIZE_RESTRICTION_EXCEEDED            -72
 {$ENDIF}
@@ -248,7 +248,7 @@ typedef struct _cl_buffer_region {
 (* cl_bool *)
 #define CL_FALSE                                    0
 #define CL_TRUE                                     1
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_BLOCKING                                 CL_TRUE
 #define CL_NON_BLOCKING                             CL_FALSE
 {$ENDIF}
@@ -259,7 +259,7 @@ typedef struct _cl_buffer_region {
 #define CL_PLATFORM_NAME                            0x0902
 #define CL_PLATFORM_VENDOR                          0x0903
 #define CL_PLATFORM_EXTENSIONS                      0x0904
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 #define CL_PLATFORM_HOST_TIMER_RESOLUTION           0x0905
 {$ENDIF}
 
@@ -268,7 +268,7 @@ typedef struct _cl_buffer_region {
 #define CL_DEVICE_TYPE_CPU                          (1 << 1)
 #define CL_DEVICE_TYPE_GPU                          (1 << 2)
 #define CL_DEVICE_TYPE_ACCELERATOR                  (1 << 3)
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_DEVICE_TYPE_CUSTOM                       (1 << 4)
 {$ENDIF}
 #define CL_DEVICE_TYPE_ALL                          0xFFFFFFFF
@@ -317,7 +317,7 @@ typedef struct _cl_buffer_region {
 #define CL_DEVICE_COMPILER_AVAILABLE                     0x1028
 #define CL_DEVICE_EXECUTION_CAPABILITIES                 0x1029
 #define CL_DEVICE_QUEUE_PROPERTIES                       0x102A    (* deprecated *)
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_DEVICE_QUEUE_ON_HOST_PROPERTIES               0x102A
 {$ENDIF}
 #define CL_DEVICE_NAME                                   0x102B
@@ -327,11 +327,11 @@ typedef struct _cl_buffer_region {
 #define CL_DEVICE_VERSION                                0x102F
 #define CL_DEVICE_EXTENSIONS                             0x1030
 #define CL_DEVICE_PLATFORM                               0x1031
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_DEVICE_DOUBLE_FP_CONFIG                       0x1032
 {$ENDIF}
 (* 0x1033 reserved for CL_DEVICE_HALF_FP_CONFIG which is already defined in "cl_ext.h" *)
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 #define CL_DEVICE_PREFERRED_VECTOR_WIDTH_HALF            0x1034
 #define CL_DEVICE_HOST_UNIFIED_MEMORY                    0x1035   (* deprecated *)
 #define CL_DEVICE_NATIVE_VECTOR_WIDTH_CHAR               0x1036
@@ -343,7 +343,7 @@ typedef struct _cl_buffer_region {
 #define CL_DEVICE_NATIVE_VECTOR_WIDTH_HALF               0x103C
 #define CL_DEVICE_OPENCL_C_VERSION                       0x103D
 {$ENDIF}
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_DEVICE_LINKER_AVAILABLE                       0x103E
 #define CL_DEVICE_BUILT_IN_KERNELS                       0x103F
 #define CL_DEVICE_IMAGE_MAX_BUFFER_SIZE                  0x1040
@@ -357,7 +357,7 @@ typedef struct _cl_buffer_region {
 #define CL_DEVICE_PREFERRED_INTEROP_USER_SYNC            0x1048
 #define CL_DEVICE_PRINTF_BUFFER_SIZE                     0x1049
 {$ENDIF}
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_DEVICE_IMAGE_PITCH_ALIGNMENT                  0x104A
 #define CL_DEVICE_IMAGE_BASE_ADDRESS_ALIGNMENT           0x104B
 #define CL_DEVICE_MAX_READ_WRITE_IMAGE_ARGS              0x104C
@@ -376,7 +376,7 @@ typedef struct _cl_buffer_region {
 #define CL_DEVICE_PREFERRED_GLOBAL_ATOMIC_ALIGNMENT      0x1059
 #define CL_DEVICE_PREFERRED_LOCAL_ATOMIC_ALIGNMENT       0x105A
 {$ENDIF}
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 #define CL_DEVICE_IL_VERSION                             0x105B
 #define CL_DEVICE_MAX_NUM_SUB_GROUPS                     0x105C
 #define CL_DEVICE_SUB_GROUP_INDEPENDENT_FORWARD_PROGRESS 0x105D
@@ -389,10 +389,10 @@ typedef struct _cl_buffer_region {
 #define CL_FP_ROUND_TO_ZERO                         (1 << 3)
 #define CL_FP_ROUND_TO_INF                          (1 << 4)
 #define CL_FP_FMA                                   (1 << 5)
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 #define CL_FP_SOFT_FLOAT                            (1 << 6)
 {$ENDIF}
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT         (1 << 7)
 {$ENDIF}
 
@@ -412,7 +412,7 @@ typedef struct _cl_buffer_region {
 (* cl_command_queue_properties - bitfield *)
 #define CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE      (1 << 0)
 #define CL_QUEUE_PROFILING_ENABLE                   (1 << 1)
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_QUEUE_ON_DEVICE                          (1 << 2)
 #define CL_QUEUE_ON_DEVICE_DEFAULT                  (1 << 3)
 {$ENDIF}
@@ -421,17 +421,17 @@ typedef struct _cl_buffer_region {
 #define CL_CONTEXT_REFERENCE_COUNT                  0x1080
 #define CL_CONTEXT_DEVICES                          0x1081
 #define CL_CONTEXT_PROPERTIES                       0x1082
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 #define CL_CONTEXT_NUM_DEVICES                      0x1083
 {$ENDIF}
 
 (* cl_context_properties *)
 #define CL_CONTEXT_PLATFORM                         0x1084
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_CONTEXT_INTEROP_USER_SYNC                0x1085
 {$ENDIF}
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 (* cl_device_partition_property *)
 #define CL_DEVICE_PARTITION_EQUALLY                 0x1086
@@ -441,7 +441,7 @@ typedef struct _cl_buffer_region {
 
 {$ENDIF}
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 (* cl_device_affinity_domain *)
 #define CL_DEVICE_AFFINITY_DOMAIN_NUMA               (1 << 0)
@@ -453,7 +453,7 @@ typedef struct _cl_buffer_region {
 
 {$ENDIF}
 
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 
 (* cl_device_svm_capabilities *)
 #define CL_DEVICE_SVM_COARSE_GRAIN_BUFFER           (1 << 0)
@@ -468,10 +468,10 @@ typedef struct _cl_buffer_region {
 #define CL_QUEUE_DEVICE                             0x1091
 #define CL_QUEUE_REFERENCE_COUNT                    0x1092
 #define CL_QUEUE_PROPERTIES                         0x1093
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_QUEUE_SIZE                               0x1094
 {$ENDIF}
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 #define CL_QUEUE_DEVICE_DEFAULT                     0x1095
 {$ENDIF}
 
@@ -483,18 +483,18 @@ typedef struct _cl_buffer_region {
 #define CL_MEM_ALLOC_HOST_PTR                       (1 << 4)
 #define CL_MEM_COPY_HOST_PTR                        (1 << 5)
 (* reserved                                         (1 << 6)    *)
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_MEM_HOST_WRITE_ONLY                      (1 << 7)
 #define CL_MEM_HOST_READ_ONLY                       (1 << 8)
 #define CL_MEM_HOST_NO_ACCESS                       (1 << 9)
 {$ENDIF}
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_MEM_SVM_FINE_GRAIN_BUFFER                (1 << 10)   (* used by cl_svm_mem_flags only *)
 #define CL_MEM_SVM_ATOMICS                          (1 << 11)   (* used by cl_svm_mem_flags only *)
 #define CL_MEM_KERNEL_READ_AND_WRITE                (1 << 12)
 {$ENDIF}
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 (* cl_mem_migration_flags - bitfield *)
 #define CL_MIGRATE_MEM_OBJECT_HOST                  (1 << 0)
@@ -513,16 +513,16 @@ typedef struct _cl_buffer_region {
 #define CL_ARGB                                     0x10B7
 #define CL_INTENSITY                                0x10B8
 #define CL_LUMINANCE                                0x10B9
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 #define CL_Rx                                       0x10BA
 #define CL_RGx                                      0x10BB
 #define CL_RGBx                                     0x10BC
 {$ENDIF}
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_DEPTH                                    0x10BD
 #define CL_DEPTH_STENCIL                            0x10BE
 {$ENDIF}
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_sRGB                                     0x10BF
 #define CL_sRGBx                                    0x10C0
 #define CL_sRGBA                                    0x10C1
@@ -546,10 +546,10 @@ typedef struct _cl_buffer_region {
 #define CL_UNSIGNED_INT32                           0x10DC
 #define CL_HALF_FLOAT                               0x10DD
 #define CL_FLOAT                                    0x10DE
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_UNORM_INT24                              0x10DF
 {$ENDIF}
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 #define CL_UNORM_INT_101010_2                       0x10E0
 {$ENDIF}
 
@@ -557,13 +557,13 @@ typedef struct _cl_buffer_region {
 #define CL_MEM_OBJECT_BUFFER                        0x10F0
 #define CL_MEM_OBJECT_IMAGE2D                       0x10F1
 #define CL_MEM_OBJECT_IMAGE3D                       0x10F2
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_MEM_OBJECT_IMAGE2D_ARRAY                 0x10F3
 #define CL_MEM_OBJECT_IMAGE1D                       0x10F4
 #define CL_MEM_OBJECT_IMAGE1D_ARRAY                 0x10F5
 #define CL_MEM_OBJECT_IMAGE1D_BUFFER                0x10F6
 {$ENDIF}
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_MEM_OBJECT_PIPE                          0x10F7
 {$ENDIF}
 
@@ -575,11 +575,11 @@ typedef struct _cl_buffer_region {
 #define CL_MEM_MAP_COUNT                            0x1104
 #define CL_MEM_REFERENCE_COUNT                      0x1105
 #define CL_MEM_CONTEXT                              0x1106
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 #define CL_MEM_ASSOCIATED_MEMOBJECT                 0x1107
 #define CL_MEM_OFFSET                               0x1108
 {$ENDIF}
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_MEM_USES_SVM_POINTER                     0x1109
 {$ENDIF}
 
@@ -591,14 +591,14 @@ typedef struct _cl_buffer_region {
 #define CL_IMAGE_WIDTH                              0x1114
 #define CL_IMAGE_HEIGHT                             0x1115
 #define CL_IMAGE_DEPTH                              0x1116
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_IMAGE_ARRAY_SIZE                         0x1117
 #define CL_IMAGE_BUFFER                             0x1118
 #define CL_IMAGE_NUM_MIP_LEVELS                     0x1119
 #define CL_IMAGE_NUM_SAMPLES                        0x111A
 {$ENDIF}
 
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 
 (* cl_pipe_info *)
 #define CL_PIPE_PACKET_SIZE                         0x1120
@@ -611,7 +611,7 @@ typedef struct _cl_buffer_region {
 #define CL_ADDRESS_CLAMP_TO_EDGE                    0x1131
 #define CL_ADDRESS_CLAMP                            0x1132
 #define CL_ADDRESS_REPEAT                           0x1133
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 #define CL_ADDRESS_MIRRORED_REPEAT                  0x1134
 {$ENDIF}
 
@@ -625,7 +625,7 @@ typedef struct _cl_buffer_region {
 #define CL_SAMPLER_NORMALIZED_COORDS                0x1152
 #define CL_SAMPLER_ADDRESSING_MODE                  0x1153
 #define CL_SAMPLER_FILTER_MODE                      0x1154
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 (* These enumerants are for the cl_khr_mipmap_image extension.
    They have since been added to cl_ext.h with an appropriate
    KHR suffix, but are left here for backwards compatibility. *)
@@ -637,7 +637,7 @@ typedef struct _cl_buffer_region {
 (* cl_map_flags - bitfield *)
 #define CL_MAP_READ                                 (1 << 0)
 #define CL_MAP_WRITE                                (1 << 1)
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_MAP_WRITE_INVALIDATE_REGION              (1 << 2)
 {$ENDIF}
 
@@ -649,14 +649,14 @@ typedef struct _cl_buffer_region {
 #define CL_PROGRAM_SOURCE                           0x1164
 #define CL_PROGRAM_BINARY_SIZES                     0x1165
 #define CL_PROGRAM_BINARIES                         0x1166
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_PROGRAM_NUM_KERNELS                      0x1167
 #define CL_PROGRAM_KERNEL_NAMES                     0x1168
 {$ENDIF}
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 #define CL_PROGRAM_IL                               0x1169
 {$ENDIF}
-#ifdef CL_VERSION_2_2
+{$IFDEF CL_VERSION_2_2 }
 #define CL_PROGRAM_SCOPE_GLOBAL_CTORS_PRESENT       0x116A
 #define CL_PROGRAM_SCOPE_GLOBAL_DTORS_PRESENT       0x116B
 {$ENDIF}
@@ -665,14 +665,14 @@ typedef struct _cl_buffer_region {
 #define CL_PROGRAM_BUILD_STATUS                     0x1181
 #define CL_PROGRAM_BUILD_OPTIONS                    0x1182
 #define CL_PROGRAM_BUILD_LOG                        0x1183
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_PROGRAM_BINARY_TYPE                      0x1184
 {$ENDIF}
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_PROGRAM_BUILD_GLOBAL_VARIABLE_TOTAL_SIZE 0x1185
 {$ENDIF}
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 (* cl_program_binary_type *)
 #define CL_PROGRAM_BINARY_TYPE_NONE                 0x0
@@ -694,15 +694,15 @@ typedef struct _cl_buffer_region {
 #define CL_KERNEL_REFERENCE_COUNT                   0x1192
 #define CL_KERNEL_CONTEXT                           0x1193
 #define CL_KERNEL_PROGRAM                           0x1194
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_KERNEL_ATTRIBUTES                        0x1195
 {$ENDIF}
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 #define CL_KERNEL_MAX_NUM_SUB_GROUPS                0x11B9
 #define CL_KERNEL_COMPILE_NUM_SUB_GROUPS            0x11BA
 {$ENDIF}
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 (* cl_kernel_arg_info *)
 #define CL_KERNEL_ARG_ADDRESS_QUALIFIER             0x1196
@@ -713,7 +713,7 @@ typedef struct _cl_buffer_region {
 
 {$ENDIF}
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 (* cl_kernel_arg_address_qualifier *)
 #define CL_KERNEL_ARG_ADDRESS_GLOBAL                0x119B
@@ -723,7 +723,7 @@ typedef struct _cl_buffer_region {
 
 {$ENDIF}
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 (* cl_kernel_arg_access_qualifier *)
 #define CL_KERNEL_ARG_ACCESS_READ_ONLY              0x11A0
@@ -733,14 +733,14 @@ typedef struct _cl_buffer_region {
 
 {$ENDIF}
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 (* cl_kernel_arg_type_qualifier *)
 #define CL_KERNEL_ARG_TYPE_NONE                     0
 #define CL_KERNEL_ARG_TYPE_CONST                    (1 << 0)
 #define CL_KERNEL_ARG_TYPE_RESTRICT                 (1 << 1)
 #define CL_KERNEL_ARG_TYPE_VOLATILE                 (1 << 2)
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_KERNEL_ARG_TYPE_PIPE                     (1 << 3)
 {$ENDIF}
 
@@ -752,11 +752,11 @@ typedef struct _cl_buffer_region {
 #define CL_KERNEL_LOCAL_MEM_SIZE                    0x11B2
 #define CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE 0x11B3
 #define CL_KERNEL_PRIVATE_MEM_SIZE                  0x11B4
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_KERNEL_GLOBAL_WORK_SIZE                  0x11B5
 {$ENDIF}
 
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 
 (* cl_kernel_sub_group_info *)
 #define CL_KERNEL_MAX_SUB_GROUP_SIZE_FOR_NDRANGE    0x2033
@@ -765,7 +765,7 @@ typedef struct _cl_buffer_region {
 
 {$ENDIF}
 
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 
 (* cl_kernel_exec_info *)
 #define CL_KERNEL_EXEC_INFO_SVM_PTRS                0x11B6
@@ -778,7 +778,7 @@ typedef struct _cl_buffer_region {
 #define CL_EVENT_COMMAND_TYPE                       0x11D1
 #define CL_EVENT_REFERENCE_COUNT                    0x11D2
 #define CL_EVENT_COMMAND_EXECUTION_STATUS           0x11D3
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 #define CL_EVENT_CONTEXT                            0x11D4
 {$ENDIF}
 
@@ -800,19 +800,19 @@ typedef struct _cl_buffer_region {
 #define CL_COMMAND_MARKER                           0x11FE
 #define CL_COMMAND_ACQUIRE_GL_OBJECTS               0x11FF
 #define CL_COMMAND_RELEASE_GL_OBJECTS               0x1200
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 #define CL_COMMAND_READ_BUFFER_RECT                 0x1201
 #define CL_COMMAND_WRITE_BUFFER_RECT                0x1202
 #define CL_COMMAND_COPY_BUFFER_RECT                 0x1203
 #define CL_COMMAND_USER                             0x1204
 {$ENDIF}
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 #define CL_COMMAND_BARRIER                          0x1205
 #define CL_COMMAND_MIGRATE_MEM_OBJECTS              0x1206
 #define CL_COMMAND_FILL_BUFFER                      0x1207
 #define CL_COMMAND_FILL_IMAGE                       0x1208
 {$ENDIF}
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_COMMAND_SVM_FREE                         0x1209
 #define CL_COMMAND_SVM_MEMCPY                       0x120A
 #define CL_COMMAND_SVM_MEMFILL                      0x120B
@@ -826,7 +826,7 @@ typedef struct _cl_buffer_region {
 #define CL_SUBMITTED                                0x2
 #define CL_QUEUED                                   0x3
 
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 
 (* cl_buffer_create_type *)
 #define CL_BUFFER_CREATE_TYPE_REGION                0x1220
@@ -838,7 +838,7 @@ typedef struct _cl_buffer_region {
 #define CL_PROFILING_COMMAND_SUBMIT                 0x1281
 #define CL_PROFILING_COMMAND_START                  0x1282
 #define CL_PROFILING_COMMAND_END                    0x1283
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 #define CL_PROFILING_COMMAND_COMPLETE               0x1284
 {$ENDIF}
 
@@ -872,7 +872,7 @@ clGetDeviceInfo(cl_device_id    device,
                 void *          param_value,
                 size_t *        param_value_size_ret) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clCreateSubDevices(cl_device_id                         in_device,
@@ -889,7 +889,7 @@ clReleaseDevice(cl_device_id device) CL_API_SUFFIX__VERSION_1_2;
 
 {$ENDIF}
 
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clSetDefaultDeviceCommandQueue(cl_context           context,
@@ -944,7 +944,7 @@ clGetContextInfo(cl_context         context,
 
 (* Command Queue APIs *)
 
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 
 extern CL_API_ENTRY cl_command_queue CL_API_CALL
 clCreateCommandQueueWithProperties(cl_context               context,
@@ -975,7 +975,7 @@ clCreateBuffer(cl_context   context,
                void *       host_ptr,
                cl_int *     errcode_ret) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 
 extern CL_API_ENTRY cl_mem CL_API_CALL
 clCreateSubBuffer(cl_mem                   buffer,
@@ -986,7 +986,7 @@ clCreateSubBuffer(cl_mem                   buffer,
 
 {$ENDIF}
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 extern CL_API_ENTRY cl_mem CL_API_CALL
 clCreateImage(cl_context              context,
@@ -998,7 +998,7 @@ clCreateImage(cl_context              context,
 
 {$ENDIF}
 
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 
 extern CL_API_ENTRY cl_mem CL_API_CALL
 clCreatePipe(cl_context                 context,
@@ -1038,7 +1038,7 @@ clGetImageInfo(cl_mem           image,
                void *           param_value,
                size_t *         param_value_size_ret) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clGetPipeInfo(cl_mem           pipe,
@@ -1049,7 +1049,7 @@ clGetPipeInfo(cl_mem           pipe,
 
 {$ENDIF}
 
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clSetMemObjectDestructorCallback(cl_mem memobj,
@@ -1061,7 +1061,7 @@ clSetMemObjectDestructorCallback(cl_mem memobj,
 
 (* SVM Allocation APIs *)
 
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 
 extern CL_API_ENTRY void * CL_API_CALL
 clSVMAlloc(cl_context       context,
@@ -1077,7 +1077,7 @@ clSVMFree(cl_context        context,
 
 (* Sampler APIs *)
 
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 
 extern CL_API_ENTRY cl_sampler CL_API_CALL
 clCreateSamplerWithProperties(cl_context                     context,
@@ -1116,7 +1116,7 @@ clCreateProgramWithBinary(cl_context                     context,
                           cl_int *                       binary_status,
                           cl_int *                       errcode_ret) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 extern CL_API_ENTRY cl_program CL_API_CALL
 clCreateProgramWithBuiltInKernels(cl_context            context,
@@ -1127,7 +1127,7 @@ clCreateProgramWithBuiltInKernels(cl_context            context,
 
 {$ENDIF}
 
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 
 extern CL_API_ENTRY cl_program CL_API_CALL
 clCreateProgramWithIL(cl_context    context,
@@ -1152,7 +1152,7 @@ clBuildProgram(cl_program           program,
                                                 void * user_data),
                void *               user_data) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clCompileProgram(cl_program           program,
@@ -1180,7 +1180,7 @@ clLinkProgram(cl_context           context,
 
 {$ENDIF}
 
-#ifdef CL_VERSION_2_2
+{$IFDEF CL_VERSION_2_2 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clSetProgramReleaseCallback(cl_program          program,
@@ -1196,7 +1196,7 @@ clSetProgramSpecializationConstant(cl_program  program,
 
 {$ENDIF}
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clUnloadPlatformCompiler(cl_platform_id platform) CL_API_SUFFIX__VERSION_1_2;
@@ -1230,7 +1230,7 @@ clCreateKernelsInProgram(cl_program     program,
                          cl_kernel *    kernels,
                          cl_uint *      num_kernels_ret) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 
 extern CL_API_ENTRY cl_kernel CL_API_CALL
 clCloneKernel(cl_kernel     source_kernel,
@@ -1250,7 +1250,7 @@ clSetKernelArg(cl_kernel    kernel,
                size_t       arg_size,
                const void * arg_value) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clSetKernelArgSVMPointer(cl_kernel    kernel,
@@ -1272,7 +1272,7 @@ clGetKernelInfo(cl_kernel       kernel,
                 void *          param_value,
                 size_t *        param_value_size_ret) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clGetKernelArgInfo(cl_kernel       kernel,
@@ -1292,7 +1292,7 @@ clGetKernelWorkGroupInfo(cl_kernel                  kernel,
                          void *                     param_value,
                          size_t *                   param_value_size_ret) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clGetKernelSubGroupInfo(cl_kernel                   kernel,
@@ -1318,7 +1318,7 @@ clGetEventInfo(cl_event         event,
                void *           param_value,
                size_t *         param_value_size_ret) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 
 extern CL_API_ENTRY cl_event CL_API_CALL
 clCreateUserEvent(cl_context    context,
@@ -1332,7 +1332,7 @@ clRetainEvent(cl_event event) CL_API_SUFFIX__VERSION_1_0;
 extern CL_API_ENTRY cl_int CL_API_CALL
 clReleaseEvent(cl_event event) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clSetUserEventStatus(cl_event   event,
@@ -1375,7 +1375,7 @@ clEnqueueReadBuffer(cl_command_queue    command_queue,
                     const cl_event *    event_wait_list,
                     cl_event *          event) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clEnqueueReadBufferRect(cl_command_queue    command_queue,
@@ -1406,7 +1406,7 @@ clEnqueueWriteBuffer(cl_command_queue   command_queue,
                      const cl_event *   event_wait_list,
                      cl_event *         event) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clEnqueueWriteBufferRect(cl_command_queue    command_queue,
@@ -1426,7 +1426,7 @@ clEnqueueWriteBufferRect(cl_command_queue    command_queue,
 
 {$ENDIF}
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clEnqueueFillBuffer(cl_command_queue   command_queue,
@@ -1452,7 +1452,7 @@ clEnqueueCopyBuffer(cl_command_queue    command_queue,
                     const cl_event *    event_wait_list,
                     cl_event *          event) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_1
+{$IFDEF CL_VERSION_1_1 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clEnqueueCopyBufferRect(cl_command_queue    command_queue,
@@ -1497,7 +1497,7 @@ clEnqueueWriteImage(cl_command_queue    command_queue,
                     const cl_event *    event_wait_list,
                     cl_event *          event) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clEnqueueFillImage(cl_command_queue   command_queue,
@@ -1578,7 +1578,7 @@ clEnqueueUnmapMemObject(cl_command_queue command_queue,
                         const cl_event * event_wait_list,
                         cl_event *       event) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clEnqueueMigrateMemObjects(cl_command_queue       command_queue,
@@ -1614,7 +1614,7 @@ clEnqueueNativeKernel(cl_command_queue  command_queue,
                       const cl_event *  event_wait_list,
                       cl_event *        event) CL_API_SUFFIX__VERSION_1_0;
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clEnqueueMarkerWithWaitList(cl_command_queue  command_queue,
@@ -1630,7 +1630,7 @@ clEnqueueBarrierWithWaitList(cl_command_queue  command_queue,
 
 {$ENDIF}
 
-#ifdef CL_VERSION_2_0
+{$IFDEF CL_VERSION_2_0 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clEnqueueSVMFree(cl_command_queue  command_queue,
@@ -1684,7 +1684,7 @@ clEnqueueSVMUnmap(cl_command_queue  command_queue,
 
 {$ENDIF}
 
-#ifdef CL_VERSION_2_1
+{$IFDEF CL_VERSION_2_1 }
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clEnqueueSVMMigrateMem(cl_command_queue         command_queue,
@@ -1698,7 +1698,7 @@ clEnqueueSVMMigrateMem(cl_command_queue         command_queue,
 
 {$ENDIF}
 
-#ifdef CL_VERSION_1_2
+{$IFDEF CL_VERSION_1_2 }
 
 (* Extension function access
  *
@@ -1713,7 +1713,7 @@ clGetExtensionFunctionAddressForPlatform(cl_platform_id platform,
 
 {$ENDIF}
 
-#ifdef CL_USE_DEPRECATED_OPENCL_1_0_APIS
+{$IFDEF CL_USE_DEPRECATED_OPENCL_1_0_APIS }
     (*
      *  WARNING:
      *     This API introduces mutable state into the OpenCL implementation. It has been REMOVED
