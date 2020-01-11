@@ -1,4 +1,6 @@
-﻿(*******************************************************************************
+﻿unit cl;
+
+(*******************************************************************************
  * Copyright (c) 2008-2019 The Khronos Group Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -26,15 +28,9 @@
  * MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
  ******************************************************************************)
 
-#ifndef __OPENCL_CL_H
-#define __OPENCL_CL_H
+interface //#################################################################### ■
 
-#include <CL/cl_version.h>
-#include <CL/cl_platform.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+uses cl_version, cl_platform;
 
 (******************************************************************************)
 
@@ -1797,8 +1793,6 @@ clEnqueueTask(cl_command_queue  command_queue,
               const cl_event *  event_wait_list,
               cl_event *        event) CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED;
 
-#ifdef __cplusplus
-}
-#endif
+implementation //############################################################### ■
 
-#endif  (* __OPENCL_CL_H *)
+end. //######################################################################### ■
