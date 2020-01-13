@@ -529,9 +529,9 @@ typedef union
 {
     cl_char  CL_ALIGNED(2) s[2];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y :T_cl_char );
-       0: ( s0, s1 :T_cl_char );
-       0: ( lo, hi :T_cl_char );
+       1: ( x, y :T_cl_char );
+       2: ( s0, s1 :T_cl_char );
+       3: ( lo, hi :T_cl_char );
 #endif
 #if defined( __CL_CHAR2__)
     __cl_char2     v2;
@@ -542,9 +542,9 @@ typedef union
 {
     cl_char  CL_ALIGNED(4) s[4];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_char );
-       0: ( s0, s1, s2, s3 :T_cl_char );
-       0: ( lo, hi :T_cl_char2 );
+       1: ( x, y, z, w :T_cl_char );
+       2: ( s0, s1, s2, s3 :T_cl_char );
+       3: ( lo, hi :T_cl_char2 );
 #endif
 #if defined( __CL_CHAR2__)
     __cl_char2     v2[2];
@@ -561,9 +561,9 @@ typedef union
 {
     cl_char   CL_ALIGNED(8) s[8];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_char );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_char );
-       0: ( lo, hi :T_cl_char4 );
+       1: ( x, y, z, w :T_cl_char );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_char );
+       3: ( lo, hi :T_cl_char4 );
 #endif
 #if defined( __CL_CHAR2__)
     __cl_char2     v2[4];
@@ -580,9 +580,9 @@ typedef union
 {
     cl_char  CL_ALIGNED(16) s[16];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_char );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_char );
-       0: ( lo, hi :T_cl_char8 );
+       1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_char );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_char );
+       3: ( lo, hi :T_cl_char8 );
 #endif
 #if defined( __CL_CHAR2__)
     __cl_char2     v2[8];
@@ -604,9 +604,9 @@ typedef union
 {
     cl_uchar  CL_ALIGNED(2) s[2];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y :T_cl_uchar );
-       0: ( s0, s1 :T_cl_uchar );
-       0: ( lo, hi :T_cl_uchar );
+       1: ( x, y :T_cl_uchar );
+       2: ( s0, s1 :T_cl_uchar );
+       3: ( lo, hi :T_cl_uchar );
 #endif
 #if defined( __cl_uchar2__)
     __cl_uchar2     v2;
@@ -617,9 +617,9 @@ typedef union
 {
     cl_uchar  CL_ALIGNED(4) s[4];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_uchar );
-       0: ( s0, s1, s2, s3 :T_cl_uchar );
-       0: ( lo, hi :T_cl_uchar2 );
+       1: ( x, y, z, w :T_cl_uchar );
+       2: ( s0, s1, s2, s3 :T_cl_uchar );
+       3: ( lo, hi :T_cl_uchar2 );
 #endif
 #if defined( __CL_UCHAR2__)
     __cl_uchar2     v2[2];
@@ -636,9 +636,9 @@ typedef union
 {
     cl_uchar   CL_ALIGNED(8) s[8];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_uchar );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_uchar );
-       0: ( lo, hi :T_cl_uchar4 );
+       1: ( x, y, z, w :T_cl_uchar );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_uchar );
+       3: ( lo, hi :T_cl_uchar4 );
 #endif
 #if defined( __CL_UCHAR2__)
     __cl_uchar2     v2[4];
@@ -655,9 +655,9 @@ typedef union
 {
     cl_uchar  CL_ALIGNED(16) s[16];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_uchar );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_uchar );
-       0: ( lo, hi :T_cl_uchar8 );
+       1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_uchar );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_uchar );
+       3: ( lo, hi :T_cl_uchar8 );
 #endif
 #if defined( __CL_UCHAR2__)
     __cl_uchar2     v2[8];
@@ -679,9 +679,9 @@ typedef union
 {
     cl_short  CL_ALIGNED(4) s[2];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y :T_cl_short );
-       0: ( s0, s1 :T_cl_short );
-       0: ( lo, hi :T_cl_short );
+       1: ( x, y :T_cl_short );
+       2: ( s0, s1 :T_cl_short );
+       3: ( lo, hi :T_cl_short );
 #endif
 #if defined( __CL_SHORT2__)
     __cl_short2     v2;
@@ -692,9 +692,9 @@ typedef union
 {
     cl_short  CL_ALIGNED(8) s[4];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_short );
-       0: ( s0, s1, s2, s3 :T_cl_short );
-       0: ( lo, hi :T_cl_short2 );
+       1: ( x, y, z, w :T_cl_short );
+       2: ( s0, s1, s2, s3 :T_cl_short );
+       3: ( lo, hi :T_cl_short2 );
 #endif
 #if defined( __CL_SHORT2__)
     __cl_short2     v2[2];
@@ -711,9 +711,9 @@ typedef union
 {
     cl_short   CL_ALIGNED(16) s[8];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_short );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_short );
-       0: ( lo, hi :T_cl_short4 );
+       1: ( x, y, z, w :T_cl_short );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_short );
+       3: ( lo, hi :T_cl_short4 );
 #endif
 #if defined( __CL_SHORT2__)
     __cl_short2     v2[4];
@@ -730,9 +730,9 @@ typedef union
 {
     cl_short  CL_ALIGNED(32) s[16];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_short );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_short );
-       0: ( lo, hi :T_cl_short8 );
+       1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_short );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_short );
+       3: ( lo, hi :T_cl_short8 );
 #endif
 #if defined( __CL_SHORT2__)
     __cl_short2     v2[8];
@@ -754,9 +754,9 @@ typedef union
 {
     cl_ushort  CL_ALIGNED(4) s[2];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y :T_cl_ushort );
-       0: ( s0, s1 :T_cl_ushort );
-       0: ( lo, hi :T_cl_ushort );
+       1: ( x, y :T_cl_ushort );
+       2: ( s0, s1 :T_cl_ushort );
+       3: ( lo, hi :T_cl_ushort );
 #endif
 #if defined( __CL_USHORT2__)
     __cl_ushort2     v2;
@@ -767,9 +767,9 @@ typedef union
 {
     cl_ushort  CL_ALIGNED(8) s[4];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_ushort );
-       0: ( s0, s1, s2, s3 :T_cl_ushort );
-       0: ( lo, hi :T_cl_ushort2 );
+       1: ( x, y, z, w :T_cl_ushort );
+       2: ( s0, s1, s2, s3 :T_cl_ushort );
+       3: ( lo, hi :T_cl_ushort2 );
 #endif
 #if defined( __CL_USHORT2__)
     __cl_ushort2     v2[2];
@@ -786,9 +786,9 @@ typedef union
 {
     cl_ushort   CL_ALIGNED(16) s[8];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_ushort );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_ushort );
-       0: ( lo, hi :T_cl_ushort4 );
+       1: ( x, y, z, w :T_cl_ushort );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_ushort );
+       3: ( lo, hi :T_cl_ushort4 );
 #endif
 #if defined( __CL_USHORT2__)
     __cl_ushort2     v2[4];
@@ -805,9 +805,9 @@ typedef union
 {
     cl_ushort  CL_ALIGNED(32) s[16];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_ushort );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_ushort );
-       0: ( lo, hi :T_cl_ushort8 );
+       1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_ushort );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_ushort );
+       3: ( lo, hi :T_cl_ushort8 );
 #endif
 #if defined( __CL_USHORT2__)
     __cl_ushort2     v2[8];
@@ -829,9 +829,9 @@ typedef union
 {
     cl_half  CL_ALIGNED(4) s[2];
 #if __CL_HAS_ANON_STRUCT__
-        0: ( x, y :T_cl_half );
-        0: ( s0, s1 :T_cl_half );
-        0: ( lo, hi :T_cl_half );
+        1: ( x, y :T_cl_half );
+        2: ( s0, s1 :T_cl_half );
+        3: ( lo, hi :T_cl_half );
 #endif
 #if defined( __CL_HALF2__)
     __cl_half2     v2;
@@ -842,9 +842,9 @@ typedef union
 {
     cl_half  CL_ALIGNED(8) s[4];
 #if __CL_HAS_ANON_STRUCT__
-        0: ( x, y, z, w :T_cl_half );
-        0: ( s0, s1, s2, s3 :T_cl_half );
-        0: ( lo, hi :T_cl_half2 );
+        1: ( x, y, z, w :T_cl_half );
+        2: ( s0, s1, s2, s3 :T_cl_half );
+        3: ( lo, hi :T_cl_half2 );
 #endif
 #if defined( __CL_HALF2__)
     __cl_half2     v2[2];
@@ -861,9 +861,9 @@ typedef union
 {
     cl_half   CL_ALIGNED(16) s[8];
 #if __CL_HAS_ANON_STRUCT__
-        0: ( x, y, z, w :T_cl_half );
-        0: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_half );
-        0: ( lo, hi :T_cl_half4 );
+        1: ( x, y, z, w :T_cl_half );
+        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_half );
+        3: ( lo, hi :T_cl_half4 );
 #endif
 #if defined( __CL_HALF2__)
     __cl_half2     v2[4];
@@ -880,9 +880,9 @@ typedef union
 {
     cl_half  CL_ALIGNED(32) s[16];
 #if __CL_HAS_ANON_STRUCT__
-        0: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_half );
-        0: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_half );
-        0: ( lo, hi :T_cl_half8 );
+        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_half );
+        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_half );
+        3: ( lo, hi :T_cl_half8 );
 #endif
 #if defined( __CL_HALF2__)
     __cl_half2     v2[8];
@@ -903,9 +903,9 @@ typedef union
 {
     cl_int  CL_ALIGNED(8) s[2];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y :T_cl_int );
-       0: ( s0, s1 :T_cl_int );
-       0: ( lo, hi :T_cl_int );
+       1: ( x, y :T_cl_int );
+       2: ( s0, s1 :T_cl_int );
+       3: ( lo, hi :T_cl_int );
 #endif
 #if defined( __CL_INT2__)
     __cl_int2     v2;
@@ -916,9 +916,9 @@ typedef union
 {
     cl_int  CL_ALIGNED(16) s[4];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_int );
-       0: ( s0, s1, s2, s3 :T_cl_int );
-       0: ( lo, hi :T_cl_int2 );
+       1: ( x, y, z, w :T_cl_int );
+       2: ( s0, s1, s2, s3 :T_cl_int );
+       3: ( lo, hi :T_cl_int2 );
 #endif
 #if defined( __CL_INT2__)
     __cl_int2     v2[2];
@@ -935,9 +935,9 @@ typedef union
 {
     cl_int   CL_ALIGNED(32) s[8];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_int );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_int );
-       0: ( lo, hi :T_cl_int4 );
+       1: ( x, y, z, w :T_cl_int );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_int );
+       3: ( lo, hi :T_cl_int4 );
 #endif
 #if defined( __CL_INT2__)
     __cl_int2     v2[4];
@@ -954,9 +954,9 @@ typedef union
 {
     cl_int  CL_ALIGNED(64) s[16];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_int );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_int );
-       0: ( lo, hi :T_cl_int8 );
+       1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_int );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_int );
+       3: ( lo, hi :T_cl_int8 );
 #endif
 #if defined( __CL_INT2__)
     __cl_int2     v2[8];
@@ -978,9 +978,9 @@ typedef union
 {
     cl_uint  CL_ALIGNED(8) s[2];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y :T_cl_uint );
-       0: ( s0, s1 :T_cl_uint );
-       0: ( lo, hi :T_cl_uint );
+       1: ( x, y :T_cl_uint );
+       2: ( s0, s1 :T_cl_uint );
+       3: ( lo, hi :T_cl_uint );
 #endif
 #if defined( __CL_UINT2__)
     __cl_uint2     v2;
@@ -991,9 +991,9 @@ typedef union
 {
     cl_uint  CL_ALIGNED(16) s[4];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_uint );
-       0: ( s0, s1, s2, s3 :T_cl_uint );
-       0: ( lo, hi :T_cl_uint2 );
+       1: ( x, y, z, w :T_cl_uint );
+       2: ( s0, s1, s2, s3 :T_cl_uint );
+       3: ( lo, hi :T_cl_uint2 );
 #endif
 #if defined( __CL_UINT2__)
     __cl_uint2     v2[2];
@@ -1010,9 +1010,9 @@ typedef union
 {
     cl_uint   CL_ALIGNED(32) s[8];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_uint );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_uint );
-       0: ( lo, hi :T_cl_uint4 );
+       1: ( x, y, z, w :T_cl_uint );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_uint );
+       3: ( lo, hi :T_cl_uint4 );
 #endif
 #if defined( __CL_UINT2__)
     __cl_uint2     v2[4];
@@ -1029,9 +1029,9 @@ typedef union
 {
     cl_uint  CL_ALIGNED(64) s[16];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_uint );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_uint );
-       0: ( lo, hi :T_cl_uint8 );
+       1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_uint );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_uint );
+       3: ( lo, hi :T_cl_uint8 );
 #endif
 #if defined( __CL_UINT2__)
     __cl_uint2     v2[8];
@@ -1052,9 +1052,9 @@ typedef union
 {
     cl_long  CL_ALIGNED(16) s[2];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y :T_cl_long );
-       0: ( s0, s1 :T_cl_long );
-       0: ( lo, hi :T_cl_long );
+       1: ( x, y :T_cl_long );
+       2: ( s0, s1 :T_cl_long );
+       3: ( lo, hi :T_cl_long );
 #endif
 #if defined( __CL_LONG2__)
     __cl_long2     v2;
@@ -1065,9 +1065,9 @@ typedef union
 {
     cl_long  CL_ALIGNED(32) s[4];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_long );
-       0: ( s0, s1, s2, s3 :T_cl_long );
-       0: ( lo, hi :T_cl_long2 );
+       1: ( x, y, z, w :T_cl_long );
+       2: ( s0, s1, s2, s3 :T_cl_long );
+       3: ( lo, hi :T_cl_long2 );
 #endif
 #if defined( __CL_LONG2__)
     __cl_long2     v2[2];
@@ -1084,9 +1084,9 @@ typedef union
 {
     cl_long   CL_ALIGNED(64) s[8];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_long );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_long );
-       0: ( lo, hi :T_cl_long4 );
+       1: ( x, y, z, w :T_cl_long );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_long );
+       3: ( lo, hi :T_cl_long4 );
 #endif
 #if defined( __CL_LONG2__)
     __cl_long2     v2[4];
@@ -1103,9 +1103,9 @@ typedef union
 {
     cl_long  CL_ALIGNED(128) s[16];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_long );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_long );
-       0: ( lo, hi :T_cl_long8 );
+       1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_long );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_long );
+       3: ( lo, hi :T_cl_long8 );
 #endif
 #if defined( __CL_LONG2__)
     __cl_long2     v2[8];
@@ -1127,9 +1127,9 @@ typedef union
 {
     cl_ulong  CL_ALIGNED(16) s[2];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y :T_cl_ulong );
-       0: ( s0, s1 :T_cl_ulong );
-       0: ( lo, hi :T_cl_ulong );
+       1: ( x, y :T_cl_ulong );
+       2: ( s0, s1 :T_cl_ulong );
+       3: ( lo, hi :T_cl_ulong );
 #endif
 #if defined( __CL_ULONG2__)
     __cl_ulong2     v2;
@@ -1140,9 +1140,9 @@ typedef union
 {
     cl_ulong  CL_ALIGNED(32) s[4];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_ulong );
-       0: ( s0, s1, s2, s3 :T_cl_ulong );
-       0: ( lo, hi :T_cl_ulong2 );
+       1: ( x, y, z, w :T_cl_ulong );
+       2: ( s0, s1, s2, s3 :T_cl_ulong );
+       3: ( lo, hi :T_cl_ulong2 );
 #endif
 #if defined( __CL_ULONG2__)
     __cl_ulong2     v2[2];
@@ -1159,9 +1159,9 @@ typedef union
 {
     cl_ulong   CL_ALIGNED(64) s[8];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_ulong );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_ulong );
-       0: ( lo, hi :T_cl_ulong4 );
+       1: ( x, y, z, w :T_cl_ulong );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_ulong );
+       3: ( lo, hi :T_cl_ulong4 );
 #endif
 #if defined( __CL_ULONG2__)
     __cl_ulong2     v2[4];
@@ -1178,9 +1178,9 @@ typedef union
 {
     cl_ulong  CL_ALIGNED(128) s[16];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_ulong );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_ulong );
-       0: ( lo, hi :T_cl_ulong8 );
+       1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_ulong );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_ulong );
+       3: ( lo, hi :T_cl_ulong8 );
 #endif
 #if defined( __CL_ULONG2__)
     __cl_ulong2     v2[8];
@@ -1203,9 +1203,9 @@ typedef union
 {
     cl_float  CL_ALIGNED(8) s[2];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y :T_cl_float );
-       0: ( s0, s1 :T_cl_float );
-       0: ( lo, hi :T_cl_float );
+       1: ( x, y :T_cl_float );
+       2: ( s0, s1 :T_cl_float );
+       3: ( lo, hi :T_cl_float );
 #endif
 #if defined( __CL_FLOAT2__)
     __cl_float2     v2;
@@ -1216,9 +1216,9 @@ typedef union
 {
     cl_float  CL_ALIGNED(16) s[4];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_float );
-       0: ( s0, s1, s2, s3 :T_cl_float );
-       0: ( lo, hi :T_cl_float2 );
+       1: ( x, y, z, w :T_cl_float );
+       2: ( s0, s1, s2, s3 :T_cl_float );
+       3: ( lo, hi :T_cl_float2 );
 #endif
 #if defined( __CL_FLOAT2__)
     __cl_float2     v2[2];
@@ -1235,9 +1235,9 @@ typedef union
 {
     cl_float   CL_ALIGNED(32) s[8];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_float );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_float );
-       0: ( lo, hi :T_cl_float4 );
+       1: ( x, y, z, w :T_cl_float );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_float );
+       3: ( lo, hi :T_cl_float4 );
 #endif
 #if defined( __CL_FLOAT2__)
     __cl_float2     v2[4];
@@ -1254,9 +1254,9 @@ typedef union
 {
     cl_float  CL_ALIGNED(64) s[16];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_float );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_float );
-       0: ( lo, hi :T_cl_float8 );
+       1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_float );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_float );
+       3: ( lo, hi :T_cl_float8 );
 #endif
 #if defined( __CL_FLOAT2__)
     __cl_float2     v2[8];
@@ -1278,9 +1278,9 @@ typedef union
 {
     cl_double  CL_ALIGNED(16) s[2];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y :T_cl_double );
-       0: ( s0, s1 :T_cl_double );
-       0: ( lo, hi :T_cl_double );
+       1: ( x, y :T_cl_double );
+       2: ( s0, s1 :T_cl_double );
+       3: ( lo, hi :T_cl_double );
 #endif
 #if defined( __CL_DOUBLE2__)
     __cl_double2     v2;
@@ -1291,9 +1291,9 @@ typedef union
 {
     cl_double  CL_ALIGNED(32) s[4];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_double );
-       0: ( s0, s1, s2, s3 :T_cl_double );
-       0: ( lo, hi :T_cl_double2 );
+       1: ( x, y, z, w :T_cl_double );
+       2: ( s0, s1, s2, s3 :T_cl_double );
+       3: ( lo, hi :T_cl_double2 );
 #endif
 #if defined( __CL_DOUBLE2__)
     __cl_double2     v2[2];
@@ -1310,9 +1310,9 @@ typedef union
 {
     cl_double   CL_ALIGNED(64) s[8];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w :T_cl_double );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_double );
-       0: ( lo, hi :T_cl_double4 );
+       1: ( x, y, z, w :T_cl_double );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_double );
+       3: ( lo, hi :T_cl_double4 );
 #endif
 #if defined( __CL_DOUBLE2__)
     __cl_double2     v2[4];
@@ -1329,9 +1329,9 @@ typedef union
 {
     cl_double  CL_ALIGNED(128) s[16];
 #if __CL_HAS_ANON_STRUCT__
-       0: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_double );
-       0: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_double );
-       0: ( lo, hi :T_cl_double8 );
+       1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_double );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_double );
+       3: ( lo, hi :T_cl_double8 );
 #endif
 #if defined( __CL_DOUBLE2__)
     __cl_double2     v2[8];
