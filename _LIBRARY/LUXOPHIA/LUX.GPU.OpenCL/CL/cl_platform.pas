@@ -41,7 +41,7 @@ uses LUX.Code.C,
     #define CL_API_ENTRY
     #define CL_API_CALL     __stdcall
     #define CL_CALLBACK     __stdcall
-#else
+{$ELSE}
     #define CL_API_ENTRY
     #define CL_API_CALL
     #define CL_CALLBACK
@@ -76,7 +76,7 @@ uses LUX.Code.C,
 #elif defined(_WIN32)
   #define CL_EXT_SUFFIX_DEPRECATED
   #define CL_EXT_PREFIX_DEPRECATED __declspec(deprecated)
-#else
+{$ELSE}
   #define CL_EXT_SUFFIX_DEPRECATED
   #define CL_EXT_PREFIX_DEPRECATED
 {$ENDIF}
@@ -84,7 +84,7 @@ uses LUX.Code.C,
 #ifdef CL_USE_DEPRECATED_OPENCL_1_0_APIS
     #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED
-#else
+{$ELSE}
     #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED CL_EXT_PREFIX_DEPRECATED
 {$ENDIF}
@@ -92,7 +92,7 @@ uses LUX.Code.C,
 #ifdef CL_USE_DEPRECATED_OPENCL_1_1_APIS
     #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED
-#else
+{$ELSE}
     #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED CL_EXT_PREFIX_DEPRECATED
 {$ENDIF}
@@ -100,7 +100,7 @@ uses LUX.Code.C,
 #ifdef CL_USE_DEPRECATED_OPENCL_1_2_APIS
     #define CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_1_2_DEPRECATED
-#else
+{$ELSE}
     #define CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_1_2_DEPRECATED CL_EXT_PREFIX_DEPRECATED
 {$ENDIF}
@@ -108,7 +108,7 @@ uses LUX.Code.C,
 #ifdef CL_USE_DEPRECATED_OPENCL_2_0_APIS
     #define CL_EXT_SUFFIX__VERSION_2_0_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_2_0_DEPRECATED
-#else
+{$ELSE}
     #define CL_EXT_SUFFIX__VERSION_2_0_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_2_0_DEPRECATED CL_EXT_PREFIX_DEPRECATED
 {$ENDIF}
@@ -116,7 +116,7 @@ uses LUX.Code.C,
 #ifdef CL_USE_DEPRECATED_OPENCL_2_1_APIS
     #define CL_EXT_SUFFIX__VERSION_2_1_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_2_1_DEPRECATED
-#else
+{$ELSE}
     #define CL_EXT_SUFFIX__VERSION_2_1_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_2_1_DEPRECATED CL_EXT_PREFIX_DEPRECATED
 {$ENDIF}
@@ -221,7 +221,7 @@ typedef double                  cl_double;
 #define CL_MAXFLOAT         CL_FLT_MAX
 #define CL_INFINITY         CL_HUGE_VALF
 
-#else
+{$ELSE}
 
 #include <stdint.h>
 
@@ -321,7 +321,7 @@ typedef double          cl_double;
    #define CL_HUGE_VALF     __builtin_huge_valf()
    #define CL_HUGE_VAL      __builtin_huge_val()
    #define CL_NAN           __builtin_nanf( "" )
-#else
+{$ELSE}
    #define CL_HUGE_VALF     ((cl_float) 1e50)
    #define CL_HUGE_VAL      ((cl_double) 1e500)
    float nanf( const char * );
@@ -377,12 +377,12 @@ typedef unsigned int cl_GLenum;
 #if defined( __SSE__ )
     #if defined( __MINGW64__ )
         #include <intrin.h>
-    #else
+    {$ELSE}
         #include <xmmintrin.h>
     {$ENDIF}
     #if defined( __GNUC__ )
         typedef float __cl_float4   __attribute__((vector_size(16)));
-    #else
+    {$ELSE}
         typedef __m128 __cl_float4;
     {$ENDIF}
     #define __CL_FLOAT4__   1
@@ -391,7 +391,7 @@ typedef unsigned int cl_GLenum;
 #if defined( __SSE2__ )
     #if defined( __MINGW64__ )
         #include <intrin.h>
-    #else
+    {$ELSE}
         #include <emmintrin.h>
     {$ENDIF}
     #if defined( __GNUC__ )
@@ -404,7 +404,7 @@ typedef unsigned int cl_GLenum;
         typedef cl_ulong    __cl_ulong2     __attribute__((vector_size(16)));
         typedef cl_long     __cl_long2      __attribute__((vector_size(16)));
         typedef cl_double   __cl_double2    __attribute__((vector_size(16)));
-    #else
+    {$ELSE}
         typedef __m128i __cl_uchar16;
         typedef __m128i __cl_char16;
         typedef __m128i __cl_ushort8;
@@ -438,7 +438,7 @@ typedef unsigned int cl_GLenum;
         typedef cl_ulong    __cl_ulong1     __attribute__((vector_size(8)));
         typedef cl_long     __cl_long1      __attribute__((vector_size(8)));
         typedef cl_float    __cl_float2     __attribute__((vector_size(8)));
-    #else
+    {$ELSE}
         typedef __m64       __cl_uchar8;
         typedef __m64       __cl_char8;
         typedef __m64       __cl_ushort4;
@@ -463,13 +463,13 @@ typedef unsigned int cl_GLenum;
 #if defined( __AVX__ )
     #if defined( __MINGW64__ )
         #include <intrin.h>
-    #else
+    {$ELSE}
         #include <immintrin.h>
     {$ENDIF}
     #if defined( __GNUC__ )
         typedef cl_float    __cl_float8     __attribute__((vector_size(32)));
         typedef cl_double   __cl_double4    __attribute__((vector_size(32)));
-    #else
+    {$ELSE}
         typedef __m256      __cl_float8;
         typedef __m256d     __cl_double4;
     {$ENDIF}
@@ -495,7 +495,7 @@ typedef unsigned int cl_GLenum;
     #pragma warning( push )
     #pragma warning( disable : 4201 )
     {$ENDIF}
-#else
+{$ELSE}
 #define  __CL_HAS_ANON_STRUCT__ 0
 #define  __CL_ANON_STRUCT__
 {$ENDIF}
@@ -509,7 +509,7 @@ typedef unsigned int cl_GLenum;
     (* #include <crtdefs.h>                                                                                             *)
     (* #define CL_ALIGNED(_x)          _CRT_ALIGN(_x)                                                                   *)
     #define CL_ALIGNED(_x)
-#else
+{$ELSE}
    #warning  Need to implement some method to align data here
    #define  CL_ALIGNED(_x)
 {$ENDIF}
