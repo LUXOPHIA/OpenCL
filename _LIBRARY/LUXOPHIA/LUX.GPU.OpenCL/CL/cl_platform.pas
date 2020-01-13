@@ -45,7 +45,7 @@ uses LUX.Code.C,
     #define CL_API_ENTRY
     #define CL_API_CALL
     #define CL_CALLBACK
-#endif
+{$ENDIF}
 
 (*
  * Deprecation flags refer to the last version of the header in which the
@@ -79,7 +79,7 @@ uses LUX.Code.C,
 #else
   #define CL_EXT_SUFFIX_DEPRECATED
   #define CL_EXT_PREFIX_DEPRECATED
-#endif
+{$ENDIF}
 
 #ifdef CL_USE_DEPRECATED_OPENCL_1_0_APIS
     #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED
@@ -87,7 +87,7 @@ uses LUX.Code.C,
 #else
     #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED CL_EXT_PREFIX_DEPRECATED
-#endif
+{$ENDIF}
 
 #ifdef CL_USE_DEPRECATED_OPENCL_1_1_APIS
     #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED
@@ -95,7 +95,7 @@ uses LUX.Code.C,
 #else
     #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED CL_EXT_PREFIX_DEPRECATED
-#endif
+{$ENDIF}
 
 #ifdef CL_USE_DEPRECATED_OPENCL_1_2_APIS
     #define CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED
@@ -103,7 +103,7 @@ uses LUX.Code.C,
 #else
     #define CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_1_2_DEPRECATED CL_EXT_PREFIX_DEPRECATED
- #endif
+{$ENDIF}
 
 #ifdef CL_USE_DEPRECATED_OPENCL_2_0_APIS
     #define CL_EXT_SUFFIX__VERSION_2_0_DEPRECATED
@@ -111,7 +111,7 @@ uses LUX.Code.C,
 #else
     #define CL_EXT_SUFFIX__VERSION_2_0_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_2_0_DEPRECATED CL_EXT_PREFIX_DEPRECATED
-#endif
+{$ENDIF}
 
 #ifdef CL_USE_DEPRECATED_OPENCL_2_1_APIS
     #define CL_EXT_SUFFIX__VERSION_2_1_DEPRECATED
@@ -119,7 +119,7 @@ uses LUX.Code.C,
 #else
     #define CL_EXT_SUFFIX__VERSION_2_1_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
     #define CL_EXT_PREFIX__VERSION_2_1_DEPRECATED CL_EXT_PREFIX_DEPRECATED
-#endif
+{$ENDIF}
 
 #if (defined (_WIN32) && defined(_MSC_VER))
 
@@ -326,11 +326,11 @@ typedef double          cl_double;
    #define CL_HUGE_VAL      ((cl_double) 1e500)
    float nanf( const char * );
    #define CL_NAN           nanf( "" )
-#endif
+{$ENDIF}
 #define CL_MAXFLOAT         CL_FLT_MAX
 #define CL_INFINITY         CL_HUGE_VALF
 
-#endif
+{$ENDIF}
 
 #include <stddef.h>
 
@@ -372,28 +372,28 @@ typedef unsigned int cl_GLenum;
    #define  __CL_UINT4__    1
    #define  __CL_INT4__     1
    #define  __CL_FLOAT4__   1
-#endif
+{$ENDIF}
 
 #if defined( __SSE__ )
     #if defined( __MINGW64__ )
         #include <intrin.h>
     #else
         #include <xmmintrin.h>
-    #endif
+    {$ENDIF}
     #if defined( __GNUC__ )
         typedef float __cl_float4   __attribute__((vector_size(16)));
     #else
         typedef __m128 __cl_float4;
-    #endif
+    {$ENDIF}
     #define __CL_FLOAT4__   1
-#endif
+{$ENDIF}
 
 #if defined( __SSE2__ )
     #if defined( __MINGW64__ )
         #include <intrin.h>
     #else
         #include <emmintrin.h>
-    #endif
+    {$ENDIF}
     #if defined( __GNUC__ )
         typedef cl_uchar    __cl_uchar16    __attribute__((vector_size(16)));
         typedef cl_char     __cl_char16     __attribute__((vector_size(16)));
@@ -414,7 +414,7 @@ typedef unsigned int cl_GLenum;
         typedef __m128i __cl_ulong2;
         typedef __m128i __cl_long2;
         typedef __m128d __cl_double2;
-    #endif
+    {$ENDIF}
     #define __CL_UCHAR16__  1
     #define __CL_CHAR16__   1
     #define __CL_USHORT8__  1
@@ -424,7 +424,7 @@ typedef unsigned int cl_GLenum;
     #define __CL_ULONG2__   1
     #define __CL_LONG2__    1
     #define __CL_DOUBLE2__  1
-#endif
+{$ENDIF}
 
 #if defined( __MMX__ )
     #include <mmintrin.h>
@@ -448,7 +448,7 @@ typedef unsigned int cl_GLenum;
         typedef __m64       __cl_ulong1;
         typedef __m64       __cl_long1;
         typedef __m64       __cl_float2;
-    #endif
+    {$ENDIF}
     #define __CL_UCHAR8__   1
     #define __CL_CHAR8__    1
     #define __CL_USHORT4__  1
@@ -458,24 +458,24 @@ typedef unsigned int cl_GLenum;
     #define __CL_ULONG1__   1
     #define __CL_LONG1__    1
     #define __CL_FLOAT2__   1
-#endif
+{$ENDIF}
 
 #if defined( __AVX__ )
     #if defined( __MINGW64__ )
         #include <intrin.h>
     #else
         #include <immintrin.h>
-    #endif
+    {$ENDIF}
     #if defined( __GNUC__ )
         typedef cl_float    __cl_float8     __attribute__((vector_size(32)));
         typedef cl_double   __cl_double4    __attribute__((vector_size(32)));
     #else
         typedef __m256      __cl_float8;
         typedef __m256d     __cl_double4;
-    #endif
+    {$ENDIF}
     #define __CL_FLOAT8__   1
     #define __CL_DOUBLE4__  1
-#endif
+{$ENDIF}
 
 (* Define capabilities for anonymous struct members. *)
 #if !defined(__cplusplus) && defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
@@ -494,11 +494,11 @@ typedef unsigned int cl_GLenum;
     * struct/union *)
     #pragma warning( push )
     #pragma warning( disable : 4201 )
-    #endif
+    {$ENDIF}
 #else
 #define  __CL_HAS_ANON_STRUCT__ 0
 #define  __CL_ANON_STRUCT__
-#endif
+{$ENDIF}
 
 (* Define alignment keys *)
 #if defined( __GNUC__ )
@@ -512,7 +512,7 @@ typedef unsigned int cl_GLenum;
 #else
    #warning  Need to implement some method to align data here
    #define  CL_ALIGNED(_x)
-#endif
+{$ENDIF}
 
 (* Indicate whether .xyzw, .s0123 and .hi.lo are supported *)
 #if __CL_HAS_ANON_STRUCT__
@@ -520,7 +520,7 @@ typedef unsigned int cl_GLenum;
     #define CL_HAS_NAMED_VECTOR_FIELDS 1
     (* .hi and .lo are supported *)
     #define CL_HAS_HI_LO_VECTOR_FIELDS 1
-#endif
+{$ENDIF}
 
 (* Define cl_vector types *)
 
@@ -532,10 +532,10 @@ type T_cl_char2 = record
        1: ( x, y :T_cl_char );
        2: ( s0, s1 :T_cl_char );
        3: ( lo, hi :T_cl_char );
-#endif
+{$ENDIF}
 #if defined( __CL_CHAR2__)
        4: ( v2 :T___cl_char2 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_char4 = record
@@ -545,13 +545,13 @@ type T_cl_char4 = record
        1: ( x, y, z, w :T_cl_char );
        2: ( s0, s1, s2, s3 :T_cl_char );
        3: ( lo, hi :T_cl_char2 );
-#endif
+{$ENDIF}
 #if defined( __CL_CHAR2__)
        4: ( v2 :array [ 0..2-1 ] of T___cl_char2 );
-#endif
+{$ENDIF}
 #if defined( __CL_CHAR4__)
        5: ( v4 :T___cl_char4 );
-#endif
+{$ENDIF}
      end;
 
 (* cl_char3 is identical in size, alignment and behavior to cl_char4. See section 6.1.5. *)
@@ -564,16 +564,16 @@ type T_cl_char8 = record
        1: ( x, y, z, w :T_cl_char );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_char );
        3: ( lo, hi :T_cl_char4 );
-#endif
+{$ENDIF}
 #if defined( __CL_CHAR2__)
        4: ( v2 :array [ 0..4-1 ] of T___cl_char2 );
-#endif
+{$ENDIF}
 #if defined( __CL_CHAR4__)
        5: ( v4 :array [ 0..2-1 ] of T___cl_char4 );
-#endif
+{$ENDIF}
 #if defined( __CL_CHAR8__ )
        6: ( v8 :T___cl_char8 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_char16 = record
@@ -583,19 +583,19 @@ type T_cl_char16 = record
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_char );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_char );
        3: ( lo, hi :T_cl_char8 );
-#endif
+{$ENDIF}
 #if defined( __CL_CHAR2__)
        4: ( v2 :array [ 0..8-1 ] of T___cl_char2 );
-#endif
+{$ENDIF}
 #if defined( __CL_CHAR4__)
        5: ( v4 :array [ 0..4-1 ] of T___cl_char4 );
-#endif
+{$ENDIF}
 #if defined( __CL_CHAR8__ )
        6: ( v8 :array [ 0..2-1 ] of T___cl_char8 );
-#endif
+{$ENDIF}
 #if defined( __CL_CHAR16__ )
        7: ( v16 :T___cl_char16 );
-#endif
+{$ENDIF}
      end;
 
 
@@ -607,10 +607,10 @@ type T_cl_uchar2 = record
        1: ( x, y :T_cl_uchar );
        2: ( s0, s1 :T_cl_uchar );
        3: ( lo, hi :T_cl_uchar );
-#endif
+{$ENDIF}
 #if defined( __cl_uchar2__)
        4: ( v2 :T___cl_uchar2 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_uchar4 = record
@@ -620,13 +620,13 @@ type T_cl_uchar4 = record
        1: ( x, y, z, w :T_cl_uchar );
        2: ( s0, s1, s2, s3 :T_cl_uchar );
        3: ( lo, hi :T_cl_uchar2 );
-#endif
+{$ENDIF}
 #if defined( __CL_UCHAR2__)
        4: ( v2 :array [ 0..2-1 ] of T___cl_uchar2 );
-#endif
+{$ENDIF}
 #if defined( __CL_UCHAR4__)
        5: ( v4 :T___cl_uchar4 );
-#endif
+{$ENDIF}
      end;
 
 (* cl_uchar3 is identical in size, alignment and behavior to cl_uchar4. See section 6.1.5. *)
@@ -639,16 +639,16 @@ type T_cl_uchar8 = record
        1: ( x, y, z, w :T_cl_uchar );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_uchar );
        3: ( lo, hi :T_cl_uchar4 );
-#endif
+{$ENDIF}
 #if defined( __CL_UCHAR2__)
        4: ( v2 :array [ 0..4-1 ] of T___cl_uchar2 );
-#endif
+{$ENDIF}
 #if defined( __CL_UCHAR4__)
        5: ( v4 :array [ 0..2-1 ] of T___cl_uchar4 );
-#endif
+{$ENDIF}
 #if defined( __CL_UCHAR8__ )
        6: ( v8 :T___cl_uchar8 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_uchar16 = record
@@ -658,19 +658,19 @@ type T_cl_uchar16 = record
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_uchar );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_uchar );
        3: ( lo, hi :T_cl_uchar8 );
-#endif
+{$ENDIF}
 #if defined( __CL_UCHAR2__)
        4: ( v2 :array [ 0..8-1 ] of T___cl_uchar2 );
-#endif
+{$ENDIF}
 #if defined( __CL_UCHAR4__)
        5: ( v4 :array [ 0..4-1 ] of T___cl_uchar4 );
-#endif
+{$ENDIF}
 #if defined( __CL_UCHAR8__ )
        6: ( v8 :array [ 0..2-1 ] of T___cl_uchar8 );
-#endif
+{$ENDIF}
 #if defined( __CL_UCHAR16__ )
        7: ( v16 :T___cl_uchar16 );
-#endif
+{$ENDIF}
      end;
 
 
@@ -682,10 +682,10 @@ type T_cl_short2 = record
        1: ( x, y :T_cl_short );
        2: ( s0, s1 :T_cl_short );
        3: ( lo, hi :T_cl_short );
-#endif
+{$ENDIF}
 #if defined( __CL_SHORT2__)
        4: ( v2 :T___cl_short2 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_short4 = record
@@ -695,13 +695,13 @@ type T_cl_short4 = record
        1: ( x, y, z, w :T_cl_short );
        2: ( s0, s1, s2, s3 :T_cl_short );
        3: ( lo, hi :T_cl_short2 );
-#endif
+{$ENDIF}
 #if defined( __CL_SHORT2__)
        4: ( v2 :array [ 0..2-1 ] of T___cl_short2 );
-#endif
+{$ENDIF}
 #if defined( __CL_SHORT4__)
        5: ( v4 :T___cl_short4 );
-#endif
+{$ENDIF}
      end;
 
 (* cl_short3 is identical in size, alignment and behavior to cl_short4. See section 6.1.5. *)
@@ -714,16 +714,16 @@ type T_cl_short8 = record
        1: ( x, y, z, w :T_cl_short );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_short );
        3: ( lo, hi :T_cl_short4 );
-#endif
+{$ENDIF}
 #if defined( __CL_SHORT2__)
        4: ( v2 :array [ 0..4-1 ] of T___cl_short2 );
-#endif
+{$ENDIF}
 #if defined( __CL_SHORT4__)
        5: ( v4 :array [ 0..2-1 ] of T___cl_short4 );
-#endif
+{$ENDIF}
 #if defined( __CL_SHORT8__ )
        6: ( v8 :T___cl_short8 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_short16 = record
@@ -733,19 +733,19 @@ type T_cl_short16 = record
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_short );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_short );
        3: ( lo, hi :T_cl_short8 );
-#endif
+{$ENDIF}
 #if defined( __CL_SHORT2__)
        4: ( v2 :array [ 0..8-1 ] of T___cl_short2 );
-#endif
+{$ENDIF}
 #if defined( __CL_SHORT4__)
        5: ( v4 :array [ 0..4-1 ] of T___cl_short4 );
-#endif
+{$ENDIF}
 #if defined( __CL_SHORT8__ )
        6: ( v8 :array [ 0..2-1 ] of T___cl_short8 );
-#endif
+{$ENDIF}
 #if defined( __CL_SHORT16__ )
        7: ( v16 :T___cl_short16 );
-#endif
+{$ENDIF}
      end;
 
 
@@ -757,10 +757,10 @@ type T_cl_ushort2 = record
        1: ( x, y :T_cl_ushort );
        2: ( s0, s1 :T_cl_ushort );
        3: ( lo, hi :T_cl_ushort );
-#endif
+{$ENDIF}
 #if defined( __CL_USHORT2__)
        4: ( v2 :T___cl_ushort2 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_ushort4 = record
@@ -770,13 +770,13 @@ type T_cl_ushort4 = record
        1: ( x, y, z, w :T_cl_ushort );
        2: ( s0, s1, s2, s3 :T_cl_ushort );
        3: ( lo, hi :T_cl_ushort2 );
-#endif
+{$ENDIF}
 #if defined( __CL_USHORT2__)
        4: ( v2 :array [ 0..2-1 ] of T___cl_ushort2 );
-#endif
+{$ENDIF}
 #if defined( __CL_USHORT4__)
        5: ( v4 :T___cl_ushort4 );
-#endif
+{$ENDIF}
      end;
 
 (* cl_ushort3 is identical in size, alignment and behavior to cl_ushort4. See section 6.1.5. *)
@@ -789,16 +789,16 @@ type T_cl_ushort8 = record
        1: ( x, y, z, w :T_cl_ushort );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_ushort );
        3: ( lo, hi :T_cl_ushort4 );
-#endif
+{$ENDIF}
 #if defined( __CL_USHORT2__)
        4: ( v2 :array [ 0..4-1 ] of T___cl_ushort2 );
-#endif
+{$ENDIF}
 #if defined( __CL_USHORT4__)
        5: ( v4 :array [ 0..2-1 ] of T___cl_ushort4 );
-#endif
+{$ENDIF}
 #if defined( __CL_USHORT8__ )
        6: ( v8 :T___cl_ushort8 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_ushort16 = record
@@ -808,19 +808,19 @@ type T_cl_ushort16 = record
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_ushort );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_ushort );
        3: ( lo, hi :T_cl_ushort8 );
-#endif
+{$ENDIF}
 #if defined( __CL_USHORT2__)
        4: ( v2 :array [ 0..8-1 ] of T___cl_ushort2 );
-#endif
+{$ENDIF}
 #if defined( __CL_USHORT4__)
        5: ( v4 :array [ 0..4-1 ] of T___cl_ushort4 );
-#endif
+{$ENDIF}
 #if defined( __CL_USHORT8__ )
        6: ( v8 :array [ 0..2-1 ] of T___cl_ushort8 );
-#endif
+{$ENDIF}
 #if defined( __CL_USHORT16__ )
        7: ( v16 :T___cl_ushort16 );
-#endif
+{$ENDIF}
      end;
 
 
@@ -832,10 +832,10 @@ type T_cl_half2 = record
        1: ( x, y :T_cl_half );
        2: ( s0, s1 :T_cl_half );
        3: ( lo, hi :T_cl_half );
-#endif
+{$ENDIF}
 #if defined( __CL_HALF2__)
        4: ( v2 :T___cl_half2 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_half4 = record
@@ -845,13 +845,13 @@ type T_cl_half4 = record
        1: ( x, y, z, w :T_cl_half );
        2: ( s0, s1, s2, s3 :T_cl_half );
        3: ( lo, hi :T_cl_half2 );
-#endif
+{$ENDIF}
 #if defined( __CL_HALF2__)
        4: ( v2 :array [ 0..2-1 ] of T___cl_half2 );
-#endif
+{$ENDIF}
 #if defined( __CL_HALF4__)
        5: ( v4 :T___cl_half4 );
-#endif
+{$ENDIF}
      end;
 
 (* cl_half3 is identical in size, alignment and behavior to cl_half4. See section 6.1.5. *)
@@ -864,16 +864,16 @@ type T_cl_half8 = record
        1: ( x, y, z, w :T_cl_half );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_half );
        3: ( lo, hi :T_cl_half4 );
-#endif
+{$ENDIF}
 #if defined( __CL_HALF2__)
        4: ( v2 :array [ 0..4-1 ] of T___cl_half2 );
-#endif
+{$ENDIF}
 #if defined( __CL_HALF4__)
        5: ( v4 :array [ 0..2-1 ] of T___cl_half4 );
-#endif
+{$ENDIF}
 #if defined( __CL_HALF8__ )
        6: ( v8 :T___cl_half8 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_half16 = record
@@ -883,19 +883,19 @@ type T_cl_half16 = record
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_half );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_half );
        3: ( lo, hi :T_cl_half8 );
-#endif
+{$ENDIF}
 #if defined( __CL_HALF2__)
        4: ( v2 :array [ 0..8-1 ] of T___cl_half2 );
-#endif
+{$ENDIF}
 #if defined( __CL_HALF4__)
        5: ( v4 :array [ 0..4-1 ] of T___cl_half4 );
-#endif
+{$ENDIF}
 #if defined( __CL_HALF8__ )
        6: ( v8 :array [ 0..2-1 ] of T___cl_half8 );
-#endif
+{$ENDIF}
 #if defined( __CL_HALF16__ )
        7: ( v16 :T___cl_half16 );
-#endif
+{$ENDIF}
      end;
 
 (* ---- cl_intn ---- *)
@@ -906,10 +906,10 @@ type T_cl_int2 = record
        1: ( x, y :T_cl_int );
        2: ( s0, s1 :T_cl_int );
        3: ( lo, hi :T_cl_int );
-#endif
+{$ENDIF}
 #if defined( __CL_INT2__)
        4: ( v2 :T___cl_int2 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_int4 = record
@@ -919,13 +919,13 @@ type T_cl_int4 = record
        1: ( x, y, z, w :T_cl_int );
        2: ( s0, s1, s2, s3 :T_cl_int );
        3: ( lo, hi :T_cl_int2 );
-#endif
+{$ENDIF}
 #if defined( __CL_INT2__)
        4: ( v2 :array [ 0..2-1 ] of T___cl_int2 );
-#endif
+{$ENDIF}
 #if defined( __CL_INT4__)
        5: ( v4 :T___cl_int4 );
-#endif
+{$ENDIF}
      end;
 
 (* cl_int3 is identical in size, alignment and behavior to cl_int4. See section 6.1.5. *)
@@ -938,16 +938,16 @@ type T_cl_int8 = record
        1: ( x, y, z, w :T_cl_int );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_int );
        3: ( lo, hi :T_cl_int4 );
-#endif
+{$ENDIF}
 #if defined( __CL_INT2__)
        4: ( v2 :array [ 0..4-1 ] of T___cl_int2 );
-#endif
+{$ENDIF}
 #if defined( __CL_INT4__)
        5: ( v4 :array [ 0..2-1 ] of T___cl_int4 );
-#endif
+{$ENDIF}
 #if defined( __CL_INT8__ )
        6: ( v8 :T___cl_int8 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_int16 = record
@@ -957,19 +957,19 @@ type T_cl_int16 = record
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_int );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_int );
        3: ( lo, hi :T_cl_int8 );
-#endif
+{$ENDIF}
 #if defined( __CL_INT2__)
        4: ( v2 :array [ 0..8-1 ] of T___cl_int2 );
-#endif
+{$ENDIF}
 #if defined( __CL_INT4__)
        5: ( v4 :array [ 0..4-1 ] of T___cl_int4 );
-#endif
+{$ENDIF}
 #if defined( __CL_INT8__ )
        6: ( v8 :array [ 0..2-1 ] of T___cl_int8 );
-#endif
+{$ENDIF}
 #if defined( __CL_INT16__ )
        7: ( v16 :T___cl_int16 );
-#endif
+{$ENDIF}
      end;
 
 
@@ -981,10 +981,10 @@ type T_cl_uint2 = record
        1: ( x, y :T_cl_uint );
        2: ( s0, s1 :T_cl_uint );
        3: ( lo, hi :T_cl_uint );
-#endif
+{$ENDIF}
 #if defined( __CL_UINT2__)
        4: ( v2 :T___cl_uint2 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_uint4 = record
@@ -994,13 +994,13 @@ type T_cl_uint4 = record
        1: ( x, y, z, w :T_cl_uint );
        2: ( s0, s1, s2, s3 :T_cl_uint );
        3: ( lo, hi :T_cl_uint2 );
-#endif
+{$ENDIF}
 #if defined( __CL_UINT2__)
        4: ( v2 :array [ 0..2-1 ] of T___cl_uint2 );
-#endif
+{$ENDIF}
 #if defined( __CL_UINT4__)
        5: ( v4 :T___cl_uint4 );
-#endif
+{$ENDIF}
      end;
 
 (* cl_uint3 is identical in size, alignment and behavior to cl_uint4. See section 6.1.5. *)
@@ -1013,16 +1013,16 @@ type T_cl_uint8 = record
        1: ( x, y, z, w :T_cl_uint );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_uint );
        3: ( lo, hi :T_cl_uint4 );
-#endif
+{$ENDIF}
 #if defined( __CL_UINT2__)
        4: ( v2 :array [ 0..4-1 ] of T___cl_uint2 );
-#endif
+{$ENDIF}
 #if defined( __CL_UINT4__)
        5: ( v4 :array [ 0..2-1 ] of T___cl_uint4 );
-#endif
+{$ENDIF}
 #if defined( __CL_UINT8__ )
        6: ( v8 :T___cl_uint8 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_uint16 = record
@@ -1032,19 +1032,19 @@ type T_cl_uint16 = record
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_uint );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_uint );
        3: ( lo, hi :T_cl_uint8 );
-#endif
+{$ENDIF}
 #if defined( __CL_UINT2__)
        4: ( v2 :array [ 0..8-1 ] of T___cl_uint2 );
-#endif
+{$ENDIF}
 #if defined( __CL_UINT4__)
        5: ( v4 :array [ 0..4-1 ] of T___cl_uint4 );
-#endif
+{$ENDIF}
 #if defined( __CL_UINT8__ )
        6: ( v8 :array [ 0..2-1 ] of T___cl_uint8 );
-#endif
+{$ENDIF}
 #if defined( __CL_UINT16__ )
        7: ( v16 :T___cl_uint16 );
-#endif
+{$ENDIF}
      end;
 
 (* ---- cl_longn ---- *)
@@ -1055,10 +1055,10 @@ type T_cl_long2 = record
        1: ( x, y :T_cl_long );
        2: ( s0, s1 :T_cl_long );
        3: ( lo, hi :T_cl_long );
-#endif
+{$ENDIF}
 #if defined( __CL_LONG2__)
        4: ( v2 :T___cl_long2 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_long4 = record
@@ -1068,13 +1068,13 @@ type T_cl_long4 = record
        1: ( x, y, z, w :T_cl_long );
        2: ( s0, s1, s2, s3 :T_cl_long );
        3: ( lo, hi :T_cl_long2 );
-#endif
+{$ENDIF}
 #if defined( __CL_LONG2__)
        4: ( v2 :array [ 0..2-1 ] of T___cl_long2 );
-#endif
+{$ENDIF}
 #if defined( __CL_LONG4__)
        5: ( v4 :T___cl_long4 );
-#endif
+{$ENDIF}
      end;
 
 (* cl_long3 is identical in size, alignment and behavior to cl_long4. See section 6.1.5. *)
@@ -1087,16 +1087,16 @@ type T_cl_long8 = record
        1: ( x, y, z, w :T_cl_long );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_long );
        3: ( lo, hi :T_cl_long4 );
-#endif
+{$ENDIF}
 #if defined( __CL_LONG2__)
        4: ( v2 :array [ 0..4-1 ] of T___cl_long2 );
-#endif
+{$ENDIF}
 #if defined( __CL_LONG4__)
        5: ( v4 :array [ 0..2-1 ] of T___cl_long4 );
-#endif
+{$ENDIF}
 #if defined( __CL_LONG8__ )
        6: ( v8 :T___cl_long8 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_long16 = record
@@ -1106,19 +1106,19 @@ type T_cl_long16 = record
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_long );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_long );
        3: ( lo, hi :T_cl_long8 );
-#endif
+{$ENDIF}
 #if defined( __CL_LONG2__)
        4: ( v2 :array [ 0..8-1 ] of T___cl_long2 );
-#endif
+{$ENDIF}
 #if defined( __CL_LONG4__)
        5: ( v4 :array [ 0..4-1 ] of T___cl_long4 );
-#endif
+{$ENDIF}
 #if defined( __CL_LONG8__ )
        6: ( v8 :array [ 0..2-1 ] of T___cl_long8 );
-#endif
+{$ENDIF}
 #if defined( __CL_LONG16__ )
        7: ( v16 :T___cl_long16 );
-#endif
+{$ENDIF}
      end;
 
 
@@ -1130,10 +1130,10 @@ type T_cl_ulong2 = record
        1: ( x, y :T_cl_ulong );
        2: ( s0, s1 :T_cl_ulong );
        3: ( lo, hi :T_cl_ulong );
-#endif
+{$ENDIF}
 #if defined( __CL_ULONG2__)
        4: ( v2 :T___cl_ulong2 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_ulong4 = record
@@ -1143,13 +1143,13 @@ type T_cl_ulong4 = record
        1: ( x, y, z, w :T_cl_ulong );
        2: ( s0, s1, s2, s3 :T_cl_ulong );
        3: ( lo, hi :T_cl_ulong2 );
-#endif
+{$ENDIF}
 #if defined( __CL_ULONG2__)
        4: ( v2 :array [ 0..2-1 ] of T___cl_ulong2 );
-#endif
+{$ENDIF}
 #if defined( __CL_ULONG4__)
        5: ( v4 :T___cl_ulong4 );
-#endif
+{$ENDIF}
      end;
 
 (* cl_ulong3 is identical in size, alignment and behavior to cl_ulong4. See section 6.1.5. *)
@@ -1162,16 +1162,16 @@ type T_cl_ulong8 = record
        1: ( x, y, z, w :T_cl_ulong );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_ulong );
        3: ( lo, hi :T_cl_ulong4 );
-#endif
+{$ENDIF}
 #if defined( __CL_ULONG2__)
        4: ( v2 :array [ 0..4-1 ] of T___cl_ulong2 );
-#endif
+{$ENDIF}
 #if defined( __CL_ULONG4__)
        5: ( v4 :array [ 0..2-1 ] of T___cl_ulong4 );
-#endif
+{$ENDIF}
 #if defined( __CL_ULONG8__ )
        6: ( v8 :T___cl_ulong8 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_ulong16 = record
@@ -1181,19 +1181,19 @@ type T_cl_ulong16 = record
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_ulong );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_ulong );
        3: ( lo, hi :T_cl_ulong8 );
-#endif
+{$ENDIF}
 #if defined( __CL_ULONG2__)
        4: ( v2 :array [ 0..8-1 ] of T___cl_ulong2 );
-#endif
+{$ENDIF}
 #if defined( __CL_ULONG4__)
        5: ( v4 :array [ 0..4-1 ] of T___cl_ulong4 );
-#endif
+{$ENDIF}
 #if defined( __CL_ULONG8__ )
        6: ( v8 :array [ 0..2-1 ] of T___cl_ulong8 );
-#endif
+{$ENDIF}
 #if defined( __CL_ULONG16__ )
        7: ( v16 :T___cl_ulong16 );
-#endif
+{$ENDIF}
      end;
 
 
@@ -1206,10 +1206,10 @@ type T_cl_float2 = record
        1: ( x, y :T_cl_float );
        2: ( s0, s1 :T_cl_float );
        3: ( lo, hi :T_cl_float );
-#endif
+{$ENDIF}
 #if defined( __CL_FLOAT2__)
        4: ( v2 :T___cl_float2 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_float4 = record
@@ -1219,13 +1219,13 @@ type T_cl_float4 = record
        1: ( x, y, z, w :T_cl_float );
        2: ( s0, s1, s2, s3 :T_cl_float );
        3: ( lo, hi :T_cl_float2 );
-#endif
+{$ENDIF}
 #if defined( __CL_FLOAT2__)
        4: ( v2 :array [ 0..2-1 ] of T___cl_float2 );
-#endif
+{$ENDIF}
 #if defined( __CL_FLOAT4__)
        5: ( v4 :T___cl_float4 );
-#endif
+{$ENDIF}
      end;
 
 (* cl_float3 is identical in size, alignment and behavior to cl_float4. See section 6.1.5. *)
@@ -1238,16 +1238,16 @@ type T_cl_float8 = record
        1: ( x, y, z, w :T_cl_float );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_float );
        3: ( lo, hi :T_cl_float4 );
-#endif
+{$ENDIF}
 #if defined( __CL_FLOAT2__)
        4: ( v2 :array [ 0..4-1 ] of T___cl_float2 );
-#endif
+{$ENDIF}
 #if defined( __CL_FLOAT4__)
        5: ( v4 :array [ 0..2-1 ] of T___cl_float4 );
-#endif
+{$ENDIF}
 #if defined( __CL_FLOAT8__ )
        6: ( v8 :T___cl_float8 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_float16 = record
@@ -1257,19 +1257,19 @@ type T_cl_float16 = record
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_float );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_float );
        3: ( lo, hi :T_cl_float8 );
-#endif
+{$ENDIF}
 #if defined( __CL_FLOAT2__)
        4: ( v2 :array [ 0..8-1 ] of T___cl_float2 );
-#endif
+{$ENDIF}
 #if defined( __CL_FLOAT4__)
        5: ( v4 :array [ 0..4-1 ] of T___cl_float4 );
-#endif
+{$ENDIF}
 #if defined( __CL_FLOAT8__ )
        6: ( v8 :array [ 0..2-1 ] of T___cl_float8 );
-#endif
+{$ENDIF}
 #if defined( __CL_FLOAT16__ )
        7: ( v16 :T___cl_float16 );
-#endif
+{$ENDIF}
      end;
 
 (* --- cl_doublen ---- *)
@@ -1281,10 +1281,10 @@ type T_cl_double2 = record
        1: ( x, y :T_cl_double );
        2: ( s0, s1 :T_cl_double );
        3: ( lo, hi :T_cl_double );
-#endif
+{$ENDIF}
 #if defined( __CL_DOUBLE2__)
        4: ( v2 :T___cl_double2 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_double4 = record
@@ -1294,13 +1294,13 @@ type T_cl_double4 = record
        1: ( x, y, z, w :T_cl_double );
        2: ( s0, s1, s2, s3 :T_cl_double );
        3: ( lo, hi :T_cl_double2 );
-#endif
+{$ENDIF}
 #if defined( __CL_DOUBLE2__)
        4: ( v2 :array [ 0..2-1 ] of T___cl_double2 );
-#endif
+{$ENDIF}
 #if defined( __CL_DOUBLE4__)
        5: ( v4 :T___cl_double4 );
-#endif
+{$ENDIF}
      end;
 
 (* cl_double3 is identical in size, alignment and behavior to cl_double4. See section 6.1.5. *)
@@ -1313,16 +1313,16 @@ type T_cl_double8 = record
        1: ( x, y, z, w :T_cl_double );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_double );
        3: ( lo, hi :T_cl_double4 );
-#endif
+{$ENDIF}
 #if defined( __CL_DOUBLE2__)
        4: ( v2 :array [ 0..4-1 ] of T___cl_double2 );
-#endif
+{$ENDIF}
 #if defined( __CL_DOUBLE4__)
        5: ( v4 :array [ 0..2-1 ] of T___cl_double4 );
-#endif
+{$ENDIF}
 #if defined( __CL_DOUBLE8__ )
        6: ( v8 :T___cl_double8 );
-#endif
+{$ENDIF}
      end;
 
 type T_cl_double16 = record
@@ -1332,19 +1332,19 @@ type T_cl_double16 = record
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_double );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_double );
        3: ( lo, hi :T_cl_double8 );
-#endif
+{$ENDIF}
 #if defined( __CL_DOUBLE2__)
        4: ( v2 :array [ 0..8-1 ] of T___cl_double2 );
-#endif
+{$ENDIF}
 #if defined( __CL_DOUBLE4__)
        5: ( v4 :array [ 0..4-1 ] of T___cl_double4 );
-#endif
+{$ENDIF}
 #if defined( __CL_DOUBLE8__ )
        6: ( v8 :array [ 0..2-1 ] of T___cl_double8 );
-#endif
+{$ENDIF}
 #if defined( __CL_DOUBLE16__ )
        7: ( v16 :T___cl_double16 );
-#endif
+{$ENDIF}
      end;
 
 (* Macro to facilitate debugging
