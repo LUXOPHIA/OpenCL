@@ -547,7 +547,7 @@ type T_cl_char4 = record
        3: ( lo, hi :T_cl_char2 );
 #endif
 #if defined( __CL_CHAR2__)
-    __cl_char2     v2[2];
+       4: ( v2 :array [ 0..2-1 ] of T___cl_char2 );
 #endif
 #if defined( __CL_CHAR4__)
     __cl_char4     v4;
@@ -566,10 +566,10 @@ type T_cl_char8 = record
        3: ( lo, hi :T_cl_char4 );
 #endif
 #if defined( __CL_CHAR2__)
-    __cl_char2     v2[4];
+       4: ( v2 :array [ 0..4-1 ] of T___cl_char2 );
 #endif
 #if defined( __CL_CHAR4__)
-    __cl_char4     v4[2];
+       5: ( v4 :array [ 0..2-1 ] of T___cl_char4 );
 #endif
 #if defined( __CL_CHAR8__ )
     __cl_char8     v8;
@@ -585,13 +585,13 @@ type T_cl_char16 = record
        3: ( lo, hi :T_cl_char8 );
 #endif
 #if defined( __CL_CHAR2__)
-    __cl_char2     v2[8];
+       4: ( v2 :array [ 0..8-1 ] of T___cl_char2 );
 #endif
 #if defined( __CL_CHAR4__)
-    __cl_char4     v4[4];
+       5: ( v4 :array [ 0..4-1 ] of T___cl_char4 );
 #endif
 #if defined( __CL_CHAR8__ )
-    __cl_char8     v8[2];
+       6: ( v8 :array [ 0..2-1 ] of T___cl_char8 );
 #endif
 #if defined( __CL_CHAR16__ )
     __cl_char16    v16;
@@ -622,7 +622,7 @@ type T_cl_uchar4 = record
        3: ( lo, hi :T_cl_uchar2 );
 #endif
 #if defined( __CL_UCHAR2__)
-    __cl_uchar2     v2[2];
+       4: ( v2 :array [ 0..2-1 ] of T___cl_uchar2 );
 #endif
 #if defined( __CL_UCHAR4__)
     __cl_uchar4     v4;
@@ -641,10 +641,10 @@ type T_cl_uchar8 = record
        3: ( lo, hi :T_cl_uchar4 );
 #endif
 #if defined( __CL_UCHAR2__)
-    __cl_uchar2     v2[4];
+       4: ( v2 :array [ 0..4-1 ] of T___cl_uchar2 );
 #endif
 #if defined( __CL_UCHAR4__)
-    __cl_uchar4     v4[2];
+       5: ( v4 :array [ 0..2-1 ] of T___cl_uchar4 );
 #endif
 #if defined( __CL_UCHAR8__ )
     __cl_uchar8     v8;
@@ -660,13 +660,13 @@ type T_cl_uchar16 = record
        3: ( lo, hi :T_cl_uchar8 );
 #endif
 #if defined( __CL_UCHAR2__)
-    __cl_uchar2     v2[8];
+       4: ( v2 :array [ 0..8-1 ] of T___cl_uchar2 );
 #endif
 #if defined( __CL_UCHAR4__)
-    __cl_uchar4     v4[4];
+       5: ( v4 :array [ 0..4-1 ] of T___cl_uchar4 );
 #endif
 #if defined( __CL_UCHAR8__ )
-    __cl_uchar8     v8[2];
+       6: ( v8 :array [ 0..2-1 ] of T___cl_uchar8 );
 #endif
 #if defined( __CL_UCHAR16__ )
     __cl_uchar16    v16;
@@ -697,7 +697,7 @@ type T_cl_short4 = record
        3: ( lo, hi :T_cl_short2 );
 #endif
 #if defined( __CL_SHORT2__)
-    __cl_short2     v2[2];
+       4: ( v2 :array [ 0..2-1 ] of T___cl_short2 );
 #endif
 #if defined( __CL_SHORT4__)
     __cl_short4     v4;
@@ -716,10 +716,10 @@ type T_cl_short8 = record
        3: ( lo, hi :T_cl_short4 );
 #endif
 #if defined( __CL_SHORT2__)
-    __cl_short2     v2[4];
+       4: ( v2 :array [ 0..4-1 ] of T___cl_short2 );
 #endif
 #if defined( __CL_SHORT4__)
-    __cl_short4     v4[2];
+       5: ( v4 :array [ 0..2-1 ] of T___cl_short4 );
 #endif
 #if defined( __CL_SHORT8__ )
     __cl_short8     v8;
@@ -735,13 +735,13 @@ type T_cl_short16 = record
        3: ( lo, hi :T_cl_short8 );
 #endif
 #if defined( __CL_SHORT2__)
-    __cl_short2     v2[8];
+       4: ( v2 :array [ 0..8-1 ] of T___cl_short2 );
 #endif
 #if defined( __CL_SHORT4__)
-    __cl_short4     v4[4];
+       5: ( v4 :array [ 0..4-1 ] of T___cl_short4 );
 #endif
 #if defined( __CL_SHORT8__ )
-    __cl_short8     v8[2];
+       6: ( v8 :array [ 0..2-1 ] of T___cl_short8 );
 #endif
 #if defined( __CL_SHORT16__ )
     __cl_short16    v16;
@@ -772,7 +772,7 @@ type T_cl_ushort4 = record
        3: ( lo, hi :T_cl_ushort2 );
 #endif
 #if defined( __CL_USHORT2__)
-    __cl_ushort2     v2[2];
+       4: ( v2 :array [ 0..2-1 ] of T___cl_ushort2 );
 #endif
 #if defined( __CL_USHORT4__)
     __cl_ushort4     v4;
@@ -791,10 +791,10 @@ type T_cl_ushort8 = record
        3: ( lo, hi :T_cl_ushort4 );
 #endif
 #if defined( __CL_USHORT2__)
-    __cl_ushort2     v2[4];
+       4: ( v2 :array [ 0..4-1 ] of T___cl_ushort2 );
 #endif
 #if defined( __CL_USHORT4__)
-    __cl_ushort4     v4[2];
+       5: ( v4 :array [ 0..2-1 ] of T___cl_ushort4 );
 #endif
 #if defined( __CL_USHORT8__ )
     __cl_ushort8     v8;
@@ -810,13 +810,13 @@ type T_cl_ushort16 = record
        3: ( lo, hi :T_cl_ushort8 );
 #endif
 #if defined( __CL_USHORT2__)
-    __cl_ushort2     v2[8];
+       4: ( v2 :array [ 0..8-1 ] of T___cl_ushort2 );
 #endif
 #if defined( __CL_USHORT4__)
-    __cl_ushort4     v4[4];
+       5: ( v4 :array [ 0..4-1 ] of T___cl_ushort4 );
 #endif
 #if defined( __CL_USHORT8__ )
-    __cl_ushort8     v8[2];
+       6: ( v8 :array [ 0..2-1 ] of T___cl_ushort8 );
 #endif
 #if defined( __CL_USHORT16__ )
     __cl_ushort16    v16;
@@ -829,9 +829,9 @@ type T_cl_half2 = record
      case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_half );
 #if __CL_HAS_ANON_STRUCT__
-        1: ( x, y :T_cl_half );
-        2: ( s0, s1 :T_cl_half );
-        3: ( lo, hi :T_cl_half );
+       1: ( x, y :T_cl_half );
+       2: ( s0, s1 :T_cl_half );
+       3: ( lo, hi :T_cl_half );
 #endif
 #if defined( __CL_HALF2__)
     __cl_half2     v2;
@@ -842,12 +842,12 @@ type T_cl_half4 = record
      case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_half );
 #if __CL_HAS_ANON_STRUCT__
-        1: ( x, y, z, w :T_cl_half );
-        2: ( s0, s1, s2, s3 :T_cl_half );
-        3: ( lo, hi :T_cl_half2 );
+       1: ( x, y, z, w :T_cl_half );
+       2: ( s0, s1, s2, s3 :T_cl_half );
+       3: ( lo, hi :T_cl_half2 );
 #endif
 #if defined( __CL_HALF2__)
-    __cl_half2     v2[2];
+       4: ( v2 :array [ 0..2-1 ] of T___cl_half2 );
 #endif
 #if defined( __CL_HALF4__)
     __cl_half4     v4;
@@ -861,15 +861,15 @@ type T_cl_half8 = record
      case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_half );
 #if __CL_HAS_ANON_STRUCT__
-        1: ( x, y, z, w :T_cl_half );
-        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_half );
-        3: ( lo, hi :T_cl_half4 );
+       1: ( x, y, z, w :T_cl_half );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_half );
+       3: ( lo, hi :T_cl_half4 );
 #endif
 #if defined( __CL_HALF2__)
-    __cl_half2     v2[4];
+       4: ( v2 :array [ 0..4-1 ] of T___cl_half2 );
 #endif
 #if defined( __CL_HALF4__)
-    __cl_half4     v4[2];
+       5: ( v4 :array [ 0..2-1 ] of T___cl_half4 );
 #endif
 #if defined( __CL_HALF8__ )
     __cl_half8     v8;
@@ -880,18 +880,18 @@ type T_cl_half16 = record
      case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_half );
 #if __CL_HAS_ANON_STRUCT__
-        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_half );
-        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_half );
-        3: ( lo, hi :T_cl_half8 );
+       1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_half );
+       2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_half );
+       3: ( lo, hi :T_cl_half8 );
 #endif
 #if defined( __CL_HALF2__)
-    __cl_half2     v2[8];
+       4: ( v2 :array [ 0..8-1 ] of T___cl_half2 );
 #endif
 #if defined( __CL_HALF4__)
-    __cl_half4     v4[4];
+       5: ( v4 :array [ 0..4-1 ] of T___cl_half4 );
 #endif
 #if defined( __CL_HALF8__ )
-    __cl_half8     v8[2];
+       6: ( v8 :array [ 0..2-1 ] of T___cl_half8 );
 #endif
 #if defined( __CL_HALF16__ )
     __cl_half16    v16;
@@ -921,7 +921,7 @@ type T_cl_int4 = record
        3: ( lo, hi :T_cl_int2 );
 #endif
 #if defined( __CL_INT2__)
-    __cl_int2     v2[2];
+       4: ( v2 :array [ 0..2-1 ] of T___cl_int2 );
 #endif
 #if defined( __CL_INT4__)
     __cl_int4     v4;
@@ -940,10 +940,10 @@ type T_cl_int8 = record
        3: ( lo, hi :T_cl_int4 );
 #endif
 #if defined( __CL_INT2__)
-    __cl_int2     v2[4];
+       4: ( v2 :array [ 0..4-1 ] of T___cl_int2 );
 #endif
 #if defined( __CL_INT4__)
-    __cl_int4     v4[2];
+       5: ( v4 :array [ 0..2-1 ] of T___cl_int4 );
 #endif
 #if defined( __CL_INT8__ )
     __cl_int8     v8;
@@ -959,13 +959,13 @@ type T_cl_int16 = record
        3: ( lo, hi :T_cl_int8 );
 #endif
 #if defined( __CL_INT2__)
-    __cl_int2     v2[8];
+       4: ( v2 :array [ 0..8-1 ] of T___cl_int2 );
 #endif
 #if defined( __CL_INT4__)
-    __cl_int4     v4[4];
+       5: ( v4 :array [ 0..4-1 ] of T___cl_int4 );
 #endif
 #if defined( __CL_INT8__ )
-    __cl_int8     v8[2];
+       6: ( v8 :array [ 0..2-1 ] of T___cl_int8 );
 #endif
 #if defined( __CL_INT16__ )
     __cl_int16    v16;
@@ -996,7 +996,7 @@ type T_cl_uint4 = record
        3: ( lo, hi :T_cl_uint2 );
 #endif
 #if defined( __CL_UINT2__)
-    __cl_uint2     v2[2];
+       4: ( v2 :array [ 0..2-1 ] of T___cl_uint2 );
 #endif
 #if defined( __CL_UINT4__)
     __cl_uint4     v4;
@@ -1015,10 +1015,10 @@ type T_cl_uint8 = record
        3: ( lo, hi :T_cl_uint4 );
 #endif
 #if defined( __CL_UINT2__)
-    __cl_uint2     v2[4];
+       4: ( v2 :array [ 0..4-1 ] of T___cl_uint2 );
 #endif
 #if defined( __CL_UINT4__)
-    __cl_uint4     v4[2];
+       5: ( v4 :array [ 0..2-1 ] of T___cl_uint4 );
 #endif
 #if defined( __CL_UINT8__ )
     __cl_uint8     v8;
@@ -1034,13 +1034,13 @@ type T_cl_uint16 = record
        3: ( lo, hi :T_cl_uint8 );
 #endif
 #if defined( __CL_UINT2__)
-    __cl_uint2     v2[8];
+       4: ( v2 :array [ 0..8-1 ] of T___cl_uint2 );
 #endif
 #if defined( __CL_UINT4__)
-    __cl_uint4     v4[4];
+       5: ( v4 :array [ 0..4-1 ] of T___cl_uint4 );
 #endif
 #if defined( __CL_UINT8__ )
-    __cl_uint8     v8[2];
+       6: ( v8 :array [ 0..2-1 ] of T___cl_uint8 );
 #endif
 #if defined( __CL_UINT16__ )
     __cl_uint16    v16;
@@ -1070,7 +1070,7 @@ type T_cl_long4 = record
        3: ( lo, hi :T_cl_long2 );
 #endif
 #if defined( __CL_LONG2__)
-    __cl_long2     v2[2];
+       4: ( v2 :array [ 0..2-1 ] of T___cl_long2 );
 #endif
 #if defined( __CL_LONG4__)
     __cl_long4     v4;
@@ -1089,10 +1089,10 @@ type T_cl_long8 = record
        3: ( lo, hi :T_cl_long4 );
 #endif
 #if defined( __CL_LONG2__)
-    __cl_long2     v2[4];
+       4: ( v2 :array [ 0..4-1 ] of T___cl_long2 );
 #endif
 #if defined( __CL_LONG4__)
-    __cl_long4     v4[2];
+       5: ( v4 :array [ 0..2-1 ] of T___cl_long4 );
 #endif
 #if defined( __CL_LONG8__ )
     __cl_long8     v8;
@@ -1108,13 +1108,13 @@ type T_cl_long16 = record
        3: ( lo, hi :T_cl_long8 );
 #endif
 #if defined( __CL_LONG2__)
-    __cl_long2     v2[8];
+       4: ( v2 :array [ 0..8-1 ] of T___cl_long2 );
 #endif
 #if defined( __CL_LONG4__)
-    __cl_long4     v4[4];
+       5: ( v4 :array [ 0..4-1 ] of T___cl_long4 );
 #endif
 #if defined( __CL_LONG8__ )
-    __cl_long8     v8[2];
+       6: ( v8 :array [ 0..2-1 ] of T___cl_long8 );
 #endif
 #if defined( __CL_LONG16__ )
     __cl_long16    v16;
@@ -1145,7 +1145,7 @@ type T_cl_ulong4 = record
        3: ( lo, hi :T_cl_ulong2 );
 #endif
 #if defined( __CL_ULONG2__)
-    __cl_ulong2     v2[2];
+       4: ( v2 :array [ 0..2-1 ] of T___cl_ulong2 );
 #endif
 #if defined( __CL_ULONG4__)
     __cl_ulong4     v4;
@@ -1164,10 +1164,10 @@ type T_cl_ulong8 = record
        3: ( lo, hi :T_cl_ulong4 );
 #endif
 #if defined( __CL_ULONG2__)
-    __cl_ulong2     v2[4];
+       4: ( v2 :array [ 0..4-1 ] of T___cl_ulong2 );
 #endif
 #if defined( __CL_ULONG4__)
-    __cl_ulong4     v4[2];
+       5: ( v4 :array [ 0..2-1 ] of T___cl_ulong4 );
 #endif
 #if defined( __CL_ULONG8__ )
     __cl_ulong8     v8;
@@ -1183,13 +1183,13 @@ type T_cl_ulong16 = record
        3: ( lo, hi :T_cl_ulong8 );
 #endif
 #if defined( __CL_ULONG2__)
-    __cl_ulong2     v2[8];
+       4: ( v2 :array [ 0..8-1 ] of T___cl_ulong2 );
 #endif
 #if defined( __CL_ULONG4__)
-    __cl_ulong4     v4[4];
+       5: ( v4 :array [ 0..4-1 ] of T___cl_ulong4 );
 #endif
 #if defined( __CL_ULONG8__ )
-    __cl_ulong8     v8[2];
+       6: ( v8 :array [ 0..2-1 ] of T___cl_ulong8 );
 #endif
 #if defined( __CL_ULONG16__ )
     __cl_ulong16    v16;
@@ -1221,7 +1221,7 @@ type T_cl_float4 = record
        3: ( lo, hi :T_cl_float2 );
 #endif
 #if defined( __CL_FLOAT2__)
-    __cl_float2     v2[2];
+       4: ( v2 :array [ 0..2-1 ] of T___cl_float2 );
 #endif
 #if defined( __CL_FLOAT4__)
     __cl_float4     v4;
@@ -1240,10 +1240,10 @@ type T_cl_float8 = record
        3: ( lo, hi :T_cl_float4 );
 #endif
 #if defined( __CL_FLOAT2__)
-    __cl_float2     v2[4];
+       4: ( v2 :array [ 0..4-1 ] of T___cl_float2 );
 #endif
 #if defined( __CL_FLOAT4__)
-    __cl_float4     v4[2];
+       5: ( v4 :array [ 0..2-1 ] of T___cl_float4 );
 #endif
 #if defined( __CL_FLOAT8__ )
     __cl_float8     v8;
@@ -1259,13 +1259,13 @@ type T_cl_float16 = record
        3: ( lo, hi :T_cl_float8 );
 #endif
 #if defined( __CL_FLOAT2__)
-    __cl_float2     v2[8];
+       4: ( v2 :array [ 0..8-1 ] of T___cl_float2 );
 #endif
 #if defined( __CL_FLOAT4__)
-    __cl_float4     v4[4];
+       5: ( v4 :array [ 0..4-1 ] of T___cl_float4 );
 #endif
 #if defined( __CL_FLOAT8__ )
-    __cl_float8     v8[2];
+       6: ( v8 :array [ 0..2-1 ] of T___cl_float8 );
 #endif
 #if defined( __CL_FLOAT16__ )
     __cl_float16    v16;
@@ -1296,7 +1296,7 @@ type T_cl_double4 = record
        3: ( lo, hi :T_cl_double2 );
 #endif
 #if defined( __CL_DOUBLE2__)
-    __cl_double2     v2[2];
+       4: ( v2 :array [ 0..2-1 ] of T___cl_double2 );
 #endif
 #if defined( __CL_DOUBLE4__)
     __cl_double4     v4;
@@ -1315,10 +1315,10 @@ type T_cl_double8 = record
        3: ( lo, hi :T_cl_double4 );
 #endif
 #if defined( __CL_DOUBLE2__)
-    __cl_double2     v2[4];
+       4: ( v2 :array [ 0..4-1 ] of T___cl_double2 );
 #endif
 #if defined( __CL_DOUBLE4__)
-    __cl_double4     v4[2];
+       5: ( v4 :array [ 0..2-1 ] of T___cl_double4 );
 #endif
 #if defined( __CL_DOUBLE8__ )
     __cl_double8     v8;
@@ -1334,13 +1334,13 @@ type T_cl_double16 = record
        3: ( lo, hi :T_cl_double8 );
 #endif
 #if defined( __CL_DOUBLE2__)
-    __cl_double2     v2[8];
+       4: ( v2 :array [ 0..8-1 ] of T___cl_double2 );
 #endif
 #if defined( __CL_DOUBLE4__)
-    __cl_double4     v4[4];
+       5: ( v4 :array [ 0..4-1 ] of T___cl_double4 );
 #endif
 #if defined( __CL_DOUBLE8__ )
-    __cl_double8     v8[2];
+       6: ( v8 :array [ 0..2-1 ] of T___cl_double8 );
 #endif
 #if defined( __CL_DOUBLE16__ )
     __cl_double16    v16;
