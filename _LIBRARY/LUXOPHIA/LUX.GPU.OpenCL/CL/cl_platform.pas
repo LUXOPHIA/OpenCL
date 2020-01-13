@@ -527,7 +527,7 @@ typedef unsigned int cl_GLenum;
 (* ---- cl_charn ---- *)
 typedef union
 {
-    cl_char  CL_ALIGNED(2) s[2];
+       0: ( s :array [ 0..2-1 ] of T_cl_char );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_char );
        2: ( s0, s1 :T_cl_char );
@@ -540,7 +540,7 @@ typedef union
 
 typedef union
 {
-    cl_char  CL_ALIGNED(4) s[4];
+       0: ( s :array [ 0..4-1 ] of T_cl_char );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_char );
        2: ( s0, s1, s2, s3 :T_cl_char );
@@ -559,7 +559,7 @@ typedef  cl_char4  cl_char3;
 
 typedef union
 {
-    cl_char   CL_ALIGNED(8) s[8];
+       0: ( s :array [ 0..8-1 ] of T_cl_char );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_char );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_char );
@@ -578,7 +578,7 @@ typedef union
 
 typedef union
 {
-    cl_char  CL_ALIGNED(16) s[16];
+       0: ( s :array [ 0..16-1 ] of T_cl_char );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_char );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_char );
@@ -602,7 +602,7 @@ typedef union
 (* ---- cl_ucharn ---- *)
 typedef union
 {
-    cl_uchar  CL_ALIGNED(2) s[2];
+       0: ( s :array [ 0..2-1 ] of T_cl_uchar );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_uchar );
        2: ( s0, s1 :T_cl_uchar );
@@ -615,7 +615,7 @@ typedef union
 
 typedef union
 {
-    cl_uchar  CL_ALIGNED(4) s[4];
+       0: ( s :array [ 0..4-1 ] of T_cl_uchar );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_uchar );
        2: ( s0, s1, s2, s3 :T_cl_uchar );
@@ -634,7 +634,7 @@ typedef  cl_uchar4  cl_uchar3;
 
 typedef union
 {
-    cl_uchar   CL_ALIGNED(8) s[8];
+       0: ( s :array [ 0..8-1 ] of T_cl_uchar );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_uchar );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_uchar );
@@ -653,7 +653,7 @@ typedef union
 
 typedef union
 {
-    cl_uchar  CL_ALIGNED(16) s[16];
+       0: ( s :array [ 0..16-1 ] of T_cl_uchar );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_uchar );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_uchar );
@@ -677,7 +677,7 @@ typedef union
 (* ---- cl_shortn ---- *)
 typedef union
 {
-    cl_short  CL_ALIGNED(4) s[2];
+       0: ( s :array [ 0..2-1 ] of T_cl_short );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_short );
        2: ( s0, s1 :T_cl_short );
@@ -690,7 +690,7 @@ typedef union
 
 typedef union
 {
-    cl_short  CL_ALIGNED(8) s[4];
+       0: ( s :array [ 0..4-1 ] of T_cl_short );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_short );
        2: ( s0, s1, s2, s3 :T_cl_short );
@@ -709,7 +709,7 @@ typedef  cl_short4  cl_short3;
 
 typedef union
 {
-    cl_short   CL_ALIGNED(16) s[8];
+       0: ( s :array [ 0..8-1 ] of T_cl_short );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_short );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_short );
@@ -728,7 +728,7 @@ typedef union
 
 typedef union
 {
-    cl_short  CL_ALIGNED(32) s[16];
+       0: ( s :array [ 0..16-1 ] of T_cl_short );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_short );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_short );
@@ -752,7 +752,7 @@ typedef union
 (* ---- cl_ushortn ---- *)
 typedef union
 {
-    cl_ushort  CL_ALIGNED(4) s[2];
+       0: ( s :array [ 0..2-1 ] of T_cl_ushort );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_ushort );
        2: ( s0, s1 :T_cl_ushort );
@@ -765,7 +765,7 @@ typedef union
 
 typedef union
 {
-    cl_ushort  CL_ALIGNED(8) s[4];
+       0: ( s :array [ 0..4-1 ] of T_cl_ushort );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_ushort );
        2: ( s0, s1, s2, s3 :T_cl_ushort );
@@ -784,7 +784,7 @@ typedef  cl_ushort4  cl_ushort3;
 
 typedef union
 {
-    cl_ushort   CL_ALIGNED(16) s[8];
+       0: ( s :array [ 0..8-1 ] of T_cl_ushort );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_ushort );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_ushort );
@@ -803,7 +803,7 @@ typedef union
 
 typedef union
 {
-    cl_ushort  CL_ALIGNED(32) s[16];
+       0: ( s :array [ 0..16-1 ] of T_cl_ushort );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_ushort );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_ushort );
@@ -827,7 +827,7 @@ typedef union
 (* ---- cl_halfn ---- *)
 typedef union
 {
-    cl_half  CL_ALIGNED(4) s[2];
+       0: ( s :array [ 0..2-1 ] of T_cl_half );
 #if __CL_HAS_ANON_STRUCT__
         1: ( x, y :T_cl_half );
         2: ( s0, s1 :T_cl_half );
@@ -840,7 +840,7 @@ typedef union
 
 typedef union
 {
-    cl_half  CL_ALIGNED(8) s[4];
+       0: ( s :array [ 0..4-1 ] of T_cl_half );
 #if __CL_HAS_ANON_STRUCT__
         1: ( x, y, z, w :T_cl_half );
         2: ( s0, s1, s2, s3 :T_cl_half );
@@ -859,7 +859,7 @@ typedef  cl_half4  cl_half3;
 
 typedef union
 {
-    cl_half   CL_ALIGNED(16) s[8];
+       0: ( s :array [ 0..8-1 ] of T_cl_half );
 #if __CL_HAS_ANON_STRUCT__
         1: ( x, y, z, w :T_cl_half );
         2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_half );
@@ -878,7 +878,7 @@ typedef union
 
 typedef union
 {
-    cl_half  CL_ALIGNED(32) s[16];
+       0: ( s :array [ 0..16-1 ] of T_cl_half );
 #if __CL_HAS_ANON_STRUCT__
         1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_half );
         2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_half );
@@ -901,7 +901,7 @@ typedef union
 (* ---- cl_intn ---- *)
 typedef union
 {
-    cl_int  CL_ALIGNED(8) s[2];
+       0: ( s :array [ 0..2-1 ] of T_cl_int );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_int );
        2: ( s0, s1 :T_cl_int );
@@ -914,7 +914,7 @@ typedef union
 
 typedef union
 {
-    cl_int  CL_ALIGNED(16) s[4];
+       0: ( s :array [ 0..4-1 ] of T_cl_int );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_int );
        2: ( s0, s1, s2, s3 :T_cl_int );
@@ -933,7 +933,7 @@ typedef  cl_int4  cl_int3;
 
 typedef union
 {
-    cl_int   CL_ALIGNED(32) s[8];
+       0: ( s :array [ 0..8-1 ] of T_cl_int );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_int );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_int );
@@ -952,7 +952,7 @@ typedef union
 
 typedef union
 {
-    cl_int  CL_ALIGNED(64) s[16];
+       0: ( s :array [ 0..16-1 ] of T_cl_int );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_int );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_int );
@@ -976,7 +976,7 @@ typedef union
 (* ---- cl_uintn ---- *)
 typedef union
 {
-    cl_uint  CL_ALIGNED(8) s[2];
+       0: ( s :array [ 0..2-1 ] of T_cl_uint );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_uint );
        2: ( s0, s1 :T_cl_uint );
@@ -989,7 +989,7 @@ typedef union
 
 typedef union
 {
-    cl_uint  CL_ALIGNED(16) s[4];
+       0: ( s :array [ 0..4-1 ] of T_cl_uint );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_uint );
        2: ( s0, s1, s2, s3 :T_cl_uint );
@@ -1008,7 +1008,7 @@ typedef  cl_uint4  cl_uint3;
 
 typedef union
 {
-    cl_uint   CL_ALIGNED(32) s[8];
+       0: ( s :array [ 0..8-1 ] of T_cl_uint );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_uint );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_uint );
@@ -1027,7 +1027,7 @@ typedef union
 
 typedef union
 {
-    cl_uint  CL_ALIGNED(64) s[16];
+       0: ( s :array [ 0..16-1 ] of T_cl_uint );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_uint );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_uint );
@@ -1050,7 +1050,7 @@ typedef union
 (* ---- cl_longn ---- *)
 typedef union
 {
-    cl_long  CL_ALIGNED(16) s[2];
+       0: ( s :array [ 0..2-1 ] of T_cl_long );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_long );
        2: ( s0, s1 :T_cl_long );
@@ -1063,7 +1063,7 @@ typedef union
 
 typedef union
 {
-    cl_long  CL_ALIGNED(32) s[4];
+       0: ( s :array [ 0..4-1 ] of T_cl_long );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_long );
        2: ( s0, s1, s2, s3 :T_cl_long );
@@ -1082,7 +1082,7 @@ typedef  cl_long4  cl_long3;
 
 typedef union
 {
-    cl_long   CL_ALIGNED(64) s[8];
+       0: ( s :array [ 0..8-1 ] of T_cl_long );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_long );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_long );
@@ -1101,7 +1101,7 @@ typedef union
 
 typedef union
 {
-    cl_long  CL_ALIGNED(128) s[16];
+       0: ( s :array [ 0..16-1 ] of T_cl_long );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_long );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_long );
@@ -1125,7 +1125,7 @@ typedef union
 (* ---- cl_ulongn ---- *)
 typedef union
 {
-    cl_ulong  CL_ALIGNED(16) s[2];
+       0: ( s :array [ 0..2-1 ] of T_cl_ulong );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_ulong );
        2: ( s0, s1 :T_cl_ulong );
@@ -1138,7 +1138,7 @@ typedef union
 
 typedef union
 {
-    cl_ulong  CL_ALIGNED(32) s[4];
+       0: ( s :array [ 0..4-1 ] of T_cl_ulong );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_ulong );
        2: ( s0, s1, s2, s3 :T_cl_ulong );
@@ -1157,7 +1157,7 @@ typedef  cl_ulong4  cl_ulong3;
 
 typedef union
 {
-    cl_ulong   CL_ALIGNED(64) s[8];
+       0: ( s :array [ 0..8-1 ] of T_cl_ulong );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_ulong );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_ulong );
@@ -1176,7 +1176,7 @@ typedef union
 
 typedef union
 {
-    cl_ulong  CL_ALIGNED(128) s[16];
+       0: ( s :array [ 0..16-1 ] of T_cl_ulong );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_ulong );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_ulong );
@@ -1201,7 +1201,7 @@ typedef union
 
 typedef union
 {
-    cl_float  CL_ALIGNED(8) s[2];
+       0: ( s :array [ 0..2-1 ] of T_cl_float );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_float );
        2: ( s0, s1 :T_cl_float );
@@ -1214,7 +1214,7 @@ typedef union
 
 typedef union
 {
-    cl_float  CL_ALIGNED(16) s[4];
+       0: ( s :array [ 0..4-1 ] of T_cl_float );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_float );
        2: ( s0, s1, s2, s3 :T_cl_float );
@@ -1233,7 +1233,7 @@ typedef  cl_float4  cl_float3;
 
 typedef union
 {
-    cl_float   CL_ALIGNED(32) s[8];
+       0: ( s :array [ 0..8-1 ] of T_cl_float );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_float );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_float );
@@ -1252,7 +1252,7 @@ typedef union
 
 typedef union
 {
-    cl_float  CL_ALIGNED(64) s[16];
+       0: ( s :array [ 0..16-1 ] of T_cl_float );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_float );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_float );
@@ -1276,7 +1276,7 @@ typedef union
 
 typedef union
 {
-    cl_double  CL_ALIGNED(16) s[2];
+       0: ( s :array [ 0..2-1 ] of T_cl_double );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_double );
        2: ( s0, s1 :T_cl_double );
@@ -1289,7 +1289,7 @@ typedef union
 
 typedef union
 {
-    cl_double  CL_ALIGNED(32) s[4];
+       0: ( s :array [ 0..4-1 ] of T_cl_double );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_double );
        2: ( s0, s1, s2, s3 :T_cl_double );
@@ -1308,7 +1308,7 @@ typedef  cl_double4  cl_double3;
 
 typedef union
 {
-    cl_double   CL_ALIGNED(64) s[8];
+       0: ( s :array [ 0..8-1 ] of T_cl_double );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_double );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_double );
@@ -1327,7 +1327,7 @@ typedef union
 
 typedef union
 {
-    cl_double  CL_ALIGNED(128) s[16];
+       0: ( s :array [ 0..16-1 ] of T_cl_double );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_double );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_double );
