@@ -124,18 +124,18 @@ uses LUX.Code.C,
 {$IF defined( _WIN32 ) and defined( _MSC_VER ) }
 
 (* scalar types  *)
-typedef signed   __int8         cl_char;
-typedef unsigned __int8         cl_uchar;
-typedef signed   __int16        cl_short;
-typedef unsigned __int16        cl_ushort;
-typedef signed   __int32        cl_int;
-typedef unsigned __int32        cl_uint;
-typedef signed   __int64        cl_long;
-typedef unsigned __int64        cl_ulong;
+type T_cl_char   = T_signed___int8;
+type T_cl_uchar  = T_unsigned___int8;
+type T_cl_short  = T_signed___int16;
+type T_cl_ushort = T_unsigned___int16;
+type T_cl_int    = T_signed___int32;
+type T_cl_uint   = T_unsigned___int32;
+type T_cl_long   = T_signed___int64;
+type T_cl_ulong  = T_unsigned___int64;
 
-typedef unsigned __int16        cl_half;
-typedef float                   cl_float;
-typedef double                  cl_double;
+type T_cl_half   = T_unsigned___int16;
+type T_cl_float  = T_float;
+type T_cl_double = T_double;
 
 (* Macro names and corresponding values defined by OpenCL *)
 #define CL_CHAR_BIT         8
@@ -226,18 +226,18 @@ typedef double                  cl_double;
 #include <stdint.h>
 
 (* scalar types  *)
-typedef int8_t          cl_char;
-typedef uint8_t         cl_uchar;
-typedef int16_t         cl_short;
-typedef uint16_t        cl_ushort;
-typedef int32_t         cl_int;
-typedef uint32_t        cl_uint;
-typedef int64_t         cl_long;
-typedef uint64_t        cl_ulong;
+type T_cl_char   = T_int8_t;
+type T_cl_uchar  = T_uint8_t;
+type T_cl_short  = T_int16_t;
+type T_cl_ushort = T_uint16_t;
+type T_cl_int    = T_int32_t;
+type T_cl_uint   = T_uint32_t;
+type T_cl_long   = T_int64_t;
+type T_cl_ulong  = T_uint64_t;
 
-typedef uint16_t        cl_half;
-typedef float           cl_float;
-typedef double          cl_double;
+type T_cl_half   = T_uint16_t;
+type T_cl_float  = T_float;
+type T_cl_double = T_double;
 
 (* Macro names and corresponding values defined by OpenCL *)
 #define CL_CHAR_BIT         8
@@ -335,9 +335,9 @@ typedef double          cl_double;
 #include <stddef.h>
 
 (* Mirror types to GL types. Mirror types allow us to avoid deciding which 87s to load based on whether we are using GL or GLES here. *)
-typedef unsigned int cl_GLuint;
-typedef int          cl_GLint;
-typedef unsigned int cl_GLenum;
+type T_cl_GLuint = T_unsigned_int;
+type T_cl_GLint  = T_int;
+type T_cl_GLenum = T_unsigned_int;
 
 (*
  * Vector types
@@ -383,7 +383,7 @@ typedef unsigned int cl_GLenum;
     {$IF defined( __GNUC__ ) }
         typedef float __cl_float4   __attribute__((vector_size(16)));
     {$ELSE}
-        typedef __m128 __cl_float4;
+        type T___cl_float4 = T___m128;
     {$ENDIF}
     #define __CL_FLOAT4__   1
 {$ENDIF}
@@ -405,15 +405,15 @@ typedef unsigned int cl_GLenum;
         typedef cl_long     __cl_long2      __attribute__((vector_size(16)));
         typedef cl_double   __cl_double2    __attribute__((vector_size(16)));
     {$ELSE}
-        typedef __m128i __cl_uchar16;
-        typedef __m128i __cl_char16;
-        typedef __m128i __cl_ushort8;
-        typedef __m128i __cl_short8;
-        typedef __m128i __cl_uint4;
-        typedef __m128i __cl_int4;
-        typedef __m128i __cl_ulong2;
-        typedef __m128i __cl_long2;
-        typedef __m128d __cl_double2;
+        type T___cl_uchar16 = T___m128i;
+        type T___cl_char16  = T___m128i;
+        type T___cl_ushort8 = T___m128i;
+        type T___cl_short8  = T___m128i;
+        type T___cl_uint4   = T___m128i;
+        type T___cl_int4    = T___m128i;
+        type T___cl_ulong2  = T___m128i;
+        type T___cl_long2   = T___m128i;
+        type T___cl_double2 = T___m128d;
     {$ENDIF}
     #define __CL_UCHAR16__  1
     #define __CL_CHAR16__   1
@@ -439,15 +439,15 @@ typedef unsigned int cl_GLenum;
         typedef cl_long     __cl_long1      __attribute__((vector_size(8)));
         typedef cl_float    __cl_float2     __attribute__((vector_size(8)));
     {$ELSE}
-        typedef __m64       __cl_uchar8;
-        typedef __m64       __cl_char8;
-        typedef __m64       __cl_ushort4;
-        typedef __m64       __cl_short4;
-        typedef __m64       __cl_uint2;
-        typedef __m64       __cl_int2;
-        typedef __m64       __cl_ulong1;
-        typedef __m64       __cl_long1;
-        typedef __m64       __cl_float2;
+        type T___cl_uchar8  = T___m64;
+        type T___cl_char8   = T___m64;
+        type T___cl_ushort4 = T___m64;
+        type T___cl_short4  = T___m64;
+        type T___cl_uint2   = T___m64;
+        type T___cl_int2    = T___m64;
+        type T___cl_ulong1  = T___m64;
+        type T___cl_long1   = T___m64;
+        type T___cl_float2  = T___m64;
     {$ENDIF}
     #define __CL_UCHAR8__   1
     #define __CL_CHAR8__    1
@@ -470,8 +470,8 @@ typedef unsigned int cl_GLenum;
         typedef cl_float    __cl_float8     __attribute__((vector_size(32)));
         typedef cl_double   __cl_double4    __attribute__((vector_size(32)));
     {$ELSE}
-        typedef __m256      __cl_float8;
-        typedef __m256d     __cl_double4;
+        type T___cl_float8  = T___m256;
+        type T___cl_double4 = T___m256d;
     {$ENDIF}
     #define __CL_FLOAT8__   1
     #define __CL_DOUBLE4__  1
@@ -555,7 +555,7 @@ type T_cl_char4 = record
      end;
 
 (* cl_char3 is identical in size, alignment and behavior to cl_char4. See section 6.1.5. *)
-typedef  cl_char4  cl_char3;
+type T_cl_char3 = T_cl_char4;
 
 type T_cl_char8 = record
      case Byte of
@@ -630,7 +630,7 @@ type T_cl_uchar4 = record
      end;
 
 (* cl_uchar3 is identical in size, alignment and behavior to cl_uchar4. See section 6.1.5. *)
-typedef  cl_uchar4  cl_uchar3;
+type T_cl_uchar3 = T_cl_uchar4;
 
 type T_cl_uchar8 = record
      case Byte of
@@ -705,7 +705,7 @@ type T_cl_short4 = record
      end;
 
 (* cl_short3 is identical in size, alignment and behavior to cl_short4. See section 6.1.5. *)
-typedef  cl_short4  cl_short3;
+type T_cl_short3 = T_cl_short4;
 
 type T_cl_short8 = record
      case Byte of
@@ -780,7 +780,7 @@ type T_cl_ushort4 = record
      end;
 
 (* cl_ushort3 is identical in size, alignment and behavior to cl_ushort4. See section 6.1.5. *)
-typedef  cl_ushort4  cl_ushort3;
+type T_cl_ushort3 = T_cl_ushort4;
 
 type T_cl_ushort8 = record
      case Byte of
@@ -855,7 +855,7 @@ type T_cl_half4 = record
      end;
 
 (* cl_half3 is identical in size, alignment and behavior to cl_half4. See section 6.1.5. *)
-typedef  cl_half4  cl_half3;
+type T_cl_half3 = T_cl_half4;
 
 type T_cl_half8 = record
      case Byte of
@@ -929,7 +929,7 @@ type T_cl_int4 = record
      end;
 
 (* cl_int3 is identical in size, alignment and behavior to cl_int4. See section 6.1.5. *)
-typedef  cl_int4  cl_int3;
+type T_cl_int3 = T_cl_int4;
 
 type T_cl_int8 = record
      case Byte of
@@ -1004,7 +1004,7 @@ type T_cl_uint4 = record
      end;
 
 (* cl_uint3 is identical in size, alignment and behavior to cl_uint4. See section 6.1.5. *)
-typedef  cl_uint4  cl_uint3;
+type T_cl_uint3 = T_cl_uint4;
 
 type T_cl_uint8 = record
      case Byte of
@@ -1078,7 +1078,7 @@ type T_cl_long4 = record
      end;
 
 (* cl_long3 is identical in size, alignment and behavior to cl_long4. See section 6.1.5. *)
-typedef  cl_long4  cl_long3;
+type T_cl_long3 = T_cl_long4;
 
 type T_cl_long8 = record
      case Byte of
@@ -1153,7 +1153,7 @@ type T_cl_ulong4 = record
      end;
 
 (* cl_ulong3 is identical in size, alignment and behavior to cl_ulong4. See section 6.1.5. *)
-typedef  cl_ulong4  cl_ulong3;
+type T_cl_ulong3 = T_cl_ulong4;
 
 type T_cl_ulong8 = record
      case Byte of
@@ -1229,7 +1229,7 @@ type T_cl_float4 = record
      end;
 
 (* cl_float3 is identical in size, alignment and behavior to cl_float4. See section 6.1.5. *)
-typedef  cl_float4  cl_float3;
+type T_cl_float3 = T_cl_float4;
 
 type T_cl_float8 = record
      case Byte of
@@ -1304,7 +1304,7 @@ type T_cl_double4 = record
      end;
 
 (* cl_double3 is identical in size, alignment and behavior to cl_double4. See section 6.1.5. *)
-typedef  cl_double4  cl_double3;
+type T_cl_double3 = T_cl_double4;
 
 type T_cl_double8 = record
      case Byte of
