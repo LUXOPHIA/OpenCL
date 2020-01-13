@@ -37,7 +37,7 @@ uses LUX.Code.C,
 //extern "C" {
 //#endif
 
-#if defined(_WIN32)
+{$IF defined(_WIN32) }
     #define CL_API_ENTRY
     #define CL_API_CALL     __stdcall
     #define CL_CALLBACK     __stdcall
@@ -121,7 +121,7 @@ uses LUX.Code.C,
     #define CL_EXT_PREFIX__VERSION_2_1_DEPRECATED CL_EXT_PREFIX_DEPRECATED
 {$ENDIF}
 
-#if (defined (_WIN32) && defined(_MSC_VER))
+{$IF (defined (_WIN32) && defined(_MSC_VER)) }
 
 (* scalar types  *)
 typedef signed   __int8         cl_char;
@@ -317,7 +317,7 @@ typedef double          cl_double;
 #define CL_M_SQRT2_F        1.414213562f
 #define CL_M_SQRT1_2_F      0.707106781f
 
-#if defined( __GNUC__ )
+{$IF defined( __GNUC__ ) }
    #define CL_HUGE_VALF     __builtin_huge_valf()
    #define CL_HUGE_VAL      __builtin_huge_val()
    #define CL_NAN           __builtin_nanf( "" )
@@ -356,7 +356,7 @@ typedef unsigned int cl_GLenum;
  *)
 
 (* Define basic vector types *)
-#if defined( __VEC__ )
+{$IF defined( __VEC__ ) }
    #include <altivec.h>   (* may be omitted depending on compiler. AltiVec spec provides no way to detect whether the header is required. *)
    typedef __vector unsigned char     __cl_uchar16;
    typedef __vector signed char       __cl_char16;
@@ -374,13 +374,13 @@ typedef unsigned int cl_GLenum;
    #define  __CL_FLOAT4__   1
 {$ENDIF}
 
-#if defined( __SSE__ )
-    #if defined( __MINGW64__ )
+{$IF defined( __SSE__ ) }
+    {$IF defined( __MINGW64__ ) }
         #include <intrin.h>
     {$ELSE}
         #include <xmmintrin.h>
     {$ENDIF}
-    #if defined( __GNUC__ )
+    {$IF defined( __GNUC__ ) }
         typedef float __cl_float4   __attribute__((vector_size(16)));
     {$ELSE}
         typedef __m128 __cl_float4;
@@ -388,13 +388,13 @@ typedef unsigned int cl_GLenum;
     #define __CL_FLOAT4__   1
 {$ENDIF}
 
-#if defined( __SSE2__ )
-    #if defined( __MINGW64__ )
+{$IF defined( __SSE2__ ) }
+    {$IF defined( __MINGW64__ ) }
         #include <intrin.h>
     {$ELSE}
         #include <emmintrin.h>
     {$ENDIF}
-    #if defined( __GNUC__ )
+    {$IF defined( __GNUC__ ) }
         typedef cl_uchar    __cl_uchar16    __attribute__((vector_size(16)));
         typedef cl_char     __cl_char16     __attribute__((vector_size(16)));
         typedef cl_ushort   __cl_ushort8    __attribute__((vector_size(16)));
@@ -426,9 +426,9 @@ typedef unsigned int cl_GLenum;
     #define __CL_DOUBLE2__  1
 {$ENDIF}
 
-#if defined( __MMX__ )
+{$IF defined( __MMX__ ) }
     #include <mmintrin.h>
-    #if defined( __GNUC__ )
+    {$IF defined( __GNUC__ ) }
         typedef cl_uchar    __cl_uchar8     __attribute__((vector_size(8)));
         typedef cl_char     __cl_char8      __attribute__((vector_size(8)));
         typedef cl_ushort   __cl_ushort4    __attribute__((vector_size(8)));
@@ -460,13 +460,13 @@ typedef unsigned int cl_GLenum;
     #define __CL_FLOAT2__   1
 {$ENDIF}
 
-#if defined( __AVX__ )
-    #if defined( __MINGW64__ )
+{$IF defined( __AVX__ ) }
+    {$IF defined( __MINGW64__ ) }
         #include <intrin.h>
     {$ELSE}
         #include <immintrin.h>
     {$ENDIF}
-    #if defined( __GNUC__ )
+    {$IF defined( __GNUC__ ) }
         typedef cl_float    __cl_float8     __attribute__((vector_size(32)));
         typedef cl_double   __cl_double4    __attribute__((vector_size(32)));
     {$ELSE}
@@ -478,14 +478,14 @@ typedef unsigned int cl_GLenum;
 {$ENDIF}
 
 (* Define capabilities for anonymous struct members. *)
-#if !defined(__cplusplus) && defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
+{$IF !defined(__cplusplus) && defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L }
 #define  __CL_HAS_ANON_STRUCT__ 1
 #define  __CL_ANON_STRUCT__
 #elif defined( __GNUC__) && ! defined( __STRICT_ANSI__ )
 #define  __CL_HAS_ANON_STRUCT__ 1
 #define  __CL_ANON_STRUCT__ __extension__
 #elif defined( _WIN32) && defined(_MSC_VER)
-    #if _MSC_VER >= 1500
+    {$IF _MSC_VER >= 1500 }
    (* Microsoft Developer Studio 2008 supports anonymous structs, but
     * complains by default. *)
     #define  __CL_HAS_ANON_STRUCT__ 1
@@ -501,7 +501,7 @@ typedef unsigned int cl_GLenum;
 {$ENDIF}
 
 (* Define alignment keys *)
-#if defined( __GNUC__ )
+{$IF defined( __GNUC__ ) }
     #define CL_ALIGNED(_x)          __attribute__ ((aligned(_x)))
 #elif defined( _WIN32) && (_MSC_VER)
     (* Alignment keys neutered on windows because MSVC can't swallow function arguments with alignment requirements     *)
@@ -515,7 +515,7 @@ typedef unsigned int cl_GLenum;
 {$ENDIF}
 
 (* Indicate whether .xyzw, .s0123 and .hi.lo are supported *)
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
     (* .xyzw and .s0123...{f|F} are supported *)
     #define CL_HAS_NAMED_VECTOR_FIELDS 1
     (* .hi and .lo are supported *)
@@ -528,12 +528,12 @@ typedef unsigned int cl_GLenum;
 type T_cl_char2 = record
      case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_char );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y :T_cl_char );
        2: ( s0, s1 :T_cl_char );
        3: ( lo, hi :T_cl_char );
 {$ENDIF}
-#if defined( __CL_CHAR2__)
+{$IF defined( __CL_CHAR2__) }
        4: ( v2 :T___cl_char2 );
 {$ENDIF}
      end;
@@ -541,15 +541,15 @@ type T_cl_char2 = record
 type T_cl_char4 = record
      case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_char );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_char );
        2: ( s0, s1, s2, s3 :T_cl_char );
        3: ( lo, hi :T_cl_char2 );
 {$ENDIF}
-#if defined( __CL_CHAR2__)
+{$IF defined( __CL_CHAR2__) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_char2 );
 {$ENDIF}
-#if defined( __CL_CHAR4__)
+{$IF defined( __CL_CHAR4__) }
        5: ( v4 :T___cl_char4 );
 {$ENDIF}
      end;
@@ -560,18 +560,18 @@ typedef  cl_char4  cl_char3;
 type T_cl_char8 = record
      case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_char );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_char );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_char );
        3: ( lo, hi :T_cl_char4 );
 {$ENDIF}
-#if defined( __CL_CHAR2__)
+{$IF defined( __CL_CHAR2__) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_char2 );
 {$ENDIF}
-#if defined( __CL_CHAR4__)
+{$IF defined( __CL_CHAR4__) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_char4 );
 {$ENDIF}
-#if defined( __CL_CHAR8__ )
+{$IF defined( __CL_CHAR8__ ) }
        6: ( v8 :T___cl_char8 );
 {$ENDIF}
      end;
@@ -579,21 +579,21 @@ type T_cl_char8 = record
 type T_cl_char16 = record
      case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_char );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_char );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_char );
        3: ( lo, hi :T_cl_char8 );
 {$ENDIF}
-#if defined( __CL_CHAR2__)
+{$IF defined( __CL_CHAR2__) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_char2 );
 {$ENDIF}
-#if defined( __CL_CHAR4__)
+{$IF defined( __CL_CHAR4__) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_char4 );
 {$ENDIF}
-#if defined( __CL_CHAR8__ )
+{$IF defined( __CL_CHAR8__ ) }
        6: ( v8 :array [ 0..2-1 ] of T___cl_char8 );
 {$ENDIF}
-#if defined( __CL_CHAR16__ )
+{$IF defined( __CL_CHAR16__ ) }
        7: ( v16 :T___cl_char16 );
 {$ENDIF}
      end;
@@ -603,12 +603,12 @@ type T_cl_char16 = record
 type T_cl_uchar2 = record
      case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_uchar );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y :T_cl_uchar );
        2: ( s0, s1 :T_cl_uchar );
        3: ( lo, hi :T_cl_uchar );
 {$ENDIF}
-#if defined( __cl_uchar2__)
+{$IF defined( __cl_uchar2__) }
        4: ( v2 :T___cl_uchar2 );
 {$ENDIF}
      end;
@@ -616,15 +616,15 @@ type T_cl_uchar2 = record
 type T_cl_uchar4 = record
      case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_uchar );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_uchar );
        2: ( s0, s1, s2, s3 :T_cl_uchar );
        3: ( lo, hi :T_cl_uchar2 );
 {$ENDIF}
-#if defined( __CL_UCHAR2__)
+{$IF defined( __CL_UCHAR2__) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_uchar2 );
 {$ENDIF}
-#if defined( __CL_UCHAR4__)
+{$IF defined( __CL_UCHAR4__) }
        5: ( v4 :T___cl_uchar4 );
 {$ENDIF}
      end;
@@ -635,18 +635,18 @@ typedef  cl_uchar4  cl_uchar3;
 type T_cl_uchar8 = record
      case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_uchar );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_uchar );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_uchar );
        3: ( lo, hi :T_cl_uchar4 );
 {$ENDIF}
-#if defined( __CL_UCHAR2__)
+{$IF defined( __CL_UCHAR2__) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_uchar2 );
 {$ENDIF}
-#if defined( __CL_UCHAR4__)
+{$IF defined( __CL_UCHAR4__) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_uchar4 );
 {$ENDIF}
-#if defined( __CL_UCHAR8__ )
+{$IF defined( __CL_UCHAR8__ ) }
        6: ( v8 :T___cl_uchar8 );
 {$ENDIF}
      end;
@@ -654,21 +654,21 @@ type T_cl_uchar8 = record
 type T_cl_uchar16 = record
      case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_uchar );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_uchar );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_uchar );
        3: ( lo, hi :T_cl_uchar8 );
 {$ENDIF}
-#if defined( __CL_UCHAR2__)
+{$IF defined( __CL_UCHAR2__) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_uchar2 );
 {$ENDIF}
-#if defined( __CL_UCHAR4__)
+{$IF defined( __CL_UCHAR4__) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_uchar4 );
 {$ENDIF}
-#if defined( __CL_UCHAR8__ )
+{$IF defined( __CL_UCHAR8__ ) }
        6: ( v8 :array [ 0..2-1 ] of T___cl_uchar8 );
 {$ENDIF}
-#if defined( __CL_UCHAR16__ )
+{$IF defined( __CL_UCHAR16__ ) }
        7: ( v16 :T___cl_uchar16 );
 {$ENDIF}
      end;
@@ -678,12 +678,12 @@ type T_cl_uchar16 = record
 type T_cl_short2 = record
      case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_short );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y :T_cl_short );
        2: ( s0, s1 :T_cl_short );
        3: ( lo, hi :T_cl_short );
 {$ENDIF}
-#if defined( __CL_SHORT2__)
+{$IF defined( __CL_SHORT2__) }
        4: ( v2 :T___cl_short2 );
 {$ENDIF}
      end;
@@ -691,15 +691,15 @@ type T_cl_short2 = record
 type T_cl_short4 = record
      case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_short );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_short );
        2: ( s0, s1, s2, s3 :T_cl_short );
        3: ( lo, hi :T_cl_short2 );
 {$ENDIF}
-#if defined( __CL_SHORT2__)
+{$IF defined( __CL_SHORT2__) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_short2 );
 {$ENDIF}
-#if defined( __CL_SHORT4__)
+{$IF defined( __CL_SHORT4__) }
        5: ( v4 :T___cl_short4 );
 {$ENDIF}
      end;
@@ -710,18 +710,18 @@ typedef  cl_short4  cl_short3;
 type T_cl_short8 = record
      case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_short );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_short );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_short );
        3: ( lo, hi :T_cl_short4 );
 {$ENDIF}
-#if defined( __CL_SHORT2__)
+{$IF defined( __CL_SHORT2__) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_short2 );
 {$ENDIF}
-#if defined( __CL_SHORT4__)
+{$IF defined( __CL_SHORT4__) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_short4 );
 {$ENDIF}
-#if defined( __CL_SHORT8__ )
+{$IF defined( __CL_SHORT8__ ) }
        6: ( v8 :T___cl_short8 );
 {$ENDIF}
      end;
@@ -729,21 +729,21 @@ type T_cl_short8 = record
 type T_cl_short16 = record
      case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_short );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_short );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_short );
        3: ( lo, hi :T_cl_short8 );
 {$ENDIF}
-#if defined( __CL_SHORT2__)
+{$IF defined( __CL_SHORT2__) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_short2 );
 {$ENDIF}
-#if defined( __CL_SHORT4__)
+{$IF defined( __CL_SHORT4__) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_short4 );
 {$ENDIF}
-#if defined( __CL_SHORT8__ )
+{$IF defined( __CL_SHORT8__ ) }
        6: ( v8 :array [ 0..2-1 ] of T___cl_short8 );
 {$ENDIF}
-#if defined( __CL_SHORT16__ )
+{$IF defined( __CL_SHORT16__ ) }
        7: ( v16 :T___cl_short16 );
 {$ENDIF}
      end;
@@ -753,12 +753,12 @@ type T_cl_short16 = record
 type T_cl_ushort2 = record
      case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_ushort );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y :T_cl_ushort );
        2: ( s0, s1 :T_cl_ushort );
        3: ( lo, hi :T_cl_ushort );
 {$ENDIF}
-#if defined( __CL_USHORT2__)
+{$IF defined( __CL_USHORT2__) }
        4: ( v2 :T___cl_ushort2 );
 {$ENDIF}
      end;
@@ -766,15 +766,15 @@ type T_cl_ushort2 = record
 type T_cl_ushort4 = record
      case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_ushort );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_ushort );
        2: ( s0, s1, s2, s3 :T_cl_ushort );
        3: ( lo, hi :T_cl_ushort2 );
 {$ENDIF}
-#if defined( __CL_USHORT2__)
+{$IF defined( __CL_USHORT2__) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_ushort2 );
 {$ENDIF}
-#if defined( __CL_USHORT4__)
+{$IF defined( __CL_USHORT4__) }
        5: ( v4 :T___cl_ushort4 );
 {$ENDIF}
      end;
@@ -785,18 +785,18 @@ typedef  cl_ushort4  cl_ushort3;
 type T_cl_ushort8 = record
      case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_ushort );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_ushort );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_ushort );
        3: ( lo, hi :T_cl_ushort4 );
 {$ENDIF}
-#if defined( __CL_USHORT2__)
+{$IF defined( __CL_USHORT2__) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_ushort2 );
 {$ENDIF}
-#if defined( __CL_USHORT4__)
+{$IF defined( __CL_USHORT4__) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_ushort4 );
 {$ENDIF}
-#if defined( __CL_USHORT8__ )
+{$IF defined( __CL_USHORT8__ ) }
        6: ( v8 :T___cl_ushort8 );
 {$ENDIF}
      end;
@@ -804,21 +804,21 @@ type T_cl_ushort8 = record
 type T_cl_ushort16 = record
      case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_ushort );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_ushort );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_ushort );
        3: ( lo, hi :T_cl_ushort8 );
 {$ENDIF}
-#if defined( __CL_USHORT2__)
+{$IF defined( __CL_USHORT2__) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_ushort2 );
 {$ENDIF}
-#if defined( __CL_USHORT4__)
+{$IF defined( __CL_USHORT4__) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_ushort4 );
 {$ENDIF}
-#if defined( __CL_USHORT8__ )
+{$IF defined( __CL_USHORT8__ ) }
        6: ( v8 :array [ 0..2-1 ] of T___cl_ushort8 );
 {$ENDIF}
-#if defined( __CL_USHORT16__ )
+{$IF defined( __CL_USHORT16__ ) }
        7: ( v16 :T___cl_ushort16 );
 {$ENDIF}
      end;
@@ -828,12 +828,12 @@ type T_cl_ushort16 = record
 type T_cl_half2 = record
      case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_half );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y :T_cl_half );
        2: ( s0, s1 :T_cl_half );
        3: ( lo, hi :T_cl_half );
 {$ENDIF}
-#if defined( __CL_HALF2__)
+{$IF defined( __CL_HALF2__) }
        4: ( v2 :T___cl_half2 );
 {$ENDIF}
      end;
@@ -841,15 +841,15 @@ type T_cl_half2 = record
 type T_cl_half4 = record
      case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_half );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_half );
        2: ( s0, s1, s2, s3 :T_cl_half );
        3: ( lo, hi :T_cl_half2 );
 {$ENDIF}
-#if defined( __CL_HALF2__)
+{$IF defined( __CL_HALF2__) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_half2 );
 {$ENDIF}
-#if defined( __CL_HALF4__)
+{$IF defined( __CL_HALF4__) }
        5: ( v4 :T___cl_half4 );
 {$ENDIF}
      end;
@@ -860,18 +860,18 @@ typedef  cl_half4  cl_half3;
 type T_cl_half8 = record
      case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_half );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_half );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_half );
        3: ( lo, hi :T_cl_half4 );
 {$ENDIF}
-#if defined( __CL_HALF2__)
+{$IF defined( __CL_HALF2__) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_half2 );
 {$ENDIF}
-#if defined( __CL_HALF4__)
+{$IF defined( __CL_HALF4__) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_half4 );
 {$ENDIF}
-#if defined( __CL_HALF8__ )
+{$IF defined( __CL_HALF8__ ) }
        6: ( v8 :T___cl_half8 );
 {$ENDIF}
      end;
@@ -879,21 +879,21 @@ type T_cl_half8 = record
 type T_cl_half16 = record
      case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_half );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_half );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_half );
        3: ( lo, hi :T_cl_half8 );
 {$ENDIF}
-#if defined( __CL_HALF2__)
+{$IF defined( __CL_HALF2__) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_half2 );
 {$ENDIF}
-#if defined( __CL_HALF4__)
+{$IF defined( __CL_HALF4__) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_half4 );
 {$ENDIF}
-#if defined( __CL_HALF8__ )
+{$IF defined( __CL_HALF8__ ) }
        6: ( v8 :array [ 0..2-1 ] of T___cl_half8 );
 {$ENDIF}
-#if defined( __CL_HALF16__ )
+{$IF defined( __CL_HALF16__ ) }
        7: ( v16 :T___cl_half16 );
 {$ENDIF}
      end;
@@ -902,12 +902,12 @@ type T_cl_half16 = record
 type T_cl_int2 = record
      case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_int );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y :T_cl_int );
        2: ( s0, s1 :T_cl_int );
        3: ( lo, hi :T_cl_int );
 {$ENDIF}
-#if defined( __CL_INT2__)
+{$IF defined( __CL_INT2__) }
        4: ( v2 :T___cl_int2 );
 {$ENDIF}
      end;
@@ -915,15 +915,15 @@ type T_cl_int2 = record
 type T_cl_int4 = record
      case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_int );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_int );
        2: ( s0, s1, s2, s3 :T_cl_int );
        3: ( lo, hi :T_cl_int2 );
 {$ENDIF}
-#if defined( __CL_INT2__)
+{$IF defined( __CL_INT2__) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_int2 );
 {$ENDIF}
-#if defined( __CL_INT4__)
+{$IF defined( __CL_INT4__) }
        5: ( v4 :T___cl_int4 );
 {$ENDIF}
      end;
@@ -934,18 +934,18 @@ typedef  cl_int4  cl_int3;
 type T_cl_int8 = record
      case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_int );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_int );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_int );
        3: ( lo, hi :T_cl_int4 );
 {$ENDIF}
-#if defined( __CL_INT2__)
+{$IF defined( __CL_INT2__) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_int2 );
 {$ENDIF}
-#if defined( __CL_INT4__)
+{$IF defined( __CL_INT4__) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_int4 );
 {$ENDIF}
-#if defined( __CL_INT8__ )
+{$IF defined( __CL_INT8__ ) }
        6: ( v8 :T___cl_int8 );
 {$ENDIF}
      end;
@@ -953,21 +953,21 @@ type T_cl_int8 = record
 type T_cl_int16 = record
      case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_int );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_int );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_int );
        3: ( lo, hi :T_cl_int8 );
 {$ENDIF}
-#if defined( __CL_INT2__)
+{$IF defined( __CL_INT2__) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_int2 );
 {$ENDIF}
-#if defined( __CL_INT4__)
+{$IF defined( __CL_INT4__) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_int4 );
 {$ENDIF}
-#if defined( __CL_INT8__ )
+{$IF defined( __CL_INT8__ ) }
        6: ( v8 :array [ 0..2-1 ] of T___cl_int8 );
 {$ENDIF}
-#if defined( __CL_INT16__ )
+{$IF defined( __CL_INT16__ ) }
        7: ( v16 :T___cl_int16 );
 {$ENDIF}
      end;
@@ -977,12 +977,12 @@ type T_cl_int16 = record
 type T_cl_uint2 = record
      case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_uint );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y :T_cl_uint );
        2: ( s0, s1 :T_cl_uint );
        3: ( lo, hi :T_cl_uint );
 {$ENDIF}
-#if defined( __CL_UINT2__)
+{$IF defined( __CL_UINT2__) }
        4: ( v2 :T___cl_uint2 );
 {$ENDIF}
      end;
@@ -990,15 +990,15 @@ type T_cl_uint2 = record
 type T_cl_uint4 = record
      case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_uint );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_uint );
        2: ( s0, s1, s2, s3 :T_cl_uint );
        3: ( lo, hi :T_cl_uint2 );
 {$ENDIF}
-#if defined( __CL_UINT2__)
+{$IF defined( __CL_UINT2__) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_uint2 );
 {$ENDIF}
-#if defined( __CL_UINT4__)
+{$IF defined( __CL_UINT4__) }
        5: ( v4 :T___cl_uint4 );
 {$ENDIF}
      end;
@@ -1009,18 +1009,18 @@ typedef  cl_uint4  cl_uint3;
 type T_cl_uint8 = record
      case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_uint );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_uint );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_uint );
        3: ( lo, hi :T_cl_uint4 );
 {$ENDIF}
-#if defined( __CL_UINT2__)
+{$IF defined( __CL_UINT2__) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_uint2 );
 {$ENDIF}
-#if defined( __CL_UINT4__)
+{$IF defined( __CL_UINT4__) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_uint4 );
 {$ENDIF}
-#if defined( __CL_UINT8__ )
+{$IF defined( __CL_UINT8__ ) }
        6: ( v8 :T___cl_uint8 );
 {$ENDIF}
      end;
@@ -1028,21 +1028,21 @@ type T_cl_uint8 = record
 type T_cl_uint16 = record
      case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_uint );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_uint );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_uint );
        3: ( lo, hi :T_cl_uint8 );
 {$ENDIF}
-#if defined( __CL_UINT2__)
+{$IF defined( __CL_UINT2__) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_uint2 );
 {$ENDIF}
-#if defined( __CL_UINT4__)
+{$IF defined( __CL_UINT4__) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_uint4 );
 {$ENDIF}
-#if defined( __CL_UINT8__ )
+{$IF defined( __CL_UINT8__ ) }
        6: ( v8 :array [ 0..2-1 ] of T___cl_uint8 );
 {$ENDIF}
-#if defined( __CL_UINT16__ )
+{$IF defined( __CL_UINT16__ ) }
        7: ( v16 :T___cl_uint16 );
 {$ENDIF}
      end;
@@ -1051,12 +1051,12 @@ type T_cl_uint16 = record
 type T_cl_long2 = record
      case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_long );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y :T_cl_long );
        2: ( s0, s1 :T_cl_long );
        3: ( lo, hi :T_cl_long );
 {$ENDIF}
-#if defined( __CL_LONG2__)
+{$IF defined( __CL_LONG2__) }
        4: ( v2 :T___cl_long2 );
 {$ENDIF}
      end;
@@ -1064,15 +1064,15 @@ type T_cl_long2 = record
 type T_cl_long4 = record
      case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_long );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_long );
        2: ( s0, s1, s2, s3 :T_cl_long );
        3: ( lo, hi :T_cl_long2 );
 {$ENDIF}
-#if defined( __CL_LONG2__)
+{$IF defined( __CL_LONG2__) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_long2 );
 {$ENDIF}
-#if defined( __CL_LONG4__)
+{$IF defined( __CL_LONG4__) }
        5: ( v4 :T___cl_long4 );
 {$ENDIF}
      end;
@@ -1083,18 +1083,18 @@ typedef  cl_long4  cl_long3;
 type T_cl_long8 = record
      case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_long );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_long );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_long );
        3: ( lo, hi :T_cl_long4 );
 {$ENDIF}
-#if defined( __CL_LONG2__)
+{$IF defined( __CL_LONG2__) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_long2 );
 {$ENDIF}
-#if defined( __CL_LONG4__)
+{$IF defined( __CL_LONG4__) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_long4 );
 {$ENDIF}
-#if defined( __CL_LONG8__ )
+{$IF defined( __CL_LONG8__ ) }
        6: ( v8 :T___cl_long8 );
 {$ENDIF}
      end;
@@ -1102,21 +1102,21 @@ type T_cl_long8 = record
 type T_cl_long16 = record
      case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_long );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_long );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_long );
        3: ( lo, hi :T_cl_long8 );
 {$ENDIF}
-#if defined( __CL_LONG2__)
+{$IF defined( __CL_LONG2__) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_long2 );
 {$ENDIF}
-#if defined( __CL_LONG4__)
+{$IF defined( __CL_LONG4__) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_long4 );
 {$ENDIF}
-#if defined( __CL_LONG8__ )
+{$IF defined( __CL_LONG8__ ) }
        6: ( v8 :array [ 0..2-1 ] of T___cl_long8 );
 {$ENDIF}
-#if defined( __CL_LONG16__ )
+{$IF defined( __CL_LONG16__ ) }
        7: ( v16 :T___cl_long16 );
 {$ENDIF}
      end;
@@ -1126,12 +1126,12 @@ type T_cl_long16 = record
 type T_cl_ulong2 = record
      case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_ulong );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y :T_cl_ulong );
        2: ( s0, s1 :T_cl_ulong );
        3: ( lo, hi :T_cl_ulong );
 {$ENDIF}
-#if defined( __CL_ULONG2__)
+{$IF defined( __CL_ULONG2__) }
        4: ( v2 :T___cl_ulong2 );
 {$ENDIF}
      end;
@@ -1139,15 +1139,15 @@ type T_cl_ulong2 = record
 type T_cl_ulong4 = record
      case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_ulong );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_ulong );
        2: ( s0, s1, s2, s3 :T_cl_ulong );
        3: ( lo, hi :T_cl_ulong2 );
 {$ENDIF}
-#if defined( __CL_ULONG2__)
+{$IF defined( __CL_ULONG2__) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_ulong2 );
 {$ENDIF}
-#if defined( __CL_ULONG4__)
+{$IF defined( __CL_ULONG4__) }
        5: ( v4 :T___cl_ulong4 );
 {$ENDIF}
      end;
@@ -1158,18 +1158,18 @@ typedef  cl_ulong4  cl_ulong3;
 type T_cl_ulong8 = record
      case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_ulong );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_ulong );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_ulong );
        3: ( lo, hi :T_cl_ulong4 );
 {$ENDIF}
-#if defined( __CL_ULONG2__)
+{$IF defined( __CL_ULONG2__) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_ulong2 );
 {$ENDIF}
-#if defined( __CL_ULONG4__)
+{$IF defined( __CL_ULONG4__) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_ulong4 );
 {$ENDIF}
-#if defined( __CL_ULONG8__ )
+{$IF defined( __CL_ULONG8__ ) }
        6: ( v8 :T___cl_ulong8 );
 {$ENDIF}
      end;
@@ -1177,21 +1177,21 @@ type T_cl_ulong8 = record
 type T_cl_ulong16 = record
      case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_ulong );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_ulong );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_ulong );
        3: ( lo, hi :T_cl_ulong8 );
 {$ENDIF}
-#if defined( __CL_ULONG2__)
+{$IF defined( __CL_ULONG2__) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_ulong2 );
 {$ENDIF}
-#if defined( __CL_ULONG4__)
+{$IF defined( __CL_ULONG4__) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_ulong4 );
 {$ENDIF}
-#if defined( __CL_ULONG8__ )
+{$IF defined( __CL_ULONG8__ ) }
        6: ( v8 :array [ 0..2-1 ] of T___cl_ulong8 );
 {$ENDIF}
-#if defined( __CL_ULONG16__ )
+{$IF defined( __CL_ULONG16__ ) }
        7: ( v16 :T___cl_ulong16 );
 {$ENDIF}
      end;
@@ -1202,12 +1202,12 @@ type T_cl_ulong16 = record
 type T_cl_float2 = record
      case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_float );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y :T_cl_float );
        2: ( s0, s1 :T_cl_float );
        3: ( lo, hi :T_cl_float );
 {$ENDIF}
-#if defined( __CL_FLOAT2__)
+{$IF defined( __CL_FLOAT2__) }
        4: ( v2 :T___cl_float2 );
 {$ENDIF}
      end;
@@ -1215,15 +1215,15 @@ type T_cl_float2 = record
 type T_cl_float4 = record
      case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_float );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_float );
        2: ( s0, s1, s2, s3 :T_cl_float );
        3: ( lo, hi :T_cl_float2 );
 {$ENDIF}
-#if defined( __CL_FLOAT2__)
+{$IF defined( __CL_FLOAT2__) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_float2 );
 {$ENDIF}
-#if defined( __CL_FLOAT4__)
+{$IF defined( __CL_FLOAT4__) }
        5: ( v4 :T___cl_float4 );
 {$ENDIF}
      end;
@@ -1234,18 +1234,18 @@ typedef  cl_float4  cl_float3;
 type T_cl_float8 = record
      case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_float );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_float );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_float );
        3: ( lo, hi :T_cl_float4 );
 {$ENDIF}
-#if defined( __CL_FLOAT2__)
+{$IF defined( __CL_FLOAT2__) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_float2 );
 {$ENDIF}
-#if defined( __CL_FLOAT4__)
+{$IF defined( __CL_FLOAT4__) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_float4 );
 {$ENDIF}
-#if defined( __CL_FLOAT8__ )
+{$IF defined( __CL_FLOAT8__ ) }
        6: ( v8 :T___cl_float8 );
 {$ENDIF}
      end;
@@ -1253,21 +1253,21 @@ type T_cl_float8 = record
 type T_cl_float16 = record
      case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_float );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_float );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_float );
        3: ( lo, hi :T_cl_float8 );
 {$ENDIF}
-#if defined( __CL_FLOAT2__)
+{$IF defined( __CL_FLOAT2__) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_float2 );
 {$ENDIF}
-#if defined( __CL_FLOAT4__)
+{$IF defined( __CL_FLOAT4__) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_float4 );
 {$ENDIF}
-#if defined( __CL_FLOAT8__ )
+{$IF defined( __CL_FLOAT8__ ) }
        6: ( v8 :array [ 0..2-1 ] of T___cl_float8 );
 {$ENDIF}
-#if defined( __CL_FLOAT16__ )
+{$IF defined( __CL_FLOAT16__ ) }
        7: ( v16 :T___cl_float16 );
 {$ENDIF}
      end;
@@ -1277,12 +1277,12 @@ type T_cl_float16 = record
 type T_cl_double2 = record
      case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_double );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y :T_cl_double );
        2: ( s0, s1 :T_cl_double );
        3: ( lo, hi :T_cl_double );
 {$ENDIF}
-#if defined( __CL_DOUBLE2__)
+{$IF defined( __CL_DOUBLE2__) }
        4: ( v2 :T___cl_double2 );
 {$ENDIF}
      end;
@@ -1290,15 +1290,15 @@ type T_cl_double2 = record
 type T_cl_double4 = record
      case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_double );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_double );
        2: ( s0, s1, s2, s3 :T_cl_double );
        3: ( lo, hi :T_cl_double2 );
 {$ENDIF}
-#if defined( __CL_DOUBLE2__)
+{$IF defined( __CL_DOUBLE2__) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_double2 );
 {$ENDIF}
-#if defined( __CL_DOUBLE4__)
+{$IF defined( __CL_DOUBLE4__) }
        5: ( v4 :T___cl_double4 );
 {$ENDIF}
      end;
@@ -1309,18 +1309,18 @@ typedef  cl_double4  cl_double3;
 type T_cl_double8 = record
      case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_double );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w :T_cl_double );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_double );
        3: ( lo, hi :T_cl_double4 );
 {$ENDIF}
-#if defined( __CL_DOUBLE2__)
+{$IF defined( __CL_DOUBLE2__) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_double2 );
 {$ENDIF}
-#if defined( __CL_DOUBLE4__)
+{$IF defined( __CL_DOUBLE4__) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_double4 );
 {$ENDIF}
-#if defined( __CL_DOUBLE8__ )
+{$IF defined( __CL_DOUBLE8__ ) }
        6: ( v8 :T___cl_double8 );
 {$ENDIF}
      end;
@@ -1328,21 +1328,21 @@ type T_cl_double8 = record
 type T_cl_double16 = record
      case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_double );
-#if __CL_HAS_ANON_STRUCT__
+{$IF __CL_HAS_ANON_STRUCT__ }
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_double );
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_double );
        3: ( lo, hi :T_cl_double8 );
 {$ENDIF}
-#if defined( __CL_DOUBLE2__)
+{$IF defined( __CL_DOUBLE2__) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_double2 );
 {$ENDIF}
-#if defined( __CL_DOUBLE4__)
+{$IF defined( __CL_DOUBLE4__) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_double4 );
 {$ENDIF}
-#if defined( __CL_DOUBLE8__ )
+{$IF defined( __CL_DOUBLE8__ ) }
        6: ( v8 :array [ 0..2-1 ] of T___cl_double8 );
 {$ENDIF}
-#if defined( __CL_DOUBLE16__ )
+{$IF defined( __CL_DOUBLE16__ ) }
        7: ( v16 :T___cl_double16 );
 {$ENDIF}
      end;
@@ -1377,8 +1377,8 @@ type T_cl_double16 = record
 
 #undef __CL_HAS_ANON_STRUCT__
 #undef __CL_ANON_STRUCT__
-#if defined( _WIN32) && defined(_MSC_VER)
-    #if _MSC_VER >=1500
+{$IF defined( _WIN32) && defined(_MSC_VER) }
+    {$IF _MSC_VER >=1500 }
     #pragma warning( pop )
     #endif
 #endif
