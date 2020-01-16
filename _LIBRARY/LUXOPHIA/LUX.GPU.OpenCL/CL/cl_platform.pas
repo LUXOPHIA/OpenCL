@@ -37,15 +37,15 @@ uses LUX.Code.C,
 //extern "C" {
 //#endif
 
-{$IF defined( _WIN32 ) }
-    #define CL_API_ENTRY
-    #define CL_API_CALL     __stdcall
-    #define CL_CALLBACK     __stdcall
-{$ELSE}
-    #define CL_API_ENTRY
-    #define CL_API_CALL
-    #define CL_CALLBACK
-{$ENDIF}
+//{$IF defined( _WIN32 ) }
+//    #define CL_API_ENTRY
+//    #define CL_API_CALL     __stdcall
+//    #define CL_CALLBACK     __stdcall
+//{$ELSE}
+//    #define CL_API_ENTRY
+//    #define CL_API_CALL
+//    #define CL_CALLBACK
+//{$ENDIF}
 
 (*
  * Deprecation flags refer to the last version of the header in which the
@@ -55,71 +55,71 @@ uses LUX.Code.C,
  * deprecation but is deprecated in versions later than 1.1.
  *)
 
-#define CL_EXTENSION_WEAK_LINK
-#define CL_API_SUFFIX__VERSION_1_0
-#define CL_EXT_SUFFIX__VERSION_1_0
-#define CL_API_SUFFIX__VERSION_1_1
-#define CL_EXT_SUFFIX__VERSION_1_1
-#define CL_API_SUFFIX__VERSION_1_2
-#define CL_EXT_SUFFIX__VERSION_1_2
-#define CL_API_SUFFIX__VERSION_2_0
-#define CL_EXT_SUFFIX__VERSION_2_0
-#define CL_API_SUFFIX__VERSION_2_1
-#define CL_EXT_SUFFIX__VERSION_2_1
-#define CL_API_SUFFIX__VERSION_2_2
-#define CL_EXT_SUFFIX__VERSION_2_2
+//#define CL_EXTENSION_WEAK_LINK
+//#define CL_API_SUFFIX__VERSION_1_0
+//#define CL_EXT_SUFFIX__VERSION_1_0
+//#define CL_API_SUFFIX__VERSION_1_1
+//#define CL_EXT_SUFFIX__VERSION_1_1
+//#define CL_API_SUFFIX__VERSION_1_2
+//#define CL_EXT_SUFFIX__VERSION_1_2
+//#define CL_API_SUFFIX__VERSION_2_0
+//#define CL_EXT_SUFFIX__VERSION_2_0
+//#define CL_API_SUFFIX__VERSION_2_1
+//#define CL_EXT_SUFFIX__VERSION_2_1
+//#define CL_API_SUFFIX__VERSION_2_2
+//#define CL_EXT_SUFFIX__VERSION_2_2
 
 
-{$IFDEF __GNUC__ }
-  #define CL_EXT_SUFFIX_DEPRECATED __attribute__((deprecated))
-  #define CL_EXT_PREFIX_DEPRECATED
-{$ELSEIF defined( _WIN32 ) }
-  #define CL_EXT_SUFFIX_DEPRECATED
-  #define CL_EXT_PREFIX_DEPRECATED __declspec(deprecated)
-{$ELSE}
-  #define CL_EXT_SUFFIX_DEPRECATED
-  #define CL_EXT_PREFIX_DEPRECATED
-{$ENDIF}
+//{$IFDEF __GNUC__ }
+//  #define CL_EXT_SUFFIX_DEPRECATED __attribute__((deprecated))
+//  #define CL_EXT_PREFIX_DEPRECATED
+//{$ELSEIF defined( _WIN32 ) }
+//  #define CL_EXT_SUFFIX_DEPRECATED
+//  #define CL_EXT_PREFIX_DEPRECATED __declspec(deprecated)
+//{$ELSE}
+//  #define CL_EXT_SUFFIX_DEPRECATED
+//  #define CL_EXT_PREFIX_DEPRECATED
+//{$ENDIF}
 
-{$IFDEF CL_USE_DEPRECATED_OPENCL_1_0_APIS }
-    #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED
-    #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED
-{$ELSE}
-    #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
-    #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED CL_EXT_PREFIX_DEPRECATED
-{$ENDIF}
+//{$IFDEF CL_USE_DEPRECATED_OPENCL_1_0_APIS }
+//    #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED
+//    #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED
+//{$ELSE}
+//    #define CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
+//    #define CL_EXT_PREFIX__VERSION_1_0_DEPRECATED CL_EXT_PREFIX_DEPRECATED
+//{$ENDIF}
 
-{$IFDEF CL_USE_DEPRECATED_OPENCL_1_1_APIS }
-    #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED
-    #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED
-{$ELSE}
-    #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
-    #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED CL_EXT_PREFIX_DEPRECATED
-{$ENDIF}
+//{$IFDEF CL_USE_DEPRECATED_OPENCL_1_1_APIS }
+//    #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED
+//    #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED
+//{$ELSE}
+//    #define CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
+//    #define CL_EXT_PREFIX__VERSION_1_1_DEPRECATED CL_EXT_PREFIX_DEPRECATED
+//{$ENDIF}
 
-{$IFDEF CL_USE_DEPRECATED_OPENCL_1_2_APIS }
-    #define CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED
-    #define CL_EXT_PREFIX__VERSION_1_2_DEPRECATED
-{$ELSE}
-    #define CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
-    #define CL_EXT_PREFIX__VERSION_1_2_DEPRECATED CL_EXT_PREFIX_DEPRECATED
-{$ENDIF}
+//{$IFDEF CL_USE_DEPRECATED_OPENCL_1_2_APIS }
+//    #define CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED
+//    #define CL_EXT_PREFIX__VERSION_1_2_DEPRECATED
+//{$ELSE}
+//    #define CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
+//    #define CL_EXT_PREFIX__VERSION_1_2_DEPRECATED CL_EXT_PREFIX_DEPRECATED
+//{$ENDIF}
 
-{$IFDEF CL_USE_DEPRECATED_OPENCL_2_0_APIS }
-    #define CL_EXT_SUFFIX__VERSION_2_0_DEPRECATED
-    #define CL_EXT_PREFIX__VERSION_2_0_DEPRECATED
-{$ELSE}
-    #define CL_EXT_SUFFIX__VERSION_2_0_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
-    #define CL_EXT_PREFIX__VERSION_2_0_DEPRECATED CL_EXT_PREFIX_DEPRECATED
-{$ENDIF}
+//{$IFDEF CL_USE_DEPRECATED_OPENCL_2_0_APIS }
+//    #define CL_EXT_SUFFIX__VERSION_2_0_DEPRECATED
+//    #define CL_EXT_PREFIX__VERSION_2_0_DEPRECATED
+//{$ELSE}
+//    #define CL_EXT_SUFFIX__VERSION_2_0_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
+//    #define CL_EXT_PREFIX__VERSION_2_0_DEPRECATED CL_EXT_PREFIX_DEPRECATED
+//{$ENDIF}
 
-{$IFDEF CL_USE_DEPRECATED_OPENCL_2_1_APIS }
-    #define CL_EXT_SUFFIX__VERSION_2_1_DEPRECATED
-    #define CL_EXT_PREFIX__VERSION_2_1_DEPRECATED
-{$ELSE}
-    #define CL_EXT_SUFFIX__VERSION_2_1_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
-    #define CL_EXT_PREFIX__VERSION_2_1_DEPRECATED CL_EXT_PREFIX_DEPRECATED
-{$ENDIF}
+//{$IFDEF CL_USE_DEPRECATED_OPENCL_2_1_APIS }
+//    #define CL_EXT_SUFFIX__VERSION_2_1_DEPRECATED
+//    #define CL_EXT_PREFIX__VERSION_2_1_DEPRECATED
+//{$ELSE}
+//    #define CL_EXT_SUFFIX__VERSION_2_1_DEPRECATED CL_EXT_SUFFIX_DEPRECATED
+//    #define CL_EXT_PREFIX__VERSION_2_1_DEPRECATED CL_EXT_PREFIX_DEPRECATED
+//{$ENDIF}
 
 {$IF defined( _WIN32 ) and defined( _MSC_VER ) }
 
@@ -223,7 +223,7 @@ const CL_INFINITY         = CL_HUGE_VALF;
 
 {$ELSE}
 
-#include <stdint.h>
+//#include <stdint.h>
 
 (* scalar types  *)
 type T_cl_char   = T_int8_t;
@@ -324,15 +324,15 @@ const CL_M_SQRT1_2_F      = 0.707106781;
 {$ELSE}
     const CL_HUGE_VALF     = T_cl_float( 1e50 );
     const CL_HUGE_VAL      = T_cl_double( 1e500 );
-    float nanf( const char * );
-    const CL_NAN           = nanf( "" );
+//    float nanf( const char * );
+    const CL_NAN           = 0/0;
 {$ENDIF}
 const CL_MAXFLOAT         = CL_FLT_MAX;
 const CL_INFINITY         = CL_HUGE_VALF;
 
 {$ENDIF}
 
-#include <stddef.h>
+//#include <stddef.h>
 
 (* Mirror types to GL types. Mirror types allow us to avoid deciding which 87s to load based on whether we are using GL or GLES here. *)
 type T_cl_GLuint = T_unsigned_int;
@@ -485,19 +485,19 @@ const __CL_HAS_ANON_STRUCT__ = 1;
 const __CL_HAS_ANON_STRUCT__ = 1;
 #define  __CL_ANON_STRUCT__ __extension__
 {$ELSEIF defined( _WIN32 ) and defined( _MSC_VER ) }
-    {$IF _MSC_VER >= 1500 }
-   (* Microsoft Developer Studio 2008 supports anonymous structs, but
-    * complains by default. *)
-    const __CL_HAS_ANON_STRUCT__ = 1;
-    #define  __CL_ANON_STRUCT__
-   (* Disable warning C4201: nonstandard extension used : nameless
-    * struct/union *)
-    #pragma warning( push )
-    #pragma warning( disable : 4201 )
-    {$ENDIF}
+//    {$IF _MSC_VER >= 1500 }
+//   (* Microsoft Developer Studio 2008 supports anonymous structs, but
+//    * complains by default. *)
+//    const __CL_HAS_ANON_STRUCT__ = 1;
+//    #define  __CL_ANON_STRUCT__
+//   (* Disable warning C4201: nonstandard extension used : nameless
+//    * struct/union *)
+//    #pragma warning( push )
+//    #pragma warning( disable : 4201 )
+//    {$ENDIF}
 {$ELSE}
 const __CL_HAS_ANON_STRUCT__ = 0;
-#define  __CL_ANON_STRUCT__
+//#define  __CL_ANON_STRUCT__
 {$ENDIF}
 
 (* Define alignment keys *)
@@ -510,8 +510,8 @@ const __CL_HAS_ANON_STRUCT__ = 0;
     (* #define CL_ALIGNED(_x)          _CRT_ALIGN(_x)                                                                   *)
     #define CL_ALIGNED(_x)
 {$ELSE}
-    #warning  Need to implement some method to align data here
-    #define  CL_ALIGNED(_x)
+//    #warning  Need to implement some method to align data here
+//    #define  CL_ALIGNED(_x)
 {$ENDIF}
 
 (* Indicate whether .xyzw, .s0123 and .hi.lo are supported *)
@@ -1367,21 +1367,21 @@ type T_cl_double16 = record
  * This should correctly set up the line, (column) and file information for your source
  * string so you can do source level debugging.
  *)
-#define  __CL_STRINGIFY( _x )               # _x
-#define  _CL_STRINGIFY( _x )                __CL_STRINGIFY( _x )
-#define  CL_PROGRAM_STRING_DEBUG_INFO       "#line "  _CL_STRINGIFY(__LINE__) " \"" __FILE__ "\" \n\n"
+//#define  __CL_STRINGIFY( _x )               # _x
+//#define  _CL_STRINGIFY( _x )                __CL_STRINGIFY( _x )
+//#define  CL_PROGRAM_STRING_DEBUG_INFO       "#line "  _CL_STRINGIFY(__LINE__) " \"" __FILE__ "\" \n\n"
 
 //#ifdef __cplusplus
 //}
 //#endif
 
-#undef __CL_HAS_ANON_STRUCT__
-#undef __CL_ANON_STRUCT__
-#if defined( _WIN32) && defined(_MSC_VER)
-    #if _MSC_VER >=1500
-    #pragma warning( pop )
-    #endif
-#endif
+//#undef __CL_HAS_ANON_STRUCT__
+//#undef __CL_ANON_STRUCT__
+//#if defined( _WIN32) && defined(_MSC_VER)
+//    #if _MSC_VER >=1500
+//    #pragma warning( pop )
+//    #endif
+//#endif
 
 implementation //############################################################### ■
 
