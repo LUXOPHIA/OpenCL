@@ -525,8 +525,8 @@ typedef unsigned int cl_GLenum;
 (* Define cl_vector types *)
 
 (* ---- cl_charn ---- *)
-typedef union
-{
+type T_cl_char2 = record
+     case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_char );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_char );
@@ -536,10 +536,10 @@ typedef union
 #if defined( __CL_CHAR2__)
     __cl_char2     v2;
 #endif
-}cl_char2;
+     end;
 
-typedef union
-{
+type T_cl_char4 = record
+     case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_char );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_char );
@@ -552,13 +552,13 @@ typedef union
 #if defined( __CL_CHAR4__)
     __cl_char4     v4;
 #endif
-}cl_char4;
+     end;
 
 (* cl_char3 is identical in size, alignment and behavior to cl_char4. See section 6.1.5. *)
 typedef  cl_char4  cl_char3;
 
-typedef union
-{
+type T_cl_char8 = record
+     case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_char );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_char );
@@ -574,10 +574,10 @@ typedef union
 #if defined( __CL_CHAR8__ )
     __cl_char8     v8;
 #endif
-}cl_char8;
+     end;
 
-typedef union
-{
+type T_cl_char16 = record
+     case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_char );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_char );
@@ -596,12 +596,12 @@ typedef union
 #if defined( __CL_CHAR16__ )
     __cl_char16    v16;
 #endif
-}cl_char16;
+     end;
 
 
 (* ---- cl_ucharn ---- *)
-typedef union
-{
+type T_cl_uchar2 = record
+     case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_uchar );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_uchar );
@@ -611,10 +611,10 @@ typedef union
 #if defined( __cl_uchar2__)
     __cl_uchar2     v2;
 #endif
-}cl_uchar2;
+     end;
 
-typedef union
-{
+type T_cl_uchar4 = record
+     case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_uchar );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_uchar );
@@ -627,13 +627,13 @@ typedef union
 #if defined( __CL_UCHAR4__)
     __cl_uchar4     v4;
 #endif
-}cl_uchar4;
+     end;
 
 (* cl_uchar3 is identical in size, alignment and behavior to cl_uchar4. See section 6.1.5. *)
 typedef  cl_uchar4  cl_uchar3;
 
-typedef union
-{
+type T_cl_uchar8 = record
+     case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_uchar );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_uchar );
@@ -649,10 +649,10 @@ typedef union
 #if defined( __CL_UCHAR8__ )
     __cl_uchar8     v8;
 #endif
-}cl_uchar8;
+     end;
 
-typedef union
-{
+type T_cl_uchar16 = record
+     case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_uchar );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_uchar );
@@ -671,12 +671,12 @@ typedef union
 #if defined( __CL_UCHAR16__ )
     __cl_uchar16    v16;
 #endif
-}cl_uchar16;
+     end;
 
 
 (* ---- cl_shortn ---- *)
-typedef union
-{
+type T_cl_short2 = record
+     case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_short );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_short );
@@ -686,10 +686,10 @@ typedef union
 #if defined( __CL_SHORT2__)
     __cl_short2     v2;
 #endif
-}cl_short2;
+     end;
 
-typedef union
-{
+type T_cl_short4 = record
+     case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_short );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_short );
@@ -702,13 +702,13 @@ typedef union
 #if defined( __CL_SHORT4__)
     __cl_short4     v4;
 #endif
-}cl_short4;
+     end;
 
 (* cl_short3 is identical in size, alignment and behavior to cl_short4. See section 6.1.5. *)
 typedef  cl_short4  cl_short3;
 
-typedef union
-{
+type T_cl_short8 = record
+     case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_short );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_short );
@@ -724,10 +724,10 @@ typedef union
 #if defined( __CL_SHORT8__ )
     __cl_short8     v8;
 #endif
-}cl_short8;
+     end;
 
-typedef union
-{
+type T_cl_short16 = record
+     case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_short );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_short );
@@ -746,12 +746,12 @@ typedef union
 #if defined( __CL_SHORT16__ )
     __cl_short16    v16;
 #endif
-}cl_short16;
+     end;
 
 
 (* ---- cl_ushortn ---- *)
-typedef union
-{
+type T_cl_ushort2 = record
+     case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_ushort );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_ushort );
@@ -761,10 +761,10 @@ typedef union
 #if defined( __CL_USHORT2__)
     __cl_ushort2     v2;
 #endif
-}cl_ushort2;
+     end;
 
-typedef union
-{
+type T_cl_ushort4 = record
+     case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_ushort );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_ushort );
@@ -777,13 +777,13 @@ typedef union
 #if defined( __CL_USHORT4__)
     __cl_ushort4     v4;
 #endif
-}cl_ushort4;
+     end;
 
 (* cl_ushort3 is identical in size, alignment and behavior to cl_ushort4. See section 6.1.5. *)
 typedef  cl_ushort4  cl_ushort3;
 
-typedef union
-{
+type T_cl_ushort8 = record
+     case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_ushort );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_ushort );
@@ -799,10 +799,10 @@ typedef union
 #if defined( __CL_USHORT8__ )
     __cl_ushort8     v8;
 #endif
-}cl_ushort8;
+     end;
 
-typedef union
-{
+type T_cl_ushort16 = record
+     case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_ushort );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_ushort );
@@ -821,12 +821,12 @@ typedef union
 #if defined( __CL_USHORT16__ )
     __cl_ushort16    v16;
 #endif
-}cl_ushort16;
+     end;
 
 
 (* ---- cl_halfn ---- *)
-typedef union
-{
+type T_cl_half2 = record
+     case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_half );
 #if __CL_HAS_ANON_STRUCT__
         1: ( x, y :T_cl_half );
@@ -836,10 +836,10 @@ typedef union
 #if defined( __CL_HALF2__)
     __cl_half2     v2;
 #endif
-}cl_half2;
+     end;
 
-typedef union
-{
+type T_cl_half4 = record
+     case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_half );
 #if __CL_HAS_ANON_STRUCT__
         1: ( x, y, z, w :T_cl_half );
@@ -852,13 +852,13 @@ typedef union
 #if defined( __CL_HALF4__)
     __cl_half4     v4;
 #endif
-}cl_half4;
+     end;
 
 (* cl_half3 is identical in size, alignment and behavior to cl_half4. See section 6.1.5. *)
 typedef  cl_half4  cl_half3;
 
-typedef union
-{
+type T_cl_half8 = record
+     case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_half );
 #if __CL_HAS_ANON_STRUCT__
         1: ( x, y, z, w :T_cl_half );
@@ -874,10 +874,10 @@ typedef union
 #if defined( __CL_HALF8__ )
     __cl_half8     v8;
 #endif
-}cl_half8;
+     end;
 
-typedef union
-{
+type T_cl_half16 = record
+     case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_half );
 #if __CL_HAS_ANON_STRUCT__
         1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_half );
@@ -896,11 +896,11 @@ typedef union
 #if defined( __CL_HALF16__ )
     __cl_half16    v16;
 #endif
-}cl_half16;
+     end;
 
 (* ---- cl_intn ---- *)
-typedef union
-{
+type T_cl_int2 = record
+     case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_int );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_int );
@@ -910,10 +910,10 @@ typedef union
 #if defined( __CL_INT2__)
     __cl_int2     v2;
 #endif
-}cl_int2;
+     end;
 
-typedef union
-{
+type T_cl_int4 = record
+     case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_int );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_int );
@@ -926,13 +926,13 @@ typedef union
 #if defined( __CL_INT4__)
     __cl_int4     v4;
 #endif
-}cl_int4;
+     end;
 
 (* cl_int3 is identical in size, alignment and behavior to cl_int4. See section 6.1.5. *)
 typedef  cl_int4  cl_int3;
 
-typedef union
-{
+type T_cl_int8 = record
+     case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_int );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_int );
@@ -948,10 +948,10 @@ typedef union
 #if defined( __CL_INT8__ )
     __cl_int8     v8;
 #endif
-}cl_int8;
+     end;
 
-typedef union
-{
+type T_cl_int16 = record
+     case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_int );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_int );
@@ -970,12 +970,12 @@ typedef union
 #if defined( __CL_INT16__ )
     __cl_int16    v16;
 #endif
-}cl_int16;
+     end;
 
 
 (* ---- cl_uintn ---- *)
-typedef union
-{
+type T_cl_uint2 = record
+     case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_uint );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_uint );
@@ -985,10 +985,10 @@ typedef union
 #if defined( __CL_UINT2__)
     __cl_uint2     v2;
 #endif
-}cl_uint2;
+     end;
 
-typedef union
-{
+type T_cl_uint4 = record
+     case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_uint );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_uint );
@@ -1001,13 +1001,13 @@ typedef union
 #if defined( __CL_UINT4__)
     __cl_uint4     v4;
 #endif
-}cl_uint4;
+     end;
 
 (* cl_uint3 is identical in size, alignment and behavior to cl_uint4. See section 6.1.5. *)
 typedef  cl_uint4  cl_uint3;
 
-typedef union
-{
+type T_cl_uint8 = record
+     case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_uint );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_uint );
@@ -1023,10 +1023,10 @@ typedef union
 #if defined( __CL_UINT8__ )
     __cl_uint8     v8;
 #endif
-}cl_uint8;
+     end;
 
-typedef union
-{
+type T_cl_uint16 = record
+     case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_uint );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_uint );
@@ -1045,11 +1045,11 @@ typedef union
 #if defined( __CL_UINT16__ )
     __cl_uint16    v16;
 #endif
-}cl_uint16;
+     end;
 
 (* ---- cl_longn ---- *)
-typedef union
-{
+type T_cl_long2 = record
+     case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_long );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_long );
@@ -1059,10 +1059,10 @@ typedef union
 #if defined( __CL_LONG2__)
     __cl_long2     v2;
 #endif
-}cl_long2;
+     end;
 
-typedef union
-{
+type T_cl_long4 = record
+     case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_long );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_long );
@@ -1075,13 +1075,13 @@ typedef union
 #if defined( __CL_LONG4__)
     __cl_long4     v4;
 #endif
-}cl_long4;
+     end;
 
 (* cl_long3 is identical in size, alignment and behavior to cl_long4. See section 6.1.5. *)
 typedef  cl_long4  cl_long3;
 
-typedef union
-{
+type T_cl_long8 = record
+     case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_long );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_long );
@@ -1097,10 +1097,10 @@ typedef union
 #if defined( __CL_LONG8__ )
     __cl_long8     v8;
 #endif
-}cl_long8;
+     end;
 
-typedef union
-{
+type T_cl_long16 = record
+     case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_long );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_long );
@@ -1119,12 +1119,12 @@ typedef union
 #if defined( __CL_LONG16__ )
     __cl_long16    v16;
 #endif
-}cl_long16;
+     end;
 
 
 (* ---- cl_ulongn ---- *)
-typedef union
-{
+type T_cl_ulong2 = record
+     case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_ulong );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_ulong );
@@ -1134,10 +1134,10 @@ typedef union
 #if defined( __CL_ULONG2__)
     __cl_ulong2     v2;
 #endif
-}cl_ulong2;
+     end;
 
-typedef union
-{
+type T_cl_ulong4 = record
+     case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_ulong );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_ulong );
@@ -1150,13 +1150,13 @@ typedef union
 #if defined( __CL_ULONG4__)
     __cl_ulong4     v4;
 #endif
-}cl_ulong4;
+     end;
 
 (* cl_ulong3 is identical in size, alignment and behavior to cl_ulong4. See section 6.1.5. *)
 typedef  cl_ulong4  cl_ulong3;
 
-typedef union
-{
+type T_cl_ulong8 = record
+     case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_ulong );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_ulong );
@@ -1172,10 +1172,10 @@ typedef union
 #if defined( __CL_ULONG8__ )
     __cl_ulong8     v8;
 #endif
-}cl_ulong8;
+     end;
 
-typedef union
-{
+type T_cl_ulong16 = record
+     case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_ulong );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_ulong );
@@ -1194,13 +1194,13 @@ typedef union
 #if defined( __CL_ULONG16__ )
     __cl_ulong16    v16;
 #endif
-}cl_ulong16;
+     end;
 
 
 (* --- cl_floatn ---- *)
 
-typedef union
-{
+type T_cl_float2 = record
+     case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_float );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_float );
@@ -1210,10 +1210,10 @@ typedef union
 #if defined( __CL_FLOAT2__)
     __cl_float2     v2;
 #endif
-}cl_float2;
+     end;
 
-typedef union
-{
+type T_cl_float4 = record
+     case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_float );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_float );
@@ -1226,13 +1226,13 @@ typedef union
 #if defined( __CL_FLOAT4__)
     __cl_float4     v4;
 #endif
-}cl_float4;
+     end;
 
 (* cl_float3 is identical in size, alignment and behavior to cl_float4. See section 6.1.5. *)
 typedef  cl_float4  cl_float3;
 
-typedef union
-{
+type T_cl_float8 = record
+     case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_float );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_float );
@@ -1248,10 +1248,10 @@ typedef union
 #if defined( __CL_FLOAT8__ )
     __cl_float8     v8;
 #endif
-}cl_float8;
+     end;
 
-typedef union
-{
+type T_cl_float16 = record
+     case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_float );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_float );
@@ -1270,12 +1270,12 @@ typedef union
 #if defined( __CL_FLOAT16__ )
     __cl_float16    v16;
 #endif
-}cl_float16;
+     end;
 
 (* --- cl_doublen ---- *)
 
-typedef union
-{
+type T_cl_double2 = record
+     case Byte of
        0: ( s :array [ 0..2-1 ] of T_cl_double );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y :T_cl_double );
@@ -1285,10 +1285,10 @@ typedef union
 #if defined( __CL_DOUBLE2__)
     __cl_double2     v2;
 #endif
-}cl_double2;
+     end;
 
-typedef union
-{
+type T_cl_double4 = record
+     case Byte of
        0: ( s :array [ 0..4-1 ] of T_cl_double );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_double );
@@ -1301,13 +1301,13 @@ typedef union
 #if defined( __CL_DOUBLE4__)
     __cl_double4     v4;
 #endif
-}cl_double4;
+     end;
 
 (* cl_double3 is identical in size, alignment and behavior to cl_double4. See section 6.1.5. *)
 typedef  cl_double4  cl_double3;
 
-typedef union
-{
+type T_cl_double8 = record
+     case Byte of
        0: ( s :array [ 0..8-1 ] of T_cl_double );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w :T_cl_double );
@@ -1323,10 +1323,10 @@ typedef union
 #if defined( __CL_DOUBLE8__ )
     __cl_double8     v8;
 #endif
-}cl_double8;
+     end;
 
-typedef union
-{
+type T_cl_double16 = record
+     case Byte of
        0: ( s :array [ 0..16-1 ] of T_cl_double );
 #if __CL_HAS_ANON_STRUCT__
        1: ( x, y, z, w, __spacer4, __spacer5, __spacer6, __spacer7, __spacer8, __spacer9, sa, sb, sc, sd, se, sf :T_cl_double );
@@ -1345,7 +1345,7 @@ typedef union
 #if defined( __CL_DOUBLE16__ )
     __cl_double16    v16;
 #endif
-}cl_double16;
+     end;
 
 (* Macro to facilitate debugging
  * Usage:
