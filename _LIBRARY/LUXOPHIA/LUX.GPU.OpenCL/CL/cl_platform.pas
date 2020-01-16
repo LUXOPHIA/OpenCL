@@ -318,14 +318,14 @@ const CL_M_SQRT2_F        = 1.414213562;
 const CL_M_SQRT1_2_F      = 0.707106781;
 
 {$IF defined( __GNUC__ ) }
-   const CL_HUGE_VALF     = __builtin_huge_valf();
-   const CL_HUGE_VAL      = __builtin_huge_val();
-   const CL_NAN           = __builtin_nanf( "" );
+    const CL_HUGE_VALF     = __builtin_huge_valf();
+    const CL_HUGE_VAL      = __builtin_huge_val();
+    const CL_NAN           = __builtin_nanf( "" );
 {$ELSE}
-   const CL_HUGE_VALF     = T_cl_float( 1e50 );
-   const CL_HUGE_VAL      = T_cl_double( 1e500 );
-   float nanf( const char * );
-   const CL_NAN           = nanf( "" );
+    const CL_HUGE_VALF     = T_cl_float( 1e50 );
+    const CL_HUGE_VAL      = T_cl_double( 1e500 );
+    float nanf( const char * );
+    const CL_NAN           = nanf( "" );
 {$ENDIF}
 const CL_MAXFLOAT         = CL_FLT_MAX;
 const CL_INFINITY         = CL_HUGE_VALF;
@@ -357,21 +357,21 @@ type T_cl_GLenum = T_unsigned_int;
 
 (* Define basic vector types *)
 {$IF defined( __VEC__ ) }
-   #include <altivec.h>   (* may be omitted depending on compiler. AltiVec spec provides no way to detect whether the header is required. *)
-   typedef __vector unsigned char     __cl_uchar16;
-   typedef __vector signed char       __cl_char16;
-   typedef __vector unsigned short    __cl_ushort8;
-   typedef __vector signed short      __cl_short8;
-   typedef __vector unsigned int      __cl_uint4;
-   typedef __vector signed int        __cl_int4;
-   typedef __vector float             __cl_float4;
-   const __CL_UCHAR16__  = 1;
-   const __CL_CHAR16__   = 1;
-   const __CL_USHORT8__  = 1;
-   const __CL_SHORT8__   = 1;
-   const __CL_UINT4__    = 1;
-   const __CL_INT4__     = 1;
-   const __CL_FLOAT4__   = 1;
+    #include <altivec.h>   (* may be omitted depending on compiler. AltiVec spec provides no way to detect whether the header is required. *)
+    typedef __vector unsigned char     __cl_uchar16;
+    typedef __vector signed char       __cl_char16;
+    typedef __vector unsigned short    __cl_ushort8;
+    typedef __vector signed short      __cl_short8;
+    typedef __vector unsigned int      __cl_uint4;
+    typedef __vector signed int        __cl_int4;
+    typedef __vector float             __cl_float4;
+    const __CL_UCHAR16__  = 1;
+    const __CL_CHAR16__   = 1;
+    const __CL_USHORT8__  = 1;
+    const __CL_SHORT8__   = 1;
+    const __CL_UINT4__    = 1;
+    const __CL_INT4__     = 1;
+    const __CL_FLOAT4__   = 1;
 {$ENDIF}
 
 {$IF defined( __SSE__ ) }
@@ -510,8 +510,8 @@ const __CL_HAS_ANON_STRUCT__ = 0;
     (* #define CL_ALIGNED(_x)          _CRT_ALIGN(_x)                                                                   *)
     #define CL_ALIGNED(_x)
 {$ELSE}
-   #warning  Need to implement some method to align data here
-   #define  CL_ALIGNED(_x)
+    #warning  Need to implement some method to align data here
+    #define  CL_ALIGNED(_x)
 {$ENDIF}
 
 (* Indicate whether .xyzw, .s0123 and .hi.lo are supported *)
