@@ -73,7 +73,7 @@ uses LUX.Code.C,
 {$IFDEF __GNUC__ }
   #define CL_EXT_SUFFIX_DEPRECATED __attribute__((deprecated))
   #define CL_EXT_PREFIX_DEPRECATED
-#elif defined(_WIN32)
+{$ELSEIF defined( _WIN32 ) }
   #define CL_EXT_SUFFIX_DEPRECATED
   #define CL_EXT_PREFIX_DEPRECATED __declspec(deprecated)
 {$ELSE}
@@ -481,10 +481,10 @@ typedef unsigned int cl_GLenum;
 {$IF not defined( __cplusplus ) and defined( __STDC_VERSION__ ) and ( __STDC_VERSION__ >= 201112 ) }
 #define  __CL_HAS_ANON_STRUCT__ 1
 #define  __CL_ANON_STRUCT__
-#elif defined( __GNUC__) && ! defined( __STRICT_ANSI__ )
+{$ELSEIF defined( __GNUC__ ) and not defined( __STRICT_ANSI__ ) }
 #define  __CL_HAS_ANON_STRUCT__ 1
 #define  __CL_ANON_STRUCT__ __extension__
-#elif defined( _WIN32) && defined(_MSC_VER)
+{$ELSEIF defined( _WIN32 ) and defined( _MSC_VER ) }
     {$IF _MSC_VER >= 1500 }
    (* Microsoft Developer Studio 2008 supports anonymous structs, but
     * complains by default. *)
@@ -503,7 +503,7 @@ typedef unsigned int cl_GLenum;
 (* Define alignment keys *)
 {$IF defined( __GNUC__ ) }
     #define CL_ALIGNED(_x)          __attribute__ ((aligned(_x)))
-#elif defined( _WIN32) && (_MSC_VER)
+{$ELSEIF defined( _WIN32 ) and defined( _MSC_VER ) }
     (* Alignment keys neutered on windows because MSVC can't swallow function arguments with alignment requirements     *)
     (* http://msdn.microsoft.com/en-us/library/373ak2y1%28VS.71%29.aspx                                                 *)
     (* #include <crtdefs.h>                                                                                             *)
