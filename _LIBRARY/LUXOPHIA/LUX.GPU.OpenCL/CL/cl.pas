@@ -34,15 +34,15 @@ uses cl_version, cl_platform;
 
 (******************************************************************************)
 
-typedef struct _cl_platform_id *    cl_platform_id;
-typedef struct _cl_device_id *      cl_device_id;
-typedef struct _cl_context *        cl_context;
-typedef struct _cl_command_queue *  cl_command_queue;
-typedef struct _cl_mem *            cl_mem;
-typedef struct _cl_program *        cl_program;
-typedef struct _cl_kernel *         cl_kernel;
-typedef struct _cl_event *          cl_event;
-typedef struct _cl_sampler *        cl_sampler;
+type T_cl_platform_id   = ^T__cl_platform_id  ;  T__cl_platform_id   = record end;
+type T_cl_device_id     = ^T__cl_device_id    ;  T__cl_device_id     = record end;
+type T_cl_context       = ^T__cl_context      ;  T__cl_context       = record end;
+type T_cl_command_queue = ^T__cl_command_queue;  T__cl_command_queue = record end;
+type T_cl_mem           = ^T__cl_mem          ;  T__cl_mem           = record end;
+type T_cl_program       = ^T__cl_program      ;  T__cl_program       = record end;
+type T_cl_kernel        = ^T__cl_kernel       ;  T__cl_kernel        = record end;
+type T_cl_event         = ^T__cl_event        ;  T__cl_event         = record end;
+type T_cl_sampler       = ^T__cl_sampler      ;  T__cl_sampler       = record end;
 
 type T_cl_bool                         = T_cl_uint;                     (* WARNING!  Unlike cl_ types in cl_platform.h, cl_bool is not guaranteed to be the same size as the bool in kernels. *)
 type T_cl_bitfield                     = T_cl_ulong;
@@ -116,23 +116,23 @@ type T_cl_sampler_properties           = T_cl_bitfield;
 type T_cl_kernel_exec_info             = T_cl_uint;
 {$ENDIF}
 
-typedef struct _cl_image_format {
-    cl_channel_order        image_channel_order;
-    cl_channel_type         image_channel_data_type;
-} cl_image_format;
+type T_cl_image_format = record
+       image_channel_order     :T_cl_channel_order;
+       image_channel_data_type :T_cl_channel_type;
+     end;
 
 {$IFDEF CL_VERSION_1_2 }
 
-typedef struct _cl_image_desc {
-    cl_mem_object_type      image_type;
-    size_t                  image_width;
-    size_t                  image_height;
-    size_t                  image_depth;
-    size_t                  image_array_size;
-    size_t                  image_row_pitch;
-    size_t                  image_slice_pitch;
-    cl_uint                 num_mip_levels;
-    cl_uint                 num_samples;
+type T_cl_image_desc = record
+       image_type        :T_cl_mem_object_type;
+       image_width       :T_size_t;
+       image_height      :T_size_t;
+       image_depth       :T_size_t;
+       image_array_size  :T_size_t;
+       image_row_pitch   :T_size_t;
+       image_slice_pitch :T_size_t;
+       num_mip_levels    :T_cl_uint;
+       num_samples       :T_cl_uint;
 {$IFDEF CL_VERSION_2_0 }
 {$IFDEF __GNUC__ }
     __extension__   (* Prevents warnings about anonymous union in -pedantic builds *)
@@ -141,26 +141,26 @@ typedef struct _cl_image_desc {
 #pragma warning( push )
 #pragma warning( disable : 4201 ) (* Prevents warning about nameless struct/union in /W4 /Za builds *)
 {$ENDIF}
-    union {
+    case  Byte of
 {$ENDIF}
-      cl_mem                  buffer;
+       0: ( buffer :T_cl_mem );
 {$IFDEF CL_VERSION_2_0 }
-      cl_mem                  mem_object;
+       1: ( mem_object :T_cl_mem );
     };
 {$IFDEF _MSC_VER }
 #pragma warning( pop )
 {$ENDIF}
 {$ENDIF}
-} cl_image_desc;
+end;
 
 {$ENDIF}
 
 {$IFDEF CL_VERSION_1_1 }
 
-typedef struct _cl_buffer_region {
-    size_t                  origin;
-    size_t                  size;
-} cl_buffer_region;
+type T_cl_buffer_region = record
+       origin :T_size_t;
+       size   :T_size_t;
+     end;
 
 {$ENDIF}
 
