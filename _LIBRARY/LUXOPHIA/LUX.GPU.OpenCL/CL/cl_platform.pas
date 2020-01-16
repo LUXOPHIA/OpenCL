@@ -138,88 +138,88 @@ type T_cl_float  = T_float;
 type T_cl_double = T_double;
 
 (* Macro names and corresponding values defined by OpenCL *)
-#define CL_CHAR_BIT         8
-#define CL_SCHAR_MAX        127
-#define CL_SCHAR_MIN        (-127-1)
-#define CL_CHAR_MAX         CL_SCHAR_MAX
-#define CL_CHAR_MIN         CL_SCHAR_MIN
-#define CL_UCHAR_MAX        255
-#define CL_SHRT_MAX         32767
-#define CL_SHRT_MIN         (-32767-1)
-#define CL_USHRT_MAX        65535
-#define CL_INT_MAX          2147483647
-#define CL_INT_MIN          (-2147483647-1)
-#define CL_UINT_MAX         0xffffffffU
-#define CL_LONG_MAX         ((cl_long) 0x7FFFFFFFFFFFFFFFLL)
-#define CL_LONG_MIN         ((cl_long) -0x7FFFFFFFFFFFFFFFLL - 1LL)
-#define CL_ULONG_MAX        ((cl_ulong) 0xFFFFFFFFFFFFFFFFULL)
+const CL_CHAR_BIT         = 8;
+const CL_SCHAR_MAX        = 127;
+const CL_SCHAR_MIN        = (-127-1);
+const CL_CHAR_MAX         = CL_SCHAR_MAX;
+const CL_CHAR_MIN         = CL_SCHAR_MIN;
+const CL_UCHAR_MAX        = 255;
+const CL_SHRT_MAX         = 32767;
+const CL_SHRT_MIN         = (-32767-1);
+const CL_USHRT_MAX        = 65535;
+const CL_INT_MAX          = 2147483647;
+const CL_INT_MIN          = (-2147483647-1);
+const CL_UINT_MAX         = 0xffffffffU;
+const CL_LONG_MAX         = ((cl_long) 0x7FFFFFFFFFFFFFFFLL);
+const CL_LONG_MIN         = ((cl_long) -0x7FFFFFFFFFFFFFFFLL - 1LL);
+const CL_ULONG_MAX        = ((cl_ulong) 0xFFFFFFFFFFFFFFFFULL);
 
-#define CL_FLT_DIG          6
-#define CL_FLT_MANT_DIG     24
-#define CL_FLT_MAX_10_EXP   +38
-#define CL_FLT_MAX_EXP      +128
-#define CL_FLT_MIN_10_EXP   -37
-#define CL_FLT_MIN_EXP      -125
-#define CL_FLT_RADIX        2
-#define CL_FLT_MAX          340282346638528859811704183484516925440.0f
-#define CL_FLT_MIN          1.175494350822287507969e-38f
-#define CL_FLT_EPSILON      1.1920928955078125e-7f
+const CL_FLT_DIG          = 6;
+const CL_FLT_MANT_DIG     = 24;
+const CL_FLT_MAX_10_EXP   = +38;
+const CL_FLT_MAX_EXP      = +128;
+const CL_FLT_MIN_10_EXP   = -37;
+const CL_FLT_MIN_EXP      = -125;
+const CL_FLT_RADIX        = 2;
+const CL_FLT_MAX          = 340282346638528859811704183484516925440.0f;
+const CL_FLT_MIN          = 1.175494350822287507969e-38f;
+const CL_FLT_EPSILON      = 1.1920928955078125e-7f;
 
-#define CL_HALF_DIG          3
-#define CL_HALF_MANT_DIG     11
-#define CL_HALF_MAX_10_EXP   +4
-#define CL_HALF_MAX_EXP      +16
-#define CL_HALF_MIN_10_EXP   -4
-#define CL_HALF_MIN_EXP      -13
-#define CL_HALF_RADIX        2
-#define CL_HALF_MAX          65504.0f
-#define CL_HALF_MIN          6.103515625e-05f
-#define CL_HALF_EPSILON      9.765625e-04f
+const CL_HALF_DIG          = 3;
+const CL_HALF_MANT_DIG     = 11;
+const CL_HALF_MAX_10_EXP   = +4;
+const CL_HALF_MAX_EXP      = +16;
+const CL_HALF_MIN_10_EXP   = -4;
+const CL_HALF_MIN_EXP      = -13;
+const CL_HALF_RADIX        = 2;
+const CL_HALF_MAX          = 65504.0f;
+const CL_HALF_MIN          = 6.103515625e-05f;
+const CL_HALF_EPSILON      = 9.765625e-04f;
 
-#define CL_DBL_DIG          15
-#define CL_DBL_MANT_DIG     53
-#define CL_DBL_MAX_10_EXP   +308
-#define CL_DBL_MAX_EXP      +1024
-#define CL_DBL_MIN_10_EXP   -307
-#define CL_DBL_MIN_EXP      -1021
-#define CL_DBL_RADIX        2
-#define CL_DBL_MAX          1.7976931348623158e+308
-#define CL_DBL_MIN          2.225073858507201383090e-308
-#define CL_DBL_EPSILON      2.220446049250313080847e-16
+const CL_DBL_DIG          = 15;
+const CL_DBL_MANT_DIG     = 53;
+const CL_DBL_MAX_10_EXP   = +308;
+const CL_DBL_MAX_EXP      = +1024;
+const CL_DBL_MIN_10_EXP   = -307;
+const CL_DBL_MIN_EXP      = -1021;
+const CL_DBL_RADIX        = 2;
+const CL_DBL_MAX          = 1.7976931348623158e+308;
+const CL_DBL_MIN          = 2.225073858507201383090e-308;
+const CL_DBL_EPSILON      = 2.220446049250313080847e-16;
 
-#define CL_M_E              2.7182818284590452354
-#define CL_M_LOG2E          1.4426950408889634074
-#define CL_M_LOG10E         0.43429448190325182765
-#define CL_M_LN2            0.69314718055994530942
-#define CL_M_LN10           2.30258509299404568402
-#define CL_M_PI             3.14159265358979323846
-#define CL_M_PI_2           1.57079632679489661923
-#define CL_M_PI_4           0.78539816339744830962
-#define CL_M_1_PI           0.31830988618379067154
-#define CL_M_2_PI           0.63661977236758134308
-#define CL_M_2_SQRTPI       1.12837916709551257390
-#define CL_M_SQRT2          1.41421356237309504880
-#define CL_M_SQRT1_2        0.70710678118654752440
+const CL_M_E              = 2.7182818284590452354;
+const CL_M_LOG2E          = 1.4426950408889634074;
+const CL_M_LOG10E         = 0.43429448190325182765;
+const CL_M_LN2            = 0.69314718055994530942;
+const CL_M_LN10           = 2.30258509299404568402;
+const CL_M_PI             = 3.14159265358979323846;
+const CL_M_PI_2           = 1.57079632679489661923;
+const CL_M_PI_4           = 0.78539816339744830962;
+const CL_M_1_PI           = 0.31830988618379067154;
+const CL_M_2_PI           = 0.63661977236758134308;
+const CL_M_2_SQRTPI       = 1.12837916709551257390;
+const CL_M_SQRT2          = 1.41421356237309504880;
+const CL_M_SQRT1_2        = 0.70710678118654752440;
 
-#define CL_M_E_F            2.718281828f
-#define CL_M_LOG2E_F        1.442695041f
-#define CL_M_LOG10E_F       0.434294482f
-#define CL_M_LN2_F          0.693147181f
-#define CL_M_LN10_F         2.302585093f
-#define CL_M_PI_F           3.141592654f
-#define CL_M_PI_2_F         1.570796327f
-#define CL_M_PI_4_F         0.785398163f
-#define CL_M_1_PI_F         0.318309886f
-#define CL_M_2_PI_F         0.636619772f
-#define CL_M_2_SQRTPI_F     1.128379167f
-#define CL_M_SQRT2_F        1.414213562f
-#define CL_M_SQRT1_2_F      0.707106781f
+const CL_M_E_F            = 2.718281828f;
+const CL_M_LOG2E_F        = 1.442695041f;
+const CL_M_LOG10E_F       = 0.434294482f;
+const CL_M_LN2_F          = 0.693147181f;
+const CL_M_LN10_F         = 2.302585093f;
+const CL_M_PI_F           = 3.141592654f;
+const CL_M_PI_2_F         = 1.570796327f;
+const CL_M_PI_4_F         = 0.785398163f;
+const CL_M_1_PI_F         = 0.318309886f;
+const CL_M_2_PI_F         = 0.636619772f;
+const CL_M_2_SQRTPI_F     = 1.128379167f;
+const CL_M_SQRT2_F        = 1.414213562f;
+const CL_M_SQRT1_2_F      = 0.707106781f;
 
-#define CL_NAN              (CL_INFINITY - CL_INFINITY)
-#define CL_HUGE_VALF        ((cl_float) 1e50)
-#define CL_HUGE_VAL         ((cl_double) 1e500)
-#define CL_MAXFLOAT         CL_FLT_MAX
-#define CL_INFINITY         CL_HUGE_VALF
+const CL_NAN              = (CL_INFINITY - CL_INFINITY);
+const CL_HUGE_VALF        = ((cl_float) 1e50);
+const CL_HUGE_VAL         = ((cl_double) 1e500);
+const CL_MAXFLOAT         = CL_FLT_MAX;
+const CL_INFINITY         = CL_HUGE_VALF;
 
 {$ELSE}
 
@@ -240,95 +240,95 @@ type T_cl_float  = T_float;
 type T_cl_double = T_double;
 
 (* Macro names and corresponding values defined by OpenCL *)
-#define CL_CHAR_BIT         8
-#define CL_SCHAR_MAX        127
-#define CL_SCHAR_MIN        (-127-1)
-#define CL_CHAR_MAX         CL_SCHAR_MAX
-#define CL_CHAR_MIN         CL_SCHAR_MIN
-#define CL_UCHAR_MAX        255
-#define CL_SHRT_MAX         32767
-#define CL_SHRT_MIN         (-32767-1)
-#define CL_USHRT_MAX        65535
-#define CL_INT_MAX          2147483647
-#define CL_INT_MIN          (-2147483647-1)
-#define CL_UINT_MAX         0xffffffffU
-#define CL_LONG_MAX         ((cl_long) 0x7FFFFFFFFFFFFFFFLL)
-#define CL_LONG_MIN         ((cl_long) -0x7FFFFFFFFFFFFFFFLL - 1LL)
-#define CL_ULONG_MAX        ((cl_ulong) 0xFFFFFFFFFFFFFFFFULL)
+const CL_CHAR_BIT         = 8;
+const CL_SCHAR_MAX        = 127;
+const CL_SCHAR_MIN        = (-127-1);
+const CL_CHAR_MAX         = CL_SCHAR_MAX;
+const CL_CHAR_MIN         = CL_SCHAR_MIN;
+const CL_UCHAR_MAX        = 255;
+const CL_SHRT_MAX         = 32767;
+const CL_SHRT_MIN         = (-32767-1);
+const CL_USHRT_MAX        = 65535;
+const CL_INT_MAX          = 2147483647;
+const CL_INT_MIN          = (-2147483647-1);
+const CL_UINT_MAX         = 0xffffffffU;
+const CL_LONG_MAX         = ((cl_long) 0x7FFFFFFFFFFFFFFFLL);
+const CL_LONG_MIN         = ((cl_long) -0x7FFFFFFFFFFFFFFFLL - 1LL);
+const CL_ULONG_MAX        = ((cl_ulong) 0xFFFFFFFFFFFFFFFFULL);
 
-#define CL_FLT_DIG          6
-#define CL_FLT_MANT_DIG     24
-#define CL_FLT_MAX_10_EXP   +38
-#define CL_FLT_MAX_EXP      +128
-#define CL_FLT_MIN_10_EXP   -37
-#define CL_FLT_MIN_EXP      -125
-#define CL_FLT_RADIX        2
-#define CL_FLT_MAX          340282346638528859811704183484516925440.0f
-#define CL_FLT_MIN          1.175494350822287507969e-38f
-#define CL_FLT_EPSILON      1.1920928955078125e-7f
+const CL_FLT_DIG          = 6;
+const CL_FLT_MANT_DIG     = 24;
+const CL_FLT_MAX_10_EXP   = +38;
+const CL_FLT_MAX_EXP      = +128;
+const CL_FLT_MIN_10_EXP   = -37;
+const CL_FLT_MIN_EXP      = -125;
+const CL_FLT_RADIX        = 2;
+const CL_FLT_MAX          = 340282346638528859811704183484516925440.0f;
+const CL_FLT_MIN          = 1.175494350822287507969e-38f;
+const CL_FLT_EPSILON      = 1.1920928955078125e-7f;
 
-#define CL_HALF_DIG          3
-#define CL_HALF_MANT_DIG     11
-#define CL_HALF_MAX_10_EXP   +4
-#define CL_HALF_MAX_EXP      +16
-#define CL_HALF_MIN_10_EXP   -4
-#define CL_HALF_MIN_EXP      -13
-#define CL_HALF_RADIX        2
-#define CL_HALF_MAX          65504.0f
-#define CL_HALF_MIN          6.103515625e-05f
-#define CL_HALF_EPSILON      9.765625e-04f
+const CL_HALF_DIG          = 3;
+const CL_HALF_MANT_DIG     = 11;
+const CL_HALF_MAX_10_EXP   = +4;
+const CL_HALF_MAX_EXP      = +16;
+const CL_HALF_MIN_10_EXP   = -4;
+const CL_HALF_MIN_EXP      = -13;
+const CL_HALF_RADIX        = 2;
+const CL_HALF_MAX          = 65504.0f;
+const CL_HALF_MIN          = 6.103515625e-05f;
+const CL_HALF_EPSILON      = 9.765625e-04f;
 
-#define CL_DBL_DIG          15
-#define CL_DBL_MANT_DIG     53
-#define CL_DBL_MAX_10_EXP   +308
-#define CL_DBL_MAX_EXP      +1024
-#define CL_DBL_MIN_10_EXP   -307
-#define CL_DBL_MIN_EXP      -1021
-#define CL_DBL_RADIX        2
-#define CL_DBL_MAX          179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.0
-#define CL_DBL_MIN          2.225073858507201383090e-308
-#define CL_DBL_EPSILON      2.220446049250313080847e-16
+const CL_DBL_DIG          = 15;
+const CL_DBL_MANT_DIG     = 53;
+const CL_DBL_MAX_10_EXP   = +308;
+const CL_DBL_MAX_EXP      = +1024;
+const CL_DBL_MIN_10_EXP   = -307;
+const CL_DBL_MIN_EXP      = -1021;
+const CL_DBL_RADIX        = 2;
+const CL_DBL_MAX          = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.0;
+const CL_DBL_MIN          = 2.225073858507201383090e-308;
+const CL_DBL_EPSILON      = 2.220446049250313080847e-16;
 
-#define CL_M_E              2.7182818284590452354
-#define CL_M_LOG2E          1.4426950408889634074
-#define CL_M_LOG10E         0.43429448190325182765
-#define CL_M_LN2            0.69314718055994530942
-#define CL_M_LN10           2.30258509299404568402
-#define CL_M_PI             3.14159265358979323846
-#define CL_M_PI_2           1.57079632679489661923
-#define CL_M_PI_4           0.78539816339744830962
-#define CL_M_1_PI           0.31830988618379067154
-#define CL_M_2_PI           0.63661977236758134308
-#define CL_M_2_SQRTPI       1.12837916709551257390
-#define CL_M_SQRT2          1.41421356237309504880
-#define CL_M_SQRT1_2        0.70710678118654752440
+const CL_M_E              = 2.7182818284590452354;
+const CL_M_LOG2E          = 1.4426950408889634074;
+const CL_M_LOG10E         = 0.43429448190325182765;
+const CL_M_LN2            = 0.69314718055994530942;
+const CL_M_LN10           = 2.30258509299404568402;
+const CL_M_PI             = 3.14159265358979323846;
+const CL_M_PI_2           = 1.57079632679489661923;
+const CL_M_PI_4           = 0.78539816339744830962;
+const CL_M_1_PI           = 0.31830988618379067154;
+const CL_M_2_PI           = 0.63661977236758134308;
+const CL_M_2_SQRTPI       = 1.12837916709551257390;
+const CL_M_SQRT2          = 1.41421356237309504880;
+const CL_M_SQRT1_2        = 0.70710678118654752440;
 
-#define CL_M_E_F            2.718281828f
-#define CL_M_LOG2E_F        1.442695041f
-#define CL_M_LOG10E_F       0.434294482f
-#define CL_M_LN2_F          0.693147181f
-#define CL_M_LN10_F         2.302585093f
-#define CL_M_PI_F           3.141592654f
-#define CL_M_PI_2_F         1.570796327f
-#define CL_M_PI_4_F         0.785398163f
-#define CL_M_1_PI_F         0.318309886f
-#define CL_M_2_PI_F         0.636619772f
-#define CL_M_2_SQRTPI_F     1.128379167f
-#define CL_M_SQRT2_F        1.414213562f
-#define CL_M_SQRT1_2_F      0.707106781f
+const CL_M_E_F            = 2.718281828f;
+const CL_M_LOG2E_F        = 1.442695041f;
+const CL_M_LOG10E_F       = 0.434294482f;
+const CL_M_LN2_F          = 0.693147181f;
+const CL_M_LN10_F         = 2.302585093f;
+const CL_M_PI_F           = 3.141592654f;
+const CL_M_PI_2_F         = 1.570796327f;
+const CL_M_PI_4_F         = 0.785398163f;
+const CL_M_1_PI_F         = 0.318309886f;
+const CL_M_2_PI_F         = 0.636619772f;
+const CL_M_2_SQRTPI_F     = 1.128379167f;
+const CL_M_SQRT2_F        = 1.414213562f;
+const CL_M_SQRT1_2_F      = 0.707106781f;
 
 {$IF defined( __GNUC__ ) }
-   #define CL_HUGE_VALF     __builtin_huge_valf()
-   #define CL_HUGE_VAL      __builtin_huge_val()
-   #define CL_NAN           __builtin_nanf( "" )
+   const CL_HUGE_VALF     = __builtin_huge_valf();
+   const CL_HUGE_VAL      = __builtin_huge_val();
+   const CL_NAN           = __builtin_nanf( "" );
 {$ELSE}
-   #define CL_HUGE_VALF     ((cl_float) 1e50)
-   #define CL_HUGE_VAL      ((cl_double) 1e500)
+   const CL_HUGE_VALF     = ((cl_float) 1e50);
+   const CL_HUGE_VAL      = ((cl_double) 1e500);
    float nanf( const char * );
-   #define CL_NAN           nanf( "" )
+   const CL_NAN           = nanf( "" );
 {$ENDIF}
-#define CL_MAXFLOAT         CL_FLT_MAX
-#define CL_INFINITY         CL_HUGE_VALF
+const CL_MAXFLOAT         = CL_FLT_MAX;
+const CL_INFINITY         = CL_HUGE_VALF;
 
 {$ENDIF}
 
@@ -365,13 +365,13 @@ type T_cl_GLenum = T_unsigned_int;
    typedef __vector unsigned int      __cl_uint4;
    typedef __vector signed int        __cl_int4;
    typedef __vector float             __cl_float4;
-   #define  __CL_UCHAR16__  1
-   #define  __CL_CHAR16__   1
-   #define  __CL_USHORT8__  1
-   #define  __CL_SHORT8__   1
-   #define  __CL_UINT4__    1
-   #define  __CL_INT4__     1
-   #define  __CL_FLOAT4__   1
+   const __CL_UCHAR16__  = 1;
+   const __CL_CHAR16__   = 1;
+   const __CL_USHORT8__  = 1;
+   const __CL_SHORT8__   = 1;
+   const __CL_UINT4__    = 1;
+   const __CL_INT4__     = 1;
+   const __CL_FLOAT4__   = 1;
 {$ENDIF}
 
 {$IF defined( __SSE__ ) }
@@ -385,7 +385,7 @@ type T_cl_GLenum = T_unsigned_int;
     {$ELSE}
         type T___cl_float4 = T___m128;
     {$ENDIF}
-    #define __CL_FLOAT4__   1
+    const __CL_FLOAT4__   = 1;
 {$ENDIF}
 
 {$IF defined( __SSE2__ ) }
@@ -415,15 +415,15 @@ type T_cl_GLenum = T_unsigned_int;
         type T___cl_long2   = T___m128i;
         type T___cl_double2 = T___m128d;
     {$ENDIF}
-    #define __CL_UCHAR16__  1
-    #define __CL_CHAR16__   1
-    #define __CL_USHORT8__  1
-    #define __CL_SHORT8__   1
-    #define __CL_INT4__     1
-    #define __CL_UINT4__    1
-    #define __CL_ULONG2__   1
-    #define __CL_LONG2__    1
-    #define __CL_DOUBLE2__  1
+    const __CL_UCHAR16__  = 1;
+    const __CL_CHAR16__   = 1;
+    const __CL_USHORT8__  = 1;
+    const __CL_SHORT8__   = 1;
+    const __CL_INT4__     = 1;
+    const __CL_UINT4__    = 1;
+    const __CL_ULONG2__   = 1;
+    const __CL_LONG2__    = 1;
+    const __CL_DOUBLE2__  = 1;
 {$ENDIF}
 
 {$IF defined( __MMX__ ) }
@@ -449,15 +449,15 @@ type T_cl_GLenum = T_unsigned_int;
         type T___cl_long1   = T___m64;
         type T___cl_float2  = T___m64;
     {$ENDIF}
-    #define __CL_UCHAR8__   1
-    #define __CL_CHAR8__    1
-    #define __CL_USHORT4__  1
-    #define __CL_SHORT4__   1
-    #define __CL_INT2__     1
-    #define __CL_UINT2__    1
-    #define __CL_ULONG1__   1
-    #define __CL_LONG1__    1
-    #define __CL_FLOAT2__   1
+    const __CL_UCHAR8__   = 1;
+    const __CL_CHAR8__    = 1;
+    const __CL_USHORT4__  = 1;
+    const __CL_SHORT4__   = 1;
+    const __CL_INT2__     = 1;
+    const __CL_UINT2__    = 1;
+    const __CL_ULONG1__   = 1;
+    const __CL_LONG1__    = 1;
+    const __CL_FLOAT2__   = 1;
 {$ENDIF}
 
 {$IF defined( __AVX__ ) }
@@ -473,22 +473,22 @@ type T_cl_GLenum = T_unsigned_int;
         type T___cl_float8  = T___m256;
         type T___cl_double4 = T___m256d;
     {$ENDIF}
-    #define __CL_FLOAT8__   1
-    #define __CL_DOUBLE4__  1
+    const __CL_FLOAT8__   = 1;
+    const __CL_DOUBLE4__  = 1;
 {$ENDIF}
 
 (* Define capabilities for anonymous struct members. *)
 {$IF not defined( __cplusplus ) and defined( __STDC_VERSION__ ) and ( __STDC_VERSION__ >= 201112 ) }
-#define  __CL_HAS_ANON_STRUCT__ 1
+const __CL_HAS_ANON_STRUCT__ = 1;
 #define  __CL_ANON_STRUCT__
 {$ELSEIF defined( __GNUC__ ) and not defined( __STRICT_ANSI__ ) }
-#define  __CL_HAS_ANON_STRUCT__ 1
+const __CL_HAS_ANON_STRUCT__ = 1;
 #define  __CL_ANON_STRUCT__ __extension__
 {$ELSEIF defined( _WIN32 ) and defined( _MSC_VER ) }
     {$IF _MSC_VER >= 1500 }
    (* Microsoft Developer Studio 2008 supports anonymous structs, but
     * complains by default. *)
-    #define  __CL_HAS_ANON_STRUCT__ 1
+    const __CL_HAS_ANON_STRUCT__ = 1;
     #define  __CL_ANON_STRUCT__
    (* Disable warning C4201: nonstandard extension used : nameless
     * struct/union *)
@@ -496,7 +496,7 @@ type T_cl_GLenum = T_unsigned_int;
     #pragma warning( disable : 4201 )
     {$ENDIF}
 {$ELSE}
-#define  __CL_HAS_ANON_STRUCT__ 0
+const __CL_HAS_ANON_STRUCT__ = 0;
 #define  __CL_ANON_STRUCT__
 {$ENDIF}
 
@@ -517,9 +517,9 @@ type T_cl_GLenum = T_unsigned_int;
 (* Indicate whether .xyzw, .s0123 and .hi.lo are supported *)
 {$IF __CL_HAS_ANON_STRUCT__ }
     (* .xyzw and .s0123...{f|F} are supported *)
-    #define CL_HAS_NAMED_VECTOR_FIELDS 1
+    const CL_HAS_NAMED_VECTOR_FIELDS = 1;
     (* .hi and .lo are supported *)
-    #define CL_HAS_HI_LO_VECTOR_FIELDS 1
+    const CL_HAS_HI_LO_VECTOR_FIELDS = 1;
 {$ENDIF}
 
 (* Define cl_vector types *)
