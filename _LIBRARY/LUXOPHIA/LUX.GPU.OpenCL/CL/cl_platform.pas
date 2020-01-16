@@ -37,7 +37,7 @@ uses LUX.Code.C,
 //extern "C" {
 //#endif
 
-{$IF defined(_WIN32) }
+{$IF defined( _WIN32 ) }
     #define CL_API_ENTRY
     #define CL_API_CALL     __stdcall
     #define CL_CALLBACK     __stdcall
@@ -121,7 +121,7 @@ uses LUX.Code.C,
     #define CL_EXT_PREFIX__VERSION_2_1_DEPRECATED CL_EXT_PREFIX_DEPRECATED
 {$ENDIF}
 
-{$IF (defined (_WIN32) && defined(_MSC_VER)) }
+{$IF defined( _WIN32 ) and defined( _MSC_VER ) }
 
 (* scalar types  *)
 typedef signed   __int8         cl_char;
@@ -478,7 +478,7 @@ typedef unsigned int cl_GLenum;
 {$ENDIF}
 
 (* Define capabilities for anonymous struct members. *)
-{$IF !defined(__cplusplus) && defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L }
+{$IF not defined( __cplusplus ) and defined( __STDC_VERSION__ ) and ( __STDC_VERSION__ >= 201112 ) }
 #define  __CL_HAS_ANON_STRUCT__ 1
 #define  __CL_ANON_STRUCT__
 #elif defined( __GNUC__) && ! defined( __STRICT_ANSI__ )
@@ -533,7 +533,7 @@ type T_cl_char2 = record
        2: ( s0, s1 :T_cl_char );
        3: ( lo, hi :T_cl_char );
 {$ENDIF}
-{$IF defined( __CL_CHAR2__) }
+{$IF defined( __CL_CHAR2__ ) }
        4: ( v2 :T___cl_char2 );
 {$ENDIF}
      end;
@@ -546,10 +546,10 @@ type T_cl_char4 = record
        2: ( s0, s1, s2, s3 :T_cl_char );
        3: ( lo, hi :T_cl_char2 );
 {$ENDIF}
-{$IF defined( __CL_CHAR2__) }
+{$IF defined( __CL_CHAR2__ ) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_char2 );
 {$ENDIF}
-{$IF defined( __CL_CHAR4__) }
+{$IF defined( __CL_CHAR4__ ) }
        5: ( v4 :T___cl_char4 );
 {$ENDIF}
      end;
@@ -565,10 +565,10 @@ type T_cl_char8 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_char );
        3: ( lo, hi :T_cl_char4 );
 {$ENDIF}
-{$IF defined( __CL_CHAR2__) }
+{$IF defined( __CL_CHAR2__ ) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_char2 );
 {$ENDIF}
-{$IF defined( __CL_CHAR4__) }
+{$IF defined( __CL_CHAR4__ ) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_char4 );
 {$ENDIF}
 {$IF defined( __CL_CHAR8__ ) }
@@ -584,10 +584,10 @@ type T_cl_char16 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_char );
        3: ( lo, hi :T_cl_char8 );
 {$ENDIF}
-{$IF defined( __CL_CHAR2__) }
+{$IF defined( __CL_CHAR2__ ) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_char2 );
 {$ENDIF}
-{$IF defined( __CL_CHAR4__) }
+{$IF defined( __CL_CHAR4__ ) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_char4 );
 {$ENDIF}
 {$IF defined( __CL_CHAR8__ ) }
@@ -608,7 +608,7 @@ type T_cl_uchar2 = record
        2: ( s0, s1 :T_cl_uchar );
        3: ( lo, hi :T_cl_uchar );
 {$ENDIF}
-{$IF defined( __cl_uchar2__) }
+{$IF defined( __cl_uchar2__ ) }
        4: ( v2 :T___cl_uchar2 );
 {$ENDIF}
      end;
@@ -621,10 +621,10 @@ type T_cl_uchar4 = record
        2: ( s0, s1, s2, s3 :T_cl_uchar );
        3: ( lo, hi :T_cl_uchar2 );
 {$ENDIF}
-{$IF defined( __CL_UCHAR2__) }
+{$IF defined( __CL_UCHAR2__ ) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_uchar2 );
 {$ENDIF}
-{$IF defined( __CL_UCHAR4__) }
+{$IF defined( __CL_UCHAR4__ ) }
        5: ( v4 :T___cl_uchar4 );
 {$ENDIF}
      end;
@@ -640,10 +640,10 @@ type T_cl_uchar8 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_uchar );
        3: ( lo, hi :T_cl_uchar4 );
 {$ENDIF}
-{$IF defined( __CL_UCHAR2__) }
+{$IF defined( __CL_UCHAR2__ ) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_uchar2 );
 {$ENDIF}
-{$IF defined( __CL_UCHAR4__) }
+{$IF defined( __CL_UCHAR4__ ) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_uchar4 );
 {$ENDIF}
 {$IF defined( __CL_UCHAR8__ ) }
@@ -659,10 +659,10 @@ type T_cl_uchar16 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_uchar );
        3: ( lo, hi :T_cl_uchar8 );
 {$ENDIF}
-{$IF defined( __CL_UCHAR2__) }
+{$IF defined( __CL_UCHAR2__ ) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_uchar2 );
 {$ENDIF}
-{$IF defined( __CL_UCHAR4__) }
+{$IF defined( __CL_UCHAR4__ ) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_uchar4 );
 {$ENDIF}
 {$IF defined( __CL_UCHAR8__ ) }
@@ -683,7 +683,7 @@ type T_cl_short2 = record
        2: ( s0, s1 :T_cl_short );
        3: ( lo, hi :T_cl_short );
 {$ENDIF}
-{$IF defined( __CL_SHORT2__) }
+{$IF defined( __CL_SHORT2__ ) }
        4: ( v2 :T___cl_short2 );
 {$ENDIF}
      end;
@@ -696,10 +696,10 @@ type T_cl_short4 = record
        2: ( s0, s1, s2, s3 :T_cl_short );
        3: ( lo, hi :T_cl_short2 );
 {$ENDIF}
-{$IF defined( __CL_SHORT2__) }
+{$IF defined( __CL_SHORT2__ ) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_short2 );
 {$ENDIF}
-{$IF defined( __CL_SHORT4__) }
+{$IF defined( __CL_SHORT4__ ) }
        5: ( v4 :T___cl_short4 );
 {$ENDIF}
      end;
@@ -715,10 +715,10 @@ type T_cl_short8 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_short );
        3: ( lo, hi :T_cl_short4 );
 {$ENDIF}
-{$IF defined( __CL_SHORT2__) }
+{$IF defined( __CL_SHORT2__ ) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_short2 );
 {$ENDIF}
-{$IF defined( __CL_SHORT4__) }
+{$IF defined( __CL_SHORT4__ ) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_short4 );
 {$ENDIF}
 {$IF defined( __CL_SHORT8__ ) }
@@ -734,10 +734,10 @@ type T_cl_short16 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_short );
        3: ( lo, hi :T_cl_short8 );
 {$ENDIF}
-{$IF defined( __CL_SHORT2__) }
+{$IF defined( __CL_SHORT2__ ) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_short2 );
 {$ENDIF}
-{$IF defined( __CL_SHORT4__) }
+{$IF defined( __CL_SHORT4__ ) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_short4 );
 {$ENDIF}
 {$IF defined( __CL_SHORT8__ ) }
@@ -758,7 +758,7 @@ type T_cl_ushort2 = record
        2: ( s0, s1 :T_cl_ushort );
        3: ( lo, hi :T_cl_ushort );
 {$ENDIF}
-{$IF defined( __CL_USHORT2__) }
+{$IF defined( __CL_USHORT2__ ) }
        4: ( v2 :T___cl_ushort2 );
 {$ENDIF}
      end;
@@ -771,10 +771,10 @@ type T_cl_ushort4 = record
        2: ( s0, s1, s2, s3 :T_cl_ushort );
        3: ( lo, hi :T_cl_ushort2 );
 {$ENDIF}
-{$IF defined( __CL_USHORT2__) }
+{$IF defined( __CL_USHORT2__ ) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_ushort2 );
 {$ENDIF}
-{$IF defined( __CL_USHORT4__) }
+{$IF defined( __CL_USHORT4__ ) }
        5: ( v4 :T___cl_ushort4 );
 {$ENDIF}
      end;
@@ -790,10 +790,10 @@ type T_cl_ushort8 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_ushort );
        3: ( lo, hi :T_cl_ushort4 );
 {$ENDIF}
-{$IF defined( __CL_USHORT2__) }
+{$IF defined( __CL_USHORT2__ ) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_ushort2 );
 {$ENDIF}
-{$IF defined( __CL_USHORT4__) }
+{$IF defined( __CL_USHORT4__ ) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_ushort4 );
 {$ENDIF}
 {$IF defined( __CL_USHORT8__ ) }
@@ -809,10 +809,10 @@ type T_cl_ushort16 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_ushort );
        3: ( lo, hi :T_cl_ushort8 );
 {$ENDIF}
-{$IF defined( __CL_USHORT2__) }
+{$IF defined( __CL_USHORT2__ ) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_ushort2 );
 {$ENDIF}
-{$IF defined( __CL_USHORT4__) }
+{$IF defined( __CL_USHORT4__ ) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_ushort4 );
 {$ENDIF}
 {$IF defined( __CL_USHORT8__ ) }
@@ -833,7 +833,7 @@ type T_cl_half2 = record
        2: ( s0, s1 :T_cl_half );
        3: ( lo, hi :T_cl_half );
 {$ENDIF}
-{$IF defined( __CL_HALF2__) }
+{$IF defined( __CL_HALF2__ ) }
        4: ( v2 :T___cl_half2 );
 {$ENDIF}
      end;
@@ -846,10 +846,10 @@ type T_cl_half4 = record
        2: ( s0, s1, s2, s3 :T_cl_half );
        3: ( lo, hi :T_cl_half2 );
 {$ENDIF}
-{$IF defined( __CL_HALF2__) }
+{$IF defined( __CL_HALF2__ ) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_half2 );
 {$ENDIF}
-{$IF defined( __CL_HALF4__) }
+{$IF defined( __CL_HALF4__ ) }
        5: ( v4 :T___cl_half4 );
 {$ENDIF}
      end;
@@ -865,10 +865,10 @@ type T_cl_half8 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_half );
        3: ( lo, hi :T_cl_half4 );
 {$ENDIF}
-{$IF defined( __CL_HALF2__) }
+{$IF defined( __CL_HALF2__ ) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_half2 );
 {$ENDIF}
-{$IF defined( __CL_HALF4__) }
+{$IF defined( __CL_HALF4__ ) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_half4 );
 {$ENDIF}
 {$IF defined( __CL_HALF8__ ) }
@@ -884,10 +884,10 @@ type T_cl_half16 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_half );
        3: ( lo, hi :T_cl_half8 );
 {$ENDIF}
-{$IF defined( __CL_HALF2__) }
+{$IF defined( __CL_HALF2__ ) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_half2 );
 {$ENDIF}
-{$IF defined( __CL_HALF4__) }
+{$IF defined( __CL_HALF4__ ) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_half4 );
 {$ENDIF}
 {$IF defined( __CL_HALF8__ ) }
@@ -907,7 +907,7 @@ type T_cl_int2 = record
        2: ( s0, s1 :T_cl_int );
        3: ( lo, hi :T_cl_int );
 {$ENDIF}
-{$IF defined( __CL_INT2__) }
+{$IF defined( __CL_INT2__ ) }
        4: ( v2 :T___cl_int2 );
 {$ENDIF}
      end;
@@ -920,10 +920,10 @@ type T_cl_int4 = record
        2: ( s0, s1, s2, s3 :T_cl_int );
        3: ( lo, hi :T_cl_int2 );
 {$ENDIF}
-{$IF defined( __CL_INT2__) }
+{$IF defined( __CL_INT2__ ) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_int2 );
 {$ENDIF}
-{$IF defined( __CL_INT4__) }
+{$IF defined( __CL_INT4__ ) }
        5: ( v4 :T___cl_int4 );
 {$ENDIF}
      end;
@@ -939,10 +939,10 @@ type T_cl_int8 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_int );
        3: ( lo, hi :T_cl_int4 );
 {$ENDIF}
-{$IF defined( __CL_INT2__) }
+{$IF defined( __CL_INT2__ ) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_int2 );
 {$ENDIF}
-{$IF defined( __CL_INT4__) }
+{$IF defined( __CL_INT4__ ) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_int4 );
 {$ENDIF}
 {$IF defined( __CL_INT8__ ) }
@@ -958,10 +958,10 @@ type T_cl_int16 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_int );
        3: ( lo, hi :T_cl_int8 );
 {$ENDIF}
-{$IF defined( __CL_INT2__) }
+{$IF defined( __CL_INT2__ ) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_int2 );
 {$ENDIF}
-{$IF defined( __CL_INT4__) }
+{$IF defined( __CL_INT4__ ) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_int4 );
 {$ENDIF}
 {$IF defined( __CL_INT8__ ) }
@@ -982,7 +982,7 @@ type T_cl_uint2 = record
        2: ( s0, s1 :T_cl_uint );
        3: ( lo, hi :T_cl_uint );
 {$ENDIF}
-{$IF defined( __CL_UINT2__) }
+{$IF defined( __CL_UINT2__ ) }
        4: ( v2 :T___cl_uint2 );
 {$ENDIF}
      end;
@@ -995,10 +995,10 @@ type T_cl_uint4 = record
        2: ( s0, s1, s2, s3 :T_cl_uint );
        3: ( lo, hi :T_cl_uint2 );
 {$ENDIF}
-{$IF defined( __CL_UINT2__) }
+{$IF defined( __CL_UINT2__ ) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_uint2 );
 {$ENDIF}
-{$IF defined( __CL_UINT4__) }
+{$IF defined( __CL_UINT4__ ) }
        5: ( v4 :T___cl_uint4 );
 {$ENDIF}
      end;
@@ -1014,10 +1014,10 @@ type T_cl_uint8 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_uint );
        3: ( lo, hi :T_cl_uint4 );
 {$ENDIF}
-{$IF defined( __CL_UINT2__) }
+{$IF defined( __CL_UINT2__ ) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_uint2 );
 {$ENDIF}
-{$IF defined( __CL_UINT4__) }
+{$IF defined( __CL_UINT4__ ) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_uint4 );
 {$ENDIF}
 {$IF defined( __CL_UINT8__ ) }
@@ -1033,10 +1033,10 @@ type T_cl_uint16 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_uint );
        3: ( lo, hi :T_cl_uint8 );
 {$ENDIF}
-{$IF defined( __CL_UINT2__) }
+{$IF defined( __CL_UINT2__ ) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_uint2 );
 {$ENDIF}
-{$IF defined( __CL_UINT4__) }
+{$IF defined( __CL_UINT4__ ) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_uint4 );
 {$ENDIF}
 {$IF defined( __CL_UINT8__ ) }
@@ -1056,7 +1056,7 @@ type T_cl_long2 = record
        2: ( s0, s1 :T_cl_long );
        3: ( lo, hi :T_cl_long );
 {$ENDIF}
-{$IF defined( __CL_LONG2__) }
+{$IF defined( __CL_LONG2__ ) }
        4: ( v2 :T___cl_long2 );
 {$ENDIF}
      end;
@@ -1069,10 +1069,10 @@ type T_cl_long4 = record
        2: ( s0, s1, s2, s3 :T_cl_long );
        3: ( lo, hi :T_cl_long2 );
 {$ENDIF}
-{$IF defined( __CL_LONG2__) }
+{$IF defined( __CL_LONG2__ ) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_long2 );
 {$ENDIF}
-{$IF defined( __CL_LONG4__) }
+{$IF defined( __CL_LONG4__ ) }
        5: ( v4 :T___cl_long4 );
 {$ENDIF}
      end;
@@ -1088,10 +1088,10 @@ type T_cl_long8 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_long );
        3: ( lo, hi :T_cl_long4 );
 {$ENDIF}
-{$IF defined( __CL_LONG2__) }
+{$IF defined( __CL_LONG2__ ) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_long2 );
 {$ENDIF}
-{$IF defined( __CL_LONG4__) }
+{$IF defined( __CL_LONG4__ ) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_long4 );
 {$ENDIF}
 {$IF defined( __CL_LONG8__ ) }
@@ -1107,10 +1107,10 @@ type T_cl_long16 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_long );
        3: ( lo, hi :T_cl_long8 );
 {$ENDIF}
-{$IF defined( __CL_LONG2__) }
+{$IF defined( __CL_LONG2__ ) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_long2 );
 {$ENDIF}
-{$IF defined( __CL_LONG4__) }
+{$IF defined( __CL_LONG4__ ) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_long4 );
 {$ENDIF}
 {$IF defined( __CL_LONG8__ ) }
@@ -1131,7 +1131,7 @@ type T_cl_ulong2 = record
        2: ( s0, s1 :T_cl_ulong );
        3: ( lo, hi :T_cl_ulong );
 {$ENDIF}
-{$IF defined( __CL_ULONG2__) }
+{$IF defined( __CL_ULONG2__ ) }
        4: ( v2 :T___cl_ulong2 );
 {$ENDIF}
      end;
@@ -1144,10 +1144,10 @@ type T_cl_ulong4 = record
        2: ( s0, s1, s2, s3 :T_cl_ulong );
        3: ( lo, hi :T_cl_ulong2 );
 {$ENDIF}
-{$IF defined( __CL_ULONG2__) }
+{$IF defined( __CL_ULONG2__ ) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_ulong2 );
 {$ENDIF}
-{$IF defined( __CL_ULONG4__) }
+{$IF defined( __CL_ULONG4__ ) }
        5: ( v4 :T___cl_ulong4 );
 {$ENDIF}
      end;
@@ -1163,10 +1163,10 @@ type T_cl_ulong8 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_ulong );
        3: ( lo, hi :T_cl_ulong4 );
 {$ENDIF}
-{$IF defined( __CL_ULONG2__) }
+{$IF defined( __CL_ULONG2__ ) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_ulong2 );
 {$ENDIF}
-{$IF defined( __CL_ULONG4__) }
+{$IF defined( __CL_ULONG4__ ) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_ulong4 );
 {$ENDIF}
 {$IF defined( __CL_ULONG8__ ) }
@@ -1182,10 +1182,10 @@ type T_cl_ulong16 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_ulong );
        3: ( lo, hi :T_cl_ulong8 );
 {$ENDIF}
-{$IF defined( __CL_ULONG2__) }
+{$IF defined( __CL_ULONG2__ ) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_ulong2 );
 {$ENDIF}
-{$IF defined( __CL_ULONG4__) }
+{$IF defined( __CL_ULONG4__ ) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_ulong4 );
 {$ENDIF}
 {$IF defined( __CL_ULONG8__ ) }
@@ -1207,7 +1207,7 @@ type T_cl_float2 = record
        2: ( s0, s1 :T_cl_float );
        3: ( lo, hi :T_cl_float );
 {$ENDIF}
-{$IF defined( __CL_FLOAT2__) }
+{$IF defined( __CL_FLOAT2__ ) }
        4: ( v2 :T___cl_float2 );
 {$ENDIF}
      end;
@@ -1220,10 +1220,10 @@ type T_cl_float4 = record
        2: ( s0, s1, s2, s3 :T_cl_float );
        3: ( lo, hi :T_cl_float2 );
 {$ENDIF}
-{$IF defined( __CL_FLOAT2__) }
+{$IF defined( __CL_FLOAT2__ ) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_float2 );
 {$ENDIF}
-{$IF defined( __CL_FLOAT4__) }
+{$IF defined( __CL_FLOAT4__ ) }
        5: ( v4 :T___cl_float4 );
 {$ENDIF}
      end;
@@ -1239,10 +1239,10 @@ type T_cl_float8 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_float );
        3: ( lo, hi :T_cl_float4 );
 {$ENDIF}
-{$IF defined( __CL_FLOAT2__) }
+{$IF defined( __CL_FLOAT2__ ) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_float2 );
 {$ENDIF}
-{$IF defined( __CL_FLOAT4__) }
+{$IF defined( __CL_FLOAT4__ ) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_float4 );
 {$ENDIF}
 {$IF defined( __CL_FLOAT8__ ) }
@@ -1258,10 +1258,10 @@ type T_cl_float16 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_float );
        3: ( lo, hi :T_cl_float8 );
 {$ENDIF}
-{$IF defined( __CL_FLOAT2__) }
+{$IF defined( __CL_FLOAT2__ ) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_float2 );
 {$ENDIF}
-{$IF defined( __CL_FLOAT4__) }
+{$IF defined( __CL_FLOAT4__ ) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_float4 );
 {$ENDIF}
 {$IF defined( __CL_FLOAT8__ ) }
@@ -1282,7 +1282,7 @@ type T_cl_double2 = record
        2: ( s0, s1 :T_cl_double );
        3: ( lo, hi :T_cl_double );
 {$ENDIF}
-{$IF defined( __CL_DOUBLE2__) }
+{$IF defined( __CL_DOUBLE2__ ) }
        4: ( v2 :T___cl_double2 );
 {$ENDIF}
      end;
@@ -1295,10 +1295,10 @@ type T_cl_double4 = record
        2: ( s0, s1, s2, s3 :T_cl_double );
        3: ( lo, hi :T_cl_double2 );
 {$ENDIF}
-{$IF defined( __CL_DOUBLE2__) }
+{$IF defined( __CL_DOUBLE2__ ) }
        4: ( v2 :array [ 0..2-1 ] of T___cl_double2 );
 {$ENDIF}
-{$IF defined( __CL_DOUBLE4__) }
+{$IF defined( __CL_DOUBLE4__ ) }
        5: ( v4 :T___cl_double4 );
 {$ENDIF}
      end;
@@ -1314,10 +1314,10 @@ type T_cl_double8 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7 :T_cl_double );
        3: ( lo, hi :T_cl_double4 );
 {$ENDIF}
-{$IF defined( __CL_DOUBLE2__) }
+{$IF defined( __CL_DOUBLE2__ ) }
        4: ( v2 :array [ 0..4-1 ] of T___cl_double2 );
 {$ENDIF}
-{$IF defined( __CL_DOUBLE4__) }
+{$IF defined( __CL_DOUBLE4__ ) }
        5: ( v4 :array [ 0..2-1 ] of T___cl_double4 );
 {$ENDIF}
 {$IF defined( __CL_DOUBLE8__ ) }
@@ -1333,10 +1333,10 @@ type T_cl_double16 = record
        2: ( s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, sA, sB, sC, sD, sE, sF :T_cl_double );
        3: ( lo, hi :T_cl_double8 );
 {$ENDIF}
-{$IF defined( __CL_DOUBLE2__) }
+{$IF defined( __CL_DOUBLE2__ ) }
        4: ( v2 :array [ 0..8-1 ] of T___cl_double2 );
 {$ENDIF}
-{$IF defined( __CL_DOUBLE4__) }
+{$IF defined( __CL_DOUBLE4__ ) }
        5: ( v4 :array [ 0..4-1 ] of T___cl_double4 );
 {$ENDIF}
 {$IF defined( __CL_DOUBLE8__ ) }
@@ -1377,8 +1377,8 @@ type T_cl_double16 = record
 
 #undef __CL_HAS_ANON_STRUCT__
 #undef __CL_ANON_STRUCT__
-{$IF defined( _WIN32) && defined(_MSC_VER) }
-    {$IF _MSC_VER >=1500 }
+#if defined( _WIN32) && defined(_MSC_VER)
+    #if _MSC_VER >=1500
     #pragma warning( pop )
     #endif
 #endif
