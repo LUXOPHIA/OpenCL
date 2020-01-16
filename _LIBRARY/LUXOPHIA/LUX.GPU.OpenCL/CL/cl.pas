@@ -264,12 +264,12 @@ const CL_PLATFORM_HOST_TIMER_RESOLUTION            = $0905;
 {$ENDIF}
 
 (* cl_device_type - bitfield *)
-const CL_DEVICE_TYPE_DEFAULT                       = (1 << 0);
-const CL_DEVICE_TYPE_CPU                           = (1 << 1);
-const CL_DEVICE_TYPE_GPU                           = (1 << 2);
-const CL_DEVICE_TYPE_ACCELERATOR                   = (1 << 3);
+const CL_DEVICE_TYPE_DEFAULT                       = (1 shl 0);
+const CL_DEVICE_TYPE_CPU                           = (1 shl 1);
+const CL_DEVICE_TYPE_GPU                           = (1 shl 2);
+const CL_DEVICE_TYPE_ACCELERATOR                   = (1 shl 3);
 {$IFDEF CL_VERSION_1_2 }
-const CL_DEVICE_TYPE_CUSTOM                        = (1 << 4);
+const CL_DEVICE_TYPE_CUSTOM                        = (1 shl 4);
 {$ENDIF}
 const CL_DEVICE_TYPE_ALL                           = $FFFFFFFF;
 
@@ -383,17 +383,17 @@ const CL_DEVICE_SUB_GROUP_INDEPENDENT_FORWARD_PROGRESS  = $105D;
 {$ENDIF}
 
 (* cl_device_fp_config - bitfield *)
-const CL_FP_DENORM                                 = (1 << 0);
-const CL_FP_INF_NAN                                = (1 << 1);
-const CL_FP_ROUND_TO_NEAREST                       = (1 << 2);
-const CL_FP_ROUND_TO_ZERO                          = (1 << 3);
-const CL_FP_ROUND_TO_INF                           = (1 << 4);
-const CL_FP_FMA                                    = (1 << 5);
+const CL_FP_DENORM                                 = (1 shl 0);
+const CL_FP_INF_NAN                                = (1 shl 1);
+const CL_FP_ROUND_TO_NEAREST                       = (1 shl 2);
+const CL_FP_ROUND_TO_ZERO                          = (1 shl 3);
+const CL_FP_ROUND_TO_INF                           = (1 shl 4);
+const CL_FP_FMA                                    = (1 shl 5);
 {$IFDEF CL_VERSION_1_1 }
-const CL_FP_SOFT_FLOAT                             = (1 << 6);
+const CL_FP_SOFT_FLOAT                             = (1 shl 6);
 {$ENDIF}
 {$IFDEF CL_VERSION_1_2 }
-const CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT          = (1 << 7);
+const CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT          = (1 shl 7);
 {$ENDIF}
 
 (* cl_device_mem_cache_type *)
@@ -406,15 +406,15 @@ const CL_LOCAL                                     = $1;
 const CL_GLOBAL                                    = $2;
 
 (* cl_device_exec_capabilities - bitfield *)
-const CL_EXEC_KERNEL                               = (1 << 0);
-const CL_EXEC_NATIVE_KERNEL                        = (1 << 1);
+const CL_EXEC_KERNEL                               = (1 shl 0);
+const CL_EXEC_NATIVE_KERNEL                        = (1 shl 1);
 
 (* cl_command_queue_properties - bitfield *)
-const CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE       = (1 << 0);
-const CL_QUEUE_PROFILING_ENABLE                    = (1 << 1);
+const CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE       = (1 shl 0);
+const CL_QUEUE_PROFILING_ENABLE                    = (1 shl 1);
 {$IFDEF CL_VERSION_2_0 }
-const CL_QUEUE_ON_DEVICE                           = (1 << 2);
-const CL_QUEUE_ON_DEVICE_DEFAULT                   = (1 << 3);
+const CL_QUEUE_ON_DEVICE                           = (1 shl 2);
+const CL_QUEUE_ON_DEVICE_DEFAULT                   = (1 shl 3);
 {$ENDIF}
 
 (* cl_context_info *)
@@ -444,22 +444,22 @@ const CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN       = $1088;
 {$IFDEF CL_VERSION_1_2 }
 
 (* cl_device_affinity_domain *)
-const CL_DEVICE_AFFINITY_DOMAIN_NUMA                = (1 << 0);
-const CL_DEVICE_AFFINITY_DOMAIN_L4_CACHE            = (1 << 1);
-const CL_DEVICE_AFFINITY_DOMAIN_L3_CACHE            = (1 << 2);
-const CL_DEVICE_AFFINITY_DOMAIN_L2_CACHE            = (1 << 3);
-const CL_DEVICE_AFFINITY_DOMAIN_L1_CACHE            = (1 << 4);
-const CL_DEVICE_AFFINITY_DOMAIN_NEXT_PARTITIONABLE  = (1 << 5);
+const CL_DEVICE_AFFINITY_DOMAIN_NUMA                = (1 shl 0);
+const CL_DEVICE_AFFINITY_DOMAIN_L4_CACHE            = (1 shl 1);
+const CL_DEVICE_AFFINITY_DOMAIN_L3_CACHE            = (1 shl 2);
+const CL_DEVICE_AFFINITY_DOMAIN_L2_CACHE            = (1 shl 3);
+const CL_DEVICE_AFFINITY_DOMAIN_L1_CACHE            = (1 shl 4);
+const CL_DEVICE_AFFINITY_DOMAIN_NEXT_PARTITIONABLE  = (1 shl 5);
 
 {$ENDIF}
 
 {$IFDEF CL_VERSION_2_0 }
 
 (* cl_device_svm_capabilities *)
-const CL_DEVICE_SVM_COARSE_GRAIN_BUFFER            = (1 << 0);
-const CL_DEVICE_SVM_FINE_GRAIN_BUFFER              = (1 << 1);
-const CL_DEVICE_SVM_FINE_GRAIN_SYSTEM              = (1 << 2);
-const CL_DEVICE_SVM_ATOMICS                        = (1 << 3);
+const CL_DEVICE_SVM_COARSE_GRAIN_BUFFER            = (1 shl 0);
+const CL_DEVICE_SVM_FINE_GRAIN_BUFFER              = (1 shl 1);
+const CL_DEVICE_SVM_FINE_GRAIN_SYSTEM              = (1 shl 2);
+const CL_DEVICE_SVM_ATOMICS                        = (1 shl 3);
 
 {$ENDIF}
 
@@ -476,29 +476,29 @@ const CL_QUEUE_DEVICE_DEFAULT                      = $1095;
 {$ENDIF}
 
 (* cl_mem_flags and cl_svm_mem_flags - bitfield *)
-const CL_MEM_READ_WRITE                            = (1 << 0);
-const CL_MEM_WRITE_ONLY                            = (1 << 1);
-const CL_MEM_READ_ONLY                             = (1 << 2);
-const CL_MEM_USE_HOST_PTR                          = (1 << 3);
-const CL_MEM_ALLOC_HOST_PTR                        = (1 << 4);
-const CL_MEM_COPY_HOST_PTR                         = (1 << 5);
+const CL_MEM_READ_WRITE                            = (1 shl 0);
+const CL_MEM_WRITE_ONLY                            = (1 shl 1);
+const CL_MEM_READ_ONLY                             = (1 shl 2);
+const CL_MEM_USE_HOST_PTR                          = (1 shl 3);
+const CL_MEM_ALLOC_HOST_PTR                        = (1 shl 4);
+const CL_MEM_COPY_HOST_PTR                         = (1 shl 5);
 (* reserved                                         (1 << 6)    *)
 {$IFDEF CL_VERSION_1_2 }
-const CL_MEM_HOST_WRITE_ONLY                       = (1 << 7);
-const CL_MEM_HOST_READ_ONLY                        = (1 << 8);
-const CL_MEM_HOST_NO_ACCESS                        = (1 << 9);
+const CL_MEM_HOST_WRITE_ONLY                       = (1 shl 7);
+const CL_MEM_HOST_READ_ONLY                        = (1 shl 8);
+const CL_MEM_HOST_NO_ACCESS                        = (1 shl 9);
 {$ENDIF}
 {$IFDEF CL_VERSION_2_0 }
-const CL_MEM_SVM_FINE_GRAIN_BUFFER                 = (1 << 10);   (* used by cl_svm_mem_flags only *)
-const CL_MEM_SVM_ATOMICS                           = (1 << 11);   (* used by cl_svm_mem_flags only *)
-const CL_MEM_KERNEL_READ_AND_WRITE                 = (1 << 12);
+const CL_MEM_SVM_FINE_GRAIN_BUFFER                 = (1 shl 10);   (* used by cl_svm_mem_flags only *)
+const CL_MEM_SVM_ATOMICS                           = (1 shl 11);   (* used by cl_svm_mem_flags only *)
+const CL_MEM_KERNEL_READ_AND_WRITE                 = (1 shl 12);
 {$ENDIF}
 
 {$IFDEF CL_VERSION_1_2 }
 
 (* cl_mem_migration_flags - bitfield *)
-const CL_MIGRATE_MEM_OBJECT_HOST                   = (1 << 0);
-const CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED      = (1 << 1);
+const CL_MIGRATE_MEM_OBJECT_HOST                   = (1 shl 0);
+const CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED      = (1 shl 1);
 
 {$ENDIF}
 
@@ -635,10 +635,10 @@ const CL_SAMPLER_LOD_MAX                           = $1157;
 {$ENDIF}
 
 (* cl_map_flags - bitfield *)
-const CL_MAP_READ                                  = (1 << 0);
-const CL_MAP_WRITE                                 = (1 << 1);
+const CL_MAP_READ                                  = (1 shl 0);
+const CL_MAP_WRITE                                 = (1 shl 1);
 {$IFDEF CL_VERSION_1_2 }
-const CL_MAP_WRITE_INVALIDATE_REGION               = (1 << 2);
+const CL_MAP_WRITE_INVALIDATE_REGION               = (1 shl 2);
 {$ENDIF}
 
 (* cl_program_info *)
@@ -737,11 +737,11 @@ const CL_KERNEL_ARG_ACCESS_NONE                    = $11A3;
 
 (* cl_kernel_arg_type_qualifier *)
 const CL_KERNEL_ARG_TYPE_NONE                      = 0;
-const CL_KERNEL_ARG_TYPE_CONST                     = (1 << 0);
-const CL_KERNEL_ARG_TYPE_RESTRICT                  = (1 << 1);
-const CL_KERNEL_ARG_TYPE_VOLATILE                  = (1 << 2);
+const CL_KERNEL_ARG_TYPE_CONST                     = (1 shl 0);
+const CL_KERNEL_ARG_TYPE_RESTRICT                  = (1 shl 1);
+const CL_KERNEL_ARG_TYPE_VOLATILE                  = (1 shl 2);
 {$IFDEF CL_VERSION_2_0 }
-const CL_KERNEL_ARG_TYPE_PIPE                      = (1 << 3);
+const CL_KERNEL_ARG_TYPE_PIPE                      = (1 shl 3);
 {$ENDIF}
 
 {$ENDIF}
