@@ -845,65 +845,65 @@ const CL_PROFILING_COMMAND_COMPLETE                = $1284;
 (********************************************************************************************************)
 
 (* Platform API *)
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetPlatformIDs( num_entries_ :T_cl_uint;
                   platforms_ :P_cl_platform_id;
-                  num_platforms_ :P_cl_uint ) CL_API_SUFFIX__VERSION_1_0;
+                  num_platforms_ :P_cl_uint ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetPlatformInfo( platform_ :T_cl_platform_id;
                    param_name_ :T_cl_platform_info;
                    param_value_size_ :T_size_t;
                    param_value_ :P_void;
-                   param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                   param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 (* Device APIs *)
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetDeviceIDs( platform_ :T_cl_platform_id;
                 device_type_ :T_cl_device_type;
                 num_entries_ :T_cl_uint;
                 devices_ :P_cl_device_id;
-                num_devices_ :P_cl_uint ) CL_API_SUFFIX__VERSION_1_0;
+                num_devices_ :P_cl_uint ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetDeviceInfo( device_ :T_cl_device_id;
                  param_name_ :T_cl_device_info;
                  param_value_size_ :T_size_t;
                  param_value_ :P_void;
-                 param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                 param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_1_2 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clCreateSubDevices( in_device_ :T_cl_device_id;
                     const properties_ :P_cl_device_partition_property;
                     num_devices_ :T_cl_uint;
                     out_devices_ :P_cl_device_id;
-                    num_devices_ret_ :P_cl_uint ) CL_API_SUFFIX__VERSION_1_2;
+                    num_devices_ret_ :P_cl_uint ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clRetainDevice( device_ :T_cl_device_id ) CL_API_SUFFIX__VERSION_1_2;
+function
+clRetainDevice( device_ :T_cl_device_id ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clReleaseDevice( device_ :T_cl_device_id ) CL_API_SUFFIX__VERSION_1_2;
+function
+clReleaseDevice( device_ :T_cl_device_id ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
 {$IFDEF CL_VERSION_2_1 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clSetDefaultDeviceCommandQueue( context_ :T_cl_context;
                                 device_ :T_cl_device_id;
-                                command_queue_ :T_cl_command_queue ) CL_API_SUFFIX__VERSION_2_1;
+                                command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetDeviceAndHostTimer( device_ :T_cl_device_id;
                          device_timestamp_ :P_cl_ulong;
-                         host_timestamp_ :P_cl_ulong ) CL_API_SUFFIX__VERSION_2_1;
+                         host_timestamp_ :P_cl_ulong ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetHostTimer( device_ :T_cl_device_id;
-                host_timestamp_ :P_cl_ulong ) CL_API_SUFFIX__VERSION_2_1;
+                host_timestamp_ :P_cl_ulong ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
 
 {$ENDIF}
 
@@ -929,123 +929,123 @@ clCreateContextFromType( const properties_ :P_cl_context_properties;
                          user_data_ :P_void;
                          errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_1_0;
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clRetainContext( context_ :T_cl_context ) CL_API_SUFFIX__VERSION_1_0;
+function
+clRetainContext( context_ :T_cl_context ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clReleaseContext( context_ :T_cl_context ) CL_API_SUFFIX__VERSION_1_0;
+function
+clReleaseContext( context_ :T_cl_context ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetContextInfo( context_ :T_cl_context;
                   param_name_ :T_cl_context_info;
                   param_value_size_ :T_size_t;
                   param_value_ :P_void;
-                  param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                  param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 (* Command Queue APIs *)
 
 {$IFDEF CL_VERSION_2_0 }
 
-extern CL_API_ENTRY cl_command_queue CL_API_CALL
+function
 clCreateCommandQueueWithProperties( context_ :T_cl_context;
                                     device_ :T_cl_device_id;
                                     const properties_ :P_cl_queue_properties;
-                                    errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_2_0;
+                                    errcode_ret_ :P_cl_int ) :T_cl_command_queue; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clRetainCommandQueue( command_queue_ :T_cl_command_queue ) CL_API_SUFFIX__VERSION_1_0;
+function
+clRetainCommandQueue( command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clReleaseCommandQueue( command_queue_ :T_cl_command_queue ) CL_API_SUFFIX__VERSION_1_0;
+function
+clReleaseCommandQueue( command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetCommandQueueInfo( command_queue_ :T_cl_command_queue;
                        param_name_ :T_cl_command_queue_info;
                        param_value_size_ :T_size_t;
                        param_value_ :P_void;
-                       param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                       param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 (* Memory Object APIs *)
-extern CL_API_ENTRY cl_mem CL_API_CALL
+function
 clCreateBuffer( context_ :T_cl_context;
                 flags_ :T_cl_mem_flags;
                 size_ :T_size_t;
                 host_ptr_ :P_void;
-                errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_1_0;
+                errcode_ret_ :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_1_1 }
 
-extern CL_API_ENTRY cl_mem CL_API_CALL
+function
 clCreateSubBuffer( buffer_ :T_cl_mem;
                    flags_ :T_cl_mem_flags;
                    buffer_create_type_ :T_cl_buffer_create_type;
                    const buffer_create_info_ :P_void;
-                   errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_1_1;
+                   errcode_ret_ :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
 
 {$ENDIF}
 
 {$IFDEF CL_VERSION_1_2 }
 
-extern CL_API_ENTRY cl_mem CL_API_CALL
+function
 clCreateImage( context_ :T_cl_context;
                flags_ :T_cl_mem_flags;
                const image_format_ :P_cl_image_format;
                const image_desc_ :P_cl_image_desc;
                host_ptr_ :P_void;
-               errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_1_2;
+               errcode_ret_ :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
 {$IFDEF CL_VERSION_2_0 }
 
-extern CL_API_ENTRY cl_mem CL_API_CALL
+function
 clCreatePipe( context_ :T_cl_context;
               flags_ :T_cl_mem_flags;
               pipe_packet_size_ :T_cl_uint;
               pipe_max_packets_ :T_cl_uint;
               const properties_ :P_cl_pipe_properties;
-              errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_2_0;
+              errcode_ret_ :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clRetainMemObject( memobj_ :T_cl_mem ) CL_API_SUFFIX__VERSION_1_0;
+function
+clRetainMemObject( memobj_ :T_cl_mem ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clReleaseMemObject( memobj_ :T_cl_mem ) CL_API_SUFFIX__VERSION_1_0;
+function
+clReleaseMemObject( memobj_ :T_cl_mem ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetSupportedImageFormats( context_ :T_cl_context;
                             flags_ :T_cl_mem_flags;
                             image_type_ :T_cl_mem_object_type;
                             num_entries_ :T_cl_uint;
                             image_formats_ :P_cl_image_format;
-                            num_image_formats_ :P_cl_uint ) CL_API_SUFFIX__VERSION_1_0;
+                            num_image_formats_ :P_cl_uint ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetMemObjectInfo( memobj_ :T_cl_mem;
                     param_name_ :T_cl_mem_info;
                     param_value_size_ :T_size_t;
                     param_value_ :P_void;
-                    param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                    param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetImageInfo( image_ :T_cl_mem;
                 param_name_ :T_cl_image_info;
                 param_value_size_ :T_size_t;
                 param_value_ :P_void;
-                param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_2_0 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetPipeInfo( pipe_ :T_cl_mem;
                param_name_ :T_cl_pipe_info;
                param_value_size_ :T_size_t;
                param_value_ :P_void;
-               param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_2_0;
+               param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
@@ -1063,15 +1063,15 @@ clSetMemObjectDestructorCallback( memobj_ :T_cl_mem;
 
 {$IFDEF CL_VERSION_2_0 }
 
-extern CL_API_ENTRY *void  CL_API_CALL
+function
 clSVMAlloc( context_ :T_cl_context;
             flags_ :T_cl_svm_mem_flags;
             size_ :T_size_t;
-            alignment_ :T_cl_uint ) CL_API_SUFFIX__VERSION_2_0;
+            alignment_ :T_cl_uint ) :P_void; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
 
-extern CL_API_ENTRY void CL_API_CALL
+function
 clSVMFree( context_ :T_cl_context;
-           svm_pointer_ :P_void ) CL_API_SUFFIX__VERSION_2_0;
+           svm_pointer_ :P_void ) :T_void; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
@@ -1079,69 +1079,69 @@ clSVMFree( context_ :T_cl_context;
 
 {$IFDEF CL_VERSION_2_0 }
 
-extern CL_API_ENTRY cl_sampler CL_API_CALL
+function
 clCreateSamplerWithProperties( context_ :T_cl_context;
                                const sampler_properties_ :P_cl_sampler_properties;
-                               errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_2_0;
+                               errcode_ret_ :P_cl_int ) :T_cl_sampler; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clRetainSampler( sampler_ :T_cl_sampler ) CL_API_SUFFIX__VERSION_1_0;
+function
+clRetainSampler( sampler_ :T_cl_sampler ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clReleaseSampler( sampler_ :T_cl_sampler ) CL_API_SUFFIX__VERSION_1_0;
+function
+clReleaseSampler( sampler_ :T_cl_sampler ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetSamplerInfo( sampler_ :T_cl_sampler;
                   param_name_ :T_cl_sampler_info;
                   param_value_size_ :T_size_t;
                   param_value_ :P_void;
-                  param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                  param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 (* Program Object APIs *)
-extern CL_API_ENTRY cl_program CL_API_CALL
+function
 clCreateProgramWithSource( context_ :T_cl_context;
                            count_ :T_cl_uint;
                            const strings_ :PP_char;
                            const lengths_ :P_size_t;
-                           errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_1_0;
+                           errcode_ret_ :P_cl_int ) :T_cl_program; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_program CL_API_CALL
+function
 clCreateProgramWithBinary( context_ :T_cl_context;
                            num_devices_ :T_cl_uint;
                            const device_list_ :P_cl_device_id;
                            const lengths_ :P_size_t;
                            const binaries_ :PP_unsigned_char;
                            binary_status_ :P_cl_int;
-                           errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_1_0;
+                           errcode_ret_ :P_cl_int ) :T_cl_program; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_1_2 }
 
-extern CL_API_ENTRY cl_program CL_API_CALL
+function
 clCreateProgramWithBuiltInKernels( context_ :T_cl_context;
                                    num_devices_ :T_cl_uint;
                                    const device_list_ :P_cl_device_id;
                                    const kernel_names_ :P_char;
-                                   errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_1_2;
+                                   errcode_ret_ :P_cl_int ) :T_cl_program; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
 {$IFDEF CL_VERSION_2_1 }
 
-extern CL_API_ENTRY cl_program CL_API_CALL
+function
 clCreateProgramWithIL( context_ :T_cl_context;
                       const il_ :P_void;
                       length_ :T_size_t;
-                      errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_2_1;
+                      errcode_ret_ :P_cl_int ) :T_cl_program; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clRetainProgram( program_ :T_cl_program ) CL_API_SUFFIX__VERSION_1_0;
+function
+clRetainProgram( program_ :T_cl_program ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clReleaseProgram( program_ :T_cl_program ) CL_API_SUFFIX__VERSION_1_0;
+function
+clReleaseProgram( program_ :T_cl_program ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clBuildProgram( program_ :T_cl_program;
@@ -1188,113 +1188,113 @@ clSetProgramReleaseCallback( program_ :T_cl_program;
                                                              user_data_ :P_void ),
                              user_data_ :P_void ) CL_API_SUFFIX__VERSION_2_2;
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clSetProgramSpecializationConstant( program_ :T_cl_program;
                                     spec_id_ :T_cl_uint;
                                     spec_size_ :T_size_t;
-                                    const spec_value_ :P_void ) CL_API_SUFFIX__VERSION_2_2;
+                                    const spec_value_ :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_2}
 
 {$ENDIF}
 
 {$IFDEF CL_VERSION_1_2 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clUnloadPlatformCompiler( platform_ :T_cl_platform_id ) CL_API_SUFFIX__VERSION_1_2;
+function
+clUnloadPlatformCompiler( platform_ :T_cl_platform_id ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetProgramInfo( program_ :T_cl_program;
                   param_name_ :T_cl_program_info;
                   param_value_size_ :T_size_t;
                   param_value_ :P_void;
-                  param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                  param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetProgramBuildInfo( program_ :T_cl_program;
                        device_ :T_cl_device_id;
                        param_name_ :T_cl_program_build_info;
                        param_value_size_ :T_size_t;
                        param_value_ :P_void;
-                       param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                       param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 (* Kernel Object APIs *)
-extern CL_API_ENTRY cl_kernel CL_API_CALL
+function
 clCreateKernel( program_ :T_cl_program;
                 const kernel_name_ :P_char;
-                errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_1_0;
+                errcode_ret_ :P_cl_int ) :T_cl_kernel; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clCreateKernelsInProgram( program_ :T_cl_program;
                           num_kernels_ :T_cl_uint;
                           kernels_ :P_cl_kernel;
-                          num_kernels_ret_ :P_cl_uint ) CL_API_SUFFIX__VERSION_1_0;
+                          num_kernels_ret_ :P_cl_uint ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_2_1 }
 
-extern CL_API_ENTRY cl_kernel CL_API_CALL
+function
 clCloneKernel( source_kernel_ :T_cl_kernel;
-               errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_2_1;
+               errcode_ret_ :P_cl_int ) :T_cl_kernel; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clRetainKernel( kernel_ :T_cl_kernel ) CL_API_SUFFIX__VERSION_1_0;
+function
+clRetainKernel( kernel_ :T_cl_kernel ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clReleaseKernel( kernel_ :T_cl_kernel ) CL_API_SUFFIX__VERSION_1_0;
+function
+clReleaseKernel( kernel_ :T_cl_kernel ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clSetKernelArg( kernel_ :T_cl_kernel;
                 arg_index_ :T_cl_uint;
                 arg_size_ :T_size_t;
-                const arg_value_ :P_void ) CL_API_SUFFIX__VERSION_1_0;
+                const arg_value_ :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_2_0 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clSetKernelArgSVMPointer( kernel_ :T_cl_kernel;
                           arg_index_ :T_cl_uint;
-                          const arg_value_ :P_void ) CL_API_SUFFIX__VERSION_2_0;
+                          const arg_value_ :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clSetKernelExecInfo( kernel_ :T_cl_kernel;
                      param_name_ :T_cl_kernel_exec_info;
                      param_value_size_ :T_size_t;
-                     const param_value_ :P_void ) CL_API_SUFFIX__VERSION_2_0;
+                     const param_value_ :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetKernelInfo( kernel_ :T_cl_kernel;
                  param_name_ :T_cl_kernel_info;
                  param_value_size_ :T_size_t;
                  param_value_ :P_void;
-                 param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                 param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_1_2 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetKernelArgInfo( kernel_ :T_cl_kernel;
                     arg_indx_ :T_cl_uint;
                     param_name_ :T_cl_kernel_arg_info;
                     param_value_size_ :T_size_t;
                     param_value_ :P_void;
-                    param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_2;
+                    param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetKernelWorkGroupInfo( kernel_ :T_cl_kernel;
                           device_ :T_cl_device_id;
                           param_name_ :T_cl_kernel_work_group_info;
                           param_value_size_ :T_size_t;
                           param_value_ :P_void;
-                          param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                          param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_2_1 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetKernelSubGroupInfo( kernel_ :T_cl_kernel;
                          device_ :T_cl_device_id;
                          param_name_ :T_cl_kernel_sub_group_info;
@@ -1302,41 +1302,41 @@ clGetKernelSubGroupInfo( kernel_ :T_cl_kernel;
                          const input_value_ :P_void;
                          param_value_size_ :T_size_t;
                          param_value_ :P_void;
-                         param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_2_1;
+                         param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
 
 {$ENDIF}
 
 (* Event Object APIs *)
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clWaitForEvents( num_events_ :T_cl_uint;
-                 const event_list_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+                 const event_list_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetEventInfo( event_ :T_cl_event;
                 param_name_ :T_cl_event_info;
                 param_value_size_ :T_size_t;
                 param_value_ :P_void;
-                param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_1_1 }
 
-extern CL_API_ENTRY cl_event CL_API_CALL
+function
 clCreateUserEvent( context_ :T_cl_context;
-                   errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_1_1;
+                   errcode_ret_ :P_cl_int ) :T_cl_event; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clRetainEvent( event_ :T_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+function
+clRetainEvent( event_ :T_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clReleaseEvent( event_ :T_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+function
+clReleaseEvent( event_ :T_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_1_1 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clSetUserEventStatus( event_ :T_cl_event;
-                      execution_status_ :T_cl_int ) CL_API_SUFFIX__VERSION_1_1;
+                      execution_status_ :T_cl_int ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clSetEventCallback( event_ :T_cl_event;
@@ -1349,22 +1349,22 @@ clSetEventCallback( event_ :T_cl_event;
 {$ENDIF}
 
 (* Profiling APIs *)
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clGetEventProfilingInfo( event_ :T_cl_event;
                          param_name_ :T_cl_profiling_info;
                          param_value_size_ :T_size_t;
                          param_value_ :P_void;
-                         param_value_size_ret_ :P_size_t ) CL_API_SUFFIX__VERSION_1_0;
+                         param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 (* Flush and Finish APIs *)
-extern CL_API_ENTRY cl_int CL_API_CALL
-clFlush( command_queue_ :T_cl_command_queue ) CL_API_SUFFIX__VERSION_1_0;
+function
+clFlush( command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clFinish( command_queue_ :T_cl_command_queue ) CL_API_SUFFIX__VERSION_1_0;
+function
+clFinish( command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 (* Enqueued Commands APIs *)
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueReadBuffer( command_queue_ :T_cl_command_queue;
                      buffer_ :T_cl_mem;
                      blocking_read_ :T_cl_bool;
@@ -1373,11 +1373,11 @@ clEnqueueReadBuffer( command_queue_ :T_cl_command_queue;
                      ptr_ :P_void;
                      num_events_in_wait_list_ :T_cl_uint;
                      const event_wait_list_ :P_cl_event;
-                     event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+                     event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_1_1 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueReadBufferRect( command_queue_ :T_cl_command_queue;
                          buffer_ :T_cl_mem;
                          blocking_read_ :T_cl_bool;
@@ -1391,11 +1391,11 @@ clEnqueueReadBufferRect( command_queue_ :T_cl_command_queue;
                          ptr_ :P_void;
                          num_events_in_wait_list_ :T_cl_uint;
                          const event_wait_list_ :P_cl_event;
-                         event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_1;
+                         event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueWriteBuffer( command_queue_ :T_cl_command_queue;
                       buffer_ :T_cl_mem;
                       blocking_write_ :T_cl_bool;
@@ -1404,11 +1404,11 @@ clEnqueueWriteBuffer( command_queue_ :T_cl_command_queue;
                       const ptr_ :P_void;
                       num_events_in_wait_list_ :T_cl_uint;
                       const event_wait_list_ :P_cl_event;
-                      event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+                      event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_1_1 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueWriteBufferRect( command_queue_ :T_cl_command_queue;
                           buffer_ :T_cl_mem;
                           blocking_write_ :T_cl_bool;
@@ -1422,13 +1422,13 @@ clEnqueueWriteBufferRect( command_queue_ :T_cl_command_queue;
                           const ptr_ :P_void;
                           num_events_in_wait_list_ :T_cl_uint;
                           const event_wait_list_ :P_cl_event;
-                          event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_1;
+                          event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
 
 {$ENDIF}
 
 {$IFDEF CL_VERSION_1_2 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueFillBuffer( command_queue_ :T_cl_command_queue;
                      buffer_ :T_cl_mem;
                      const pattern_ :P_void;
@@ -1437,11 +1437,11 @@ clEnqueueFillBuffer( command_queue_ :T_cl_command_queue;
                      size_ :T_size_t;
                      num_events_in_wait_list_ :T_cl_uint;
                      const event_wait_list_ :P_cl_event;
-                     event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_2;
+                     event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueCopyBuffer( command_queue_ :T_cl_command_queue;
                      src_buffer_ :T_cl_mem;
                      dst_buffer_ :T_cl_mem;
@@ -1450,11 +1450,11 @@ clEnqueueCopyBuffer( command_queue_ :T_cl_command_queue;
                      size_ :T_size_t;
                      num_events_in_wait_list_ :T_cl_uint;
                      const event_wait_list_ :P_cl_event;
-                     event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+                     event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_1_1 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueCopyBufferRect( command_queue_ :T_cl_command_queue;
                          src_buffer_ :T_cl_mem;
                          dst_buffer_ :T_cl_mem;
@@ -1467,11 +1467,11 @@ clEnqueueCopyBufferRect( command_queue_ :T_cl_command_queue;
                          dst_slice_pitch_ :T_size_t;
                          num_events_in_wait_list_ :T_cl_uint;
                          const event_wait_list_ :P_cl_event;
-                         event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_1;
+                         event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueReadImage( command_queue_ :T_cl_command_queue;
                     image_ :T_cl_mem;
                     blocking_read_ :T_cl_bool;
@@ -1482,9 +1482,9 @@ clEnqueueReadImage( command_queue_ :T_cl_command_queue;
                     ptr_ :P_void;
                     num_events_in_wait_list_ :T_cl_uint;
                     const event_wait_list_ :P_cl_event;
-                    event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+                    event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueWriteImage( command_queue_ :T_cl_command_queue;
                      image_ :T_cl_mem;
                      blocking_write_ :T_cl_bool;
@@ -1495,11 +1495,11 @@ clEnqueueWriteImage( command_queue_ :T_cl_command_queue;
                      const ptr_ :P_void;
                      num_events_in_wait_list_ :T_cl_uint;
                      const event_wait_list_ :P_cl_event;
-                     event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+                     event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_1_2 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueFillImage( command_queue_ :T_cl_command_queue;
                     image_ :T_cl_mem;
                     const fill_color_ :P_void;
@@ -1507,11 +1507,11 @@ clEnqueueFillImage( command_queue_ :T_cl_command_queue;
                     const region_ :P_size_t;
                     num_events_in_wait_list_ :T_cl_uint;
                     const event_wait_list_ :P_cl_event;
-                    event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_2;
+                    event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueCopyImage( command_queue_ :T_cl_command_queue;
                     src_image_ :T_cl_mem;
                     dst_image_ :T_cl_mem;
@@ -1520,9 +1520,9 @@ clEnqueueCopyImage( command_queue_ :T_cl_command_queue;
                     const region_ :P_size_t;
                     num_events_in_wait_list_ :T_cl_uint;
                     const event_wait_list_ :P_cl_event;
-                    event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+                    event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueCopyImageToBuffer( command_queue_ :T_cl_command_queue;
                             src_image_ :T_cl_mem;
                             dst_buffer_ :T_cl_mem;
@@ -1531,9 +1531,9 @@ clEnqueueCopyImageToBuffer( command_queue_ :T_cl_command_queue;
                             dst_offset_ :T_size_t;
                             num_events_in_wait_list_ :T_cl_uint;
                             const event_wait_list_ :P_cl_event;
-                            event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+                            event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueCopyBufferToImage( command_queue_ :T_cl_command_queue;
                             src_buffer_ :T_cl_mem;
                             dst_image_ :T_cl_mem;
@@ -1542,9 +1542,9 @@ clEnqueueCopyBufferToImage( command_queue_ :T_cl_command_queue;
                             const region_ :P_size_t;
                             num_events_in_wait_list_ :T_cl_uint;
                             const event_wait_list_ :P_cl_event;
-                            event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+                            event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY *void  CL_API_CALL
+function
 clEnqueueMapBuffer( command_queue_ :T_cl_command_queue;
                     buffer_ :T_cl_mem;
                     blocking_map_ :T_cl_bool;
@@ -1554,9 +1554,9 @@ clEnqueueMapBuffer( command_queue_ :T_cl_command_queue;
                     num_events_in_wait_list_ :T_cl_uint;
                     const event_wait_list_ :P_cl_event;
                     event_ :P_cl_event;
-                    errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_1_0;
+                    errcode_ret_ :P_cl_int ) :P_void; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY *void  CL_API_CALL
+function
 clEnqueueMapImage( command_queue_ :T_cl_command_queue;
                    image_ :T_cl_mem;
                    blocking_map_ :T_cl_bool;
@@ -1568,30 +1568,30 @@ clEnqueueMapImage( command_queue_ :T_cl_command_queue;
                    num_events_in_wait_list_ :T_cl_uint;
                    const event_wait_list_ :P_cl_event;
                    event_ :P_cl_event;
-                   errcode_ret_ :P_cl_int ) CL_API_SUFFIX__VERSION_1_0;
+                   errcode_ret_ :P_cl_int ) :P_void; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueUnmapMemObject( command_queue_ :T_cl_command_queue;
                          memobj_ :T_cl_mem;
                          mapped_ptr_ :P_void;
                          num_events_in_wait_list_ :T_cl_uint;
                          const event_wait_list_ :P_cl_event;
-                         event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+                         event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 {$IFDEF CL_VERSION_1_2 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueMigrateMemObjects( command_queue_ :T_cl_command_queue;
                             num_mem_objects_ :T_cl_uint;
                             const mem_objects_ :P_cl_mem;
                             flags_ :T_cl_mem_migration_flags;
                             num_events_in_wait_list_ :T_cl_uint;
                             const event_wait_list_ :P_cl_event;
-                            event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_2;
+                            event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueNDRangeKernel( command_queue_ :T_cl_command_queue;
                         kernel_ :T_cl_kernel;
                         work_dim_ :T_cl_uint;
@@ -1600,7 +1600,7 @@ clEnqueueNDRangeKernel( command_queue_ :T_cl_command_queue;
                         const local_work_size_ :P_size_t;
                         num_events_in_wait_list_ :T_cl_uint;
                         const event_wait_list_ :P_cl_event;
-                        event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_0;
+                        event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clEnqueueNativeKernel( command_queue_ :T_cl_command_queue;
@@ -1616,17 +1616,17 @@ clEnqueueNativeKernel( command_queue_ :T_cl_command_queue;
 
 {$IFDEF CL_VERSION_1_2 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueMarkerWithWaitList( command_queue_ :T_cl_command_queue;
                              num_events_in_wait_list_ :T_cl_uint;
                              const event_wait_list_ :P_cl_event;
-                             event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_2;
+                             event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueBarrierWithWaitList( command_queue_ :T_cl_command_queue;
                               num_events_in_wait_list_ :T_cl_uint;
                               const event_wait_list_ :P_cl_event;
-                              event_ :P_cl_event ) CL_API_SUFFIX__VERSION_1_2;
+                              event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
@@ -1645,7 +1645,7 @@ clEnqueueSVMFree( command_queue_ :T_cl_command_queue;
                   const event_wait_list_ :P_cl_event;
                   event_ :P_cl_event ) CL_API_SUFFIX__VERSION_2_0;
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueSVMMemcpy( command_queue_ :T_cl_command_queue;
                     blocking_copy_ :T_cl_bool;
                     dst_ptr_ :P_void;
@@ -1653,9 +1653,9 @@ clEnqueueSVMMemcpy( command_queue_ :T_cl_command_queue;
                     size_ :T_size_t;
                     num_events_in_wait_list_ :T_cl_uint;
                     const event_wait_list_ :P_cl_event;
-                    event_ :P_cl_event ) CL_API_SUFFIX__VERSION_2_0;
+                    event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueSVMMemFill( command_queue_ :T_cl_command_queue;
                      svm_ptr_ :P_void;
                      const pattern_ :P_void;
@@ -1663,9 +1663,9 @@ clEnqueueSVMMemFill( command_queue_ :T_cl_command_queue;
                      size_ :T_size_t;
                      num_events_in_wait_list_ :T_cl_uint;
                      const event_wait_list_ :P_cl_event;
-                     event_ :P_cl_event ) CL_API_SUFFIX__VERSION_2_0;
+                     event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueSVMMap( command_queue_ :T_cl_command_queue;
                  blocking_map_ :T_cl_bool;
                  flags_ :T_cl_map_flags;
@@ -1673,20 +1673,20 @@ clEnqueueSVMMap( command_queue_ :T_cl_command_queue;
                  size_ :T_size_t;
                  num_events_in_wait_list_ :T_cl_uint;
                  const event_wait_list_ :P_cl_event;
-                 event_ :P_cl_event ) CL_API_SUFFIX__VERSION_2_0;
+                 event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueSVMUnmap( command_queue_ :T_cl_command_queue;
                    svm_ptr_ :P_void;
                    num_events_in_wait_list_ :T_cl_uint;
                    const event_wait_list_ :P_cl_event;
-                   event_ :P_cl_event ) CL_API_SUFFIX__VERSION_2_0;
+                   event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
 {$IFDEF CL_VERSION_2_1 }
 
-extern CL_API_ENTRY cl_int CL_API_CALL
+function
 clEnqueueSVMMigrateMem( command_queue_ :T_cl_command_queue;
                         num_svm_pointers_ :T_cl_uint;
                         const svm_pointers_ :PP_void;
@@ -1694,7 +1694,7 @@ clEnqueueSVMMigrateMem( command_queue_ :T_cl_command_queue;
                         flags_ :T_cl_mem_migration_flags;
                         num_events_in_wait_list_ :T_cl_uint;
                         const event_wait_list_ :P_cl_event;
-                        event_ :P_cl_event ) CL_API_SUFFIX__VERSION_2_1;
+                        event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
 
 {$ENDIF}
 
@@ -1707,9 +1707,9 @@ clEnqueueSVMMigrateMem( command_queue_ :T_cl_command_queue;
  * check to make sure the address is not NULL, before using or
  * calling the returned function address.
  *)
-extern CL_API_ENTRY *void  CL_API_CALL
+function
 clGetExtensionFunctionAddressForPlatform( platform_ :T_cl_platform_id;
-                                          const func_name_ :P_char ) CL_API_SUFFIX__VERSION_1_2;
+                                          const func_name_ :P_char ) :P_void; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
