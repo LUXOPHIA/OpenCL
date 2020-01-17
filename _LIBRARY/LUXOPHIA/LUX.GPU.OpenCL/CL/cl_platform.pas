@@ -226,18 +226,18 @@ const CL_INFINITY         = CL_HUGE_VALF;
 //#include <stdint.h>
 
 (* scalar types  *)
-type T_cl_char   = T_int8_t;
-type T_cl_uchar  = T_uint8_t;
-type T_cl_short  = T_int16_t;
-type T_cl_ushort = T_uint16_t;
-type T_cl_int    = T_int32_t;
-type T_cl_uint   = T_uint32_t;
-type T_cl_long   = T_int64_t;
-type T_cl_ulong  = T_uint64_t;
+type T_cl_char   = T_int8_t  ;  P_cl_char   = ^T_cl_char  ;
+type T_cl_uchar  = T_uint8_t ;  P_cl_uchar  = ^T_cl_uchar ;
+type T_cl_short  = T_int16_t ;  P_cl_short  = ^T_cl_short ;
+type T_cl_ushort = T_uint16_t;  P_cl_ushort = ^T_cl_ushort;
+type T_cl_int    = T_int32_t ;  P_cl_int    = ^T_cl_int   ;
+type T_cl_uint   = T_uint32_t;  P_cl_uint   = ^T_cl_uint  ;
+type T_cl_long   = T_int64_t ;  P_cl_long   = ^T_cl_long  ;
+type T_cl_ulong  = T_uint64_t;  P_cl_ulong  = ^T_cl_ulong ;
 
-type T_cl_half   = T_uint16_t;
-type T_cl_float  = T_float;
-type T_cl_double = T_double;
+type T_cl_half   = T_uint16_t;  P_cl_half   = ^T_cl_half  ;
+type T_cl_float  = T_float   ;  P_cl_float  = ^T_cl_float ;
+type T_cl_double = T_double  ;  P_cl_double = ^T_cl_double;
 
 (* Macro names and corresponding values defined by OpenCL *)
 const CL_CHAR_BIT         = 8;
