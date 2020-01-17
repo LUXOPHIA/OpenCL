@@ -1732,7 +1732,7 @@ clGetExtensionFunctionAddressForPlatform( platform_ :T_cl_platform_id;
 {$ENDIF} (* CL_USE_DEPRECATED_OPENCL_1_0_APIS *)
 
 (* Deprecated OpenCL 1.1 APIs *)
-extern CL_API_ENTRY CL_EXT_PREFIX__VERSION_1_1_DEPRECATED cl_mem CL_API_CALL
+function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
 clCreateImage2D( context_ :T_cl_context;
                  flags_ :T_cl_mem_flags;
                  const image_format_ :P_cl_image_format;
@@ -1740,9 +1740,9 @@ clCreateImage2D( context_ :T_cl_context;
                  image_height_ :T_size_t;
                  image_row_pitch_ :T_size_t;
                  host_ptr_ :P_void;
-                 errcode_ret_ :P_cl_int ) CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED;
+                 errcode_ret_ :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
 
-extern CL_API_ENTRY CL_EXT_PREFIX__VERSION_1_1_DEPRECATED cl_mem CL_API_CALL
+function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
 clCreateImage3D( context_ :T_cl_context;
                  flags_ :T_cl_mem_flags;
                  const image_format_ :P_cl_image_format;
@@ -1752,46 +1752,46 @@ clCreateImage3D( context_ :T_cl_context;
                  image_row_pitch_ :T_size_t;
                  image_slice_pitch_ :T_size_t;
                  host_ptr_ :P_void;
-                 errcode_ret_ :P_cl_int ) CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED;
+                 errcode_ret_ :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
 
-extern CL_API_ENTRY CL_EXT_PREFIX__VERSION_1_1_DEPRECATED cl_int CL_API_CALL
+function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
 clEnqueueMarker( command_queue_ :T_cl_command_queue;
-                 event_ :P_cl_event ) CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED;
+                 event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
 
-extern CL_API_ENTRY CL_EXT_PREFIX__VERSION_1_1_DEPRECATED cl_int CL_API_CALL
+function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
 clEnqueueWaitForEvents( command_queue_ :T_cl_command_queue;
                          num_events_ :T_cl_uint;
-                         const event_list_ :P_cl_event ) CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED;
+                         const event_list_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
 
-extern CL_API_ENTRY CL_EXT_PREFIX__VERSION_1_1_DEPRECATED cl_int CL_API_CALL
-clEnqueueBarrier( command_queue_ :T_cl_command_queue ) CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED;
+function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
+clEnqueueBarrier( command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
 
-extern CL_API_ENTRY CL_EXT_PREFIX__VERSION_1_1_DEPRECATED cl_int CL_API_CALL
-clUnloadCompiler(void) CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED;
+function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
+clUnloadCompiler(void) :T_cl_int; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
 
-extern CL_API_ENTRY CL_EXT_PREFIX__VERSION_1_1_DEPRECATED *void  CL_API_CALL
-clGetExtensionFunctionAddress( const func_name_ :P_char ) CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED;
+function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
+clGetExtensionFunctionAddress( const func_name_ :P_char ) :T_*void; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
 
 (* Deprecated OpenCL 2.0 APIs *)
-extern CL_API_ENTRY CL_EXT_PREFIX__VERSION_1_2_DEPRECATED cl_command_queue CL_API_CALL
+function {CL_EXT_PREFIX__VERSION_1_2_DEPRECATED}
 clCreateCommandQueue( context_ :T_cl_context;
                       device_ :T_cl_device_id;
                       properties_ :T_cl_command_queue_properties;
-                      errcode_ret_ :P_cl_int ) CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED;
+                      errcode_ret_ :P_cl_int ) :T_cl_command_queue; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED}
 
-extern CL_API_ENTRY CL_EXT_PREFIX__VERSION_1_2_DEPRECATED cl_sampler CL_API_CALL
+function {CL_EXT_PREFIX__VERSION_1_2_DEPRECATED}
 clCreateSampler( context_ :T_cl_context;
                  normalized_coords_ :T_cl_bool;
                  addressing_mode_ :T_cl_addressing_mode;
                  filter_mode_ :T_cl_filter_mode;
-                 errcode_ret_ :P_cl_int ) CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED;
+                 errcode_ret_ :P_cl_int ) :T_cl_sampler; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED}
 
-extern CL_API_ENTRY CL_EXT_PREFIX__VERSION_1_2_DEPRECATED cl_int CL_API_CALL
+function {CL_EXT_PREFIX__VERSION_1_2_DEPRECATED}
 clEnqueueTask( command_queue_ :T_cl_command_queue;
                kernel_ :T_cl_kernel;
                num_events_in_wait_list_ :T_cl_uint;
                const event_wait_list_ :P_cl_event;
-               event_ :P_cl_event ) CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED;
+               event_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED}
 
 implementation //############################################################### ■
 
