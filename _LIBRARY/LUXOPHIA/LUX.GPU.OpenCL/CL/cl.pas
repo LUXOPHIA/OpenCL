@@ -30,7 +30,9 @@
 
 interface //#################################################################### ■
 
-uses LUX.Code.C, cl_version, cl_platform;
+uses LUX.Code.C,
+     cl_version,
+     cl_platform;
 
 const DLLNAME = 'OpenCL.dll';
 
