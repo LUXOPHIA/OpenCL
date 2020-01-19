@@ -5,6 +5,7 @@ interface //####################################################################
 uses System.Generics.Collections,
      cl_version, cl_platform, cl,
      LUX.Code.C,
+     LUX.GPU.OpenCL.root,
      LUX.GPU.OpenCL,
      LUX.GPU.OpenCL.Command;
 
