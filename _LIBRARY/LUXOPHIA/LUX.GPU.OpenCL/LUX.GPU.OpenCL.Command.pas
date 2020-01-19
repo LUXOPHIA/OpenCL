@@ -1,47 +1,40 @@
-﻿unit LUX.GPU.OpenCL.Context;
+﻿unit LUX.GPU.OpenCL.Command;
 
 interface //#################################################################### ■
 
 uses System.Generics.Collections,
      cl_version, cl_platform, cl,
      LUX.Code.C,
-     LUX.GPU.OpenCL,
-     LUX.GPU.OpenCL.Command;
+     LUX.GPU.OpenCL;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
-
-     TCLContext = class;
-
-     TCLCommand = TCLCommand<TCLContext>;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContext
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLCommand
 
-     TCLContext = class
+     TCLCommand<_TContext_:class> = class
      private
      protected
-       _Commands :TObjectList<TCLCommand>;
-       _Handle   :T_cl_context;
+       _Context :_TContext_;
+       _Device  :TCLDevice;
+       _Handle  :T_cl_command_queue;
        ///// アクセス
-       function GetHandle :T_cl_context;
+       function GetHandle :T_cl_command_queue;
        function GetavHandle :Boolean;
        procedure SetavHandle( const avHandle_:Boolean );
        ///// メソッド
        procedure BeginHandle;
        procedure EndHandle;
      public
-       constructor Create; overload;
-       constructor Create( const Devices_:TArray<TCLDevice> ); overload;
+       constructor Create( const Context_:_TContext_; const Device_:TCLDevice );
        destructor Destroy; override;
        ///// プロパティ
-       property Commands :TObjectList<TCLCommand> read   _Commands;
-       property Handle   :T_cl_context            read GetHandle  ;  property avHandle :Boolean read GetavHandle write SetavHandle;
-       ///// メソッド
-       procedure Add( const Device_:TCLDevice );
-       procedure Remove( const Device_:TCLDevice );
+       property Context :_TContext_             read   _Context;
+       property Device  :TCLDevice          read   _Device ;
+       property Handle  :T_cl_command_queue read GetHandle ;  property avHandle :Boolean read GetavHandle write SetavHandle;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -52,11 +45,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
+uses LUX.GPU.OpenCL.Context;
+
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContext
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLCommand
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -64,19 +59,21 @@ implementation //###############################################################
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLContext.GetHandle :T_cl_context;
+function TCLCommand<_TContext_>.GetHandle :T_cl_command_queue;
 begin
-     if not avHandle then BeginHandle;
+     if not TCLContext( _Context ).avHandle then avHandle := False;
+
+     if not                        avHandle then BeginHandle;
 
      Result := _Handle;
 end;
 
-function TCLContext.GetavHandle :Boolean;
+function TCLCommand<_TContext_>.GetavHandle :Boolean;
 begin
      Result := Assigned( _Handle );
 end;
 
-procedure TCLContext.SetavHandle( const avHandle_:Boolean );
+procedure TCLCommand<_TContext_>.SetavHandle( const avHandle_:Boolean );
 begin
      if avHandle  then EndHandle;
 
@@ -85,76 +82,40 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLContext.BeginHandle;
-var
-   Ds :TArray<T_cl_device_id>;
-   I :Integer;
+procedure TCLCommand<_TContext_>.BeginHandle;
 begin
-     with _Commands do
-     begin
-          SetLength( Ds, Count );
-
-          for I := 0 to Count-1 do Ds[ I ] := Items[ I ].Device.ID;
-
-          _Handle := clCreateContext( nil, Count, @Ds[0], nil, nil, nil );
-     end;
+     {$IF Declared( CL_VERSION_2_0 ) }
+     _Handle := clCreateCommandQueueWithProperties( TCLContext( _Context ).Handle, _Device.ID, 0, nil );
+     {$ELSE}
+     _Handle := clCreateCommandQueue              ( TCLContext( _Context ).Handle, _Device.ID, 0, nil );
+     {$ENDIF}
 end;
 
-procedure TCLContext.EndHandle;
+procedure TCLCommand<_TContext_>.EndHandle;
 begin
-     clReleaseContext( _Handle );
+     clReleaseCommandQueue( _Handle );
 
      _Handle := nil;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLContext.Create;
+constructor TCLCommand<_TContext_>.Create( const Context_:_TContext_; const Device_:TCLDevice );
 begin
-     inherited;
+     inherited Create;
 
-     _Commands := TObjectList<TCLCommand>.Create;
-
-     _Handle := nil;
+     _Context := Context_;
+     _Device  := Device_;
+     _Handle  := nil;
 end;
 
-constructor TCLContext.Create( const Devices_:TArray<TCLDevice> );
-var
-   D :TCLDevice;
-begin
-     Create;
-
-     for D in Devices_ do Add( D );
-end;
-
-destructor TCLContext.Destroy;
+destructor TCLCommand<_TContext_>.Destroy;
 begin
      if avHandle then EndHandle;
 
-     _Commands.Free;
+     TCLContext( _Context ).avHandle := False;
 
      inherited;
-end;
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-procedure TCLContext.Add( const Device_:TCLDevice );
-begin
-     _Commands.Add( TCLCommand.Create( Self, Device_ ) );
-
-     avHandle := False;
-end;
-
-procedure TCLContext.Remove( const Device_:TCLDevice );
-var
-   C :TCLCommand;
-begin
-     for C in _Commands do
-     begin
-          if C.Device = Device_ then C.Free;
-     end;
-
-     avHandle := False;
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
