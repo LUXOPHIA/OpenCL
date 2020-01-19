@@ -32,7 +32,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Context_:_TContext_; const Device_:TCLDevice );
        destructor Destroy; override;
        ///// プロパティ
-       property Context :_TContext_             read   _Context;
+       property Context :_TContext_         read   _Context;
        property Device  :TCLDevice          read   _Device ;
        property Handle  :T_cl_command_queue read GetHandle ;  property avHandle :Boolean read GetavHandle write SetavHandle;
      end;
