@@ -138,7 +138,7 @@ end;
 
 function TCLPlatform<_TOpenCL_>.GetHostTimerResolution :T_cl_ulong;
 begin
-     {$IF Declared( CL_VERSION_2_1 ) }
+     {$IF CL_VERSION_2_1 <> 0 }
      Result := GetPlatformInfo<T_cl_ulong>( CL_PLATFORM_HOST_TIMER_RESOLUTION );
      {$ELSE}
      Result := 0;

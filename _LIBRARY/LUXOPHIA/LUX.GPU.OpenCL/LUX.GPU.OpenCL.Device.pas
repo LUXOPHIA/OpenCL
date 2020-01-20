@@ -85,11 +85,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetDEVICE_NATIVE_VECTOR_WIDTH_HALF :T_cl_uint;
        function GetDEVICE_OPENCL_C_VERSION :String;
        function GetDEVICE_PARENT_DEVICE :T_cl_device_id;
-       {$IF Declared( CL_VERSION_1_2 ) }
+       {$IF CL_VERSION_1_2 <> 0 }
        function GetDEVICE_PARTITION_AFFINITY_DOMAIN :T_cl_device_affinity_domain;
        {$ENDIF}
        function GetDEVICE_PARTITION_MAX_SUB_DEVICES :T_cl_uint;
-       {$IF Declared( CL_VERSION_1_2 ) }
+       {$IF CL_VERSION_1_2 <> 0 }
        function GetDEVICE_PARTITION_PROPERTIES :TArray<T_cl_device_partition_property>;
        function GetDEVICE_PARTITION_TYPE :TArray<T_cl_device_partition_property>;
        {$ENDIF}
@@ -118,7 +118,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetDEVICE_SINGLE_FP_CONFIG :T_cl_device_fp_config;
        function GetDEVICE_SPIR_VERSIONS :String;
        function GetDEVICE_SUBGROUP_INDEPENDENT_FORWARD_PROGRESS :T_cl_bool;
-       {$IF Declared( CL_VERSION_2_0 ) }
+       {$IF CL_VERSION_2_0 <> 0 }
        function GetDEVICE_SVM_CAPABILITIES :T_cl_device_svm_capabilities;
        {$ENDIF} *)
      { function GetDEVICE_TERMINATE_CAPABILITY_KHR :T_cl_device_terminate_capability_khr; }
@@ -191,11 +191,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property DEVICE_NATIVE_VECTOR_WIDTH_HALF              :T_cl_uint                              read GetDEVICE_NATIVE_VECTOR_WIDTH_HALF;
        property DEVICE_OPENCL_C_VERSION                      :String                                 read GetDEVICE_OPENCL_C_VERSION;
        property DEVICE_PARENT_DEVICE                         :T_cl_device_id                         read GetDEVICE_PARENT_DEVICE;
-       {$IF Declared( CL_VERSION_1_2 ) }
+       {$IF CL_VERSION_1_2 <> 0 }
        property DEVICE_PARTITION_AFFINITY_DOMAIN             :T_cl_device_affinity_domain            read GetDEVICE_PARTITION_AFFINITY_DOMAIN;
        {$ENDIF}
        property DEVICE_PARTITION_MAX_SUB_DEVICES             :T_cl_uint                              read GetDEVICE_PARTITION_MAX_SUB_DEVICES;
-       {$IF Declared( CL_VERSION_1_2 ) }
+       {$IF CL_VERSION_1_2 <> 0 }
        property DEVICE_PARTITION_PROPERTIES                  :TArray<T_cl_device_partition_property> read GetDEVICE_PARTITION_PROPERTIES;
        property DEVICE_PARTITION_TYPE                        :TArray<T_cl_device_partition_property> read GetDEVICE_PARTITION_TYPE;
        {$ENDIF}
@@ -224,7 +224,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property DEVICE_SINGLE_FP_CONFIG                      :T_cl_device_fp_config                  read GetDEVICE_SINGLE_FP_CONFIG;
        property DEVICE_SPIR_VERSIONS                         :String                                 read GetDEVICE_SPIR_VERSIONS;
        property DEVICE_SUBGROUP_INDEPENDENT_FORWARD_PROGRESS :T_cl_bool                              read GetDEVICE_SUBGROUP_INDEPENDENT_FORWARD_PROGRESS;
-       {$IF Declared( CL_VERSION_2_0 ) }
+       {$IF CL_VERSION_2_0 <> 0 }
        property DEVICE_SVM_CAPABILITIES                      :T_cl_device_svm_capabilities           read GetDEVICE_SVM_CAPABILITIES;
        {$ENDIF} *)
      { property DEVICE_TERMINATE_CAPABILITY_KHR              :T_cl_device_terminate_capability_khr   read GetDEVICE_TERMINATE_CAPABILITY_KHR; }
