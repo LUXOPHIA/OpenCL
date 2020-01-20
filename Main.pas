@@ -118,7 +118,7 @@ end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
-     _Context.Free;
+     /////
 end;
 
 end. //######################################################################### ■
