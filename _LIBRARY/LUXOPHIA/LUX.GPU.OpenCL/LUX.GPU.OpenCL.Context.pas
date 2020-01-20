@@ -24,6 +24,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Commands :TObjectList<TCLCommand>;
        _Handle   :T_cl_context;
        ///// アクセス
+       procedure SetParent( const Parent_:_TPlatform_ );
        function GetHandle :T_cl_context;
        function GetavHandle :Boolean;
        procedure SetavHandle( const avHandle_:Boolean );
@@ -36,9 +37,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Parent_:_TPlatform_; const Devices_:TArray<_TDevice_> ); overload;
        destructor Destroy; override;
        ///// プロパティ
-       property Parent   :_TPlatform_             read   _Parent  ;
-       property Commands :TObjectList<TCLCommand> read   _Commands;
-       property Handle   :T_cl_context            read GetHandle  ;  property avHandle :Boolean read GetavHandle write SetavHandle;
+       property Parent   :_TPlatform_             read   _Parent   write SetParent  ;
+       property Commands :TObjectList<TCLCommand> read   _Commands                  ;
+       property Handle   :T_cl_context            read GetHandle                    ;
+       property avHandle :Boolean                 read GetavHandle write SetavHandle;
        ///// メソッド
        procedure Add( const Device_:_TDevice_ );
        procedure Remove( const Device_:_TDevice_ );
@@ -65,6 +67,17 @@ uses LUX.GPU.OpenCL;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 /////////////////////////////////////////////////////////////////////// アクセス
+
+procedure TCLContext<_TDevice_,_TPlatform_>.SetParent( const Parent_:_TPlatform_ );
+begin
+     if Assigned( _Parent ) then TCLPlatform( _Parent ).Contexts.Remove( TCLContext( Self ) );
+
+                  _Parent := Parent_;
+
+     if Assigned( _Parent ) then TCLPlatform( _Parent ).Contexts.Add   ( TCLContext( Self ) );
+end;
+
+//------------------------------------------------------------------------------
 
 function TCLContext<_TDevice_,_TPlatform_>.GetHandle :T_cl_context;
 begin
@@ -122,7 +135,7 @@ begin
 
      _Commands := TObjectList<TCLCommand>.Create;
 
-     _Parent := _TPlatform_( _OpenCL_.Platform0 );
+     _Parent := nil;
      _Handle := nil;
 end;
 
@@ -130,7 +143,7 @@ constructor TCLContext<_TDevice_,_TPlatform_>.Create( const Parent_:_TPlatform_ 
 begin
      Create;
 
-     _Parent := Parent_;
+     Parent := Parent_;
 end;
 
 constructor TCLContext<_TDevice_,_TPlatform_>.Create( const Parent_:_TPlatform_; const Devices_:TArray<_TDevice_> );
