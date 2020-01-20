@@ -41,23 +41,23 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetVersion :String;
        function GetName :String;
        function GetVendor :String;
-       function GetTimerReso :T_cl_ulong;
+       function GetHostTimerResolution :T_cl_ulong;
        ///// メソッド
        procedure MakeDevices;
      public
        constructor Create( const Parent_:_TOpenCL_; const ID_:T_cl_platform_id );
        destructor Destroy; override;
        ///// プロパティ
-       property Parent     :_TOpenCL_               read   _Parent    ;
-       property ID         :T_cl_platform_id        read   _ID        ;
-       property Profile    :String                  read GetProfile   ;
-       property Version    :String                  read GetVersion   ;
-       property Name       :String                  read GetName      ;
-       property Vendor     :String                  read GetVendor    ;
-       property Extensions :TStringList             read   _Extensions;
-       property TimerReso  :T_cl_ulong              read GetTimerReso ;  { OpenCL 2.1 }
-       property Devices    :TObjectList<TCLDevice>  read   _Devices   ;
-       property Contexts   :TObjectList<TCLContext> read   _Contexts  ;
+       property Parent              :_TOpenCL_               read   _Parent             ;
+       property ID                  :T_cl_platform_id        read   _ID                 ;
+       property Profile             :String                  read GetProfile            ;
+       property Version             :String                  read GetVersion            ;
+       property Name                :String                  read GetName               ;
+       property Vendor              :String                  read GetVendor             ;
+       property Extensions          :TStringList             read   _Extensions         ;
+       property HostTimerResolution :T_cl_ulong              read GetHostTimerResolution;  { OpenCL 2.1 }
+       property Devices             :TObjectList<TCLDevice>  read   _Devices            ;
+       property Contexts            :TObjectList<TCLContext> read   _Contexts           ;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -136,7 +136,7 @@ begin
      Result := GetPlatformInfoString( CL_PLATFORM_VENDOR );
 end;
 
-function TCLPlatform<_TOpenCL_>.GetTimerReso :T_cl_ulong;
+function TCLPlatform<_TOpenCL_>.GetHostTimerResolution :T_cl_ulong;
 begin
      {$IF Declared( CL_VERSION_2_1 ) }
      Result := GetPlatformInfo<T_cl_ulong>( CL_PLATFORM_HOST_TIMER_RESOLUTION );
