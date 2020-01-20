@@ -109,7 +109,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
      ShowOPENCL;
 
-     _Context := TCLContext.Create;
+     _Context := TCLContext.Create( _OpenCL_.Platforms[ 0 ] );
 
      _Context.Add( _OpenCL_.Platforms[ 0 ].Devices[ 0 ] );
 
