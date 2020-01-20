@@ -32,7 +32,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetPlatformInfoString( const Name_:T_cl_platform_info ) :String;
      protected
        _Parent     :_TOpenCL_;
-       _ID         :T_cl_platform_id;
+       _Handle     :T_cl_platform_id;
        _Extensions :TStringList;
        _Devices    :TObjectList<TCLDevice>;
        _Contexts   :TObjectList<TCLContext>;
@@ -49,7 +49,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        destructor Destroy; override;
        ///// プロパティ
        property Parent              :_TOpenCL_               read   _Parent             ;
-       property ID                  :T_cl_platform_id        read   _ID                 ;
+       property Handle              :T_cl_platform_id        read   _Handle             ;
        property Profile             :String                  read GetProfile            ;
        property Version             :String                  read GetVersion            ;
        property Name                :String                  read GetName               ;
@@ -82,14 +82,14 @@ uses System.SysUtils;
 
 function TCLPlatform<_TOpenCL_>.GetPlatformInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
 begin
-     AssertCL( clGetPlatformInfo( _ID, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
+     AssertCL( clGetPlatformInfo( _Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
 //------------------------------------------------------------------------------
 
 function TCLPlatform<_TOpenCL_>.GetPlatformInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
 begin
-     AssertCL( clGetPlatformInfo( _ID, Name_, 0, nil, @Result ) );
+     AssertCL( clGetPlatformInfo( _Handle, Name_, 0, nil, @Result ) );
 end;
 
 //------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetPlatformInfo( _ID, Name_, S, @Result[ 0 ], nil ) );
+     AssertCL( clGetPlatformInfo( _Handle, Name_, S, @Result[ 0 ], nil ) );
 end;
 
 //------------------------------------------------------------------------------
@@ -155,11 +155,11 @@ var
    Ds :TArray<T_cl_device_id>;
    D :T_cl_device_id;
 begin
-     AssertCL( clGetDeviceIDs( _ID, DEVICETYPE, 0, nil, @DsN ) );
+     AssertCL( clGetDeviceIDs( _Handle, DEVICETYPE, 0, nil, @DsN ) );
 
      SetLength( Ds, DsN );
 
-     AssertCL( clGetDeviceIDs( _ID, DEVICETYPE, DsN, @Ds[0], nil ) );
+     AssertCL( clGetDeviceIDs( _Handle, DEVICETYPE, DsN, @Ds[0], nil ) );
 
      for D in Ds do _Devices.Add( TCLDevice.Create( Self, D ) );
 end;
@@ -177,7 +177,7 @@ begin
      _Contexts   := TObjectList<TCLContext>.Create;
 
      _Parent := Parent_;
-     _ID     := ID_;
+     _Handle := ID_;
 
      for E in GetPlatformInfoString( CL_PLATFORM_EXTENSIONS ).Split( [ ' ' ] )
      do _Extensions.Add( E );
