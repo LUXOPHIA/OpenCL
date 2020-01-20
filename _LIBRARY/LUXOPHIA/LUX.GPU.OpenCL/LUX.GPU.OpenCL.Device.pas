@@ -25,7 +25,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetDeviceInfoString( const Name_:T_cl_device_info ) :String;
      protected
        _Parent :_TPlatform_;
-       _ID     :T_cl_device_id;
+       _Handle :T_cl_device_id;
        ///// アクセス
        { cl_device_info }
 (*     function GetDEVICE_ADDRESS_BITS :T_cl_uint;
@@ -132,7 +132,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        destructor Destroy; override;
        ///// プロパティ
        property Parent                                       :_TPlatform_                            read   _Parent;
-       property ID                                           :T_cl_device_id                         read   _ID;
+       property Handle                                       :T_cl_device_id                         read   _Handle;
        { cl_device_info }
 (*     property DEVICE_ADDRESS_BITS                          :T_cl_uint                              read GetDEVICE_ADDRESS_BITS;
        property DEVICE_AVAILABLE                             :T_cl_bool                              read GetDEVICE_AVAILABLE;
@@ -255,14 +255,14 @@ implementation //###############################################################
 
 function TCLDevice<_TPlatform_>.GetDeviceInfo<_TYPE_>( const Name_:T_cl_device_info ) :_TYPE_;
 begin
-     AssertCL( clGetDeviceInfo( _ID, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
+     AssertCL( clGetDeviceInfo( _Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
 //------------------------------------------------------------------------------
 
 function TCLDevice<_TPlatform_>.GetDeviceInfoSize( const Name_:T_cl_device_info ) :T_size_t;
 begin
-     AssertCL( clGetDeviceInfo( _ID, Name_, 0, nil, @Result ) );
+     AssertCL( clGetDeviceInfo( _Handle, Name_, 0, nil, @Result ) );
 end;
 
 //------------------------------------------------------------------------------
@@ -275,7 +275,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetDeviceInfo( _ID, Name_, S, @Result[ 0 ], nil ) );
+     AssertCL( clGetDeviceInfo( _Handle, Name_, S, @Result[ 0 ], nil ) );
 end;
 
 //------------------------------------------------------------------------------
@@ -321,7 +321,7 @@ begin
      inherited Create;
 
      _Parent := Parent_;
-     _ID     := ID_;
+     _Handle := ID_;
 end;
 
 destructor TCLDevice<_TPlatform_>.Destroy;

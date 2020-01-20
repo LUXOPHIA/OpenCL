@@ -114,7 +114,7 @@ begin
      begin
           SetLength( Ds, Count );
 
-          for I := 0 to Count-1 do Ds[ I ] := TCLDevice( Items[ I ].Device ).ID;
+          for I := 0 to Count-1 do Ds[ I ] := TCLDevice( Items[ I ].Device ).Handle;
 
           _Handle := clCreateContext( @Ps[0], Count, @Ds[0], nil, nil, nil );
      end;
