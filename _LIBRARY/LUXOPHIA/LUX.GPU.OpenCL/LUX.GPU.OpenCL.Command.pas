@@ -5,8 +5,7 @@ interface //####################################################################
 uses System.Generics.Collections,
      cl_version, cl_platform, cl,
      LUX.Code.C,
-     LUX.GPU.OpenCL.root,
-     LUX.GPU.OpenCL;
+     LUX.GPU.OpenCL.root;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -14,13 +13,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLCommand<_TContext_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLCommand<_TContext_,_TDevice_>
 
-     TCLCommand<_TContext_:class> = class
+     TCLCommand<_TContext_,_TDevice_:class> = class
      private
      protected
        _Context :_TContext_;
-       _Device  :TCLDevice;
+       _Device  :_TDevice_;
        _Handle  :T_cl_command_queue;
        ///// アクセス
        function GetHandle :T_cl_command_queue;
@@ -30,11 +29,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure BeginHandle;
        procedure EndHandle;
      public
-       constructor Create( const Context_:_TContext_; const Device_:TCLDevice );
+       constructor Create( const Context_:_TContext_; const Device_:_TDevice_ );
        destructor Destroy; override;
        ///// プロパティ
        property Context :_TContext_         read   _Context;
-       property Device  :TCLDevice          read   _Device ;
+       property Device  :_TDevice_          read   _Device ;
        property Handle  :T_cl_command_queue read GetHandle ;  property avHandle :Boolean read GetavHandle write SetavHandle;
      end;
 
@@ -46,13 +45,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL.Context;
+uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLCommand<_TContext_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLCommand<_TContext_,_TDevice_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -60,7 +59,7 @@ uses LUX.GPU.OpenCL.Context;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLCommand<_TContext_>.GetHandle :T_cl_command_queue;
+function TCLCommand<_TContext_,_TDevice_>.GetHandle :T_cl_command_queue;
 begin
      if not TCLContext( _Context ).avHandle then avHandle := False;
 
@@ -69,12 +68,12 @@ begin
      Result := _Handle;
 end;
 
-function TCLCommand<_TContext_>.GetavHandle :Boolean;
+function TCLCommand<_TContext_,_TDevice_>.GetavHandle :Boolean;
 begin
      Result := Assigned( _Handle );
 end;
 
-procedure TCLCommand<_TContext_>.SetavHandle( const avHandle_:Boolean );
+procedure TCLCommand<_TContext_,_TDevice_>.SetavHandle( const avHandle_:Boolean );
 begin
      if avHandle  then EndHandle;
 
@@ -83,16 +82,16 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLCommand<_TContext_>.BeginHandle;
+procedure TCLCommand<_TContext_,_TDevice_>.BeginHandle;
 begin
      {$IF Declared( CL_VERSION_2_0 ) }
-     _Handle := clCreateCommandQueueWithProperties( TCLContext( _Context ).Handle, _Device.ID, 0, nil );
+     _Handle := clCreateCommandQueueWithProperties( TCLContext( _Context ).Handle, TCLDevice( _Device ).ID, 0, nil );
      {$ELSE}
-     _Handle := clCreateCommandQueue              ( TCLContext( _Context ).Handle, _Device.ID, 0, nil );
+     _Handle := clCreateCommandQueue              ( TCLContext( _Context ).Handle, TCLDevice( _Device ).ID, 0, nil );
      {$ENDIF}
 end;
 
-procedure TCLCommand<_TContext_>.EndHandle;
+procedure TCLCommand<_TContext_,_TDevice_>.EndHandle;
 begin
      clReleaseCommandQueue( _Handle );
 
@@ -101,7 +100,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLCommand<_TContext_>.Create( const Context_:_TContext_; const Device_:TCLDevice );
+constructor TCLCommand<_TContext_,_TDevice_>.Create( const Context_:_TContext_; const Device_:_TDevice_ );
 begin
      inherited Create;
 
@@ -110,7 +109,7 @@ begin
      _Handle  := nil;
 end;
 
-destructor TCLCommand<_TContext_>.Destroy;
+destructor TCLCommand<_TContext_,_TDevice_>.Destroy;
 begin
      if avHandle then EndHandle;
 

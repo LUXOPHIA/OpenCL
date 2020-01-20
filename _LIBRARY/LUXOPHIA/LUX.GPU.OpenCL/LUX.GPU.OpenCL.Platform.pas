@@ -8,7 +8,8 @@ uses System.Classes, System.Generics.Collections,
      cl,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
-     LUX.GPU.OpenCL.Device;
+     LUX.GPU.OpenCL.Device,
+     LUX.GPU.OpenCL.Context;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
