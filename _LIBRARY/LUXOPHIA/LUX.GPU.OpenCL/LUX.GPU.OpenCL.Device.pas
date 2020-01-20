@@ -26,6 +26,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Parent :_TPlatform_;
        _ID     :T_cl_device_id;
        ///// アクセス
+       function GetParent :_TPlatform_;
+       procedure SetParent( Parent_:_TPlatform_ );
+       function GetID :T_cl_device_id;
+       procedure SetID( ID_:T_cl_device_id );
        { cl_device_info }
 (*     function GetDEVICE_ADDRESS_BITS :T_cl_uint;
        function GetDEVICE_AVAILABLE :T_cl_bool;
@@ -130,8 +134,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Parent_:_TPlatform_; const ID_:T_cl_device_id );
        destructor Destroy; override;
        ///// プロパティ
-       property Parent                                       :_TPlatform_                            read   _Parent;
-       property ID                                           :T_cl_device_id                         read   _ID;
+       property Parent :_TPlatform_    read GetParent write SetParent;
+       property ID     :T_cl_device_id read GetID     write SetID    ;
        { cl_device_info }
 (*     property DEVICE_ADDRESS_BITS                          :T_cl_uint                              read GetDEVICE_ADDRESS_BITS;
        property DEVICE_AVAILABLE                             :T_cl_bool                              read GetDEVICE_AVAILABLE;
@@ -289,6 +293,28 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 /////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLDevice<_TPlatform_>.GetParent :_TPlatform_;
+begin
+     Result := _Parent;
+end;
+
+procedure TCLDevice<_TPlatform_>.SetParent( Parent_:_TPlatform_ );
+begin
+     _Parent := Parent_;
+end;
+
+function TCLDevice<_TPlatform_>.GetID :T_cl_device_id;
+begin
+     Result := _ID;
+end;
+
+procedure TCLDevice<_TPlatform_>.SetID( ID_:T_cl_device_id );
+begin
+     _ID := ID_;
+end;
+
+//------------------------------------------------------------{ cl_device_info }
 
 function TCLDevice<_TPlatform_>.GetDEVICE_TYPE :T_cl_device_type;
 begin
