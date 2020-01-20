@@ -12,20 +12,17 @@ uses System.Classes, System.Generics.Collections,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLPlatform<_TOpenCL_:class> = class;
-
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevice<_TOpenCL_>
 
-     TCLDevice<_TOpenCL_:class> = class( LUX.GPU.OpenCL.Device.TCLDevice<TCLPlatform<_TOpenCL_>> ) end;
-
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatform<_TOpenCL_>
 
      TCLPlatform<_TOpenCL_:class> = class
      private
+       type TCLDevice = TCLDevice<TCLPlatform<_TOpenCL_>>;
        ///// メソッド
        function GetPlatformInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
        function GetPlatformInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
@@ -35,7 +32,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Parent     :_TOpenCL_;
        _ID         :T_cl_platform_id;
        _Extensions :TStringList;
-       _Devices    :TObjectList<TCLDevice<_TOpenCL_>>;
+       _Devices    :TObjectList<TCLDevice>;
        ///// アクセス
        function GetProfile :String;
        function GetVersion :String;
@@ -48,15 +45,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Parent_:_TOpenCL_; const ID_:T_cl_platform_id );
        destructor Destroy; override;
        ///// プロパティ
-       property Parent     :_TOpenCL_                         read   _Parent    ;
-       property ID         :T_cl_platform_id                  read   _ID        ;
-       property Profile    :String                            read GetProfile   ;
-       property Version    :String                            read GetVersion   ;
-       property Name       :String                            read GetName      ;
-       property Vendor     :String                            read GetVendor    ;
-       property Extensions :TStringList                       read   _Extensions;
-       property TimerReso  :T_cl_ulong                        read GetTimerReso ;  { OpenCL 2.1 }
-       property Devices    :TObjectList<TCLDevice<_TOpenCL_>> read   _Devices   ;
+       property Parent     :_TOpenCL_              read   _Parent    ;
+       property ID         :T_cl_platform_id       read   _ID        ;
+       property Profile    :String                 read GetProfile   ;
+       property Version    :String                 read GetVersion   ;
+       property Name       :String                 read GetName      ;
+       property Vendor     :String                 read GetVendor    ;
+       property Extensions :TStringList            read   _Extensions;
+       property TimerReso  :T_cl_ulong             read GetTimerReso ;  { OpenCL 2.1 }
+       property Devices    :TObjectList<TCLDevice> read   _Devices   ;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -160,7 +157,7 @@ begin
 
      AssertCL( clGetDeviceIDs( _ID, DEVICETYPE, DsN, @Ds[0], nil ) );
 
-     for D in Ds do _Devices.Add( TCLDevice<_TOpenCL_>.Create( Self, D ) );
+     for D in Ds do _Devices.Add( TCLDevice.Create( Self, D ) );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -172,7 +169,7 @@ begin
      inherited Create;
 
      _Extensions := TStringList.Create;
-     _Devices    := TObjectList<TCLDevice<_TOpenCL_>>.Create;
+     _Devices    := TObjectList<TCLDevice>.Create;
 
      _Parent := Parent_;
      _ID     := ID_;
