@@ -15,9 +15,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TOpenCL     = class;
 
-     TCLPlatform = LUX.GPU.OpenCL.Platform.TCLPlatform<TOpenCL>;
+     TCLPlatform = TCLPlatform<TOpenCL>;
 
-     TCLDevice   = LUX.GPU.OpenCL.Device.TCLDevice<TCLPlatform>;
+     TCLDevice   = TCLDevice<TCLPlatform>;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
