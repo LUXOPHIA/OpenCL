@@ -21,7 +21,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLDevice   = TCLDevice<TCLPlatform>;
 
-     TCLContext  = TCLContext<TCLDevice>;
+     TCLContext  = TCLContext<TCLDevice,TCLPlatform>;
 
      TCLCommand  = TCLCommand<TCLContext,TCLDevice>;
 
