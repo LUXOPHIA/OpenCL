@@ -9,7 +9,9 @@ uses System.Generics.Collections,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
      LUX.GPU.OpenCL.Device,
-     LUX.GPU.OpenCL.Platform;
+     LUX.GPU.OpenCL.Platform,
+     LUX.GPU.OpenCL.Context,
+     LUX.GPU.OpenCL.Command;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -18,6 +20,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLPlatform = TCLPlatform<TOpenCL>;
 
      TCLDevice   = TCLDevice<TCLPlatform>;
+
+     TCLContext  = TCLContext<TCLDevice>;
+
+     TCLCommand  = TCLCommand<TCLContext,TCLDevice>;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
