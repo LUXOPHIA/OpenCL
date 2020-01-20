@@ -85,9 +85,9 @@ end;
 procedure TCLCommand<_TContext_,_TDevice_>.BeginHandle;
 begin
      {$IF CL_VERSION_2_0 <> 0 }
-     _Handle := clCreateCommandQueueWithProperties( TCLContext( _Context ).Handle, TCLDevice( _Device ).Handle, 0, nil );
+     _Handle := clCreateCommandQueueWithProperties( TCLContext( _Context ).Handle, TCLDevice( _Device ).Handle, nil, nil );
      {$ELSE}
-     _Handle := clCreateCommandQueue              ( TCLContext( _Context ).Handle, TCLDevice( _Device ).Handle, 0, nil );
+     _Handle := clCreateCommandQueue              ( TCLContext( _Context ).Handle, TCLDevice( _Device ).Handle, nil, nil );
      {$ENDIF}
 end;
 
