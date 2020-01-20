@@ -107,7 +107,7 @@ var
    I :Integer;
 begin
      Ps[ 0 ] := CL_CONTEXT_PLATFORM;
-     Ps[ 1 ] := NativeInt( TCLPlatform( _Parent ).ID );
+     Ps[ 1 ] := NativeInt( TCLPlatform( _Parent ).Handle );
      Ps[ 2 ] := 0;
 
      with _Commands do
