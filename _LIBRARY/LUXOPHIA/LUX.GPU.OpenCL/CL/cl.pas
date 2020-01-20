@@ -57,65 +57,65 @@ type T_cl_device_fp_config             = T_cl_bitfield;  P_cl_device_fp_config  
 type T_cl_device_mem_cache_type        = T_cl_uint    ;  P_cl_device_mem_cache_type        = ^T_cl_device_mem_cache_type       ;
 type T_cl_device_local_mem_type        = T_cl_uint    ;  P_cl_device_local_mem_type        = ^T_cl_device_local_mem_type       ;
 type T_cl_device_exec_capabilities     = T_cl_bitfield;  P_cl_device_exec_capabilities     = ^T_cl_device_exec_capabilities    ;
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 type T_cl_device_svm_capabilities      = T_cl_bitfield;  P_cl_device_svm_capabilities      = ^T_cl_device_svm_capabilities     ;
 {$ENDIF}
 type T_cl_command_queue_properties     = T_cl_bitfield;  P_cl_command_queue_properties     = ^T_cl_command_queue_properties    ;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 type T_cl_device_partition_property    = T_intptr_t   ;  P_cl_device_partition_property    = ^T_cl_device_partition_property   ;
 type T_cl_device_affinity_domain       = T_cl_bitfield;  P_cl_device_affinity_domain       = ^T_cl_device_affinity_domain      ;
 {$ENDIF}
 
 type T_cl_context_properties           = T_intptr_t   ;  P_cl_context_properties           = ^T_cl_context_properties          ;
 type T_cl_context_info                 = T_cl_uint    ;  P_cl_context_info                 = ^T_cl_context_info                ;
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 type T_cl_queue_properties             = T_cl_bitfield;  P_cl_queue_properties             = ^T_cl_queue_properties            ;
 {$ENDIF}
 type T_cl_command_queue_info           = T_cl_uint    ;  P_cl_command_queue_info           = ^T_cl_command_queue_info          ;
 type T_cl_channel_order                = T_cl_uint    ;  P_cl_channel_order                = ^T_cl_channel_order               ;
 type T_cl_channel_type                 = T_cl_uint    ;  P_cl_channel_type                 = ^T_cl_channel_type                ;
 type T_cl_mem_flags                    = T_cl_bitfield;  P_cl_mem_flags                    = ^T_cl_mem_flags                   ;
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 type T_cl_svm_mem_flags                = T_cl_bitfield;  P_cl_svm_mem_flags                = ^T_cl_svm_mem_flags               ;
 {$ENDIF}
 type T_cl_mem_object_type              = T_cl_uint    ;  P_cl_mem_object_type              = ^T_cl_mem_object_type             ;
 type T_cl_mem_info                     = T_cl_uint    ;  P_cl_mem_info                     = ^T_cl_mem_info                    ;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 type T_cl_mem_migration_flags          = T_cl_bitfield;  P_cl_mem_migration_flags          = ^T_cl_mem_migration_flags         ;
 {$ENDIF}
 type T_cl_image_info                   = T_cl_uint    ;  P_cl_image_info                   = ^T_cl_image_info                  ;
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 type T_cl_buffer_create_type           = T_cl_uint    ;  P_cl_buffer_create_type           = ^T_cl_buffer_create_type          ;
 {$ENDIF}
 type T_cl_addressing_mode              = T_cl_uint    ;  P_cl_addressing_mode              = ^T_cl_addressing_mode             ;
 type T_cl_filter_mode                  = T_cl_uint    ;  P_cl_filter_mode                  = ^T_cl_filter_mode                 ;
 type T_cl_sampler_info                 = T_cl_uint    ;  P_cl_sampler_info                 = ^T_cl_sampler_info                ;
 type T_cl_map_flags                    = T_cl_bitfield;  P_cl_map_flags                    = ^T_cl_map_flags                   ;
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 type T_cl_pipe_properties              = T_intptr_t   ;  P_cl_pipe_properties              = ^T_cl_pipe_properties             ;
 type T_cl_pipe_info                    = T_cl_uint    ;  P_cl_pipe_info                    = ^T_cl_pipe_info                   ;
 {$ENDIF}
 type T_cl_program_info                 = T_cl_uint    ;  P_cl_program_info                 = ^T_cl_program_info                ;
 type T_cl_program_build_info           = T_cl_uint    ;  P_cl_program_build_info           = ^T_cl_program_build_info          ;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 type T_cl_program_binary_type          = T_cl_uint    ;  P_cl_program_binary_type          = ^T_cl_program_binary_type         ;
 {$ENDIF}
 type T_cl_build_status                 = T_cl_int     ;  P_cl_build_status                 = ^T_cl_build_status                ;
 type T_cl_kernel_info                  = T_cl_uint    ;  P_cl_kernel_info                  = ^T_cl_kernel_info                 ;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 type T_cl_kernel_arg_info              = T_cl_uint    ;  P_cl_kernel_arg_info              = ^T_cl_kernel_arg_info             ;
 type T_cl_kernel_arg_address_qualifier = T_cl_uint    ;  P_cl_kernel_arg_address_qualifier = ^T_cl_kernel_arg_address_qualifier;
 type T_cl_kernel_arg_access_qualifier  = T_cl_uint    ;  P_cl_kernel_arg_access_qualifier  = ^T_cl_kernel_arg_access_qualifier ;
 type T_cl_kernel_arg_type_qualifier    = T_cl_bitfield;  P_cl_kernel_arg_type_qualifier    = ^T_cl_kernel_arg_type_qualifier   ;
 {$ENDIF}
 type T_cl_kernel_work_group_info       = T_cl_uint    ;  P_cl_kernel_work_group_info       = ^T_cl_kernel_work_group_info      ;
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 type T_cl_kernel_sub_group_info        = T_cl_uint    ;  P_cl_kernel_sub_group_info        = ^T_cl_kernel_sub_group_info       ;
 {$ENDIF}
 type T_cl_event_info                   = T_cl_uint    ;  P_cl_event_info                   = ^T_cl_event_info                  ;
 type T_cl_command_type                 = T_cl_uint    ;  P_cl_command_type                 = ^T_cl_command_type                ;
 type T_cl_profiling_info               = T_cl_uint    ;  P_cl_profiling_info               = ^T_cl_profiling_info              ;
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 type T_cl_sampler_properties           = T_cl_bitfield;  P_cl_sampler_properties           = ^T_cl_sampler_properties          ;
 type T_cl_kernel_exec_info             = T_cl_uint    ;  P_cl_kernel_exec_info             = ^T_cl_kernel_exec_info            ;
 {$ENDIF}
@@ -126,7 +126,7 @@ type T_cl_image_format = record
      end;
      P_cl_image_format = ^T_cl_image_format;
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 type T_cl_image_desc = record
        image_type        :T_cl_mem_object_type;
@@ -138,7 +138,7 @@ type T_cl_image_desc = record
        image_slice_pitch :T_size_t;
        num_mip_levels    :T_cl_uint;
        num_samples       :T_cl_uint;
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 {$IFDEF __GNUC__ }
     __extension__   (* Prevents warnings about anonymous union in -pedantic builds *)
 {$ENDIF}
@@ -149,7 +149,7 @@ type T_cl_image_desc = record
      case  Byte of
 {$ENDIF}
         0: ( buffer     :T_cl_mem );
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
         1: ( mem_object :T_cl_mem );
 //    };
 {$IFDEF _MSC_VER }
@@ -161,7 +161,7 @@ type T_cl_image_desc = record
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 
 type T_cl_buffer_region = record
        origin :T_size_t;
@@ -187,11 +187,11 @@ const CL_IMAGE_FORMAT_MISMATCH                     = -9;
 const CL_IMAGE_FORMAT_NOT_SUPPORTED                = -10;
 const CL_BUILD_PROGRAM_FAILURE                     = -11;
 const CL_MAP_FAILURE                               = -12;
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 const CL_MISALIGNED_SUB_BUFFER_OFFSET              = -13;
 const CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST  = -14;
 {$ENDIF}
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_COMPILE_PROGRAM_FAILURE                   = -15;
 const CL_LINKER_NOT_AVAILABLE                      = -16;
 const CL_LINK_PROGRAM_FAILURE                      = -17;
@@ -233,20 +233,20 @@ const CL_INVALID_GL_OBJECT                         = -60;
 const CL_INVALID_BUFFER_SIZE                       = -61;
 const CL_INVALID_MIP_LEVEL                         = -62;
 const CL_INVALID_GLOBAL_WORK_SIZE                  = -63;
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 const CL_INVALID_PROPERTY                          = -64;
 {$ENDIF}
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_INVALID_IMAGE_DESCRIPTOR                  = -65;
 const CL_INVALID_COMPILER_OPTIONS                  = -66;
 const CL_INVALID_LINKER_OPTIONS                    = -67;
 const CL_INVALID_DEVICE_PARTITION_COUNT            = -68;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_INVALID_PIPE_SIZE                         = -69;
 const CL_INVALID_DEVICE_QUEUE                      = -70;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_2 ) }
+{$IF CL_VERSION_2_2 <> 0 }
 const CL_INVALID_SPEC_ID                           = -71;
 const CL_MAX_SIZE_RESTRICTION_EXCEEDED             = -72;
 {$ENDIF}
@@ -255,7 +255,7 @@ const CL_MAX_SIZE_RESTRICTION_EXCEEDED             = -72;
 (* cl_bool *)
 const CL_FALSE                                     = 0;
 const CL_TRUE                                      = 1;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_BLOCKING                                  = CL_TRUE;
 const CL_NON_BLOCKING                              = CL_FALSE;
 {$ENDIF}
@@ -266,7 +266,7 @@ const CL_PLATFORM_VERSION                          = $0901;
 const CL_PLATFORM_NAME                             = $0902;
 const CL_PLATFORM_VENDOR                           = $0903;
 const CL_PLATFORM_EXTENSIONS                       = $0904;
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 const CL_PLATFORM_HOST_TIMER_RESOLUTION            = $0905;
 {$ENDIF}
 
@@ -275,7 +275,7 @@ const CL_DEVICE_TYPE_DEFAULT                       = (1 shl 0);
 const CL_DEVICE_TYPE_CPU                           = (1 shl 1);
 const CL_DEVICE_TYPE_GPU                           = (1 shl 2);
 const CL_DEVICE_TYPE_ACCELERATOR                   = (1 shl 3);
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_DEVICE_TYPE_CUSTOM                        = (1 shl 4);
 {$ENDIF}
 const CL_DEVICE_TYPE_ALL                           = $FFFFFFFF;
@@ -324,7 +324,7 @@ const CL_DEVICE_AVAILABLE                               = $1027;
 const CL_DEVICE_COMPILER_AVAILABLE                      = $1028;
 const CL_DEVICE_EXECUTION_CAPABILITIES                  = $1029;
 const CL_DEVICE_QUEUE_PROPERTIES                        = $102A;    (* deprecated *)
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_DEVICE_QUEUE_ON_HOST_PROPERTIES                = $102A;
 {$ENDIF}
 const CL_DEVICE_NAME                                    = $102B;
@@ -334,11 +334,11 @@ const CL_DEVICE_PROFILE                                 = $102E;
 const CL_DEVICE_VERSION                                 = $102F;
 const CL_DEVICE_EXTENSIONS                              = $1030;
 const CL_DEVICE_PLATFORM                                = $1031;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_DEVICE_DOUBLE_FP_CONFIG                        = $1032;
 {$ENDIF}
 (* 0x1033 reserved for CL_DEVICE_HALF_FP_CONFIG which is already defined in "cl_ext.h" *)
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 const CL_DEVICE_PREFERRED_VECTOR_WIDTH_HALF             = $1034;
 const CL_DEVICE_HOST_UNIFIED_MEMORY                     = $1035;   (* deprecated *)
 const CL_DEVICE_NATIVE_VECTOR_WIDTH_CHAR                = $1036;
@@ -350,7 +350,7 @@ const CL_DEVICE_NATIVE_VECTOR_WIDTH_DOUBLE              = $103B;
 const CL_DEVICE_NATIVE_VECTOR_WIDTH_HALF                = $103C;
 const CL_DEVICE_OPENCL_C_VERSION                        = $103D;
 {$ENDIF}
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_DEVICE_LINKER_AVAILABLE                        = $103E;
 const CL_DEVICE_BUILT_IN_KERNELS                        = $103F;
 const CL_DEVICE_IMAGE_MAX_BUFFER_SIZE                   = $1040;
@@ -364,7 +364,7 @@ const CL_DEVICE_REFERENCE_COUNT                         = $1047;
 const CL_DEVICE_PREFERRED_INTEROP_USER_SYNC             = $1048;
 const CL_DEVICE_PRINTF_BUFFER_SIZE                      = $1049;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_DEVICE_IMAGE_PITCH_ALIGNMENT                   = $104A;
 const CL_DEVICE_IMAGE_BASE_ADDRESS_ALIGNMENT            = $104B;
 const CL_DEVICE_MAX_READ_WRITE_IMAGE_ARGS               = $104C;
@@ -383,7 +383,7 @@ const CL_DEVICE_PREFERRED_PLATFORM_ATOMIC_ALIGNMENT     = $1058;
 const CL_DEVICE_PREFERRED_GLOBAL_ATOMIC_ALIGNMENT       = $1059;
 const CL_DEVICE_PREFERRED_LOCAL_ATOMIC_ALIGNMENT        = $105A;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 const CL_DEVICE_IL_VERSION                              = $105B;
 const CL_DEVICE_MAX_NUM_SUB_GROUPS                      = $105C;
 const CL_DEVICE_SUB_GROUP_INDEPENDENT_FORWARD_PROGRESS  = $105D;
@@ -396,10 +396,10 @@ const CL_FP_ROUND_TO_NEAREST                       = (1 shl 2);
 const CL_FP_ROUND_TO_ZERO                          = (1 shl 3);
 const CL_FP_ROUND_TO_INF                           = (1 shl 4);
 const CL_FP_FMA                                    = (1 shl 5);
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 const CL_FP_SOFT_FLOAT                             = (1 shl 6);
 {$ENDIF}
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT          = (1 shl 7);
 {$ENDIF}
 
@@ -419,7 +419,7 @@ const CL_EXEC_NATIVE_KERNEL                        = (1 shl 1);
 (* cl_command_queue_properties - bitfield *)
 const CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE       = (1 shl 0);
 const CL_QUEUE_PROFILING_ENABLE                    = (1 shl 1);
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_QUEUE_ON_DEVICE                           = (1 shl 2);
 const CL_QUEUE_ON_DEVICE_DEFAULT                   = (1 shl 3);
 {$ENDIF}
@@ -428,17 +428,17 @@ const CL_QUEUE_ON_DEVICE_DEFAULT                   = (1 shl 3);
 const CL_CONTEXT_REFERENCE_COUNT                   = $1080;
 const CL_CONTEXT_DEVICES                           = $1081;
 const CL_CONTEXT_PROPERTIES                        = $1082;
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 const CL_CONTEXT_NUM_DEVICES                       = $1083;
 {$ENDIF}
 
 (* cl_context_properties *)
 const CL_CONTEXT_PLATFORM                          = $1084;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_CONTEXT_INTEROP_USER_SYNC                 = $1085;
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 (* cl_device_partition_property *)
 const CL_DEVICE_PARTITION_EQUALLY                  = $1086;
@@ -448,7 +448,7 @@ const CL_DEVICE_PARTITION_BY_AFFINITY_DOMAIN       = $1088;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 (* cl_device_affinity_domain *)
 const CL_DEVICE_AFFINITY_DOMAIN_NUMA                = (1 shl 0);
@@ -460,7 +460,7 @@ const CL_DEVICE_AFFINITY_DOMAIN_NEXT_PARTITIONABLE  = (1 shl 5);
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 
 (* cl_device_svm_capabilities *)
 const CL_DEVICE_SVM_COARSE_GRAIN_BUFFER            = (1 shl 0);
@@ -475,10 +475,10 @@ const CL_QUEUE_CONTEXT                             = $1090;
 const CL_QUEUE_DEVICE                              = $1091;
 const CL_QUEUE_REFERENCE_COUNT                     = $1092;
 const CL_QUEUE_PROPERTIES                          = $1093;
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_QUEUE_SIZE                                = $1094;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 const CL_QUEUE_DEVICE_DEFAULT                      = $1095;
 {$ENDIF}
 
@@ -490,18 +490,18 @@ const CL_MEM_USE_HOST_PTR                          = (1 shl 3);
 const CL_MEM_ALLOC_HOST_PTR                        = (1 shl 4);
 const CL_MEM_COPY_HOST_PTR                         = (1 shl 5);
 (* reserved                                         (1 << 6)    *)
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_MEM_HOST_WRITE_ONLY                       = (1 shl 7);
 const CL_MEM_HOST_READ_ONLY                        = (1 shl 8);
 const CL_MEM_HOST_NO_ACCESS                        = (1 shl 9);
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_MEM_SVM_FINE_GRAIN_BUFFER                 = (1 shl 10);   (* used by cl_svm_mem_flags only *)
 const CL_MEM_SVM_ATOMICS                           = (1 shl 11);   (* used by cl_svm_mem_flags only *)
 const CL_MEM_KERNEL_READ_AND_WRITE                 = (1 shl 12);
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 (* cl_mem_migration_flags - bitfield *)
 const CL_MIGRATE_MEM_OBJECT_HOST                   = (1 shl 0);
@@ -520,16 +520,16 @@ const CL_BGRA                                      = $10B6;
 const CL_ARGB                                      = $10B7;
 const CL_INTENSITY                                 = $10B8;
 const CL_LUMINANCE                                 = $10B9;
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 const CL_Rx                                        = $10BA;
 const CL_RGx                                       = $10BB;
 const CL_RGBx                                      = $10BC;
 {$ENDIF}
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_DEPTH                                     = $10BD;
 const CL_DEPTH_STENCIL                             = $10BE;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_sRGB                                      = $10BF;
 const CL_sRGBx                                     = $10C0;
 const CL_sRGBA                                     = $10C1;
@@ -553,10 +553,10 @@ const CL_UNSIGNED_INT16                            = $10DB;
 const CL_UNSIGNED_INT32                            = $10DC;
 const CL_HALF_FLOAT                                = $10DD;
 const CL_FLOAT                                     = $10DE;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_UNORM_INT24                               = $10DF;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 const CL_UNORM_INT_101010_2                        = $10E0;
 {$ENDIF}
 
@@ -564,13 +564,13 @@ const CL_UNORM_INT_101010_2                        = $10E0;
 const CL_MEM_OBJECT_BUFFER                         = $10F0;
 const CL_MEM_OBJECT_IMAGE2D                        = $10F1;
 const CL_MEM_OBJECT_IMAGE3D                        = $10F2;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_MEM_OBJECT_IMAGE2D_ARRAY                  = $10F3;
 const CL_MEM_OBJECT_IMAGE1D                        = $10F4;
 const CL_MEM_OBJECT_IMAGE1D_ARRAY                  = $10F5;
 const CL_MEM_OBJECT_IMAGE1D_BUFFER                 = $10F6;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_MEM_OBJECT_PIPE                           = $10F7;
 {$ENDIF}
 
@@ -582,11 +582,11 @@ const CL_MEM_HOST_PTR                              = $1103;
 const CL_MEM_MAP_COUNT                             = $1104;
 const CL_MEM_REFERENCE_COUNT                       = $1105;
 const CL_MEM_CONTEXT                               = $1106;
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 const CL_MEM_ASSOCIATED_MEMOBJECT                  = $1107;
 const CL_MEM_OFFSET                                = $1108;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_MEM_USES_SVM_POINTER                      = $1109;
 {$ENDIF}
 
@@ -598,14 +598,14 @@ const CL_IMAGE_SLICE_PITCH                         = $1113;
 const CL_IMAGE_WIDTH                               = $1114;
 const CL_IMAGE_HEIGHT                              = $1115;
 const CL_IMAGE_DEPTH                               = $1116;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_IMAGE_ARRAY_SIZE                          = $1117;
 const CL_IMAGE_BUFFER                              = $1118;
 const CL_IMAGE_NUM_MIP_LEVELS                      = $1119;
 const CL_IMAGE_NUM_SAMPLES                         = $111A;
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 
 (* cl_pipe_info *)
 const CL_PIPE_PACKET_SIZE                          = $1120;
@@ -618,7 +618,7 @@ const CL_ADDRESS_NONE                              = $1130;
 const CL_ADDRESS_CLAMP_TO_EDGE                     = $1131;
 const CL_ADDRESS_CLAMP                             = $1132;
 const CL_ADDRESS_REPEAT                            = $1133;
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 const CL_ADDRESS_MIRRORED_REPEAT                   = $1134;
 {$ENDIF}
 
@@ -632,7 +632,7 @@ const CL_SAMPLER_CONTEXT                           = $1151;
 const CL_SAMPLER_NORMALIZED_COORDS                 = $1152;
 const CL_SAMPLER_ADDRESSING_MODE                   = $1153;
 const CL_SAMPLER_FILTER_MODE                       = $1154;
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 (* These enumerants are for the cl_khr_mipmap_image extension.
    They have since been added to cl_ext.h with an appropriate
    KHR suffix, but are left here for backwards compatibility. *)
@@ -644,7 +644,7 @@ const CL_SAMPLER_LOD_MAX                           = $1157;
 (* cl_map_flags - bitfield *)
 const CL_MAP_READ                                  = (1 shl 0);
 const CL_MAP_WRITE                                 = (1 shl 1);
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_MAP_WRITE_INVALIDATE_REGION               = (1 shl 2);
 {$ENDIF}
 
@@ -656,14 +656,14 @@ const CL_PROGRAM_DEVICES                           = $1163;
 const CL_PROGRAM_SOURCE                            = $1164;
 const CL_PROGRAM_BINARY_SIZES                      = $1165;
 const CL_PROGRAM_BINARIES                          = $1166;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_PROGRAM_NUM_KERNELS                       = $1167;
 const CL_PROGRAM_KERNEL_NAMES                      = $1168;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 const CL_PROGRAM_IL                                = $1169;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_2 ) }
+{$IF CL_VERSION_2_2 <> 0 }
 const CL_PROGRAM_SCOPE_GLOBAL_CTORS_PRESENT        = $116A;
 const CL_PROGRAM_SCOPE_GLOBAL_DTORS_PRESENT        = $116B;
 {$ENDIF}
@@ -672,14 +672,14 @@ const CL_PROGRAM_SCOPE_GLOBAL_DTORS_PRESENT        = $116B;
 const CL_PROGRAM_BUILD_STATUS                      = $1181;
 const CL_PROGRAM_BUILD_OPTIONS                     = $1182;
 const CL_PROGRAM_BUILD_LOG                         = $1183;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_PROGRAM_BINARY_TYPE                       = $1184;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_PROGRAM_BUILD_GLOBAL_VARIABLE_TOTAL_SIZE  = $1185;
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 (* cl_program_binary_type *)
 const CL_PROGRAM_BINARY_TYPE_NONE                  = $0;
@@ -701,15 +701,15 @@ const CL_KERNEL_NUM_ARGS                           = $1191;
 const CL_KERNEL_REFERENCE_COUNT                    = $1192;
 const CL_KERNEL_CONTEXT                            = $1193;
 const CL_KERNEL_PROGRAM                            = $1194;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_KERNEL_ATTRIBUTES                         = $1195;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 const CL_KERNEL_MAX_NUM_SUB_GROUPS                 = $11B9;
 const CL_KERNEL_COMPILE_NUM_SUB_GROUPS             = $11BA;
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 (* cl_kernel_arg_info *)
 const CL_KERNEL_ARG_ADDRESS_QUALIFIER              = $1196;
@@ -720,7 +720,7 @@ const CL_KERNEL_ARG_NAME                           = $119A;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 (* cl_kernel_arg_address_qualifier *)
 const CL_KERNEL_ARG_ADDRESS_GLOBAL                 = $119B;
@@ -730,7 +730,7 @@ const CL_KERNEL_ARG_ADDRESS_PRIVATE                = $119E;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 (* cl_kernel_arg_access_qualifier *)
 const CL_KERNEL_ARG_ACCESS_READ_ONLY               = $11A0;
@@ -740,14 +740,14 @@ const CL_KERNEL_ARG_ACCESS_NONE                    = $11A3;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 (* cl_kernel_arg_type_qualifier *)
 const CL_KERNEL_ARG_TYPE_NONE                      = 0;
 const CL_KERNEL_ARG_TYPE_CONST                     = (1 shl 0);
 const CL_KERNEL_ARG_TYPE_RESTRICT                  = (1 shl 1);
 const CL_KERNEL_ARG_TYPE_VOLATILE                  = (1 shl 2);
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_KERNEL_ARG_TYPE_PIPE                      = (1 shl 3);
 {$ENDIF}
 
@@ -759,11 +759,11 @@ const CL_KERNEL_COMPILE_WORK_GROUP_SIZE            = $11B1;
 const CL_KERNEL_LOCAL_MEM_SIZE                     = $11B2;
 const CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE  = $11B3;
 const CL_KERNEL_PRIVATE_MEM_SIZE                   = $11B4;
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_KERNEL_GLOBAL_WORK_SIZE                   = $11B5;
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 
 (* cl_kernel_sub_group_info *)
 const CL_KERNEL_MAX_SUB_GROUP_SIZE_FOR_NDRANGE     = $2033;
@@ -772,7 +772,7 @@ const CL_KERNEL_LOCAL_SIZE_FOR_SUB_GROUP_COUNT     = $11B8;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 
 (* cl_kernel_exec_info *)
 const CL_KERNEL_EXEC_INFO_SVM_PTRS                 = $11B6;
@@ -785,7 +785,7 @@ const CL_EVENT_COMMAND_QUEUE                       = $11D0;
 const CL_EVENT_COMMAND_TYPE                        = $11D1;
 const CL_EVENT_REFERENCE_COUNT                     = $11D2;
 const CL_EVENT_COMMAND_EXECUTION_STATUS            = $11D3;
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 const CL_EVENT_CONTEXT                             = $11D4;
 {$ENDIF}
 
@@ -807,19 +807,19 @@ const CL_COMMAND_UNMAP_MEM_OBJECT                  = $11FD;
 const CL_COMMAND_MARKER                            = $11FE;
 const CL_COMMAND_ACQUIRE_GL_OBJECTS                = $11FF;
 const CL_COMMAND_RELEASE_GL_OBJECTS                = $1200;
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 const CL_COMMAND_READ_BUFFER_RECT                  = $1201;
 const CL_COMMAND_WRITE_BUFFER_RECT                 = $1202;
 const CL_COMMAND_COPY_BUFFER_RECT                  = $1203;
 const CL_COMMAND_USER                              = $1204;
 {$ENDIF}
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 const CL_COMMAND_BARRIER                           = $1205;
 const CL_COMMAND_MIGRATE_MEM_OBJECTS               = $1206;
 const CL_COMMAND_FILL_BUFFER                       = $1207;
 const CL_COMMAND_FILL_IMAGE                        = $1208;
 {$ENDIF}
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_COMMAND_SVM_FREE                          = $1209;
 const CL_COMMAND_SVM_MEMCPY                        = $120A;
 const CL_COMMAND_SVM_MEMFILL                       = $120B;
@@ -833,7 +833,7 @@ const CL_RUNNING                                   = $1;
 const CL_SUBMITTED                                 = $2;
 const CL_QUEUED                                    = $3;
 
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 
 (* cl_buffer_create_type *)
 const CL_BUFFER_CREATE_TYPE_REGION                 = $1220;
@@ -845,7 +845,7 @@ const CL_PROFILING_COMMAND_QUEUED                  = $1280;
 const CL_PROFILING_COMMAND_SUBMIT                  = $1281;
 const CL_PROFILING_COMMAND_START                   = $1282;
 const CL_PROFILING_COMMAND_END                     = $1283;
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_PROFILING_COMMAND_COMPLETE                = $1284;
 {$ENDIF}
 
@@ -879,7 +879,7 @@ clGetDeviceInfo( device_               :T_cl_device_id;
                  param_value_          :P_void;
                  param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 function
 clCreateSubDevices(       in_device_       :T_cl_device_id;
@@ -896,7 +896,7 @@ clReleaseDevice( device_ :T_cl_device_id ) :T_cl_int; stdcall; external DLLNAME;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 
 function
 clSetDefaultDeviceCommandQueue( context_       :T_cl_context;
@@ -956,7 +956,7 @@ clGetContextInfo( context_              :T_cl_context;
 
 (* Command Queue APIs *)
 
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 
 function
 clCreateCommandQueueWithProperties(       context_     :T_cl_context;
@@ -987,7 +987,7 @@ clCreateBuffer( context_     :T_cl_context;
                 host_ptr_    :P_void;
                 errcode_ret_ :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 
 function
 clCreateSubBuffer(       buffer_             :T_cl_mem;
@@ -998,7 +998,7 @@ clCreateSubBuffer(       buffer_             :T_cl_mem;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 function
 clCreateImage(       context_      :T_cl_context;
@@ -1010,7 +1010,7 @@ clCreateImage(       context_      :T_cl_context;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 
 function
 clCreatePipe(       context_          :T_cl_context;
@@ -1050,7 +1050,7 @@ clGetImageInfo( image_                :T_cl_mem;
                 param_value_          :P_void;
                 param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 
 function
 clGetPipeInfo( pipe_                 :T_cl_mem;
@@ -1061,7 +1061,7 @@ clGetPipeInfo( pipe_                 :T_cl_mem;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 
 type P_CL_CALLBACK_clSetMemObjectDestructorCallback = procedure( memobj_    :T_cl_mem;
                                                                  user_data_ :P_void );
@@ -1075,7 +1075,7 @@ clSetMemObjectDestructorCallback( memobj_     :T_cl_mem;
 
 (* SVM Allocation APIs *)
 
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 
 function
 clSVMAlloc( context_   :T_cl_context;
@@ -1091,7 +1091,7 @@ clSVMFree( context_     :T_cl_context;
 
 (* Sampler APIs *)
 
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 
 function
 clCreateSamplerWithProperties(       context_            :T_cl_context;
@@ -1130,7 +1130,7 @@ clCreateProgramWithBinary(       context_       :T_cl_context;
                                  binary_status_ :P_cl_int;
                                  errcode_ret_   :P_cl_int ) :T_cl_program; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 function
 clCreateProgramWithBuiltInKernels(       context_      :T_cl_context;
@@ -1141,7 +1141,7 @@ clCreateProgramWithBuiltInKernels(       context_      :T_cl_context;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 
 function
 clCreateProgramWithIL(       context_     :T_cl_context;
@@ -1168,7 +1168,7 @@ clBuildProgram(       program_     :T_cl_program;
                       pfn_notify_  :P_CL_CALLBACK_clBuildProgram;
                       user_data_   :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 type P_CL_CALLBACK_clCompileProgram = procedure( program_   :T_cl_program;
                                                  user_data_ :P_void );
@@ -1200,7 +1200,7 @@ clLinkProgram(       context_            :T_cl_context;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_2_2 ) }
+{$IF CL_VERSION_2_2 <> 0 }
 
 type P_CL_CALLBACK_clSetProgramReleaseCallback = procedure( program_   :T_cl_program;
                                                             user_data_ :P_void );
@@ -1218,7 +1218,7 @@ clSetProgramSpecializationConstant(       program_    :T_cl_program;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 function
 clUnloadPlatformCompiler( platform_ :T_cl_platform_id ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
@@ -1252,7 +1252,7 @@ clCreateKernelsInProgram( program_         :T_cl_program;
                           kernels_         :P_cl_kernel;
                           num_kernels_ret_ :P_cl_uint ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 
 function
 clCloneKernel( source_kernel_ :T_cl_kernel;
@@ -1272,7 +1272,7 @@ clSetKernelArg(       kernel_    :T_cl_kernel;
                       arg_size_  :T_size_t;
                 const arg_value_ :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 
 function
 clSetKernelArgSVMPointer(       kernel_    :T_cl_kernel;
@@ -1294,7 +1294,7 @@ clGetKernelInfo( kernel_               :T_cl_kernel;
                  param_value_          :P_void;
                  param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 function
 clGetKernelArgInfo( kernel_               :T_cl_kernel;
@@ -1314,7 +1314,7 @@ clGetKernelWorkGroupInfo( kernel_               :T_cl_kernel;
                           param_value_          :P_void;
                           param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 
 function
 clGetKernelSubGroupInfo(       kernel_               :T_cl_kernel;
@@ -1340,7 +1340,7 @@ clGetEventInfo( event_                :T_cl_event;
                 param_value_          :P_void;
                 param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 
 function
 clCreateUserEvent( context_     :T_cl_context;
@@ -1354,7 +1354,7 @@ clRetainEvent( event_ :T_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_AP
 function
 clReleaseEvent( event_ :T_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 
 function
 clSetUserEventStatus( event_            :T_cl_event;
@@ -1399,7 +1399,7 @@ clEnqueueReadBuffer(       command_queue_           :T_cl_command_queue;
                      const event_wait_list_         :P_cl_event;
                            event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 
 function
 clEnqueueReadBufferRect(       command_queue_           :T_cl_command_queue;
@@ -1430,7 +1430,7 @@ clEnqueueWriteBuffer(       command_queue_           :T_cl_command_queue;
                       const event_wait_list_         :P_cl_event;
                             event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 
 function
 clEnqueueWriteBufferRect(       command_queue_           :T_cl_command_queue;
@@ -1450,7 +1450,7 @@ clEnqueueWriteBufferRect(       command_queue_           :T_cl_command_queue;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 function
 clEnqueueFillBuffer(       command_queue_           :T_cl_command_queue;
@@ -1476,7 +1476,7 @@ clEnqueueCopyBuffer(       command_queue_           :T_cl_command_queue;
                      const event_wait_list_         :P_cl_event;
                            event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_1 ) }
+{$IF CL_VERSION_1_1 <> 0 }
 
 function
 clEnqueueCopyBufferRect(       command_queue_           :T_cl_command_queue;
@@ -1521,7 +1521,7 @@ clEnqueueWriteImage(       command_queue_           :T_cl_command_queue;
                      const event_wait_list_         :P_cl_event;
                            event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 function
 clEnqueueFillImage(       command_queue_           :T_cl_command_queue;
@@ -1602,7 +1602,7 @@ clEnqueueUnmapMemObject(       command_queue_           :T_cl_command_queue;
                          const event_wait_list_         :P_cl_event;
                                event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 function
 clEnqueueMigrateMemObjects(       command_queue_           :T_cl_command_queue;
@@ -1640,7 +1640,7 @@ clEnqueueNativeKernel(       command_queue_           :T_cl_command_queue;
                        const event_wait_list_         :P_cl_event;
                              event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 function
 clEnqueueMarkerWithWaitList(       command_queue_           :T_cl_command_queue;
@@ -1656,7 +1656,7 @@ clEnqueueBarrierWithWaitList(       command_queue_           :T_cl_command_queue
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_2_0 ) }
+{$IF CL_VERSION_2_0 <> 0 }
 
 type P_CL_CALLBACK_clEnqueueSVMFree = procedure( queue_            :T_cl_command_queue;
                                                  num_svm_pointers_ :T_cl_uint;
@@ -1712,7 +1712,7 @@ clEnqueueSVMUnmap(       command_queue_           :T_cl_command_queue;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_2_1 ) }
+{$IF CL_VERSION_2_1 <> 0 }
 
 function
 clEnqueueSVMMigrateMem(       command_queue_           :T_cl_command_queue;
@@ -1726,7 +1726,7 @@ clEnqueueSVMMigrateMem(       command_queue_           :T_cl_command_queue;
 
 {$ENDIF}
 
-{$IF Declared( CL_VERSION_1_2 ) }
+{$IF CL_VERSION_1_2 <> 0 }
 
 (* Extension function access
  *
