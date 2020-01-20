@@ -55,7 +55,7 @@ begin
                P := _OpenCL_.Platforms[ PI ];
 
                Add( '┃' );
-               Add( '┣・Platform[ ' + PI.ToString + ' ]<' + Longint( P.ID ).ToHexString + '>' );
+               Add( '┣・Platform[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
                Add( '┃　├・Profile   ：' + P.Profile );
                Add( '┃　├・Version   ：' + P.Version );
                Add( '┃　├・Name      ：' + P.Name    );
@@ -87,14 +87,14 @@ begin
                P := _OpenCL_.Platforms[ PI ];
 
                Add( '┃' );
-               Add( '┣・Platform[ ' + PI.ToString + ' ]<' + Longint( P.ID ).ToHexString + '>' );
+               Add( '┣・Platform[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
                Add( '┃　│' );
                for DI := 0 to P.Devices.Count-1 do
                begin
                     D := P.Devices[ DI ];
 
                     Add( '┃　│' );
-                    Add( '┃　┝・Device[ ' + DI.ToString + ' ]<' + Longint( D.ID ).ToHexString + '>' );
+                    Add( '┃　┝・Device[ ' + DI.ToString + ' ]<' + Longint( D.Handle ).ToHexString + '>' );
                     Add( '┃　│　├・DEVICE_TYPE     ：'  + IntTosTr( D.DEVICE_TYPE      ) );
                     Add( '┃　│　├・DEVICE_VENDOR   ：'  +           D.DEVICE_VENDOR      );
                     Add( '┃　│　├・DEVICE_VENDOR_ID：'  + IntToStr( D.DEVICE_VENDOR_ID ) );
@@ -122,7 +122,7 @@ begin
                P := _OpenCL_.Platforms[ PI ];
 
                Add( '┃' );
-               Add( '┣・Platform[ ' + PI.ToString + ' ]<' + Longint( P.ID ).ToHexString + '>' );
+               Add( '┣・Platform[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
                for CI := 0 to P.Contexts.Count-1 do
                begin
                     C := P.Contexts[ CI ];
@@ -135,7 +135,7 @@ begin
 
                          Add( '┃　│　│' );
                          Add( '┃　│　├・Command[ ' + QI.ToString + ' ]<' + LongInt( Q.Handle ).ToHexString + '>'
-                            + ' → Device<' + LongInt( Q.Device.ID ).ToHexString + '>' );
+                            + ' → Device<' + LongInt( Q.Device.Handle ).ToHexString + '>' );
                     end;
                end;
           end;
