@@ -37,11 +37,16 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// メソッド
        procedure MakePlatforms;
      protected
+       ///// アクセス
+       function GetPlatform0 :TCLPlatform;
+       function GetDevice0 :TCLDevice;
      public
        constructor Create;
        destructor Destroy; override;
        ///// プロパティ
-       property Platforms :TObjectList<TCLPlatform> read _Platforms;
+       property Platforms :TObjectList<TCLPlatform> read   _Platforms;
+       property Platform0 :TCLPlatform              read GetPlatform0;
+       property Device0   :TCLDevice                read GetDevice0  ;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -80,6 +85,18 @@ begin
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TOpenCL.GetPlatform0 :TCLPlatform;
+begin
+     Result := Platforms[ 0 ];
+end;
+
+function TOpenCL.GetDevice0 :TCLDevice;
+begin
+     Result := Platform0.Devices[ 0 ];
+end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
