@@ -18,9 +18,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLProgram<_TContext_:class> = class
      private
      protected
-       _Parent :_TContext_;
-       _Handle :T_cl_program;
-       _Source :TStringList;
+       _Parent  :_TContext_;
+       _Handle  :T_cl_program;
+       _Source  :TStringList;
+       _LangVer :TCLVersion;
        ///// アクセス
        procedure SetParent( const Parent_:_TContext_ );
        function GetHandle :T_cl_program;
@@ -38,6 +39,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Handle   :T_cl_program read GetHandle                    ;
        property avHandle :Boolean      read GetavHandle write SetavHandle;
        property Source   :TStringList  read   _Source                    ;
+       property LangVer  :TCLVersion   read   _LangVer                   ;
        ///// メソッド
        procedure Build;
      end;
@@ -125,8 +127,9 @@ begin
 
      _Source := TStringList.Create;
 
-     _Parent := nil;
-     _Handle := nil;
+     _Parent  := nil;
+     _Handle  := nil;
+     _LangVer := TCLVersion.From( '2.0' );
 end;
 
 constructor TCLProgram<_TContext_>.Create( const Parent_:_TContext_ );
@@ -148,14 +151,16 @@ end;
 /////////////////////////////////////////////////////////////////////// メソッド
 
 procedure TCLProgram<_TContext_>.Build;
-const
-     Os :AnsiString = '-cl-std=CL2.0';
 var
    Ds :TArray<T_cl_device_id>;
+   Os :String;
 begin
      Ds :=  TCLContext( _Parent ).GetDevices;
 
-     AssertCL( clBuildProgram( Handle, Length( Ds ), @Ds[0], P_char( Os ), nil, nil ) );
+     if Ord( _LangVer ) > 100 then Os := '-cl-std=CL' + _LangVer.ToString
+                              else Os := '';
+
+     AssertCL( clBuildProgram( Handle, Length( Ds ), @Ds[0], P_char( AnsiString( Os ) ), nil, nil ) );
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
