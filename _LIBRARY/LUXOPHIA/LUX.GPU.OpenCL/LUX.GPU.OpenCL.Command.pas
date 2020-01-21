@@ -32,9 +32,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Context_:_TContext_; const Device_:_TDevice_ );
        destructor Destroy; override;
        ///// プロパティ
-       property Context :_TContext_         read   _Context;
-       property Device  :_TDevice_          read   _Device ;
-       property Handle  :T_cl_command_queue read GetHandle ;  property avHandle :Boolean read GetavHandle write SetavHandle;
+       property Context  :_TContext_         read   _Context                   ;
+       property Device   :_TDevice_          read   _Device                    ;
+       property Handle   :T_cl_command_queue read GetHandle                    ;
+       property avHandle :Boolean            read GetavHandle write SetavHandle;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
