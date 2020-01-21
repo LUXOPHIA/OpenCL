@@ -30,7 +30,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLProgram  = TCLProgram<TCLContext>;
 
-     TCLKernel   = TCLKernel<TCLProgram>;
+     TCLKernel   = TCLKernel<TCLContext,TCLProgram>;
 
      TCLMemory   = TCLMemory<TCLContext>;
 

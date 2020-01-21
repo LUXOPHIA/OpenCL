@@ -18,7 +18,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLProgram<_TContext_:class> = class
      private
-       type TCLKernel = TCLKernel<TCLProgram<_TContext_>>;
+       type TCLKernel = TCLKernel<_TContext_,TCLProgram<_TContext_>>;
      protected
        _Parent  :_TContext_;
        _Handle  :T_cl_program;

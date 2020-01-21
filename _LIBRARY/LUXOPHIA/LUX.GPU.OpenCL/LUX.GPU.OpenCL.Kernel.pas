@@ -5,7 +5,8 @@ interface //####################################################################
 uses System.Classes, System.Generics.Collections,
      cl_version, cl_platform, cl,
      LUX.Code.C,
-     LUX.GPU.OpenCL.root;
+     LUX.GPU.OpenCL.root,
+     LUX.GPU.OpenCL.Memory;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -13,14 +14,16 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<_TProgram_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<_TContext_,_TProgram_>
 
-     TCLKernel<_TProgram_:class> = class
+     TCLKernel<_TContext_,_TProgram_:class> = class
      private
+       type TCLMemory = TCLMemory<_TContext_>;
      protected
-       _Parent :_TProgram_;
-       _Handle :T_cl_kernel;
-       _Name   :String;
+       _Parent  :_TProgram_;
+       _Handle  :T_cl_kernel;
+       _Name    :String;
+       _Memorys :TList<TCLMemory>;
        ///// アクセス
        procedure SetParent( const Parent_:_TProgram_ );
        function GetHandle :T_cl_kernel;
@@ -35,10 +38,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Parent_:_TProgram_; const Name_:String ); overload;
        destructor Destroy; override;
        ///// プロパティ
-       property Parent   :_TProgram_  read   _Parent   write SetParent  ;
-       property Handle   :T_cl_kernel read GetHandle                    ;
-       property avHandle :Boolean     read GetavHandle write SetavHandle;
-       property Name     :String      read   _Name     write   _Name    ;
+       property Parent   :_TProgram_       read   _Parent   write SetParent  ;
+       property Handle   :T_cl_kernel      read GetHandle                    ;
+       property avHandle :Boolean          read GetavHandle write SetavHandle;
+       property Name     :String           read   _Name     write   _Name    ;
+       property Memorys  :TList<TCLMemory> read   _Memorys                   ;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -55,7 +59,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<_TProgram_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<_TContext_,_TProgram_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -63,7 +67,7 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-procedure TCLKernel<_TProgram_>.SetParent( const Parent_:_TProgram_ );
+procedure TCLKernel<_TContext_,_TProgram_>.SetParent( const Parent_:_TProgram_ );
 begin
      if Assigned( _Parent ) then TCLProgram( _Parent ).Kernels.Remove( TCLKernel( Self ) );
 
@@ -74,19 +78,19 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLKernel<_TProgram_>.GetHandle :T_cl_kernel;
+function TCLKernel<_TContext_,_TProgram_>.GetHandle :T_cl_kernel;
 begin
      if not avHandle then BeginHandle;
 
      Result := _Handle;
 end;
 
-function TCLKernel<_TProgram_>.GetavHandle :Boolean;
+function TCLKernel<_TContext_,_TProgram_>.GetavHandle :Boolean;
 begin
      Result := TCLProgram( _Parent ).avHandle and Assigned( _Handle );
 end;
 
-procedure TCLKernel<_TProgram_>.SetavHandle( const avHandle_:Boolean );
+procedure TCLKernel<_TContext_,_TProgram_>.SetavHandle( const avHandle_:Boolean );
 begin
      if avHandle  then EndHandle;
 
@@ -95,16 +99,25 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLKernel<_TProgram_>.BeginHandle;
+procedure TCLKernel<_TContext_,_TProgram_>.BeginHandle;
 var
    E :T_cl_int;
+   I :Integer;
+   H :T_cl_mem;
 begin
      _Handle := clCreateKernel( TCLProgram( _Parent ).Handle, P_char( AnsiString( _Name ) ), @E );
 
      AssertCL( E );
+
+     for I := 0 to _Memorys.Count-1 do
+     begin
+          H := _Memorys[ I ].Handle;
+
+          AssertCL( clSetKernelArg( _Handle, I, SizeOf( T_cl_mem ), @H ) );
+     end;
 end;
 
-procedure TCLKernel<_TProgram_>.EndHandle;
+procedure TCLKernel<_TContext_,_TProgram_>.EndHandle;
 begin
      clReleaseKernel( _Handle );
 
@@ -113,32 +126,36 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLKernel<_TProgram_>.Create;
+constructor TCLKernel<_TContext_,_TProgram_>.Create;
 begin
      inherited;
+
+     _Memorys := TList<TCLMemory>.Create;
 
      _Parent := nil;
      _Handle := nil;
      _Name   := '';
 end;
 
-constructor TCLKernel<_TProgram_>.Create( const Parent_:_TProgram_ );
+constructor TCLKernel<_TContext_,_TProgram_>.Create( const Parent_:_TProgram_ );
 begin
      Create;
 
      Parent := Parent_;
 end;
 
-constructor TCLKernel<_TProgram_>.Create( const Parent_:_TProgram_; const Name_:String );
+constructor TCLKernel<_TContext_,_TProgram_>.Create( const Parent_:_TProgram_; const Name_:String );
 begin
      Create( Parent_ );
 
      _Name := Name_;
 end;
 
-destructor TCLKernel<_TProgram_>.Destroy;
+destructor TCLKernel<_TContext_,_TProgram_>.Destroy;
 begin
      if avHandle then EndHandle;
+
+     _Memorys.Free;
 
      inherited;
 end;
