@@ -5,7 +5,8 @@ interface //####################################################################
 uses System.Classes, System.Generics.Collections,
      cl_version, cl_platform, cl,
      LUX.Code.C,
-     LUX.GPU.OpenCL.root;
+     LUX.GPU.OpenCL.root,
+     LUX.GPU.OpenCL.Kernel;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -17,11 +18,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLProgram<_TContext_:class> = class
      private
+       type TCLKernel = TCLKernel<TCLProgram<_TContext_>>;
      protected
        _Parent  :_TContext_;
        _Handle  :T_cl_program;
        _Source  :TStringList;
        _LangVer :TCLVersion;
+       _Kernels :TObjectList<TCLKernel>;
        ///// アクセス
        procedure SetParent( const Parent_:_TContext_ );
        function GetHandle :T_cl_program;
@@ -35,11 +38,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Parent_:_TContext_ ); overload;
        destructor Destroy; override;
        ///// プロパティ
-       property Parent   :_TContext_   read   _Parent   write SetParent  ;
-       property Handle   :T_cl_program read GetHandle                    ;
-       property avHandle :Boolean      read GetavHandle write SetavHandle;
-       property Source   :TStringList  read   _Source                    ;
-       property LangVer  :TCLVersion   read   _LangVer                   ;
+       property Parent   :_TContext_             read   _Parent   write SetParent  ;
+       property Handle   :T_cl_program           read GetHandle                    ;
+       property avHandle :Boolean                read GetavHandle write SetavHandle;
+       property Source   :TStringList            read   _Source                    ;
+       property LangVer  :TCLVersion             read   _LangVer                   ;
+       property Kernels  :TObjectList<TCLKernel> read   _Kernels                   ;
        ///// メソッド
        procedure Build;
      end;
@@ -79,16 +83,14 @@ end;
 
 function TCLProgram<_TContext_>.GetHandle :T_cl_program;
 begin
-     if not TCLContext( _Parent ).avHandle then avHandle := False;
-
-     if not                       avHandle then BeginHandle;
+     if not avHandle then BeginHandle;
 
      Result := _Handle;
 end;
 
 function TCLProgram<_TContext_>.GetavHandle :Boolean;
 begin
-     Result := Assigned( _Handle );
+     Result := TCLContext( _Parent ).avHandle and Assigned( _Handle );
 end;
 
 procedure TCLProgram<_TContext_>.SetavHandle( const avHandle_:Boolean );
@@ -125,7 +127,8 @@ constructor TCLProgram<_TContext_>.Create;
 begin
      inherited;
 
-     _Source := TStringList.Create;
+     _Source  := TStringList           .Create;
+     _Kernels := TObjectList<TCLKernel>.Create;
 
      _Parent  := nil;
      _Handle  := nil;
@@ -143,7 +146,8 @@ destructor TCLProgram<_TContext_>.Destroy;
 begin
      if avHandle then EndHandle;
 
-     _Source.Free;
+     _Source .Free;
+     _Kernels.Free;
 
      inherited;
 end;
