@@ -18,9 +18,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLCommand<_TContext_,_TDevice_:class> = class
      private
      protected
-       _Context :_TContext_;
-       _Device  :_TDevice_;
-       _Handle  :T_cl_command_queue;
+       _Parent :_TContext_;
+       _Device :_TDevice_;
+       _Handle :T_cl_command_queue;
        ///// アクセス
        function GetHandle :T_cl_command_queue;
        function GetavHandle :Boolean;
@@ -32,7 +32,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Context_:_TContext_; const Device_:_TDevice_ );
        destructor Destroy; override;
        ///// プロパティ
-       property Context  :_TContext_         read   _Context                   ;
+       property Parent   :_TContext_         read   _Parent                    ;
        property Device   :_TDevice_          read   _Device                    ;
        property Handle   :T_cl_command_queue read GetHandle                    ;
        property avHandle :Boolean            read GetavHandle write SetavHandle;
@@ -62,9 +62,9 @@ uses LUX.GPU.OpenCL;
 
 function TCLCommand<_TContext_,_TDevice_>.GetHandle :T_cl_command_queue;
 begin
-     if not TCLContext( _Context ).avHandle then avHandle := False;
+     if not TCLContext( _Parent ).avHandle then avHandle := False;
 
-     if not                        avHandle then BeginHandle;
+     if not                       avHandle then BeginHandle;
 
      Result := _Handle;
 end;
@@ -86,9 +86,9 @@ end;
 procedure TCLCommand<_TContext_,_TDevice_>.BeginHandle;
 begin
      {$IF CL_VERSION_2_0 <> 0 }
-     _Handle := clCreateCommandQueueWithProperties( TCLContext( _Context ).Handle, TCLDevice( _Device ).Handle, nil, nil );
+     _Handle := clCreateCommandQueueWithProperties( TCLContext( _Parent ).Handle, TCLDevice( _Device ).Handle, nil, nil );
      {$ELSE}
-     _Handle := clCreateCommandQueue              ( TCLContext( _Context ).Handle, TCLDevice( _Device ).Handle, nil, nil );
+     _Handle := clCreateCommandQueue              ( TCLContext( _Parent ).Handle, TCLDevice( _Device ).Handle, nil, nil );
      {$ENDIF}
 end;
 
@@ -105,16 +105,16 @@ constructor TCLCommand<_TContext_,_TDevice_>.Create( const Context_:_TContext_; 
 begin
      inherited Create;
 
-     _Context := Context_;
-     _Device  := Device_;
-     _Handle  := nil;
+     _Parent := Context_;
+     _Device := Device_;
+     _Handle := nil;
 end;
 
 destructor TCLCommand<_TContext_,_TDevice_>.Destroy;
 begin
      if avHandle then EndHandle;
 
-     TCLContext( _Context ).avHandle := False;
+     TCLContext( _Parent ).avHandle := False;
 
      inherited;
 end;
