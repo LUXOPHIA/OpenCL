@@ -7,7 +7,7 @@ uses System.Generics.Collections,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
      LUX.GPU.OpenCL.Command,
-     LUX.GPU.OpenCL.TProgram;
+     LUX.GPU.OpenCL.Progra;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 

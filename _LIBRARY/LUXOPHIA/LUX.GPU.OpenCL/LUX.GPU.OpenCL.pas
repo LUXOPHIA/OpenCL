@@ -12,7 +12,7 @@ uses System.Generics.Collections,
      LUX.GPU.OpenCL.Platform,
      LUX.GPU.OpenCL.Context,
      LUX.GPU.OpenCL.Command,
-     LUX.GPU.OpenCL.TProgram,
+     LUX.GPU.OpenCL.Progra,
      LUX.GPU.OpenCL.Kernel;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
