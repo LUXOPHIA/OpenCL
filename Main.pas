@@ -6,18 +6,21 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.TabControl, FMX.Controls.Presentation, FMX.ScrollBox, FMX.Memo,
-  LUX.GPU.OpenCL,
-  LUX.GPU.OpenCL.Context;
+  LUX.GPU.OpenCL;
 
 type
   TForm1 = class(TForm)
     TabControl1: TTabControl;
-      TabItem1: TTabItem;
-        Memo1: TMemo;
-      TabItem2: TTabItem;
-        Memo2: TMemo;
-    TabItem3: TTabItem;
-    Memo3: TMemo;
+      TabItemS: TTabItem;
+        TabControlS: TTabControl;
+          TabItemSP: TTabItem;
+            MemoSP: TMemo;
+          TabItemSD: TTabItem;
+            MemoSD: TMemo;
+          TabItemSC: TTabItem;
+            MemoSC: TMemo;
+      TabItemC: TTabItem;
+        MemoC: TMemo;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -25,6 +28,7 @@ type
   public
     { public 宣言 }
     _Context :TCLContext;
+    _Program :TCLProgram;
     ///// メソッド
     procedure ShowPlatforms;
     procedure ShowDevices;
@@ -48,7 +52,7 @@ var
    P :TCLPlatform;
    E :String;
 begin
-     with Memo1.Lines do
+     with MemoSP.Lines do
      begin
           for PI := 0 to _OpenCL_.Platforms.Count-1 do
           begin
@@ -80,7 +84,7 @@ var
    P :TCLPlatform;
    D :TCLDevice;
 begin
-     with Memo2.Lines do
+     with MemoSD.Lines do
      begin
           for PI := 0 to _OpenCL_.Platforms.Count-1 do
           begin
@@ -115,7 +119,7 @@ var
    C :TCLCOntext;
    Q :TCLCommand;
 begin
-     with Memo3.Lines do
+     with MemoSC.Lines do
      begin
           for PI := 0 to _OpenCL_.Platforms.Count-1 do
           begin
@@ -155,6 +159,14 @@ begin
      _Context.Add( _OpenCL_.Platforms[ 0 ].Devices[ 0 ] );
 
      ShowContexts;
+
+     _Program := TCLProgram.Create( _Context );
+
+     _Program.Source.LoadFromFile( '..\..\_DATA\Source.cl' );
+
+     _Program.Build;
+
+     MemoC.Lines.Assign( _Program.Source );
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);

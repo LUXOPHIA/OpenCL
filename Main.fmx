@@ -21,33 +21,25 @@ object Form1: TForm1
     Size.Height = 460.000000000000000000
     Size.PlatformDefault = False
     TabIndex = 0
-    TabOrder = 0
+    TabOrder = 1
     TabPosition = PlatformDefault
     Sizes = (
       620s
       434s
       620s
-      434s
-      620s
       434s)
-    object TabItem1: TTabItem
+    object TabItemS: TTabItem
       CustomIcon = <
         item
         end>
       IsSelected = True
-      Size.Width = 71.000000000000000000
+      Size.Width = 58.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
       TabOrder = 0
-      Text = 'Platforms'
-      ExplicitSize.cx = 63.000000000000000000
-      ExplicitSize.cy = 26.000000000000000000
-      object Memo1: TMemo
-        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
-        DataDetectorTypes = []
-        StyledSettings = [Size, Style, FontColor]
-        TextSettings.Font.Family = 'MS Gothic'
+      Text = 'System'
+      object TabControlS: TTabControl
         Align = Client
         Margins.Left = 10.000000000000000000
         Margins.Top = 10.000000000000000000
@@ -56,54 +48,123 @@ object Form1: TForm1
         Size.Width = 600.000000000000000000
         Size.Height = 414.000000000000000000
         Size.PlatformDefault = False
+        TabIndex = 0
         TabOrder = 0
-        Viewport.Width = 596.000000000000000000
-        Viewport.Height = 410.000000000000000000
+        TabPosition = PlatformDefault
+        Sizes = (
+          600s
+          388s
+          600s
+          388s
+          600s
+          388s)
+        object TabItemSP: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = True
+          Size.Width = 71.000000000000000000
+          Size.Height = 26.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Platforms'
+          ExplicitSize.cx = 63.000000000000000000
+          ExplicitSize.cy = 26.000000000000000000
+          object MemoSP: TMemo
+            Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+            DataDetectorTypes = []
+            StyledSettings = [Size, Style, FontColor]
+            TextSettings.Font.Family = 'MS Gothic'
+            Align = Client
+            Margins.Left = 10.000000000000000000
+            Margins.Top = 10.000000000000000000
+            Margins.Right = 10.000000000000000000
+            Margins.Bottom = 10.000000000000000000
+            Size.Width = 580.000000000000000000
+            Size.Height = 368.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            Viewport.Width = 576.000000000000000000
+            Viewport.Height = 364.000000000000000000
+          end
+        end
+        object TabItemSD: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 61.000000000000000000
+          Size.Height = 26.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Devices'
+          ExplicitSize.cx = 62.000000000000000000
+          ExplicitSize.cy = 26.000000000000000000
+          object MemoSD: TMemo
+            Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+            DataDetectorTypes = []
+            StyledSettings = [Size, Style, FontColor]
+            TextSettings.Font.Family = 'MS Gothic'
+            Align = Client
+            Margins.Left = 10.000000000000000000
+            Margins.Top = 10.000000000000000000
+            Margins.Right = 10.000000000000000000
+            Margins.Bottom = 10.000000000000000000
+            Size.Width = 580.000000000000000000
+            Size.Height = 368.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            Viewport.Width = 576.000000000000000000
+            Viewport.Height = 364.000000000000000000
+          end
+        end
+        object TabItemSC: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 67.000000000000000000
+          Size.Height = 26.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Contexts'
+          ExplicitSize.cx = 67.000000000000000000
+          ExplicitSize.cy = 26.000000000000000000
+          object MemoSC: TMemo
+            Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+            DataDetectorTypes = []
+            StyledSettings = [Size, Style, FontColor]
+            TextSettings.Font.Family = 'MS Gothic'
+            Align = Client
+            Margins.Left = 10.000000000000000000
+            Margins.Top = 10.000000000000000000
+            Margins.Right = 10.000000000000000000
+            Margins.Bottom = 10.000000000000000000
+            Size.Width = 580.000000000000000000
+            Size.Height = 368.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            Viewport.Width = 576.000000000000000000
+            Viewport.Height = 364.000000000000000000
+          end
+        end
       end
     end
-    object TabItem2: TTabItem
+    object TabItemC: TTabItem
       CustomIcon = <
         item
         end>
       IsSelected = False
-      Size.Width = 61.000000000000000000
+      Size.Width = 48.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
       TabOrder = 0
-      Text = 'Devices'
-      ExplicitSize.cx = 62.000000000000000000
-      ExplicitSize.cy = 26.000000000000000000
-      object Memo2: TMemo
-        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
-        DataDetectorTypes = []
-        StyledSettings = [Size, Style, FontColor]
-        TextSettings.Font.Family = 'MS Gothic'
-        Align = Client
-        Margins.Left = 10.000000000000000000
-        Margins.Top = 10.000000000000000000
-        Margins.Right = 10.000000000000000000
-        Margins.Bottom = 10.000000000000000000
-        Size.Width = 600.000000000000000000
-        Size.Height = 414.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 0
-        Viewport.Width = 596.000000000000000000
-        Viewport.Height = 410.000000000000000000
-      end
-    end
-    object TabItem3: TTabItem
-      CustomIcon = <
-        item
-        end>
-      IsSelected = False
-      Size.Width = 67.000000000000000000
-      Size.Height = 26.000000000000000000
-      Size.PlatformDefault = False
-      StyleLookup = ''
-      TabOrder = 0
-      Text = 'Contexts'
-      object Memo3: TMemo
+      Text = 'Code'
+      object MemoC: TMemo
         Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
         DataDetectorTypes = []
         StyledSettings = [Size, Style, FontColor]
