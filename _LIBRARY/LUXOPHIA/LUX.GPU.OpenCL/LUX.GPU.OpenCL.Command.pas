@@ -62,16 +62,14 @@ uses LUX.GPU.OpenCL;
 
 function TCLCommand<_TContext_,_TDevice_>.GetHandle :T_cl_command_queue;
 begin
-     if not TCLContext( _Parent ).avHandle then avHandle := False;
-
-     if not                       avHandle then BeginHandle;
+     if not avHandle then BeginHandle;
 
      Result := _Handle;
 end;
 
 function TCLCommand<_TContext_,_TDevice_>.GetavHandle :Boolean;
 begin
-     Result := Assigned( _Handle );
+     Result := TCLContext( _Parent ).avHandle and Assigned( _Handle );
 end;
 
 procedure TCLCommand<_TContext_,_TDevice_>.SetavHandle( const avHandle_:Boolean );
