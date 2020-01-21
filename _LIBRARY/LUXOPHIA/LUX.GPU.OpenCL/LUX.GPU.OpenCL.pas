@@ -11,7 +11,8 @@ uses System.Generics.Collections,
      LUX.GPU.OpenCL.Device,
      LUX.GPU.OpenCL.Platform,
      LUX.GPU.OpenCL.Context,
-     LUX.GPU.OpenCL.Command;
+     LUX.GPU.OpenCL.Command,
+     LUX.GPU.OpenCL.TProgram;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -24,6 +25,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLContext  = TCLContext<TCLDevice,TCLPlatform>;
 
      TCLCommand  = TCLCommand<TCLContext,TCLDevice>;
+
+     TCLProgram  = TCLProgram<TCLContext>;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
