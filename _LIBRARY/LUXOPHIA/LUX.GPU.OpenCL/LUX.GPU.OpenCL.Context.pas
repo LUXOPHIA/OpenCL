@@ -7,7 +7,8 @@ uses System.Generics.Collections,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
      LUX.GPU.OpenCL.Command,
-     LUX.GPU.OpenCL.Progra;
+     LUX.GPU.OpenCL.Progra,
+     LUX.GPU.OpenCL.Memory;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -21,11 +22,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLCommand = TCLCommand<TCLContext<_TDevice_,_TPlatform_>,_TDevice_>;
        type TCLProgram = TCLProgram<TCLContext<_TDevice_,_TPlatform_>>;
+       type TCLMemory  = TCLMemory<TCLContext<_TDevice_,_TPlatform_>>;
      protected
        _Parent   :_TPlatform_;
        _Commands :TObjectList<TCLCommand>;
        _Handle   :T_cl_context;
        _Programs :TObjectList<TCLProgram>;
+       _Memorys  :TObjectList<TCLMemory>;
        ///// アクセス
        procedure SetParent( const Parent_:_TPlatform_ );
        function GetHandle :T_cl_context;
@@ -45,6 +48,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Handle   :T_cl_context            read GetHandle                    ;
        property avHandle :Boolean                 read GetavHandle write SetavHandle;
        property Programs :TObjectList<TCLProgram> read   _Programs                  ;
+       property Memorys  :TObjectList<TCLMemory>  read   _Memorys                   ;
        ///// メソッド
        procedure Add( const Device_:_TDevice_ );
        procedure Remove( const Device_:_TDevice_ );
@@ -134,6 +138,7 @@ begin
 
      _Commands := TObjectList<TCLCommand>.Create;
      _Programs := TObjectList<TCLProgram>.Create;
+     _Memorys  := TObjectList<TCLMemory >.Create;
 
      _Parent := nil;
      _Handle := nil;
@@ -161,6 +166,7 @@ begin
 
      _Commands.Free;
      _Programs.Free;
+     _Memorys .Free;
 
      inherited;
 end;
