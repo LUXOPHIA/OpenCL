@@ -44,6 +44,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// メソッド
        procedure Add( const Device_:_TDevice_ );
        procedure Remove( const Device_:_TDevice_ );
+       function GetDevices :TArray<T_cl_device_id>;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -104,20 +105,14 @@ procedure TCLContext<_TDevice_,_TPlatform_>.BeginHandle;
 var
    Ps :array [ 0..2 ] of T_cl_context_properties;
    Ds :TArray<T_cl_device_id>;
-   I :Integer;
 begin
      Ps[ 0 ] := CL_CONTEXT_PLATFORM;
      Ps[ 1 ] := NativeInt( TCLPlatform( _Parent ).Handle );
      Ps[ 2 ] := 0;
 
-     with _Commands do
-     begin
-          SetLength( Ds, Count );
+     Ds := GetDevices;
 
-          for I := 0 to Count-1 do Ds[ I ] := TCLDevice( Items[ I ].Device ).Handle;
-
-          _Handle := clCreateContext( @Ps[0], Count, @Ds[0], nil, nil, nil );
-     end;
+     _Handle := clCreateContext( @Ps[0], Length( Ds ), @Ds[0], nil, nil, nil );
 end;
 
 procedure TCLContext<_TDevice_,_TPlatform_>.EndHandle;
@@ -183,6 +178,20 @@ begin
      end;
 
      avHandle := False;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLContext<_TDevice_,_TPlatform_>.GetDevices :TArray<T_cl_device_id>;
+var
+   I :Integer;
+begin
+     with _Commands do
+     begin
+          SetLength( Result, Count );
+
+          for I := 0 to Count-1 do Result[ I ] := TCLDevice( Items[ I ].Device ).Handle;
+     end;
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
