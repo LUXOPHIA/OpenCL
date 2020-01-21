@@ -29,6 +29,7 @@ type
     { public 宣言 }
     _Context :TCLContext;
     _Program :TCLProgram;
+    _Kernel  :TCLKernel;
     ///// メソッド
     procedure ShowPlatforms;
     procedure ShowDevices;
@@ -167,6 +168,10 @@ begin
      _Program.Build;
 
      MemoC.Lines.Assign( _Program.Source );
+
+     _Kernel := TCLKernel.Create( _Program, 'add' );
+
+     _Kernel.Handle;
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
