@@ -29,7 +29,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure BeginHandle;
        procedure EndHandle;
      public
-       constructor Create( const Context_:_TContext_; const Device_:_TDevice_ );
+       constructor Create( const Parent_:_TContext_; const Device_:_TDevice_ );
        destructor Destroy; override;
        ///// プロパティ
        property Parent   :_TContext_         read   _Parent                    ;
@@ -101,11 +101,11 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLCommand<_TContext_,_TDevice_>.Create( const Context_:_TContext_; const Device_:_TDevice_ );
+constructor TCLCommand<_TContext_,_TDevice_>.Create( const Parent_:_TContext_; const Device_:_TDevice_ );
 begin
      inherited Create;
 
-     _Parent := Context_;
+     _Parent := Parent_;
      _Device := Device_;
      _Handle := nil;
 end;
