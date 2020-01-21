@@ -4,7 +4,7 @@ OpenCL を用いて GPU で計算する方法。
 
 ライブラリを読み込むと同時に、実行マシンにおけるすべての“Platform”と“Device”が検出され、`LUX.GPU.OpenCL`ユニットで定義されているグローバル変数`_OpenCL_`内のリストとして列挙される。
 
-すべての Platform へは、以下ようにアクセスでき、
+すべての Platform へは、以下のようにアクセスでき、
 ```Delphi
 _OpenCL_.Platforms.Count                  :Integer           // 全 Platform の数
 _OpenCL_.Platforms[ * ]                   :TCLPlatform       // 全 Platform の配列
