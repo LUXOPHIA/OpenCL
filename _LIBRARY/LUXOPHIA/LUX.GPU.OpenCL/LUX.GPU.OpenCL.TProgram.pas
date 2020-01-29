@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Progra;
+﻿unit LUX.GPU.OpenCL.TProgram;
 
 interface //#################################################################### ■
 
