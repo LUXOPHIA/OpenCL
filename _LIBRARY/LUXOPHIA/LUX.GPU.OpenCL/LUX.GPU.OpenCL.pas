@@ -14,7 +14,7 @@ uses System.Generics.Collections,
      LUX.GPU.OpenCL.TCommand,
      LUX.GPU.OpenCL.TProgram,
      LUX.GPU.OpenCL.TKernel,
-     LUX.GPU.OpenCL.Memory,
+     LUX.GPU.OpenCL.TMemory,
      LUX.GPU.OpenCL.TBuffer,
      LUX.GPU.OpenCL.TBuffer.TIter;
 

@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Memory;
+﻿unit LUX.GPU.OpenCL.TMemory;
 
 interface //#################################################################### ■
 
