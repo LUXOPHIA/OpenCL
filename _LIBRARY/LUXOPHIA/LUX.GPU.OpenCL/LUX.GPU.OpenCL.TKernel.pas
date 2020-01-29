@@ -20,15 +20,22 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLMemory = TCLMemory<_TContext_>;
      protected
-       _Parent  :_TProgram_;
-       _Handle  :T_cl_kernel;
-       _Name    :String;
-       _Memorys :TList<TCLMemory>;
+       _Parent           :_TProgram_;
+       _Handle           :T_cl_kernel;
+       _Name             :String;
+       _Memorys          :TList<TCLMemory>;
+       _GlobalWorkOffset :TArray<T_size_t>;
+       _GlobalWorkSize   :TArray<T_size_t>;
+       _LocalWorkSize    :TArray<T_size_t>;
        ///// アクセス
        procedure SetParent( const Parent_:_TProgram_ );
        function GetHandle :T_cl_kernel;
        function GetavHandle :Boolean;
        procedure SetavHandle( const avHandle_:Boolean );
+       function GetDimention :T_cl_uint;
+       procedure SetGlobalWorkOffset( const GlobalWorkOffset_:TArray<T_size_t> );
+       procedure SetGlobalWorkSize( const GlobalWorkSize_:TArray<T_size_t> );
+       procedure SetLocalWorkSize( const LocalWorkSize_:TArray<T_size_t> );
        ///// メソッド
        procedure BeginHandle;
        procedure EndHandle;
@@ -38,11 +45,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Parent_:_TProgram_; const Name_:String ); overload;
        destructor Destroy; override;
        ///// プロパティ
-       property Parent   :_TProgram_       read   _Parent   write SetParent  ;
-       property Handle   :T_cl_kernel      read GetHandle                    ;
-       property avHandle :Boolean          read GetavHandle write SetavHandle;
-       property Name     :String           read   _Name     write   _Name    ;
-       property Memorys  :TList<TCLMemory> read   _Memorys                   ;
+       property Parent           :_TProgram_       read   _Parent           write SetParent          ;
+       property Handle           :T_cl_kernel      read GetHandle                                    ;
+       property avHandle         :Boolean          read GetavHandle         write SetavHandle        ;
+       property Name             :String           read   _Name             write   _Name            ;
+       property Memorys          :TList<TCLMemory> read   _Memorys                                   ;
+       property Dimention        :T_cl_uint        read GetDimention                                 ;
+       property GlobalWorkOffset :TArray<T_size_t> read   _GlobalWorkOffset write SetGlobalWorkOffset;
+       property GlobalWorkSize   :TArray<T_size_t> read   _GlobalWorkSize   write SetGlobalWorkSize  ;
+       property LocalWorkSize    :TArray<T_size_t> read   _LocalWorkSize    write SetLocalWorkSize   ;
        ///// メソッド
        procedure Run( const Command_:TObject );
      end;
@@ -99,6 +110,28 @@ begin
      if avHandle_ then BeginHandle;
 end;
 
+//------------------------------------------------------------------------------
+
+function TCLKernel<_TContext_,_TProgram_>.GetDimention :T_cl_uint;
+begin
+     Result := Length( _GlobalWorkSize );
+end;
+
+procedure TCLKernel<_TContext_,_TProgram_>.SetGlobalWorkOffset( const GlobalWorkOffset_:TArray<T_size_t> );
+begin
+     _GlobalWorkOffset := GlobalWorkOffset_;
+end;
+
+procedure TCLKernel<_TContext_,_TProgram_>.SetGlobalWorkSize( const GlobalWorkSize_:TArray<T_size_t> );
+begin
+     _GlobalWorkSize := GlobalWorkSize_;
+end;
+
+procedure TCLKernel<_TContext_,_TProgram_>.SetLocalWorkSize( const LocalWorkSize_:TArray<T_size_t> );
+begin
+     _LocalWorkSize := LocalWorkSize_;
+end;
+
 /////////////////////////////////////////////////////////////////////// メソッド
 
 procedure TCLKernel<_TContext_,_TProgram_>.BeginHandle;
@@ -137,6 +170,10 @@ begin
      _Parent := nil;
      _Handle := nil;
      _Name   := '';
+
+     _GlobalWorkOffset := [];
+     _GlobalWorkSize   := [ 1 ];
+     _LocalWorkSize    := [];
 end;
 
 constructor TCLKernel<_TContext_,_TProgram_>.Create( const Parent_:_TProgram_ );
@@ -171,7 +208,13 @@ begin
      GWS := 1;
      LWS := 1;
 
-     AssertCL( clEnqueueNDRangeKernel( TCLCommand( Command_ ).Handle, Handle, 1, nil, @GWS, @LWS, 0, nil, nil ) );
+     AssertCL( clEnqueueNDRangeKernel( TCLCommand( Command_ ).Handle,
+                                                              Handle,
+                                       Dimention,
+                                       @_GlobalWorkOffset[ 0 ],
+                                       @_GlobalWorkSize[ 0 ],
+                                       @_LocalWorkSize[ 0 ],
+                                       0, nil, nil ) );
 
      clFinish( TCLCommand( Command_ ).Handle );
 end;
