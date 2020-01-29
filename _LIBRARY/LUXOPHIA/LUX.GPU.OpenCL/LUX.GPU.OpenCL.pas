@@ -14,7 +14,9 @@ uses System.Generics.Collections,
      LUX.GPU.OpenCL.Command,
      LUX.GPU.OpenCL.Progra,
      LUX.GPU.OpenCL.Kernel,
-     LUX.GPU.OpenCL.Memory;
+     LUX.GPU.OpenCL.Memory,
+     LUX.GPU.OpenCL.TBuffer,
+     LUX.GPU.OpenCL.TBuffer.TIter;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -33,6 +35,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLKernel   = TCLKernel<TCLContext,TCLProgram>;
 
      TCLMemory   = TCLMemory<TCLContext>;
+
+     TCLDeviceBuffer<_TValue_:record> = class( TCLDeviceBuffer<TCLContext,_TValue_> );
+     TCLHostBuffer  <_TValue_:record> = class( TCLHostBuffer  <TCLContext,_TValue_> );
+
+     TCLBufferIter<_TValue_:record> = class( TCLBufferIter<TCLContext,TCLDevice,_TValue_> );
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 

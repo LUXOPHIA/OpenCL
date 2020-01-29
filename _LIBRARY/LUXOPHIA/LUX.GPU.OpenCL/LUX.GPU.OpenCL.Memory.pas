@@ -27,10 +27,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetavHandle( const avHandle_:Boolean );
        ///// メソッド
        procedure BeginHandle; virtual; abstract;
-       procedure EndHandle;
+       procedure EndHandle; virtual;
      public
-       constructor Create; overload;
-       constructor Create( const Parent_:_TContext_ ); overload;
+       constructor Create; overload; virtual;
+       constructor Create( const Parent_:_TContext_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
        property Parent   :_TContext_ read   _Parent   write SetParent  ;
