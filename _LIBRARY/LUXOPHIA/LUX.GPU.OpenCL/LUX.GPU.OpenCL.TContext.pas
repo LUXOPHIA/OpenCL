@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Context;
+﻿unit LUX.GPU.OpenCL.TContext;
 
 interface //#################################################################### ■
 

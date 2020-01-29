@@ -9,7 +9,7 @@ uses System.Classes, System.Generics.Collections,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
      LUX.GPU.OpenCL.TDevice,
-     LUX.GPU.OpenCL.Context;
+     LUX.GPU.OpenCL.TContext;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
