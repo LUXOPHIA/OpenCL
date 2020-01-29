@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Kernel;
+﻿unit LUX.GPU.OpenCL.TKernel;
 
 interface //#################################################################### ■
 
