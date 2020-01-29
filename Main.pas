@@ -5,7 +5,13 @@ interface //####################################################################
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
-  FMX.TabControl, FMX.Controls.Presentation, FMX.ScrollBox, FMX.Memo,
+  FMX.Controls.Presentation, FMX.ScrollBox, FMX.Memo, FMX.TabControl,
+  cl_version,
+  cl_platform,
+  cl,
+  LUX,
+  LUX.Code.C,
+  LUX.GPU.OpenCL.root,
   LUX.GPU.OpenCL;
 
 type
@@ -19,8 +25,12 @@ type
             MemoSD: TMemo;
           TabItemSC: TTabItem;
             MemoSC: TMemo;
-      TabItemC: TTabItem;
-        MemoC: TMemo;
+      TabItemP: TTabItem;
+        TabControlP: TTabControl;
+          TabItemPC: TTabItem;
+            MemoPC: TMemo;
+          TabItemPR: TTabItem;
+            MemoPR: TMemo;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -30,6 +40,9 @@ type
     _Context :TCLContext;
     _Program :TCLProgram;
     _Kernel  :TCLKernel;
+    _BufferA :TCLHostBuffer<T_float>;
+    _BufferB :TCLHostBuffer<T_float>;
+    _BufferC :TCLHostBuffer<T_float>;
     ///// メソッド
     procedure ShowPlatforms;
     procedure ShowDevices;
@@ -42,6 +55,8 @@ var
 implementation //############################################################### ■
 
 {$R *.fmx}
+
+uses System.Math;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -151,27 +166,60 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 procedure TForm1.FormCreate(Sender: TObject);
+var
+   A, B, C :TCLBufferIter<T_float>;
 begin
      ShowPlatforms;
      ShowDevices;
 
+     ///// Context の生成
      _Context := TCLContext.Create( _OpenCL_.Platforms[ 0 ] );
-
      _Context.Add( _OpenCL_.Platforms[ 0 ].Devices[ 0 ] );
 
      ShowContexts;
 
+     ///// Program の生成
      _Program := TCLProgram.Create( _Context );
-
      _Program.Source.LoadFromFile( '..\..\_DATA\Source.cl' );
-
      _Program.Build;
 
-     MemoC.Lines.Assign( _Program.Source );
+     ///// プログラムソースの読み込み
+     MemoPC.Lines.Assign( _Program.Source );
 
+     ///// Buffer の生成
+     _BufferA := TCLHostBuffer<T_float>.Create( _Context );
+     _BufferB := TCLHostBuffer<T_float>.Create( _Context );
+     _BufferC := TCLHostBuffer<T_float>.Create( _Context );
+
+     _BufferA.Count := 1;
+     _BufferB.Count := 1;
+     _BufferC.Count := 1;
+
+     ///// Kernel の生成
      _Kernel := TCLKernel.Create( _Program, 'add' );
+     _Kernel.Memorys.Add( _BufferA );
+     _Kernel.Memorys.Add( _BufferB );
+     _Kernel.Memorys.Add( _BufferC );
+     MemoPR.Lines.Add( 'C = A + B' );
 
-     _Kernel.Handle;
+     ///// Buffer への書き込み
+     A := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferA );
+     A.Values[ 0 ] := 1;
+     MemoPR.Lines.Add( 'A = ' + FloatToStr( A.Values[ 0 ] ) );
+     A.Free;
+
+     B := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferB );
+     B.Values[ 0 ] := 2;
+     MemoPR.Lines.Add( 'B = ' + FloatToStr( B.Values[ 0 ] ) );
+     B.Free;
+
+     ///// プログラムの実行
+     _Kernel.Run( _Context.Commands[ 0 ] );
+
+     ///// Buffer からの読み出し
+     C := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferC );
+     MemoPR.Lines.Add( 'C = ' + FloatToStr( C.Values[ 0 ] ) );
+     C.Free;
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
