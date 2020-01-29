@@ -168,56 +168,65 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 var
    A, B, C :TCLBufferIter<T_float>;
+   I :Integer;
 begin
-     ShowPlatforms;
-     ShowDevices;
+     ///// Platform
+     ShowPlatforms;  // 一覧表示
+
+     ///// Device
+     ShowDevices;  // 一覧表示
 
      ///// Context
      _Context := TCLContext.Create( _OpenCL_.Platforms[ 0 ] );  // 生成
      _Context.Add( _OpenCL_.Platforms[ 0 ].Devices[ 0 ] );      // デバイスの登録
 
-     ShowContexts;
+     ShowContexts;                                              // 一覧表示
 
      ///// Program
      _Program := TCLProgram.Create( _Context );                // 生成
      _Program.Source.LoadFromFile( '..\..\_DATA\Source.cl' );  // ソースの読み込み
      _Program.Build;                                           // ビルド
 
-     MemoPC.Lines.Assign( _Program.Source );
+     MemoPC.Lines.Assign( _Program.Source );                   // ソースの表示
 
      ///// Buffer
-     _BufferA := TCLHostBuffer<T_float>.Create( _Context );  // 生成
-     _BufferB := TCLHostBuffer<T_float>.Create( _Context );  // 生成
-     _BufferC := TCLHostBuffer<T_float>.Create( _Context );  // 生成
+     _BufferA := TCLHostBuffer<T_float>.Create( _Context );                   // 生成
+     _BufferB := TCLHostBuffer<T_float>.Create( _Context );                   // 生成
+     _BufferC := TCLHostBuffer<T_float>.Create( _Context );                   // 生成
 
-     _BufferA.Count := 1;                                    // 要素数の設定
-     _BufferB.Count := 1;                                    // 要素数の設定
-     _BufferC.Count := 1;                                    // 要素数の設定
+     _BufferA.Count := 10;                                                    // 要素数の設定
+     _BufferB.Count := 10;                                                    // 要素数の設定
+     _BufferC.Count := 10;                                                    // 要素数の設定
 
-     ///// Kernel
-     _Kernel := TCLKernel.Create( _Program, 'add' );  // 生成
-     _Kernel.Memorys.Add( _BufferA );                 // Buffer の登録
-     _Kernel.Memorys.Add( _BufferB );                 // Buffer の登録
-     _Kernel.Memorys.Add( _BufferC );                 // Buffer の登録
-     MemoPR.Lines.Add( 'C = A + B' );
-
-     ///// Buffer
      A := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferA );  // マップ
-     A.Values[ 0 ] := 1;                                                      // 書き込み
-     MemoPR.Lines.Add( 'A = ' + FloatToStr( A.Values[ 0 ] ) );
-     A.Free;                                                                  // アンマップ
-
      B := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferB );  // マップ
-     B.Values[ 0 ] := 2;                                                      // 書き込み
-     MemoPR.Lines.Add( 'B = ' + FloatToStr( B.Values[ 0 ] ) );
+     for I := 0 to _BufferA.Count-1 do A.Values[ I ] := Random( 10 );         // 書き込み
+     for I := 0 to _BufferB.Count-1 do B.Values[ I ] := Random( 10 );         // 書き込み
+     A.Free;                                                                  // アンマップ
      B.Free;                                                                  // アンマップ
 
      ///// Kernel
-     _Kernel.Run( _Context.Commands[ 0 ] );  // 実行
+     _Kernel := TCLKernel.Create( _Program, 'mul' );  // 生成
+     _Kernel.Memorys.Add( _BufferA );                 // Buffer の登録
+     _Kernel.Memorys.Add( _BufferB );                 // Buffer の登録
+     _Kernel.Memorys.Add( _BufferC );                 // Buffer の登録
+     _Kernel.GlobalWorkSize := [ 10 ];                // ループ回数の設定
+
+     _Kernel.Run( _Context.Commands[ 0 ] );           // 実行
 
      ///// Buffer
+     MemoPR.Lines.Add( 'A[i] + B[i] = C[i]' );
+     A := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferA );  // マップ
+     B := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferB );  // マップ
      C := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferC );  // マップ
-     MemoPR.Lines.Add( 'C = ' + FloatToStr( C.Values[ 0 ] ) );                // 読み込み
+     for I := 0 to _BufferC.Count-1 do
+     begin
+          MemoPR.Lines.Add( FloatToStr( A.Values[ I ] ) + ' * '               // 読み込み
+                          + FloatToStr( B.Values[ I ] ) + ' = '               // 読み込み
+                          + FloatToStr( C.Values[ I ] ) );                    // 読み込み
+     end;
+     A.Free;                                                                  // アンマップ
+     B.Free;                                                                  // アンマップ
      C.Free;                                                                  // アンマップ
 end;
 
