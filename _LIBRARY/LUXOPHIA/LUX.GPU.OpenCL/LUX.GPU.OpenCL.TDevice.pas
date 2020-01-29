@@ -7,7 +7,7 @@ uses cl_version,
      cl,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
-     LUX.GPU.OpenCL.Command;
+     LUX.GPU.OpenCL.TCommand;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 

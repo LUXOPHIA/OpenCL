@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Command;
+﻿unit LUX.GPU.OpenCL.TCommand;
 
 interface //#################################################################### ■
 
