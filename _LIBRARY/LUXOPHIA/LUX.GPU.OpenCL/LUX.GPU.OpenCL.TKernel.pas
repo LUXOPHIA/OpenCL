@@ -202,12 +202,7 @@ end;
 /////////////////////////////////////////////////////////////////////// メソッド
 
 procedure TCLKernel<_TContext_,_TProgram_>.Run( const Command_:TObject );
-var
-   GWS, LWS :T_size_t;
 begin
-     GWS := 1;
-     LWS := 1;
-
      AssertCL( clEnqueueNDRangeKernel( TCLCommand( Command_ ).Handle,
                                                               Handle,
                                        Dimention,
