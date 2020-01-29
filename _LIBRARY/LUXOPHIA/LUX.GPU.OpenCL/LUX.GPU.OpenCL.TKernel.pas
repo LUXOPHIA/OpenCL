@@ -43,6 +43,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property avHandle :Boolean          read GetavHandle write SetavHandle;
        property Name     :String           read   _Name     write   _Name    ;
        property Memorys  :TList<TCLMemory> read   _Memorys                   ;
+       ///// メソッド
+       procedure Run( const Command_:TObject );
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -158,6 +160,20 @@ begin
      _Memorys.Free;
 
      inherited;
+end;
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TCLKernel<_TContext_,_TProgram_>.Run( const Command_:TObject );
+var
+   GWS, LWS :T_size_t;
+begin
+     GWS := 1;
+     LWS := 1;
+
+     AssertCL( clEnqueueNDRangeKernel( TCLCommand( Command_ ).Handle, Handle, 1, nil, @GWS, @LWS, 0, nil, nil ) );
+
+     clFinish( TCLCommand( Command_ ).Handle );
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
