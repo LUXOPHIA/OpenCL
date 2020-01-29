@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Device;
+﻿unit LUX.GPU.OpenCL.TDevice;
 
 interface //#################################################################### ■
 
