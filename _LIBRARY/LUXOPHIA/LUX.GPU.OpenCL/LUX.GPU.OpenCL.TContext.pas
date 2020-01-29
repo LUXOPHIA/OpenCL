@@ -16,13 +16,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContext<_TDevice_,_TPlatform_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContext<_TPlatform_,_TDevice_>
 
-     TCLContext<_TDevice_,_TPlatform_:class> = class
+     TCLContext<_TPlatform_,_TDevice_:class> = class
      private
-       type TCLCommand = TCLCommand<TCLContext<_TDevice_,_TPlatform_>,_TDevice_>;
-       type TCLProgram = TCLProgram<TCLContext<_TDevice_,_TPlatform_>>;
-       type TCLMemory  = TCLMemory<TCLContext<_TDevice_,_TPlatform_>>;
+       type TCLCommand = TCLCommand<TCLContext<_TPlatform_,_TDevice_>,_TDevice_>;
+       type TCLProgram = TCLProgram<TCLContext<_TPlatform_,_TDevice_>>;
+       type TCLMemory  = TCLMemory<TCLContext<_TPlatform_,_TDevice_>>;
      protected
        _Parent   :_TPlatform_;
        _Commands :TObjectList<TCLCommand>;
@@ -69,7 +69,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContext<_TDevice_,_TPlatform_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContext<_TPlatform_,_TDevice_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -77,7 +77,7 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-procedure TCLContext<_TDevice_,_TPlatform_>.SetParent( const Parent_:_TPlatform_ );
+procedure TCLContext<_TPlatform_,_TDevice_>.SetParent( const Parent_:_TPlatform_ );
 begin
      if Assigned( _Parent ) then TCLPlatform( _Parent ).Contexts.Remove( TCLContext( Self ) );
 
@@ -88,19 +88,19 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLContext<_TDevice_,_TPlatform_>.GetHandle :T_cl_context;
+function TCLContext<_TPlatform_,_TDevice_>.GetHandle :T_cl_context;
 begin
      if not avHandle then BeginHandle;
 
      Result := _Handle;
 end;
 
-function TCLContext<_TDevice_,_TPlatform_>.GetavHandle :Boolean;
+function TCLContext<_TPlatform_,_TDevice_>.GetavHandle :Boolean;
 begin
      Result := Assigned( _Handle );
 end;
 
-procedure TCLContext<_TDevice_,_TPlatform_>.SetavHandle( const avHandle_:Boolean );
+procedure TCLContext<_TPlatform_,_TDevice_>.SetavHandle( const avHandle_:Boolean );
 begin
      if avHandle  then EndHandle;
 
@@ -109,7 +109,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLContext<_TDevice_,_TPlatform_>.BeginHandle;
+procedure TCLContext<_TPlatform_,_TDevice_>.BeginHandle;
 var
    Ps :array [ 0..2 ] of T_cl_context_properties;
    Ds :TArray<T_cl_device_id>;
@@ -123,7 +123,7 @@ begin
      _Handle := clCreateContext( @Ps[0], Length( Ds ), @Ds[0], nil, nil, nil );
 end;
 
-procedure TCLContext<_TDevice_,_TPlatform_>.EndHandle;
+procedure TCLContext<_TPlatform_,_TDevice_>.EndHandle;
 begin
      clReleaseContext( _Handle );
 
@@ -132,7 +132,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLContext<_TDevice_,_TPlatform_>.Create;
+constructor TCLContext<_TPlatform_,_TDevice_>.Create;
 begin
      inherited;
 
@@ -144,14 +144,14 @@ begin
      _Handle := nil;
 end;
 
-constructor TCLContext<_TDevice_,_TPlatform_>.Create( const Parent_:_TPlatform_ );
+constructor TCLContext<_TPlatform_,_TDevice_>.Create( const Parent_:_TPlatform_ );
 begin
      Create;
 
      Parent := Parent_;
 end;
 
-constructor TCLContext<_TDevice_,_TPlatform_>.Create( const Parent_:_TPlatform_; const Devices_:TArray<_TDevice_> );
+constructor TCLContext<_TPlatform_,_TDevice_>.Create( const Parent_:_TPlatform_; const Devices_:TArray<_TDevice_> );
 var
    D :_TDevice_;
 begin
@@ -160,7 +160,7 @@ begin
      for D in Devices_ do Add( D );
 end;
 
-destructor TCLContext<_TDevice_,_TPlatform_>.Destroy;
+destructor TCLContext<_TPlatform_,_TDevice_>.Destroy;
 begin
      if avHandle then EndHandle;
 
@@ -173,14 +173,14 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLContext<_TDevice_,_TPlatform_>.Add( const Device_:_TDevice_ );
+procedure TCLContext<_TPlatform_,_TDevice_>.Add( const Device_:_TDevice_ );
 begin
      _Commands.Add( TCLCommand.Create( Self, Device_ ) );
 
      avHandle := False;
 end;
 
-procedure TCLContext<_TDevice_,_TPlatform_>.Remove( const Device_:_TDevice_ );
+procedure TCLContext<_TPlatform_,_TDevice_>.Remove( const Device_:_TDevice_ );
 var
    C :TCLCommand;
 begin
@@ -194,7 +194,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLContext<_TDevice_,_TPlatform_>.GetDevices :TArray<T_cl_device_id>;
+function TCLContext<_TPlatform_,_TDevice_>.GetDevices :TArray<T_cl_device_id>;
 var
    I :Integer;
 begin

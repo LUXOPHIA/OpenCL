@@ -24,7 +24,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLPlatform<_TOpenCL_:class> = class
      private
        type TCLDevice  = TCLDevice<TCLPlatform<_TOpenCL_>>;
-       type TCLContext = TCLContext<TCLDevice,TCLPlatform<_TOpenCL_>>;
+       type TCLContext = TCLContext<TCLPlatform<_TOpenCL_>,TCLDevice>;
        ///// メソッド
        function GetPlatformInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
        function GetPlatformInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
