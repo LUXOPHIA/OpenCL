@@ -6,7 +6,7 @@ uses System.Generics.Collections,
      cl_version, cl_platform, cl,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
-     LUX.GPU.OpenCL.Command,
+     LUX.GPU.OpenCL.TCommand,
      LUX.GPU.OpenCL.TProgram,
      LUX.GPU.OpenCL.Memory;
 
