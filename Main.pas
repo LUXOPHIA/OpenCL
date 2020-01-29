@@ -172,54 +172,53 @@ begin
      ShowPlatforms;
      ShowDevices;
 
-     ///// Context の生成
-     _Context := TCLContext.Create( _OpenCL_.Platforms[ 0 ] );
-     _Context.Add( _OpenCL_.Platforms[ 0 ].Devices[ 0 ] );
+     ///// Context
+     _Context := TCLContext.Create( _OpenCL_.Platforms[ 0 ] );  // 生成
+     _Context.Add( _OpenCL_.Platforms[ 0 ].Devices[ 0 ] );      // デバイスの登録
 
      ShowContexts;
 
-     ///// Program の生成
-     _Program := TCLProgram.Create( _Context );
-     _Program.Source.LoadFromFile( '..\..\_DATA\Source.cl' );
-     _Program.Build;
+     ///// Program
+     _Program := TCLProgram.Create( _Context );                // 生成
+     _Program.Source.LoadFromFile( '..\..\_DATA\Source.cl' );  // ソースの読み込み
+     _Program.Build;                                           // ビルド
 
-     ///// プログラムソースの読み込み
      MemoPC.Lines.Assign( _Program.Source );
 
-     ///// Buffer の生成
-     _BufferA := TCLHostBuffer<T_float>.Create( _Context );
-     _BufferB := TCLHostBuffer<T_float>.Create( _Context );
-     _BufferC := TCLHostBuffer<T_float>.Create( _Context );
+     ///// Buffer
+     _BufferA := TCLHostBuffer<T_float>.Create( _Context );  // 生成
+     _BufferB := TCLHostBuffer<T_float>.Create( _Context );  // 生成
+     _BufferC := TCLHostBuffer<T_float>.Create( _Context );  // 生成
 
-     _BufferA.Count := 1;
-     _BufferB.Count := 1;
-     _BufferC.Count := 1;
+     _BufferA.Count := 1;                                    // 要素数の設定
+     _BufferB.Count := 1;                                    // 要素数の設定
+     _BufferC.Count := 1;                                    // 要素数の設定
 
-     ///// Kernel の生成
-     _Kernel := TCLKernel.Create( _Program, 'add' );
-     _Kernel.Memorys.Add( _BufferA );
-     _Kernel.Memorys.Add( _BufferB );
-     _Kernel.Memorys.Add( _BufferC );
+     ///// Kernel
+     _Kernel := TCLKernel.Create( _Program, 'add' );  // 生成
+     _Kernel.Memorys.Add( _BufferA );                 // Buffer の登録
+     _Kernel.Memorys.Add( _BufferB );                 // Buffer の登録
+     _Kernel.Memorys.Add( _BufferC );                 // Buffer の登録
      MemoPR.Lines.Add( 'C = A + B' );
 
-     ///// Buffer への書き込み
-     A := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferA );
-     A.Values[ 0 ] := 1;
+     ///// Buffer
+     A := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferA );  // マップ
+     A.Values[ 0 ] := 1;                                                      // 書き込み
      MemoPR.Lines.Add( 'A = ' + FloatToStr( A.Values[ 0 ] ) );
-     A.Free;
+     A.Free;                                                                  // アンマップ
 
-     B := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferB );
-     B.Values[ 0 ] := 2;
+     B := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferB );  // マップ
+     B.Values[ 0 ] := 2;                                                      // 書き込み
      MemoPR.Lines.Add( 'B = ' + FloatToStr( B.Values[ 0 ] ) );
-     B.Free;
+     B.Free;                                                                  // アンマップ
 
-     ///// プログラムの実行
-     _Kernel.Run( _Context.Commands[ 0 ] );
+     ///// Kernel
+     _Kernel.Run( _Context.Commands[ 0 ] );  // 実行
 
-     ///// Buffer からの読み出し
-     C := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferC );
-     MemoPR.Lines.Add( 'C = ' + FloatToStr( C.Values[ 0 ] ) );
-     C.Free;
+     ///// Buffer
+     C := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferC );  // マップ
+     MemoPR.Lines.Add( 'C = ' + FloatToStr( C.Values[ 0 ] ) );                // 読み込み
+     C.Free;                                                                  // アンマップ
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
