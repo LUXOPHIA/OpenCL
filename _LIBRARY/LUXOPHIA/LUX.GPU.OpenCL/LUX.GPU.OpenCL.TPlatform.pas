@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Platform;
+﻿unit LUX.GPU.OpenCL.TPlatform;
 
 interface //#################################################################### ■
 
