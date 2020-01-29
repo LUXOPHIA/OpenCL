@@ -6,8 +6,7 @@ uses cl_version,
      cl_platform,
      cl,
      LUX.Code.C,
-     LUX.GPU.OpenCL.root,
-     LUX.GPU.OpenCL.TCommand;
+     LUX.GPU.OpenCL.root;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
