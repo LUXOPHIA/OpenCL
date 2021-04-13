@@ -1,31 +1,19 @@
 ﻿unit cl;
 
 (*******************************************************************************
- * Copyright (c) 2008-2019 The Khronos Group Inc.
+ * Copyright (c) 2008-2020 The Khronos Group Inc.
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and/or associated documentation files (the
- * "Materials"), to deal in the Materials without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Materials, and to
- * permit persons to whom the Materials are furnished to do so, subject to
- * the following conditions:
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * The above copyright notice and this permission notice shall be included
- * in all copies or substantial portions of the Materials.
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
- * MODIFICATIONS TO THIS FILE MAY MEAN IT NO LONGER ACCURATELY REFLECTS
- * KHRONOS STANDARDS. THE UNMODIFIED, NORMATIVE VERSIONS OF KHRONOS
- * SPECIFICATIONS AND HEADER INFORMATION ARE LOCATED AT
- *    https://www.khronos.org/registry/
- *
- * THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
- * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- * MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  ******************************************************************************)
 
 interface //#################################################################### ■
@@ -48,76 +36,84 @@ type T_cl_kernel        = ^T__cl_kernel       ;  T__cl_kernel        = record en
 type T_cl_event         = ^T__cl_event        ;  T__cl_event         = record end;  P_cl_event         = ^T_cl_event        ;
 type T_cl_sampler       = ^T__cl_sampler      ;  T__cl_sampler       = record end;  P_cl_sampler       = ^T_cl_sampler      ;
 
-type T_cl_bool                         = T_cl_uint    ;  P_cl_bool                         = ^T_cl_bool                        ;  (* WARNING!  Unlike cl_ types in cl_platform.h, cl_bool is not guaranteed to be the same size as the bool in kernels. *)
-type T_cl_bitfield                     = T_cl_ulong   ;  P_cl_bitfield                     = ^T_cl_bitfield                    ;
-type T_cl_device_type                  = T_cl_bitfield;  P_cl_device_type                  = ^T_cl_device_type                 ;
-type T_cl_platform_info                = T_cl_uint    ;  P_cl_platform_info                = ^T_cl_platform_info               ;
-type T_cl_device_info                  = T_cl_uint    ;  P_cl_device_info                  = ^T_cl_device_info                 ;
-type T_cl_device_fp_config             = T_cl_bitfield;  P_cl_device_fp_config             = ^T_cl_device_fp_config            ;
-type T_cl_device_mem_cache_type        = T_cl_uint    ;  P_cl_device_mem_cache_type        = ^T_cl_device_mem_cache_type       ;
-type T_cl_device_local_mem_type        = T_cl_uint    ;  P_cl_device_local_mem_type        = ^T_cl_device_local_mem_type       ;
-type T_cl_device_exec_capabilities     = T_cl_bitfield;  P_cl_device_exec_capabilities     = ^T_cl_device_exec_capabilities    ;
+type T_cl_bool                         = T_cl_uint      ;  P_cl_bool                         = ^T_cl_bool                        ;  (* WARNING!  Unlike cl_ types in cl_platform.h, cl_bool is not guaranteed to be the same size as the bool in kernels. *)
+type T_cl_bitfield                     = T_cl_ulong     ;  P_cl_bitfield                     = ^T_cl_bitfield                    ;
+type T_cl_properties                   = T_cl_ulong     ;  P_cl_properties                   = ^T_cl_properties                  ;
+type T_cl_device_type                  = T_cl_bitfield  ;  P_cl_device_type                  = ^T_cl_device_type                 ;
+type T_cl_platform_info                = T_cl_uint      ;  P_cl_platform_info                = ^T_cl_platform_info               ;
+type T_cl_device_info                  = T_cl_uint      ;  P_cl_device_info                  = ^T_cl_device_info                 ;
+type T_cl_device_fp_config             = T_cl_bitfield  ;  P_cl_device_fp_config             = ^T_cl_device_fp_config            ;
+type T_cl_device_mem_cache_type        = T_cl_uint      ;  P_cl_device_mem_cache_type        = ^T_cl_device_mem_cache_type       ;
+type T_cl_device_local_mem_type        = T_cl_uint      ;  P_cl_device_local_mem_type        = ^T_cl_device_local_mem_type       ;
+type T_cl_device_exec_capabilities     = T_cl_bitfield  ;  P_cl_device_exec_capabilities     = ^T_cl_device_exec_capabilities    ;
 {$IF CL_VERSION_2_0 <> 0 }
-type T_cl_device_svm_capabilities      = T_cl_bitfield;  P_cl_device_svm_capabilities      = ^T_cl_device_svm_capabilities     ;
+type T_cl_device_svm_capabilities      = T_cl_bitfield  ;  P_cl_device_svm_capabilities      = ^T_cl_device_svm_capabilities     ;
 {$ENDIF}
-type T_cl_command_queue_properties     = T_cl_bitfield;  P_cl_command_queue_properties     = ^T_cl_command_queue_properties    ;
+type T_cl_command_queue_properties     = T_cl_bitfield  ;  P_cl_command_queue_properties     = ^T_cl_command_queue_properties    ;
 {$IF CL_VERSION_1_2 <> 0 }
-type T_cl_device_partition_property    = T_intptr_t   ;  P_cl_device_partition_property    = ^T_cl_device_partition_property   ;
-type T_cl_device_affinity_domain       = T_cl_bitfield;  P_cl_device_affinity_domain       = ^T_cl_device_affinity_domain      ;
+type T_cl_device_partition_property    = T_intptr_t     ;  P_cl_device_partition_property    = ^T_cl_device_partition_property   ;
+type T_cl_device_affinity_domain       = T_cl_bitfield  ;  P_cl_device_affinity_domain       = ^T_cl_device_affinity_domain      ;
 {$ENDIF}
 
-type T_cl_context_properties           = T_intptr_t   ;  P_cl_context_properties           = ^T_cl_context_properties          ;
-type T_cl_context_info                 = T_cl_uint    ;  P_cl_context_info                 = ^T_cl_context_info                ;
+type T_cl_context_properties           = T_intptr_t     ;  P_cl_context_properties           = ^T_cl_context_properties          ;
+type T_cl_context_info                 = T_cl_uint      ;  P_cl_context_info                 = ^T_cl_context_info                ;
 {$IF CL_VERSION_2_0 <> 0 }
-type T_cl_queue_properties             = T_cl_bitfield;  P_cl_queue_properties             = ^T_cl_queue_properties            ;
+type T_cl_queue_properties             = T_cl_properties;  P_cl_queue_properties             = ^T_cl_queue_properties            ;
 {$ENDIF}
-type T_cl_command_queue_info           = T_cl_uint    ;  P_cl_command_queue_info           = ^T_cl_command_queue_info          ;
-type T_cl_channel_order                = T_cl_uint    ;  P_cl_channel_order                = ^T_cl_channel_order               ;
-type T_cl_channel_type                 = T_cl_uint    ;  P_cl_channel_type                 = ^T_cl_channel_type                ;
-type T_cl_mem_flags                    = T_cl_bitfield;  P_cl_mem_flags                    = ^T_cl_mem_flags                   ;
+type T_cl_command_queue_info           = T_cl_uint      ;  P_cl_command_queue_info           = ^T_cl_command_queue_info          ;
+type T_cl_channel_order                = T_cl_uint      ;  P_cl_channel_order                = ^T_cl_channel_order               ;
+type T_cl_channel_type                 = T_cl_uint      ;  P_cl_channel_type                 = ^T_cl_channel_type                ;
+type T_cl_mem_flags                    = T_cl_bitfield  ;  P_cl_mem_flags                    = ^T_cl_mem_flags                   ;
 {$IF CL_VERSION_2_0 <> 0 }
-type T_cl_svm_mem_flags                = T_cl_bitfield;  P_cl_svm_mem_flags                = ^T_cl_svm_mem_flags               ;
+type T_cl_svm_mem_flags                = T_cl_bitfield  ;  P_cl_svm_mem_flags                = ^T_cl_svm_mem_flags               ;
 {$ENDIF}
-type T_cl_mem_object_type              = T_cl_uint    ;  P_cl_mem_object_type              = ^T_cl_mem_object_type             ;
-type T_cl_mem_info                     = T_cl_uint    ;  P_cl_mem_info                     = ^T_cl_mem_info                    ;
+type T_cl_mem_object_type              = T_cl_uint      ;  P_cl_mem_object_type              = ^T_cl_mem_object_type             ;
+type T_cl_mem_info                     = T_cl_uint      ;  P_cl_mem_info                     = ^T_cl_mem_info                    ;
 {$IF CL_VERSION_1_2 <> 0 }
-type T_cl_mem_migration_flags          = T_cl_bitfield;  P_cl_mem_migration_flags          = ^T_cl_mem_migration_flags         ;
+type T_cl_mem_migration_flags          = T_cl_bitfield  ;  P_cl_mem_migration_flags          = ^T_cl_mem_migration_flags         ;
 {$ENDIF}
-type T_cl_image_info                   = T_cl_uint    ;  P_cl_image_info                   = ^T_cl_image_info                  ;
+type T_cl_image_info                   = T_cl_uint      ;  P_cl_image_info                   = ^T_cl_image_info                  ;
 {$IF CL_VERSION_1_1 <> 0 }
-type T_cl_buffer_create_type           = T_cl_uint    ;  P_cl_buffer_create_type           = ^T_cl_buffer_create_type          ;
+type T_cl_buffer_create_type           = T_cl_uint      ;  P_cl_buffer_create_type           = ^T_cl_buffer_create_type          ;
 {$ENDIF}
-type T_cl_addressing_mode              = T_cl_uint    ;  P_cl_addressing_mode              = ^T_cl_addressing_mode             ;
-type T_cl_filter_mode                  = T_cl_uint    ;  P_cl_filter_mode                  = ^T_cl_filter_mode                 ;
-type T_cl_sampler_info                 = T_cl_uint    ;  P_cl_sampler_info                 = ^T_cl_sampler_info                ;
-type T_cl_map_flags                    = T_cl_bitfield;  P_cl_map_flags                    = ^T_cl_map_flags                   ;
+type T_cl_addressing_mode              = T_cl_uint      ;  P_cl_addressing_mode              = ^T_cl_addressing_mode             ;
+type T_cl_filter_mode                  = T_cl_uint      ;  P_cl_filter_mode                  = ^T_cl_filter_mode                 ;
+type T_cl_sampler_info                 = T_cl_uint      ;  P_cl_sampler_info                 = ^T_cl_sampler_info                ;
+type T_cl_map_flags                    = T_cl_bitfield  ;  P_cl_map_flags                    = ^T_cl_map_flags                   ;
 {$IF CL_VERSION_2_0 <> 0 }
-type T_cl_pipe_properties              = T_intptr_t   ;  P_cl_pipe_properties              = ^T_cl_pipe_properties             ;
-type T_cl_pipe_info                    = T_cl_uint    ;  P_cl_pipe_info                    = ^T_cl_pipe_info                   ;
+type T_cl_pipe_properties              = T_intptr_t     ;  P_cl_pipe_properties              = ^T_cl_pipe_properties             ;
+type T_cl_pipe_info                    = T_cl_uint      ;  P_cl_pipe_info                    = ^T_cl_pipe_info                   ;
 {$ENDIF}
-type T_cl_program_info                 = T_cl_uint    ;  P_cl_program_info                 = ^T_cl_program_info                ;
-type T_cl_program_build_info           = T_cl_uint    ;  P_cl_program_build_info           = ^T_cl_program_build_info          ;
+type T_cl_program_info                 = T_cl_uint      ;  P_cl_program_info                 = ^T_cl_program_info                ;
+type T_cl_program_build_info           = T_cl_uint      ;  P_cl_program_build_info           = ^T_cl_program_build_info          ;
 {$IF CL_VERSION_1_2 <> 0 }
-type T_cl_program_binary_type          = T_cl_uint    ;  P_cl_program_binary_type          = ^T_cl_program_binary_type         ;
+type T_cl_program_binary_type          = T_cl_uint      ;  P_cl_program_binary_type          = ^T_cl_program_binary_type         ;
 {$ENDIF}
-type T_cl_build_status                 = T_cl_int     ;  P_cl_build_status                 = ^T_cl_build_status                ;
-type T_cl_kernel_info                  = T_cl_uint    ;  P_cl_kernel_info                  = ^T_cl_kernel_info                 ;
+type T_cl_build_status                 = T_cl_int       ;  P_cl_build_status                 = ^T_cl_build_status                ;
+type T_cl_kernel_info                  = T_cl_uint      ;  P_cl_kernel_info                  = ^T_cl_kernel_info                 ;
 {$IF CL_VERSION_1_2 <> 0 }
-type T_cl_kernel_arg_info              = T_cl_uint    ;  P_cl_kernel_arg_info              = ^T_cl_kernel_arg_info             ;
-type T_cl_kernel_arg_address_qualifier = T_cl_uint    ;  P_cl_kernel_arg_address_qualifier = ^T_cl_kernel_arg_address_qualifier;
-type T_cl_kernel_arg_access_qualifier  = T_cl_uint    ;  P_cl_kernel_arg_access_qualifier  = ^T_cl_kernel_arg_access_qualifier ;
-type T_cl_kernel_arg_type_qualifier    = T_cl_bitfield;  P_cl_kernel_arg_type_qualifier    = ^T_cl_kernel_arg_type_qualifier   ;
+type T_cl_kernel_arg_info              = T_cl_uint      ;  P_cl_kernel_arg_info              = ^T_cl_kernel_arg_info             ;
+type T_cl_kernel_arg_address_qualifier = T_cl_uint      ;  P_cl_kernel_arg_address_qualifier = ^T_cl_kernel_arg_address_qualifier;
+type T_cl_kernel_arg_access_qualifier  = T_cl_uint      ;  P_cl_kernel_arg_access_qualifier  = ^T_cl_kernel_arg_access_qualifier ;
+type T_cl_kernel_arg_type_qualifier    = T_cl_bitfield  ;  P_cl_kernel_arg_type_qualifier    = ^T_cl_kernel_arg_type_qualifier   ;
 {$ENDIF}
-type T_cl_kernel_work_group_info       = T_cl_uint    ;  P_cl_kernel_work_group_info       = ^T_cl_kernel_work_group_info      ;
+type T_cl_kernel_work_group_info       = T_cl_uint      ;  P_cl_kernel_work_group_info       = ^T_cl_kernel_work_group_info      ;
 {$IF CL_VERSION_2_1 <> 0 }
-type T_cl_kernel_sub_group_info        = T_cl_uint    ;  P_cl_kernel_sub_group_info        = ^T_cl_kernel_sub_group_info       ;
+type T_cl_kernel_sub_group_info        = T_cl_uint      ;  P_cl_kernel_sub_group_info        = ^T_cl_kernel_sub_group_info       ;
 {$ENDIF}
-type T_cl_event_info                   = T_cl_uint    ;  P_cl_event_info                   = ^T_cl_event_info                  ;
-type T_cl_command_type                 = T_cl_uint    ;  P_cl_command_type                 = ^T_cl_command_type                ;
-type T_cl_profiling_info               = T_cl_uint    ;  P_cl_profiling_info               = ^T_cl_profiling_info              ;
+type T_cl_event_info                   = T_cl_uint      ;  P_cl_event_info                   = ^T_cl_event_info                  ;
+type T_cl_command_type                 = T_cl_uint      ;  P_cl_command_type                 = ^T_cl_command_type                ;
+type T_cl_profiling_info               = T_cl_uint      ;  P_cl_profiling_info               = ^T_cl_profiling_info              ;
 {$IF CL_VERSION_2_0 <> 0 }
-type T_cl_sampler_properties           = T_cl_bitfield;  P_cl_sampler_properties           = ^T_cl_sampler_properties          ;
-type T_cl_kernel_exec_info             = T_cl_uint    ;  P_cl_kernel_exec_info             = ^T_cl_kernel_exec_info            ;
+type T_cl_sampler_properties           = T_cl_properties;  P_cl_sampler_properties           = ^T_cl_sampler_properties          ;
+type T_cl_kernel_exec_info             = T_cl_uint      ;  P_cl_kernel_exec_info             = ^T_cl_kernel_exec_info            ;
+{$ENDIF}
+{$IF CL_VERSION_3_0 <> 0 }
+type T_cl_device_atomic_capabilities         = T_cl_bitfield  ;  P_cl_device_atomic_capabilities         = ^T_cl_device_atomic_capabilities        ;
+type T_cl_device_device_enqueue_capabilities = T_cl_bitfield  ;  P_cl_device_device_enqueue_capabilities = ^T_cl_device_device_enqueue_capabilities;
+type T_cl_khronos_vendor_id                  = T_cl_uint      ;  P_cl_khronos_vendor_id                  = ^T_cl_khronos_vendor_id                 ;
+type T_cl_mem_properties                     = T_cl_properties;  P_cl_mem_properties                     = ^T_cl_mem_properties                    ;
+type T_cl_version                            = T_cl_uint      ;  P_cl_version                            = ^T_cl_version                           ;
 {$ENDIF}
 
 type T_cl_image_format = record
@@ -139,20 +135,28 @@ type T_cl_image_desc = record
        num_mip_levels    :T_cl_uint;
        num_samples       :T_cl_uint;
 {$IF CL_VERSION_2_0 <> 0 }
-{$IFDEF __GNUC__ }
-    __extension__   (* Prevents warnings about anonymous union in -pedantic builds *)
+{$IF Defined(__GNUC__) }
+    __extension__                   (* Prevents warnings about anonymous union in -pedantic builds *)
 {$ENDIF}
-{$IFDEF _MSC_VER }
+{$IF Defined(_MSC_VER) and not Defined(__STDC__) }
 #pragma warning( push )
-#pragma warning( disable : 4201 ) (* Prevents warning about nameless struct/union in /W4 /Za builds *)
+#pragma warning( disable : 4201 )   (* Prevents warning about nameless struct/union in /W4 builds *)
 {$ENDIF}
+{$IF Defined(_MSC_VER) and Defined(__STDC__) }
+    /* Anonymous unions are not supported in /Za builds */
+{$ELSE}
      case  Byte of
+{$ENDIF}
 {$ENDIF}
         0: ( buffer     :T_cl_mem );
 {$IF CL_VERSION_2_0 <> 0 }
+{$IF Defined(_MSC_VER) and Defined(__STDC__) }
+    /* Anonymous unions are not supported in /Za builds */
+{$ELSE}
         1: ( mem_object :T_cl_mem );
 //    };
-{$IFDEF _MSC_VER }
+{$ENDIF}
+{$IF Defined(_MSC_VER) and not Defined(__STDC__) }
 #pragma warning( pop )
 {$ENDIF}
 {$ENDIF}
@@ -168,6 +172,17 @@ type T_cl_buffer_region = record
        size   :T_size_t;
      end;
      P_cl_buffer_region = ^T_cl_buffer_region;
+
+{$ENDIF}
+
+{$IF CL_VERSION_3_0 <> 0 }
+
+const CL_NAME_VERSION_MAX_NAME_SIZE = 64;
+
+type T_cl_name_version = record
+       version :T_cl_version              ;
+       name    :array [ 0..CL_NAME_VERSION_MAX_NAME_SIZE-1 ] of T_char;
+     end;
 
 {$ENDIF}
 
@@ -189,7 +204,7 @@ const CL_BUILD_PROGRAM_FAILURE                     = -11;
 const CL_MAP_FAILURE                               = -12;
 {$IF CL_VERSION_1_1 <> 0 }
 const CL_MISALIGNED_SUB_BUFFER_OFFSET              = -13;
-const CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST  = -14;
+const CL_EXEC_STATUS_ERROR_FOR_EVENTS_IN_WAIT_LIST = -14;
 {$ENDIF}
 {$IF CL_VERSION_1_2 <> 0 }
 const CL_COMPILE_PROGRAM_FAILURE                   = -15;
@@ -268,6 +283,10 @@ const CL_PLATFORM_VENDOR                           = $0903;
 const CL_PLATFORM_EXTENSIONS                       = $0904;
 {$IF CL_VERSION_2_1 <> 0 }
 const CL_PLATFORM_HOST_TIMER_RESOLUTION            = $0905;
+{$ENDIF}
+{$IFDEF CL_VERSION_3_0 <> 0 }
+const CL_PLATFORM_NUMERIC_VERSION                  = $0906;
+const CL_PLATFORM_EXTENSIONS_WITH_VERSION          = $0907;
 {$ENDIF}
 
 (* cl_device_type - bitfield *)
@@ -388,6 +407,24 @@ const CL_DEVICE_IL_VERSION                              = $105B;
 const CL_DEVICE_MAX_NUM_SUB_GROUPS                      = $105C;
 const CL_DEVICE_SUB_GROUP_INDEPENDENT_FORWARD_PROGRESS  = $105D;
 {$ENDIF}
+{$IF CL_VERSION_3_0 <> 0 }
+const CL_DEVICE_NUMERIC_VERSION                         = $105E;
+const CL_DEVICE_EXTENSIONS_WITH_VERSION                 = $1060;
+const CL_DEVICE_ILS_WITH_VERSION                        = $1061;
+const CL_DEVICE_BUILT_IN_KERNELS_WITH_VERSION           = $1062;
+const CL_DEVICE_ATOMIC_MEMORY_CAPABILITIES              = $1063;
+const CL_DEVICE_ATOMIC_FENCE_CAPABILITIES               = $1064;
+const CL_DEVICE_NON_UNIFORM_WORK_GROUP_SUPPORT          = $1065;
+const CL_DEVICE_OPENCL_C_ALL_VERSIONS                   = $1066;
+const CL_DEVICE_PREFERRED_WORK_GROUP_SIZE_MULTIPLE      = $1067;
+const CL_DEVICE_WORK_GROUP_COLLECTIVE_FUNCTIONS_SUPPORT = $1068;
+const CL_DEVICE_GENERIC_ADDRESS_SPACE_SUPPORT           = $1069;
+(* 0x106A to 0x106E - Reserved for upcoming KHR extension *)
+const CL_DEVICE_OPENCL_C_FEATURES                       = $106F;
+const CL_DEVICE_DEVICE_ENQUEUE_CAPABILITIES             = $1070;
+const CL_DEVICE_PIPE_SUPPORT                            = $1071;
+const CL_DEVICE_LATEST_CONFORMANCE_VERSION_PASSED       = $1072;
+{$ENDIF}
 
 (* cl_device_fp_config - bitfield *)
 const CL_FP_DENORM                                 = (1 shl 0);
@@ -480,6 +517,9 @@ const CL_QUEUE_SIZE                                = $1094;
 {$ENDIF}
 {$IF CL_VERSION_2_1 <> 0 }
 const CL_QUEUE_DEVICE_DEFAULT                      = $1095;
+{$ENDIF}
+{$IF CL_VERSION_3_0 <> 0 }
+const CL_QUEUE_PROPERTIES_ARRAY                    = $1098;
 {$ENDIF}
 
 (* cl_mem_flags and cl_svm_mem_flags - bitfield *)
@@ -589,6 +629,9 @@ const CL_MEM_OFFSET                                = $1108;
 {$IF CL_VERSION_2_0 <> 0 }
 const CL_MEM_USES_SVM_POINTER                      = $1109;
 {$ENDIF}
+{$IF CL_VERSION_3_0 <> 0 }
+const CL_MEM_PROPERTIES                            = $110A;
+{$ENDIF}
 
 (* cl_image_info *)
 const CL_IMAGE_FORMAT                              = $1110;
@@ -605,12 +648,14 @@ const CL_IMAGE_NUM_MIP_LEVELS                      = $1119;
 const CL_IMAGE_NUM_SAMPLES                         = $111A;
 {$ENDIF}
 
-{$IF CL_VERSION_2_0 <> 0 }
 
 (* cl_pipe_info *)
+{$IF CL_VERSION_2_0 <> 0 }
 const CL_PIPE_PACKET_SIZE                          = $1120;
 const CL_PIPE_MAX_PACKETS                          = $1121;
-
+{$ENDIF}
+{$IF CL_VERSION_3_0 <> 0 }
+const CL_PIPE_PROPERTIES                           = $1122;
 {$ENDIF}
 
 (* cl_addressing_mode *)
@@ -639,6 +684,9 @@ const CL_SAMPLER_FILTER_MODE                       = $1154;
 const CL_SAMPLER_MIP_FILTER_MODE                   = $1155;
 const CL_SAMPLER_LOD_MIN                           = $1156;
 const CL_SAMPLER_LOD_MAX                           = $1157;
+{$ENDIF}
+{$IF CL_VERSION_3_0 <> 0 }
+const CL_SAMPLER_PROPERTIES                        = $1158;
 {$ENDIF}
 
 (* cl_map_flags - bitfield *)
@@ -704,10 +752,6 @@ const CL_KERNEL_PROGRAM                            = $1194;
 {$IF CL_VERSION_1_2 <> 0 }
 const CL_KERNEL_ATTRIBUTES                         = $1195;
 {$ENDIF}
-{$IF CL_VERSION_2_1 <> 0 }
-const CL_KERNEL_MAX_NUM_SUB_GROUPS                 = $11B9;
-const CL_KERNEL_COMPILE_NUM_SUB_GROUPS             = $11BA;
-{$ENDIF}
 
 {$IF CL_VERSION_1_2 <> 0 }
 
@@ -757,7 +801,7 @@ const CL_KERNEL_ARG_TYPE_PIPE                      = (1 shl 3);
 const CL_KERNEL_WORK_GROUP_SIZE                    = $11B0;
 const CL_KERNEL_COMPILE_WORK_GROUP_SIZE            = $11B1;
 const CL_KERNEL_LOCAL_MEM_SIZE                     = $11B2;
-const CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE  = $11B3;
+const CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE = $11B3;
 const CL_KERNEL_PRIVATE_MEM_SIZE                   = $11B4;
 {$IF CL_VERSION_1_2 <> 0 }
 const CL_KERNEL_GLOBAL_WORK_SIZE                   = $11B5;
@@ -769,6 +813,8 @@ const CL_KERNEL_GLOBAL_WORK_SIZE                   = $11B5;
 const CL_KERNEL_MAX_SUB_GROUP_SIZE_FOR_NDRANGE     = $2033;
 const CL_KERNEL_SUB_GROUP_COUNT_FOR_NDRANGE        = $2034;
 const CL_KERNEL_LOCAL_SIZE_FOR_SUB_GROUP_COUNT     = $11B8;
+const CL_KERNEL_MAX_NUM_SUB_GROUPS                 = $11B9;
+const CL_KERNEL_COMPILE_NUM_SUB_GROUPS             = $11BA;
 
 {$ENDIF}
 
@@ -826,6 +872,9 @@ const CL_COMMAND_SVM_MEMFILL                       = $120B;
 const CL_COMMAND_SVM_MAP                           = $120C;
 const CL_COMMAND_SVM_UNMAP                         = $120D;
 {$ENDIF}
+{$IF CL_VERSION_3_0 <> 0 }
+const CL_COMMAND_SVM_MIGRATE_MEM                   = $120E;
+{$ENDIF}
 
 (* command execution status *)
 const CL_COMPLETE                                  = $0;
@@ -847,6 +896,53 @@ const CL_PROFILING_COMMAND_START                   = $1282;
 const CL_PROFILING_COMMAND_END                     = $1283;
 {$IF CL_VERSION_2_0 <> 0 }
 const CL_PROFILING_COMMAND_COMPLETE                = $1284;
+{$ENDIF}
+
+(* cl_device_atomic_capabilities - bitfield *)
+{$IF CL_VERSION_3_0 <> 0 }
+const CL_DEVICE_ATOMIC_ORDER_RELAXED               = 1 shl 0;
+const CL_DEVICE_ATOMIC_ORDER_ACQ_REL               = 1 shl 1;
+const CL_DEVICE_ATOMIC_ORDER_SEQ_CST               = 1 shl 2;
+const CL_DEVICE_ATOMIC_SCOPE_WORK_ITEM             = 1 shl 3;
+const CL_DEVICE_ATOMIC_SCOPE_WORK_GROUP            = 1 shl 4;
+const CL_DEVICE_ATOMIC_SCOPE_DEVICE                = 1 shl 5;
+const CL_DEVICE_ATOMIC_SCOPE_ALL_DEVICES           = 1 shl 6;
+{$ENDIF}
+
+(* cl_device_device_enqueue_capabilities - bitfield *)
+{$IF CL_VERSION_3_0 <> 0 }
+const CL_DEVICE_QUEUE_SUPPORTED                    = 1 shl 0;
+const CL_DEVICE_QUEUE_REPLACEABLE_DEFAULT          = 1 shl 1;
+{$ENDIF}
+
+(* cl_khronos_vendor_id *)
+const CL_KHRONOS_VENDOR_ID_CODEPLAY                = $10004;
+
+{$IF CL_VERSION_3_0 <> 0 }
+
+(* cl_version *)
+const CL_VERSION_MAJOR_BITS                        = 10;
+const CL_VERSION_MINOR_BITS                        = 10;
+const CL_VERSION_PATCH_BITS                        = 12;
+
+const CL_VERSION_MAJOR_MASK                        = ( 1 shl CL_VERSION_MAJOR_BITS ) - 1;
+const CL_VERSION_MINOR_MASK                        = ( 1 shl CL_VERSION_MINOR_BITS ) - 1;
+const CL_VERSION_PATCH_MASK                        = ( 1 shl CL_VERSION_PATCH_BITS ) - 1;
+
+//#define CL_VERSION_MAJOR(version) \
+//  ((version) >> (CL_VERSION_MINOR_BITS + CL_VERSION_PATCH_BITS))
+
+//#define CL_VERSION_MINOR(version) \
+//  (((version) >> CL_VERSION_PATCH_BITS) & CL_VERSION_MINOR_MASK)
+
+//#define CL_VERSION_PATCH(version) ((version) & CL_VERSION_PATCH_MASK)
+
+//#define CL_MAKE_VERSION(major, minor, patch)                      \
+//  ((((major) & CL_VERSION_MAJOR_MASK)                             \
+//       << (CL_VERSION_MINOR_BITS + CL_VERSION_PATCH_BITS)) |      \
+//   (((minor) & CL_VERSION_MINOR_MASK) << CL_VERSION_PATCH_BITS) | \
+//   ((patch) & CL_VERSION_PATCH_MASK))
+
 {$ENDIF}
 
 (********************************************************************************************************)
@@ -954,6 +1050,18 @@ clGetContextInfo( context_              :T_cl_context;
                   param_value_          :P_void;
                   param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
 
+{$IF CL_VERSION_3_0 <> 0 }
+
+type T_pfn_notify = procedure ( context_   :T_cl_context;
+                                user_data_ :P_void );
+
+function
+clSetContextDestructorCallback( context_    :T_cl_context;
+                                pfn_notify_ :T_pfn_notify;
+                                user_data_  :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_3_0}
+
+{$ENDIF}
+
 (* Command Queue APIs *)
 
 {$IF CL_VERSION_2_0 <> 0 }
@@ -1019,6 +1127,27 @@ clCreatePipe(       context_          :T_cl_context;
                     pipe_max_packets_ :T_cl_uint;
               const properties_       :P_cl_pipe_properties;
                     errcode_ret_      :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+
+{$ENDIF}
+
+{$IF CL_VERSION_3_0 <> 0 }
+
+function
+clCreateBufferWithProperties(       context_     :T_cl_context;
+                              const properties_  :P_cl_mem_properties;
+                                    flags_       :T_cl_mem_flags;
+                                    size_        :T_size_t;
+                                    host_ptr_    :P_void;
+                                    errcode_ret_ :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_3_0}
+
+function
+clCreateImageWithProperties( context_ :T_cl_context;
+                             const properties_   :P_cl_mem_properties;
+                                   flags_        :T_cl_mem_flags;
+                             const image_format_ :P_cl_image_format;
+                             const image_desc_   :P_cl_image_desc;
+                                   host_ptr_     :P_void;
+                                   errcode_ret_  :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_3_0}
 
 {$ENDIF}
 
@@ -1208,7 +1337,7 @@ type P_CL_CALLBACK_clSetProgramReleaseCallback = procedure( program_   :T_cl_pro
 function
 clSetProgramReleaseCallback( program_    :T_cl_program;
                              pfn_notify_ :P_CL_CALLBACK_clSetProgramReleaseCallback;
-                             user_data_  :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_2}
+                             user_data_  :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_2_DEPRECATED}
 
 function
 clSetProgramSpecializationConstant(       program_    :T_cl_program;
@@ -1405,8 +1534,8 @@ function
 clEnqueueReadBufferRect(       command_queue_           :T_cl_command_queue;
                                buffer_                  :T_cl_mem;
                                blocking_read_           :T_cl_bool;
-                         const buffer_offset_           :P_size_t;
-                         const host_offset_             :P_size_t;
+                         const buffer_origin_           :P_size_t;
+                         const host_origin_             :P_size_t;
                          const region_                  :P_size_t;
                                buffer_row_pitch_        :T_size_t;
                                buffer_slice_pitch_      :T_size_t;
@@ -1436,8 +1565,8 @@ function
 clEnqueueWriteBufferRect(       command_queue_           :T_cl_command_queue;
                                 buffer_                  :T_cl_mem;
                                 blocking_write_          :T_cl_bool;
-                          const buffer_offset_           :P_size_t;
-                          const host_offset_             :P_size_t;
+                          const buffer_origin_           :P_size_t;
+                          const host_origin_             :P_size_t;
                           const region_                  :P_size_t;
                                 buffer_row_pitch_        :T_size_t;
                                 buffer_slice_pitch_      :T_size_t;
@@ -1756,7 +1885,7 @@ clGetExtensionFunctionAddressForPlatform(       platform_  :T_cl_platform_id;
     clSetCommandQueueProperty( command_queue_  :T_cl_command_queue;
                                properties_     :T_cl_command_queue_properties;
                                enable_         :T_cl_bool;
-                               old_properties_ :P_cl_command_queue_properties ) :T_cl_int; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_0_DEPRECATED}
+                               old_properties_ :P_cl_command_queue_properties ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0_DEPRECATED}
 {$ENDIF} (* CL_USE_DEPRECATED_OPENCL_1_0_APIS *)
 
 (* Deprecated OpenCL 1.1 APIs *)
@@ -1768,7 +1897,7 @@ clCreateImage2D(       context_         :T_cl_context;
                        image_height_    :T_size_t;
                        image_row_pitch_ :T_size_t;
                        host_ptr_        :P_void;
-                       errcode_ret_     :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
+                       errcode_ret_     :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
 function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
 clCreateImage3D(       context_           :T_cl_context;
@@ -1780,46 +1909,46 @@ clCreateImage3D(       context_           :T_cl_context;
                        image_row_pitch_   :T_size_t;
                        image_slice_pitch_ :T_size_t;
                        host_ptr_          :P_void;
-                       errcode_ret_       :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
+                       errcode_ret_       :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
 function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
 clEnqueueMarker( command_queue_ :T_cl_command_queue;
-                 event_         :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
+                 event_         :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
 function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
 clEnqueueWaitForEvents(       command_queue_ :T_cl_command_queue;
                               num_events_    :T_cl_uint;
-                        const event_list_    :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
+                        const event_list_    :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
 function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
-clEnqueueBarrier( command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
+clEnqueueBarrier( command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
 function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
-clUnloadCompiler :T_cl_int; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
+clUnloadCompiler :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
 function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
-clGetExtensionFunctionAddress( const func_name_ :P_char ) :P_void; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_1_DEPRECATED}
+clGetExtensionFunctionAddress( const func_name_ :P_char ) :P_void; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
 (* Deprecated OpenCL 2.0 APIs *)
 function {CL_EXT_PREFIX__VERSION_1_2_DEPRECATED}
 clCreateCommandQueue( context_     :T_cl_context;
                       device_      :T_cl_device_id;
                       properties_  :T_cl_command_queue_properties;
-                      errcode_ret_ :P_cl_int ) :T_cl_command_queue; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED}
+                      errcode_ret_ :P_cl_int ) :T_cl_command_queue; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2_DEPRECATED}
 
 function {CL_EXT_PREFIX__VERSION_1_2_DEPRECATED}
 clCreateSampler( context_           :T_cl_context;
                  normalized_coords_ :T_cl_bool;
                  addressing_mode_   :T_cl_addressing_mode;
                  filter_mode_       :T_cl_filter_mode;
-                 errcode_ret_       :P_cl_int ) :T_cl_sampler; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED}
+                 errcode_ret_       :P_cl_int ) :T_cl_sampler; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2_DEPRECATED}
 
 function {CL_EXT_PREFIX__VERSION_1_2_DEPRECATED}
 clEnqueueTask(       command_queue_           :T_cl_command_queue;
                      kernel_                  :T_cl_kernel;
                      num_events_in_wait_list_ :T_cl_uint;
                const event_wait_list_         :P_cl_event;
-                     event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_EXT_SUFFIX__VERSION_1_2_DEPRECATED}
+                     event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2_DEPRECATED}
 
 implementation //############################################################### ■
 
