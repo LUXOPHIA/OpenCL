@@ -203,15 +203,15 @@ end;
 
 procedure TCLKernel<_TContext_,_TProgram_>.Run( const Command_:TObject );
 begin
-     AssertCL( clEnqueueNDRangeKernel( TCLCommand( Command_ ).Handle,
-                                                              Handle,
+     AssertCL( clEnqueueNDRangeKernel( TCLComman( Command_ ).Handle,
+                                       Handle,
                                        Dimention,
                                        @_GlobalWorkOffset[ 0 ],
                                        @_GlobalWorkSize[ 0 ],
                                        @_LocalWorkSize[ 0 ],
                                        0, nil, nil ) );
 
-     clFinish( TCLCommand( Command_ ).Handle );
+     clFinish( TCLComman( Command_ ).Handle );
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】

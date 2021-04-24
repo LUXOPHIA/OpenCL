@@ -20,12 +20,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLContext<_TPlatform_,_TDevice_:class> = class
      private
-       type TCLCommand = TCLCommand<TCLContext<_TPlatform_,_TDevice_>,_TDevice_>;
+       type TCLComman  = TCLComman<TCLContext<_TPlatform_,_TDevice_>,_TDevice_>;
        type TCLProgram = TCLProgram<TCLContext<_TPlatform_,_TDevice_>>;
        type TCLMemory  = TCLMemory<TCLContext<_TPlatform_,_TDevice_>>;
      protected
        _Parent   :_TPlatform_;
-       _Commands :TObjectList<TCLCommand>;
+       _Commands :TObjectList<TCLComman>;
        _Handle   :T_cl_context;
        _Programs :TObjectList<TCLProgram>;
        _Memorys  :TObjectList<TCLMemory>;
@@ -44,7 +44,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        destructor Destroy; override;
        ///// プロパティ
        property Parent   :_TPlatform_             read   _Parent   write SetParent  ;
-       property Commands :TObjectList<TCLCommand> read   _Commands                  ;
+       property Commands :TObjectList<TCLComman>  read   _Commands                  ;
        property Handle   :T_cl_context            read GetHandle                    ;
        property avHandle :Boolean                 read GetavHandle write SetavHandle;
        property Programs :TObjectList<TCLProgram> read   _Programs                  ;
@@ -136,7 +136,7 @@ constructor TCLContext<_TPlatform_,_TDevice_>.Create;
 begin
      inherited;
 
-     _Commands := TObjectList<TCLCommand>.Create;
+     _Commands := TObjectList<TCLComman>.Create;
      _Programs := TObjectList<TCLProgram>.Create;
      _Memorys  := TObjectList<TCLMemory >.Create;
 
@@ -175,14 +175,14 @@ end;
 
 procedure TCLContext<_TPlatform_,_TDevice_>.Add( const Device_:_TDevice_ );
 begin
-     _Commands.Add( TCLCommand.Create( Self, Device_ ) );
+     _Commands.Add( TCLComman.Create( Self, Device_ ) );
 
      avHandle := False;
 end;
 
 procedure TCLContext<_TPlatform_,_TDevice_>.Remove( const Device_:_TDevice_ );
 var
-   C :TCLCommand;
+   C :TCLComman;
 begin
      for C in _Commands do
      begin

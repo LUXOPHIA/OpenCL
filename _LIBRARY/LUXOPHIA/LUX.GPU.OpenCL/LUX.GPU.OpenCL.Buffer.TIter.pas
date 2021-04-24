@@ -19,11 +19,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLBufferIter<_TContext_,_TDevice_:class;_TValue_:record> = class
      private
-       type TCLCommand  = TCLCommand<_TContext_,_TDevice_>;
-       type TCLBuffer   = TCLBuffer<_TContext_,_TValue_>;
-       type PValue      = ^_TValue_;
+       type TCLComman = TCLComman<_TContext_,_TDevice_>;
+       type TCLBuffer = TCLBuffer<_TContext_,_TValue_>;
+       type PValue    = ^_TValue_;
      private
-       _Command :TCLCommand;
+       _Command :TCLComman;
        _Buffer  :TCLBuffer;
        _Mode    :T_cl_map_flags;
        _Head    :PValue;
@@ -31,10 +31,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetValues( const I_:Integer ) :_TValue_;
        procedure SetValues( const I_:Integer; const Values_:_TValue_ );
      public
-       constructor Create( const Command_:TCLCommand; const Buffer_:TCLBuffer; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
+       constructor Create( const Command_:TCLComman; const Buffer_:TCLBuffer; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
        destructor Destroy; override;
        ///// プロパティ
-       property Command                    :TCLCommand     read   _Command;
+       property Command                    :TCLComman      read   _Command;
        property Buffer                     :TCLBuffer      read   _Buffer;
        property Mode                       :T_cl_map_flags read   _Mode;
        property Values[ const I_:Integer ] :_TValue_       read GetValues write SetValues;
@@ -76,7 +76,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLBufferIter<_TContext_,_TDevice_,_TValue_>.Create( const Command_:TCLCommand; const Buffer_:TCLBuffer; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
+constructor TCLBufferIter<_TContext_,_TDevice_,_TValue_>.Create( const Command_:TCLComman; const Buffer_:TCLBuffer; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
 var
    E :T_cl_int;
 begin
