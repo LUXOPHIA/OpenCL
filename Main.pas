@@ -65,7 +65,7 @@ uses System.Math;
 procedure TForm1.ShowPlatforms;
 var
    PI, EI :Integer;
-   P :TCLPlatform;
+   P :TCLPlatfo;
    E :String;
 begin
      with MemoSP.Lines do
@@ -97,7 +97,7 @@ end;
 procedure TForm1.ShowDevices;
 var
    PI, DI :Integer;
-   P :TCLPlatform;
+   P :TCLPlatfo;
    D :TCLDevice;
 begin
      with MemoSD.Lines do
@@ -131,7 +131,7 @@ end;
 procedure TForm1.ShowContexts;
 var
    PI, CI, QI :Integer;
-   P :TCLPlatform;
+   P :TCLPlatfo;
    C :TCLContex;
    Q :TCLComman;
 begin
