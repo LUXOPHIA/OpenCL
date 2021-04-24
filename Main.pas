@@ -38,7 +38,7 @@ type
   public
     { public 宣言 }
     _Context :TCLContex;
-    _Program :TCLProgram;
+    _Program :TCLProgra;
     _Kernel  :TCLKernel;
     _BufferA :TCLHostBuffer<T_float>;
     _BufferB :TCLHostBuffer<T_float>;
@@ -183,7 +183,7 @@ begin
      ShowContexts;                                              // 一覧表示
 
      ///// Program
-     _Program := TCLProgram.Create( _Context );                // 生成
+     _Program := TCLProgra.Create( _Context );                // 生成
      _Program.Source.LoadFromFile( '..\..\_DATA\Source.cl' );  // ソースの読み込み
      _Program.Build;                                           // ビルド
 
