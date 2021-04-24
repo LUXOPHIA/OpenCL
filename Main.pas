@@ -37,16 +37,16 @@ type
     { private 宣言 }
   public
     { public 宣言 }
-    _Context :TCLContex;
-    _Program :TCLProgra;
+    _Contex :TCLContex;
+    _Progra :TCLProgra;
     _Kernel  :TCLKernel;
     _BufferA :TCLHostBuffer<T_float>;
     _BufferB :TCLHostBuffer<T_float>;
     _BufferC :TCLHostBuffer<T_float>;
     ///// メソッド
-    procedure ShowPlatforms;
+    procedure ShowPlatfos;
     procedure ShowDevices;
-    procedure ShowContexts;
+    procedure ShowContexs;
   end;
 
 var
@@ -62,7 +62,7 @@ uses System.Math;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-procedure TForm1.ShowPlatforms;
+procedure TForm1.ShowPlatfos;
 var
    PI, EI :Integer;
    P :TCLPlatfo;
@@ -70,9 +70,9 @@ var
 begin
      with MemoSP.Lines do
      begin
-          for PI := 0 to _OpenCL_.Platforms.Count-1 do
+          for PI := 0 to _OpenCL_.Platfos.Count-1 do
           begin
-               P := _OpenCL_.Platforms[ PI ];
+               P := _OpenCL_.Platfos[ PI ];
 
                Add( '┃' );
                Add( '┣・Platform[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
@@ -102,12 +102,12 @@ var
 begin
      with MemoSD.Lines do
      begin
-          for PI := 0 to _OpenCL_.Platforms.Count-1 do
+          for PI := 0 to _OpenCL_.Platfos.Count-1 do
           begin
-               P := _OpenCL_.Platforms[ PI ];
+               P := _OpenCL_.Platfos[ PI ];
 
                Add( '┃' );
-               Add( '┣・Platform[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
+               Add( '┣・Platfos[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
                Add( '┃　│' );
                for DI := 0 to P.Devices.Count-1 do
                begin
@@ -128,7 +128,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure TForm1.ShowContexts;
+procedure TForm1.ShowContexs;
 var
    PI, CI, QI :Integer;
    P :TCLPlatfo;
@@ -137,24 +137,24 @@ var
 begin
      with MemoSC.Lines do
      begin
-          for PI := 0 to _OpenCL_.Platforms.Count-1 do
+          for PI := 0 to _OpenCL_.Platfos.Count-1 do
           begin
-               P := _OpenCL_.Platforms[ PI ];
+               P := _OpenCL_.Platfos[ PI ];
 
                Add( '┃' );
-               Add( '┣・Platform[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
+               Add( '┣・Platfos[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
                for CI := 0 to P.Contexts.Count-1 do
                begin
                     C := P.Contexts[ CI ];
 
                     Add( '┃　│' );
-                    Add( '┃　┝・Context[ ' + CI.ToString + ' ]<' + LongInt( C.Handle ).ToHexString + '>' );
+                    Add( '┃　┝・Contexs[ ' + CI.ToString + ' ]<' + LongInt( C.Handle ).ToHexString + '>' );
                     for QI := 0 to C.Commands.Count-1 do
                     begin
                          Q := C.Commands[ QI ];
 
                          Add( '┃　│　│' );
-                         Add( '┃　│　├・Command[ ' + QI.ToString + ' ]<' + LongInt( Q.Handle ).ToHexString + '>'
+                         Add( '┃　│　├・Commans[ ' + QI.ToString + ' ]<' + LongInt( Q.Handle ).ToHexString + '>'
                             + ' → Device<' + LongInt( Q.Device.Handle ).ToHexString + '>' );
                     end;
                end;
@@ -171,63 +171,63 @@ var
    I :Integer;
 begin
      ///// Platform
-     ShowPlatforms;  // 一覧表示
+     ShowPlatfos;                                                               // 一覧表示
 
      ///// Device
      ShowDevices;  // 一覧表示
 
      ///// Context
-     _Context := TCLContex.Create( _OpenCL_.Platforms[ 0 ] );  // 生成
-     _Context.Add( _OpenCL_.Platforms[ 0 ].Devices[ 0 ] );      // デバイスの登録
+     _Contex := TCLContex.Create( _OpenCL_.Platfos[ 0 ] );                      // 生成
+     _Contex.Add( _OpenCL_.Platfos[ 0 ].Devices[ 0 ] );                         // デバイスの登録
 
-     ShowContexts;                                              // 一覧表示
+     ShowContexs;                                                               // 一覧表示
 
      ///// Program
-     _Program := TCLProgra.Create( _Context );                // 生成
-     _Program.Source.LoadFromFile( '..\..\_DATA\Source.cl' );  // ソースの読み込み
-     _Program.Build;                                           // ビルド
+     _Progra := TCLProgra.Create( _Contex );                                    // 生成
+     _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースの読み込み
+     _Progra.Build;                                                             // ビルド
 
-     MemoPC.Lines.Assign( _Program.Source );                   // ソースの表示
+     MemoPC.Lines.Assign( _Progra.Source );                                     // ソースの表示
 
      ///// Buffer
-     _BufferA := TCLHostBuffer<T_float>.Create( _Context );                   // 生成
-     _BufferB := TCLHostBuffer<T_float>.Create( _Context );                   // 生成
-     _BufferC := TCLHostBuffer<T_float>.Create( _Context );                   // 生成
+     _BufferA := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
+     _BufferB := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
+     _BufferC := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
 
-     _BufferA.Count := 10;                                                    // 要素数の設定
-     _BufferB.Count := 10;                                                    // 要素数の設定
-     _BufferC.Count := 10;                                                    // 要素数の設定
+     _BufferA.Count := 10;                                                      // 要素数の設定
+     _BufferB.Count := 10;                                                      // 要素数の設定
+     _BufferC.Count := 10;                                                      // 要素数の設定
 
-     A := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferA );  // マップ
-     B := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferB );  // マップ
-     for I := 0 to _BufferA.Count-1 do A.Values[ I ] := Random( 10 );         // 書き込み
-     for I := 0 to _BufferB.Count-1 do B.Values[ I ] := Random( 10 );         // 書き込み
-     A.Free;                                                                  // アンマップ
-     B.Free;                                                                  // アンマップ
+     A := TCLBufferIter<T_float>.Create( _Contex.Commands[ 0 ], _BufferA );     // マップ
+     B := TCLBufferIter<T_float>.Create( _Contex.Commands[ 0 ], _BufferB );     // マップ
+     for I := 0 to _BufferA.Count-1 do A.Values[ I ] := Random( 10 );           // 書き込み
+     for I := 0 to _BufferB.Count-1 do B.Values[ I ] := Random( 10 );           // 書き込み
+     A.Free;                                                                    // アンマップ
+     B.Free;                                                                    // アンマップ
 
      ///// Kernel
-     _Kernel := TCLKernel.Create( _Program, 'mul' );  // 生成
-     _Kernel.Memorys.Add( _BufferA );                 // Buffer の登録
-     _Kernel.Memorys.Add( _BufferB );                 // Buffer の登録
-     _Kernel.Memorys.Add( _BufferC );                 // Buffer の登録
-     _Kernel.GlobalWorkSize := [ 10 ];                // ループ回数の設定
+     _Kernel := TCLKernel.Create( _Progra, 'mul' );                             // 生成
+     _Kernel.Memorys.Add( _BufferA );                                           // Buffer の登録
+     _Kernel.Memorys.Add( _BufferB );                                           // Buffer の登録
+     _Kernel.Memorys.Add( _BufferC );                                           // Buffer の登録
+     _Kernel.GlobalWorkSize := [ 10 ];                                          // ループ回数の設定
 
-     _Kernel.Run( _Context.Commands[ 0 ] );           // 実行
+     _Kernel.Run( _Contex.Commands[ 0 ] );                                      // 実行
 
      ///// Buffer
      MemoPR.Lines.Add( 'A[i] + B[i] = C[i]' );
-     A := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferA );  // マップ
-     B := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferB );  // マップ
-     C := TCLBufferIter<T_float>.Create( _Context.Commands[ 0 ], _BufferC );  // マップ
+     A := TCLBufferIter<T_float>.Create( _Contex.Commands[ 0 ], _BufferA );     // マップ
+     B := TCLBufferIter<T_float>.Create( _Contex.Commands[ 0 ], _BufferB );     // マップ
+     C := TCLBufferIter<T_float>.Create( _Contex.Commands[ 0 ], _BufferC );     // マップ
      for I := 0 to _BufferC.Count-1 do
      begin
-          MemoPR.Lines.Add( FloatToStr( A.Values[ I ] ) + ' * '               // 読み込み
-                          + FloatToStr( B.Values[ I ] ) + ' = '               // 読み込み
-                          + FloatToStr( C.Values[ I ] ) );                    // 読み込み
+          MemoPR.Lines.Add( FloatToStr( A.Values[ I ] ) + ' * '                 // 読み込み
+                          + FloatToStr( B.Values[ I ] ) + ' = '                 // 読み込み
+                          + FloatToStr( C.Values[ I ] ) );                      // 読み込み
      end;
-     A.Free;                                                                  // アンマップ
-     B.Free;                                                                  // アンマップ
-     C.Free;                                                                  // アンマップ
+     A.Free;                                                                    // アンマップ
+     B.Free;                                                                    // アンマップ
+     C.Free;                                                                    // アンマップ
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
