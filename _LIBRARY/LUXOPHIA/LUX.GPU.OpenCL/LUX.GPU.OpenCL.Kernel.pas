@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.TKernel;
+﻿unit LUX.GPU.OpenCL.Kernel;
 
 interface //#################################################################### ■
 
@@ -6,7 +6,7 @@ uses System.Classes, System.Generics.Collections,
      cl_version, cl_platform, cl,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
-     LUX.GPU.OpenCL.TMemory;
+     LUX.GPU.OpenCL.Memory;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 

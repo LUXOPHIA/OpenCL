@@ -8,15 +8,15 @@ uses System.Generics.Collections,
      cl,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
-     LUX.GPU.OpenCL.TDevice,
-     LUX.GPU.OpenCL.TPlatform,
-     LUX.GPU.OpenCL.TContext,
-     LUX.GPU.OpenCL.TCommand,
-     LUX.GPU.OpenCL.TProgram,
-     LUX.GPU.OpenCL.TKernel,
-     LUX.GPU.OpenCL.TMemory,
-     LUX.GPU.OpenCL.TBuffer,
-     LUX.GPU.OpenCL.TBuffer.TIter;
+     LUX.GPU.OpenCL.Device,
+     LUX.GPU.OpenCL.Platfo,
+     LUX.GPU.OpenCL.Contex,
+     LUX.GPU.OpenCL.Comman,
+     LUX.GPU.OpenCL.Progra,
+     LUX.GPU.OpenCL.Kernel,
+     LUX.GPU.OpenCL.Memory,
+     LUX.GPU.OpenCL.Buffer,
+     LUX.GPU.OpenCL.Buffer.TIter;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 

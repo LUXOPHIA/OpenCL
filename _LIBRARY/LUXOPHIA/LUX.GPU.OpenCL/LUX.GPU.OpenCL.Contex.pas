@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.TContext;
+﻿unit LUX.GPU.OpenCL.Contex;
 
 interface //#################################################################### ■
 
@@ -6,9 +6,9 @@ uses System.Generics.Collections,
      cl_version, cl_platform, cl,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
-     LUX.GPU.OpenCL.TCommand,
-     LUX.GPU.OpenCL.TProgram,
-     LUX.GPU.OpenCL.TMemory;
+     LUX.GPU.OpenCL.Comman,
+     LUX.GPU.OpenCL.Progra,
+     LUX.GPU.OpenCL.Memory;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 

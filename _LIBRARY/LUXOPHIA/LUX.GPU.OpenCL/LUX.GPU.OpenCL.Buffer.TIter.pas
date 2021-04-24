@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.TBuffer.TIter;
+﻿unit LUX.GPU.OpenCL.Buffer.TIter;
 
 interface //#################################################################### ■
 
@@ -6,8 +6,8 @@ uses cl_version, cl_platform, cl,
      LUX,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
-     LUX.GPU.OpenCL.TCommand,
-     LUX.GPU.OpenCL.TBuffer;
+     LUX.GPU.OpenCL.Comman,
+     LUX.GPU.OpenCL.Buffer;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
