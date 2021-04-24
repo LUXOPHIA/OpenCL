@@ -26,20 +26,20 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLDevice   = TCLDevice<TCLPlatform>;
 
-     TCLContext  = TCLContext<TCLPlatform,TCLDevice>;
+     TCLContex  = TCLContex<TCLPlatform,TCLDevice>;
 
-     TCLComman  = TCLComman<TCLContext,TCLDevice>;
+     TCLComman  = TCLComman<TCLContex,TCLDevice>;
 
-     TCLProgram  = TCLProgram<TCLContext>;
+     TCLProgram  = TCLProgram<TCLContex>;
 
-     TCLKernel   = TCLKernel<TCLContext,TCLProgram>;
+     TCLKernel   = TCLKernel<TCLContex,TCLProgram>;
 
-     TCLMemory   = TCLMemory<TCLContext>;
+     TCLMemory   = TCLMemory<TCLContex>;
 
-     TCLDeviceBuffer<_TValue_:record> = class( TCLDeviceBuffer<TCLContext,_TValue_> );
-     TCLHostBuffer  <_TValue_:record> = class( TCLHostBuffer  <TCLContext,_TValue_> );
+     TCLDeviceBuffer<_TValue_:record> = class( TCLDeviceBuffer<TCLContex,_TValue_> );
+     TCLHostBuffer  <_TValue_:record> = class( TCLHostBuffer  <TCLContex,_TValue_> );
 
-     TCLBufferIter<_TValue_:record> = class( TCLBufferIter<TCLContext,TCLDevice,_TValue_> );
+     TCLBufferIter<_TValue_:record> = class( TCLBufferIter<TCLContex,TCLDevice,_TValue_> );
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 

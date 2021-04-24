@@ -117,7 +117,7 @@ procedure TCLDeviceBuffer<_TContext_,_TValue_>.BeginHandle;
 var
    E :T_cl_int;
 begin
-     _Handle := clCreateBuffer( TCLContext( _Parent ).Handle, _Kind, Size, nil, @E );
+     _Handle := clCreateBuffer( TCLContex( _Parent ).Handle, _Kind, Size, nil, @E );
 
      AssertCL( E );
 end;
@@ -147,7 +147,7 @@ begin
 
      GetMemAligned( _Data, Ceil2N( Size, 64{Byte} ), 4096{Byte} );
 
-     _Handle := clCreateBuffer( TCLContext( _Parent ).Handle, _Kind, Size, _Data, @E );
+     _Handle := clCreateBuffer( TCLContex( _Parent ).Handle, _Kind, Size, _Data, @E );
 
      AssertCL( E );
 end;

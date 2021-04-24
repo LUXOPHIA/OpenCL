@@ -72,11 +72,11 @@ uses LUX.GPU.OpenCL;
 
 procedure TCLProgram<_TContext_>.SetParent( const Parent_:_TContext_ );
 begin
-     if Assigned( _Parent ) then TCLContext( _Parent ).Programs.Remove( TCLProgram( Self ) );
+     if Assigned( _Parent ) then TCLContex( _Parent ).Programs.Remove( TCLProgram( Self ) );
 
                   _Parent := Parent_;
 
-     if Assigned( _Parent ) then TCLContext( _Parent ).Programs.Add   ( TCLProgram( Self ) );
+     if Assigned( _Parent ) then TCLContex( _Parent ).Programs.Add   ( TCLProgram( Self ) );
 end;
 
 //------------------------------------------------------------------------------
@@ -90,7 +90,7 @@ end;
 
 function TCLProgram<_TContext_>.GetavHandle :Boolean;
 begin
-     Result := TCLContext( _Parent ).avHandle and Assigned( _Handle );
+     Result := TCLContex( _Parent ).avHandle and Assigned( _Handle );
 end;
 
 procedure TCLProgram<_TContext_>.SetavHandle( const avHandle_:Boolean );
@@ -109,7 +109,7 @@ var
 begin
      C := P_char( AnsiString( _Source.Text ) );
 
-     _Handle := clCreateProgramWithSource( TCLContext( _Parent ).Handle, 1, @C, nil, @E );
+     _Handle := clCreateProgramWithSource( TCLContex( _Parent ).Handle, 1, @C, nil, @E );
 
      AssertCL( E );
 end;
@@ -159,7 +159,7 @@ var
    Ds :TArray<T_cl_device_id>;
    Os :String;
 begin
-     Ds :=  TCLContext( _Parent ).GetDevices;
+     Ds :=  TCLContex( _Parent ).GetDevices;
 
      if Ord( _LangVer ) > 100 then Os := '-cl-std=CL' + _LangVer.ToString
                               else Os := '';
