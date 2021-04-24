@@ -133,7 +133,7 @@ var
    PI, CI, QI :Integer;
    P :TCLPlatform;
    C :TCLCOntext;
-   Q :TCLCommand;
+   Q :TCLComman;
 begin
      with MemoSC.Lines do
      begin
