@@ -70,7 +70,7 @@ end;
 
 function TCLComman<_TContext_,_TDevice_>.GetavHandle :Boolean;
 begin
-     Result := TCLContext( _Parent ).avHandle and Assigned( _Handle );
+     Result := TCLContex( _Parent ).avHandle and Assigned( _Handle );
 end;
 
 procedure TCLComman<_TContext_,_TDevice_>.SetavHandle( const avHandle_:Boolean );
@@ -85,9 +85,9 @@ end;
 procedure TCLComman<_TContext_,_TDevice_>.BeginHandle;
 begin
      {$IF CL_VERSION_2_0 <> 0 }
-     _Handle := clCreateCommandQueueWithProperties( TCLContext( _Parent ).Handle, TCLDevice( _Device ).Handle, nil, nil );
+     _Handle := clCreateCommandQueueWithProperties( TCLContex( _Parent ).Handle, TCLDevice( _Device ).Handle, nil, nil );
      {$ELSE}
-     _Handle := clCreateCommandQueue              ( TCLContext( _Parent ).Handle, TCLDevice( _Device ).Handle, nil, nil );
+     _Handle := clCreateCommandQueue              ( TCLContex( _Parent ).Handle, TCLDevice( _Device ).Handle, nil, nil );
      {$ENDIF}
 end;
 
@@ -119,7 +119,7 @@ destructor TCLComman<_TContext_,_TDevice_>.Destroy;
 begin
      if avHandle then EndHandle;
 
-     TCLContext( _Parent ).avHandle := False;
+     TCLContex( _Parent ).avHandle := False;
 
      inherited;
 end;

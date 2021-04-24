@@ -23,8 +23,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLPlatform<_TOpenCL_:class> = class
      private
-       type TCLDevice  = TCLDevice<TCLPlatform<_TOpenCL_>>;
-       type TCLContext = TCLContext<TCLPlatform<_TOpenCL_>,TCLDevice>;
+       type TCLDevice = TCLDevice<TCLPlatform<_TOpenCL_>>;
+       type TCLContex = TCLContex<TCLPlatform<_TOpenCL_>,TCLDevice>;
        ///// メソッド
        function GetPlatformInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
        function GetPlatformInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
@@ -35,7 +35,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Handle     :T_cl_platform_id;
        _Extensions :TStringList;
        _Devices    :TObjectList<TCLDevice>;
-       _Contexts   :TObjectList<TCLContext>;
+       _Contexts   :TObjectList<TCLContex>;
        ///// アクセス
        function GetProfile :String;
        function GetVersion :String;
@@ -48,16 +48,16 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Parent_:_TOpenCL_; const ID_:T_cl_platform_id );
        destructor Destroy; override;
        ///// プロパティ
-       property Parent              :_TOpenCL_               read   _Parent             ;
-       property Handle              :T_cl_platform_id        read   _Handle             ;
-       property Profile             :String                  read GetProfile            ;
-       property Version             :String                  read GetVersion            ;
-       property Name                :String                  read GetName               ;
-       property Vendor              :String                  read GetVendor             ;
-       property Extensions          :TStringList             read   _Extensions         ;
-       property HostTimerResolution :T_cl_ulong              read GetHostTimerResolution;  { OpenCL 2.1 }
-       property Devices             :TObjectList<TCLDevice>  read   _Devices            ;
-       property Contexts            :TObjectList<TCLContext> read   _Contexts           ;
+       property Parent              :_TOpenCL_              read   _Parent             ;
+       property Handle              :T_cl_platform_id       read   _Handle             ;
+       property Profile             :String                 read GetProfile            ;
+       property Version             :String                 read GetVersion            ;
+       property Name                :String                 read GetName               ;
+       property Vendor              :String                 read GetVendor             ;
+       property Extensions          :TStringList            read   _Extensions         ;
+       property HostTimerResolution :T_cl_ulong             read GetHostTimerResolution;  { OpenCL 2.1 }
+       property Devices             :TObjectList<TCLDevice> read   _Devices            ;
+       property Contexts            :TObjectList<TCLContex> read   _Contexts           ;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -174,7 +174,7 @@ begin
 
      _Extensions := TStringList.Create;
      _Devices    := TObjectList<TCLDevice>.Create;
-     _Contexts   := TObjectList<TCLContext>.Create;
+     _Contexts   := TObjectList<TCLContex>.Create;
 
      _Parent := Parent_;
      _Handle := ID_;

@@ -62,11 +62,11 @@ uses LUX.GPU.OpenCL;
 
 procedure TCLMemory<_TContext_>.SetParent( const Parent_:_TContext_ );
 begin
-     if Assigned( _Parent ) then TCLContext( _Parent ).Memorys.Remove( TCLMemory( Self ) );
+     if Assigned( _Parent ) then TCLContex( _Parent ).Memorys.Remove( TCLMemory( Self ) );
 
                   _Parent := Parent_;
 
-     if Assigned( _Parent ) then TCLContext( _Parent ).Memorys.Add   ( TCLMemory( Self ) );
+     if Assigned( _Parent ) then TCLContex( _Parent ).Memorys.Add   ( TCLMemory( Self ) );
 end;
 
 //------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ end;
 
 function TCLMemory<_TContext_>.GetavHandle :Boolean;
 begin
-     Result := TCLContext( _Parent ).avHandle and Assigned( _Handle );
+     Result := TCLContex( _Parent ).avHandle and Assigned( _Handle );
 end;
 
 procedure TCLMemory<_TContext_>.SetavHandle( const avHandle_:Boolean );
