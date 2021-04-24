@@ -30,9 +30,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLComman = TCLComman<TCLContex,TCLDevice>;
 
-     TCLProgram = TCLProgram<TCLContex>;
+     TCLProgra = TCLProgra<TCLContex>;
 
-     TCLKernel = TCLKernel<TCLContex,TCLProgram>;
+     TCLKernel = TCLKernel<TCLContex,TCLProgra>;
 
      TCLMemory = TCLMemory<TCLContex>;
 

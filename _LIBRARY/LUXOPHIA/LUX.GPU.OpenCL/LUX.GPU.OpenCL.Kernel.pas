@@ -82,11 +82,11 @@ uses LUX.GPU.OpenCL;
 
 procedure TCLKernel<_TContext_,_TProgram_>.SetParent( const Parent_:_TProgram_ );
 begin
-     if Assigned( _Parent ) then TCLProgram( _Parent ).Kernels.Remove( TCLKernel( Self ) );
+     if Assigned( _Parent ) then TCLProgra( _Parent ).Kernels.Remove( TCLKernel( Self ) );
 
                   _Parent := Parent_;
 
-     if Assigned( _Parent ) then TCLProgram( _Parent ).Kernels.Add   ( TCLKernel( Self ) );
+     if Assigned( _Parent ) then TCLProgra( _Parent ).Kernels.Add   ( TCLKernel( Self ) );
 end;
 
 //------------------------------------------------------------------------------
@@ -100,7 +100,7 @@ end;
 
 function TCLKernel<_TContext_,_TProgram_>.GetavHandle :Boolean;
 begin
-     Result := TCLProgram( _Parent ).avHandle and Assigned( _Handle );
+     Result := TCLProgra( _Parent ).avHandle and Assigned( _Handle );
 end;
 
 procedure TCLKernel<_TContext_,_TProgram_>.SetavHandle( const avHandle_:Boolean );
@@ -140,7 +140,7 @@ var
    I :Integer;
    H :T_cl_mem;
 begin
-     _Handle := clCreateKernel( TCLProgram( _Parent ).Handle, P_char( AnsiString( _Name ) ), @E );
+     _Handle := clCreateKernel( TCLProgra( _Parent ).Handle, P_char( AnsiString( _Name ) ), @E );
 
      AssertCL( E );
 
