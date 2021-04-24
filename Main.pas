@@ -37,7 +37,7 @@ type
     { private 宣言 }
   public
     { public 宣言 }
-    _Context :TCLContext;
+    _Context :TCLContex;
     _Program :TCLProgram;
     _Kernel  :TCLKernel;
     _BufferA :TCLHostBuffer<T_float>;
@@ -132,7 +132,7 @@ procedure TForm1.ShowContexts;
 var
    PI, CI, QI :Integer;
    P :TCLPlatform;
-   C :TCLCOntext;
+   C :TCLContex;
    Q :TCLComman;
 begin
      with MemoSC.Lines do
@@ -177,7 +177,7 @@ begin
      ShowDevices;  // 一覧表示
 
      ///// Context
-     _Context := TCLContext.Create( _OpenCL_.Platforms[ 0 ] );  // 生成
+     _Context := TCLContex.Create( _OpenCL_.Platforms[ 0 ] );  // 生成
      _Context.Add( _OpenCL_.Platforms[ 0 ].Devices[ 0 ] );      // デバイスの登録
 
      ShowContexts;                                              // 一覧表示
