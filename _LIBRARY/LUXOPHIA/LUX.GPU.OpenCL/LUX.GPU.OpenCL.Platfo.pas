@@ -19,12 +19,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevice<_TOpenCL_>
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatform<_TOpenCL_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfo<_TOpenCL_>
 
-     TCLPlatform<_TOpenCL_:class> = class
+     TCLPlatfo<_TOpenCL_:class> = class
      private
-       type TCLDevice = TCLDevice<TCLPlatform<_TOpenCL_>>;
-       type TCLContex = TCLContex<TCLPlatform<_TOpenCL_>,TCLDevice>;
+       type TCLDevice = TCLDevice<TCLPlatfo<_TOpenCL_>>;
+       type TCLContex = TCLContex<TCLPlatfo<_TOpenCL_>,TCLDevice>;
        ///// メソッド
        function GetPlatformInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
        function GetPlatformInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
@@ -74,27 +74,27 @@ uses System.SysUtils;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatform<_TOpenCL_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfo<_TOpenCL_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLPlatform<_TOpenCL_>.GetPlatformInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
+function TCLPlatfo<_TOpenCL_>.GetPlatformInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
 begin
      AssertCL( clGetPlatformInfo( _Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLPlatform<_TOpenCL_>.GetPlatformInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
+function TCLPlatfo<_TOpenCL_>.GetPlatformInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
 begin
      AssertCL( clGetPlatformInfo( _Handle, Name_, 0, nil, @Result ) );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLPlatform<_TOpenCL_>.GetPlatformInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
+function TCLPlatfo<_TOpenCL_>.GetPlatformInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
 var
    S :T_size_t;
 begin
@@ -107,7 +107,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLPlatform<_TOpenCL_>.GetPlatformInfoString( const Name_:T_cl_platform_info ) :String;
+function TCLPlatfo<_TOpenCL_>.GetPlatformInfoString( const Name_:T_cl_platform_info ) :String;
 begin
      Result := String( P_char( GetPlatformInfos<T_char>( Name_ ) ) );
 end;
@@ -116,27 +116,27 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLPlatform<_TOpenCL_>.GetProfile :String;
+function TCLPlatfo<_TOpenCL_>.GetProfile :String;
 begin
      Result := GetPlatformInfoString( CL_PLATFORM_PROFILE );
 end;
 
-function TCLPlatform<_TOpenCL_>.GetVersion :String;
+function TCLPlatfo<_TOpenCL_>.GetVersion :String;
 begin
      Result := GetPlatformInfoString( CL_PLATFORM_VERSION );
 end;
 
-function TCLPlatform<_TOpenCL_>.GetName :String;
+function TCLPlatfo<_TOpenCL_>.GetName :String;
 begin
      Result := GetPlatformInfoString( CL_PLATFORM_NAME );
 end;
 
-function TCLPlatform<_TOpenCL_>.GetVendor :String;
+function TCLPlatfo<_TOpenCL_>.GetVendor :String;
 begin
      Result := GetPlatformInfoString( CL_PLATFORM_VENDOR );
 end;
 
-function TCLPlatform<_TOpenCL_>.GetHostTimerResolution :T_cl_ulong;
+function TCLPlatfo<_TOpenCL_>.GetHostTimerResolution :T_cl_ulong;
 begin
      {$IF CL_VERSION_2_1 <> 0 }
      Result := GetPlatformInfo<T_cl_ulong>( CL_PLATFORM_HOST_TIMER_RESOLUTION );
@@ -147,7 +147,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLPlatform<_TOpenCL_>.MakeDevices;
+procedure TCLPlatfo<_TOpenCL_>.MakeDevices;
 const
      DEVICETYPE = CL_DEVICE_TYPE_ALL;
 var
@@ -166,7 +166,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLPlatform<_TOpenCL_>.Create( const Parent_:_TOpenCL_; const ID_:T_cl_platform_id );
+constructor TCLPlatfo<_TOpenCL_>.Create( const Parent_:_TOpenCL_; const ID_:T_cl_platform_id );
 var
    E :String;
 begin
@@ -185,7 +185,7 @@ begin
      MakeDevices;
 end;
 
-destructor TCLPlatform<_TOpenCL_>.Destroy;
+destructor TCLPlatfo<_TOpenCL_>.Destroy;
 begin
      _Extensions.Free;
      _Devices   .Free;

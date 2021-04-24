@@ -20,21 +20,21 @@ uses System.Generics.Collections,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TOpenCL     = class;
+     TOpenCL   = class;
 
-     TCLPlatform = TCLPlatform<TOpenCL>;
+     TCLPlatfo = TCLPlatfo<TOpenCL>;
 
-     TCLDevice   = TCLDevice<TCLPlatform>;
+     TCLDevice = TCLDevice<TCLPlatfo>;
 
-     TCLContex  = TCLContex<TCLPlatform,TCLDevice>;
+     TCLContex = TCLContex<TCLPlatfo,TCLDevice>;
 
-     TCLComman  = TCLComman<TCLContex,TCLDevice>;
+     TCLComman = TCLComman<TCLContex,TCLDevice>;
 
-     TCLProgram  = TCLProgram<TCLContex>;
+     TCLProgram = TCLProgram<TCLContex>;
 
-     TCLKernel   = TCLKernel<TCLContex,TCLProgram>;
+     TCLKernel = TCLKernel<TCLContex,TCLProgram>;
 
-     TCLMemory   = TCLMemory<TCLContex>;
+     TCLMemory = TCLMemory<TCLContex>;
 
      TCLDeviceBuffer<_TValue_:record> = class( TCLDeviceBuffer<TCLContex,_TValue_> );
      TCLHostBuffer  <_TValue_:record> = class( TCLHostBuffer  <TCLContex,_TValue_> );
@@ -49,20 +49,20 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TOpenCL = class
      private
-       _Platforms :TObjectList<TCLPlatform>;
+       _Platforms :TObjectList<TCLPlatfo>;
        ///// メソッド
        procedure MakePlatforms;
      protected
        ///// アクセス
-       function GetPlatform0 :TCLPlatform;
+       function GetPlatform0 :TCLPlatfo;
        function GetDevice0 :TCLDevice;
      public
        constructor Create;
        destructor Destroy; override;
        ///// プロパティ
-       property Platforms :TObjectList<TCLPlatform> read   _Platforms;
-       property Platform0 :TCLPlatform              read GetPlatform0;
-       property Device0   :TCLDevice                read GetDevice0  ;
+       property Platforms :TObjectList<TCLPlatfo> read   _Platforms;
+       property Platform0 :TCLPlatfo              read GetPlatform0;
+       property Device0   :TCLDevice              read GetDevice0  ;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -97,14 +97,14 @@ begin
 
      AssertCL( clGetPlatformIDs( PsN, @Ps[0], nil ) );
 
-     for P in Ps do _Platforms.Add( TCLPlatform.Create( Self, P ) );
+     for P in Ps do _Platforms.Add( TCLPlatfo.Create( Self, P ) );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TOpenCL.GetPlatform0 :TCLPlatform;
+function TOpenCL.GetPlatform0 :TCLPlatfo;
 begin
      Result := Platforms[ 0 ];
 end;
@@ -120,7 +120,7 @@ constructor TOpenCL.Create;
 begin
      inherited;
 
-     _Platforms := TObjectList<TCLPlatform>.Create;
+     _Platforms := TObjectList<TCLPlatfo>.Create;
 
      MakePlatforms;
 end;
