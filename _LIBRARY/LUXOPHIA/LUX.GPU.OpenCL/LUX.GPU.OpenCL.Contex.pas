@@ -79,11 +79,11 @@ uses LUX.GPU.OpenCL;
 
 procedure TCLContex<_TPlatform_,_TDevice_>.SetParent( const Parent_:_TPlatform_ );
 begin
-     if Assigned( _Parent ) then TCLPlatfo( _Parent ).Contexts.Remove( TCLContex( Self ) );
+     if Assigned( _Parent ) then TCLPlatfo( _Parent ).Contexs.Remove( TCLContex( Self ) );
 
                   _Parent := Parent_;
 
-     if Assigned( _Parent ) then TCLPlatfo( _Parent ).Contexts.Add   ( TCLContex( Self ) );
+     if Assigned( _Parent ) then TCLPlatfo( _Parent ).Contexs.Add   ( TCLContex( Self ) );
 end;
 
 //------------------------------------------------------------------------------
