@@ -81,9 +81,9 @@ begin
                Add( '┃　├・Name      ：' + P.Name    );
                Add( '┃　├・Vendor    ：' + P.Vendor  );
                Add( '┃　├・Extensions：' );
-               for EI := 0 to P.Extensions.Count-1 do
+               for EI := 0 to P.Extenss.Count-1 do
                begin
-                    E := P.Extensions[ EI ];
+                    E := P.Extenss[ EI ];
 
                     Add( '┃　│　 - ' + E );
                end;
@@ -143,9 +143,9 @@ begin
 
                Add( '┃' );
                Add( '┣・Platfos[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
-               for CI := 0 to P.Contexts.Count-1 do
+               for CI := 0 to P.Contexs.Count-1 do
                begin
-                    C := P.Contexts[ CI ];
+                    C := P.Contexs[ CI ];
 
                     Add( '┃　│' );
                     Add( '┃　┝・Contexs[ ' + CI.ToString + ' ]<' + LongInt( C.Handle ).ToHexString + '>' );
