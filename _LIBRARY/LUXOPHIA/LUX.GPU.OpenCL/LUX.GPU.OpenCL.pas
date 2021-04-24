@@ -49,20 +49,20 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TOpenCL = class
      private
-       _Platforms :TObjectList<TCLPlatfo>;
+       _Platfos :TObjectList<TCLPlatfo>;
        ///// メソッド
        procedure MakePlatforms;
      protected
        ///// アクセス
-       function GetPlatform0 :TCLPlatfo;
+       function GetPlatfo0 :TCLPlatfo;
        function GetDevice0 :TCLDevice;
      public
        constructor Create;
        destructor Destroy; override;
        ///// プロパティ
-       property Platforms :TObjectList<TCLPlatfo> read   _Platforms;
-       property Platform0 :TCLPlatfo              read GetPlatform0;
-       property Device0   :TCLDevice              read GetDevice0  ;
+       property Platfos :TObjectList<TCLPlatfo> read   _Platfos;
+       property Platfo0 :TCLPlatfo              read GetPlatfo0;
+       property Device0 :TCLDevice              read GetDevice0;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -97,21 +97,21 @@ begin
 
      AssertCL( clGetPlatformIDs( PsN, @Ps[0], nil ) );
 
-     for P in Ps do _Platforms.Add( TCLPlatfo.Create( Self, P ) );
+     for P in Ps do _Platfos.Add( TCLPlatfo.Create( Self, P ) );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TOpenCL.GetPlatform0 :TCLPlatfo;
+function TOpenCL.GetPlatfo0 :TCLPlatfo;
 begin
-     Result := Platforms[ 0 ];
+     Result := Platfos[ 0 ];
 end;
 
 function TOpenCL.GetDevice0 :TCLDevice;
 begin
-     Result := Platform0.Devices[ 0 ];
+     Result := Platfo0.Devices[ 0 ];
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -120,14 +120,14 @@ constructor TOpenCL.Create;
 begin
      inherited;
 
-     _Platforms := TObjectList<TCLPlatfo>.Create;
+     _Platfos := TObjectList<TCLPlatfo>.Create;
 
      MakePlatforms;
 end;
 
 destructor TOpenCL.Destroy;
 begin
-     _Platforms.Free;
+     _Platfos.Free;
 
      inherited;
 end;
