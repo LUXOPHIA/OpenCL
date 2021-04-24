@@ -20,14 +20,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLContex<_TPlatform_,_TDevice_:class> = class
      private
-       type TCLComman  = TCLComman<TCLContex<_TPlatform_,_TDevice_>,_TDevice_>;
-       type TCLProgram = TCLProgram<TCLContex<_TPlatform_,_TDevice_>>;
-       type TCLMemory  = TCLMemory<TCLContex<_TPlatform_,_TDevice_>>;
+       type TCLComman = TCLComman<TCLContex<_TPlatform_,_TDevice_>,_TDevice_>;
+       type TCLProgra = TCLProgra<TCLContex<_TPlatform_,_TDevice_>>;
+       type TCLMemory = TCLMemory<TCLContex<_TPlatform_,_TDevice_>>;
      protected
        _Parent   :_TPlatform_;
        _Commands :TObjectList<TCLComman>;
        _Handle   :T_cl_context;
-       _Programs :TObjectList<TCLProgram>;
+       _Programs :TObjectList<TCLProgra>;
        _Memorys  :TObjectList<TCLMemory>;
        ///// アクセス
        procedure SetParent( const Parent_:_TPlatform_ );
@@ -43,12 +43,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Parent_:_TPlatform_; const Devices_:TArray<_TDevice_> ); overload;
        destructor Destroy; override;
        ///// プロパティ
-       property Parent   :_TPlatform_             read   _Parent   write SetParent  ;
-       property Commands :TObjectList<TCLComman>  read   _Commands                  ;
-       property Handle   :T_cl_context            read GetHandle                    ;
-       property avHandle :Boolean                 read GetavHandle write SetavHandle;
-       property Programs :TObjectList<TCLProgram> read   _Programs                  ;
-       property Memorys  :TObjectList<TCLMemory>  read   _Memorys                   ;
+       property Parent   :_TPlatform_            read   _Parent   write SetParent  ;
+       property Commands :TObjectList<TCLComman> read   _Commands                  ;
+       property Handle   :T_cl_context           read GetHandle                    ;
+       property avHandle :Boolean                read GetavHandle write SetavHandle;
+       property Programs :TObjectList<TCLProgra> read   _Programs                  ;
+       property Memorys  :TObjectList<TCLMemory> read   _Memorys                   ;
        ///// メソッド
        procedure Add( const Device_:_TDevice_ );
        procedure Remove( const Device_:_TDevice_ );
@@ -137,8 +137,8 @@ begin
      inherited;
 
      _Commands := TObjectList<TCLComman>.Create;
-     _Programs := TObjectList<TCLProgram>.Create;
-     _Memorys  := TObjectList<TCLMemory >.Create;
+     _Programs := TObjectList<TCLProgra>.Create;
+     _Memorys  := TObjectList<TCLMemory>.Create;
 
      _Parent := nil;
      _Handle := nil;

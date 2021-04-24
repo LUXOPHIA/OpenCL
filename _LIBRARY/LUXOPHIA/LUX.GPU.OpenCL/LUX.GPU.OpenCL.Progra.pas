@@ -14,11 +14,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgram<_TContext_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<_TContext_>
 
-     TCLProgram<_TContext_:class> = class
+     TCLProgra<_TContext_:class> = class
      private
-       type TCLKernel = TCLKernel<_TContext_,TCLProgram<_TContext_>>;
+       type TCLKernel = TCLKernel<_TContext_,TCLProgra<_TContext_>>;
      protected
        _Parent  :_TContext_;
        _Handle  :T_cl_program;
@@ -62,7 +62,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgram<_TContext_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<_TContext_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -70,30 +70,30 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-procedure TCLProgram<_TContext_>.SetParent( const Parent_:_TContext_ );
+procedure TCLProgra<_TContext_>.SetParent( const Parent_:_TContext_ );
 begin
-     if Assigned( _Parent ) then TCLContex( _Parent ).Programs.Remove( TCLProgram( Self ) );
+     if Assigned( _Parent ) then TCLContex( _Parent ).Programs.Remove( TCLProgra( Self ) );
 
                   _Parent := Parent_;
 
-     if Assigned( _Parent ) then TCLContex( _Parent ).Programs.Add   ( TCLProgram( Self ) );
+     if Assigned( _Parent ) then TCLContex( _Parent ).Programs.Add   ( TCLProgra( Self ) );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLProgram<_TContext_>.GetHandle :T_cl_program;
+function TCLProgra<_TContext_>.GetHandle :T_cl_program;
 begin
      if not avHandle then BeginHandle;
 
      Result := _Handle;
 end;
 
-function TCLProgram<_TContext_>.GetavHandle :Boolean;
+function TCLProgra<_TContext_>.GetavHandle :Boolean;
 begin
      Result := TCLContex( _Parent ).avHandle and Assigned( _Handle );
 end;
 
-procedure TCLProgram<_TContext_>.SetavHandle( const avHandle_:Boolean );
+procedure TCLProgra<_TContext_>.SetavHandle( const avHandle_:Boolean );
 begin
      if avHandle  then EndHandle;
 
@@ -102,7 +102,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLProgram<_TContext_>.BeginHandle;
+procedure TCLProgra<_TContext_>.BeginHandle;
 var
    C :P_char;
    E :T_cl_int;
@@ -114,7 +114,7 @@ begin
      AssertCL( E );
 end;
 
-procedure TCLProgram<_TContext_>.EndHandle;
+procedure TCLProgra<_TContext_>.EndHandle;
 begin
      clReleaseProgram( _Handle );
 
@@ -123,7 +123,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLProgram<_TContext_>.Create;
+constructor TCLProgra<_TContext_>.Create;
 begin
      inherited;
 
@@ -135,14 +135,14 @@ begin
      _LangVer := TCLVersion.From( '2.0' );
 end;
 
-constructor TCLProgram<_TContext_>.Create( const Parent_:_TContext_ );
+constructor TCLProgra<_TContext_>.Create( const Parent_:_TContext_ );
 begin
      Create;
 
      Parent := Parent_;
 end;
 
-destructor TCLProgram<_TContext_>.Destroy;
+destructor TCLProgra<_TContext_>.Destroy;
 begin
      if avHandle then EndHandle;
 
@@ -154,7 +154,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLProgram<_TContext_>.Build;
+procedure TCLProgra<_TContext_>.Build;
 var
    Ds :TArray<T_cl_device_id>;
    Os :String;
