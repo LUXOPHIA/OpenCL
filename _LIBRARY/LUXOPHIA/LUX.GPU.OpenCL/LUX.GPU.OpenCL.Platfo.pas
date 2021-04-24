@@ -31,11 +31,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetPlatformInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
        function GetPlatformInfoString( const Name_:T_cl_platform_info ) :String;
      protected
-       _Parent     :_TOpenCL_;
-       _Handle     :T_cl_platform_id;
-       _Extensions :TStringList;
-       _Devices    :TObjectList<TCLDevice>;
-       _Contexts   :TObjectList<TCLContex>;
+       _Parent  :_TOpenCL_;
+       _Handle  :T_cl_platform_id;
+       _Extenss :TStringList;
+       _Devices :TObjectList<TCLDevice>;
+       _Contexs :TObjectList<TCLContex>;
        ///// アクセス
        function GetProfile :String;
        function GetVersion :String;
@@ -54,10 +54,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Version             :String                 read GetVersion            ;
        property Name                :String                 read GetName               ;
        property Vendor              :String                 read GetVendor             ;
-       property Extensions          :TStringList            read   _Extensions         ;
+       property Extenss             :TStringList            read   _Extenss            ;
        property HostTimerResolution :T_cl_ulong             read GetHostTimerResolution;  { OpenCL 2.1 }
        property Devices             :TObjectList<TCLDevice> read   _Devices            ;
-       property Contexts            :TObjectList<TCLContex> read   _Contexts           ;
+       property Contexs             :TObjectList<TCLContex> read   _Contexs            ;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -172,24 +172,24 @@ var
 begin
      inherited Create;
 
-     _Extensions := TStringList.Create;
-     _Devices    := TObjectList<TCLDevice>.Create;
-     _Contexts   := TObjectList<TCLContex>.Create;
+     _Extenss := TStringList.Create;
+     _Devices := TObjectList<TCLDevice>.Create;
+     _Contexs := TObjectList<TCLContex>.Create;
 
      _Parent := Parent_;
      _Handle := ID_;
 
      for E in GetPlatformInfoString( CL_PLATFORM_EXTENSIONS ).Split( [ ' ' ] )
-     do _Extensions.Add( E );
+     do _Extenss.Add( E );
 
      MakeDevices;
 end;
 
 destructor TCLPlatfo<_TOpenCL_>.Destroy;
 begin
-     _Extensions.Free;
-     _Devices   .Free;
-     _Contexts  .Free;
+     _Extenss.Free;
+     _Devices.Free;
+     _Contexs.Free;
 
      inherited;
 end;
