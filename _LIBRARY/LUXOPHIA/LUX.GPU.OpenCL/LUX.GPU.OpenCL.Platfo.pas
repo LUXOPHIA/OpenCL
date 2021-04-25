@@ -48,7 +48,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Parent_:_TOpenCL_; const ID_:T_cl_platform_id );
        destructor Destroy; override;
        ///// プロパティ
-       property Parent              :_TOpenCL_              read   _Parent             ;
+       property OpenCL              :_TOpenCL_              read   _Parent             ;
        property Handle              :T_cl_platform_id       read   _Handle             ;
        property Profile             :String                 read GetProfile            ;
        property Version             :String                 read GetVersion            ;
