@@ -69,8 +69,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLPlatfos<TOpenCL_:class> = class( TListParent<TOpenCL_,TCLPlatfo<TOpenCL_>> )
      private
+       type TCLPlatfo_ = TCLPlatfo<TOpenCL_>;
      protected
+       ///// メソッド
+       procedure FindPlatforms;
      public
+       constructor Create; override;
+       destructor Destroy; override;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -81,7 +86,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses System.SysUtils;
+uses System.SysUtils,
+     LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -217,7 +223,37 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TCLPlatfos<TOpenCL_>.FindPlatforms;
+var
+   PsN :T_cl_uint;
+   Ps :TArray<T_cl_platform_id>;
+   P :T_cl_platform_id;
+begin
+     AssertCL( clGetPlatformIDs( 0, nil, @PsN ) );
+
+     SetLength( Ps, PsN );
+
+     AssertCL( clGetPlatformIDs( PsN, @Ps[0], nil ) );
+
+     for P in Ps do TCLPlatfo_.Create( Self, P );
+end;
+
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+constructor TCLPlatfos<TOpenCL_>.Create;
+begin
+     inherited;
+
+     FindPlatforms;
+end;
+
+destructor TCLPlatfos<TOpenCL_>.Destroy;
+begin
+
+     inherited;
+end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
 
