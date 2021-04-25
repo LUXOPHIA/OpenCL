@@ -37,8 +37,8 @@ type
     { private 宣言 }
   public
     { public 宣言 }
-    _Contex :TCLContex;
-    _Progra :TCLProgra;
+    _Contex  :TCLContex;
+    _Progra  :TCLProgra;
     _Kernel  :TCLKernel;
     _BufferA :TCLHostBuffer<T_float>;
     _BufferB :TCLHostBuffer<T_float>;
@@ -64,7 +64,7 @@ uses System.Math;
 
 procedure TForm1.ShowPlatfos;
 var
-   PI, EI :Integer;
+   PI :Integer;
    P :TCLPlatfo;
    E :String;
 begin
@@ -81,13 +81,10 @@ begin
                Add( '┃　├・Name      ：' + P.Name    );
                Add( '┃　├・Vendor    ：' + P.Vendor  );
                Add( '┃　├・Extensions：' );
-               for EI := 0 to P.Extenss.Count-1 do
-               begin
-                    E := P.Extenss[ EI ];
 
-                    Add( '┃　│　 - ' + E );
-               end;
+               for E in P.Extenss do Add( '┃　│　 - ' + E );
           end;
+
           Add( '' );
      end;
 end;
@@ -108,7 +105,7 @@ begin
 
                Add( '┃' );
                Add( '┣・Platfos[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
-               Add( '┃　│' );
+
                for DI := 0 to P.Devices.Count-1 do
                begin
                     D := P.Devices[ DI ];
@@ -122,6 +119,7 @@ begin
                     Add( '┃　│　├・DRIVER_VERSION  ：'  +           D.DRIVER_VERSION     );
                end;
           end;
+
           Add( '' );
      end;
 end;
@@ -143,12 +141,14 @@ begin
 
                Add( '┃' );
                Add( '┣・Platfos[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
+
                for CI := 0 to P.Contexs.Count-1 do
                begin
                     C := P.Contexs[ CI ];
 
                     Add( '┃　│' );
                     Add( '┃　┝・Contexs[ ' + CI.ToString + ' ]<' + LongInt( C.Handle ).ToHexString + '>' );
+
                     for QI := 0 to C.Commands.Count-1 do
                     begin
                          Q := C.Commands[ QI ];
@@ -159,6 +159,7 @@ begin
                     end;
                end;
           end;
+
           Add( '' );
      end;
 end;
