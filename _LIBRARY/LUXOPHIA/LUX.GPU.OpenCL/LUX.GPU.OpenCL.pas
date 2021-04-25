@@ -20,9 +20,9 @@ uses System.Generics.Collections,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TOpenCL   = class;
-
-     TCLPlatfo = TCLPlatfo<TOpenCL>;
+     TOpenCL       = class;
+       TCLPlatfos  = TCLPlatfos<TOpenCL>;
+         TCLPlatfo = TCLPlatfo<TOpenCL>;
 
      TCLDevice = TCLDevice<TCLPlatfo>;
 
@@ -49,7 +49,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TOpenCL = class
      private
-       _Platfos :TObjectList<TCLPlatfo>;
+       _Platfos :TCLPlatfos;
        ///// メソッド
        procedure MakePlatforms;
      protected
@@ -60,9 +60,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create;
        destructor Destroy; override;
        ///// プロパティ
-       property Platfos :TObjectList<TCLPlatfo> read   _Platfos;
-       property Platfo0 :TCLPlatfo              read GetPlatfo0;
-       property Device0 :TCLDevice              read GetDevice0;
+       property Platfos :TCLPlatfos read   _Platfos;
+       property Platfo0 :TCLPlatfo  read GetPlatfo0;
+       property Device0 :TCLDevice  read GetDevice0;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -97,7 +97,7 @@ begin
 
      AssertCL( clGetPlatformIDs( PsN, @Ps[0], nil ) );
 
-     for P in Ps do _Platfos.Add( TCLPlatfo.Create( Self, P ) );
+     for P in Ps do TCLPlatfo.Create( _Platfos, P );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
@@ -120,7 +120,7 @@ constructor TOpenCL.Create;
 begin
      inherited;
 
-     _Platfos := TObjectList<TCLPlatfo>.Create;
+     _Platfos := TCLPlatfos.Create( Self );
 
      MakePlatforms;
 end;
