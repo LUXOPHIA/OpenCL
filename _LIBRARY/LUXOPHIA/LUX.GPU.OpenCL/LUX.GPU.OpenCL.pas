@@ -20,11 +20,11 @@ uses System.Generics.Collections,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TOpenCL       = class;
-       TCLPlatfos  = TCLPlatfos<TOpenCL>;
-         TCLPlatfo = TCLPlatfo<TOpenCL>;
-
-     TCLDevice = TCLDevice<TCLPlatfo>;
+     TOpenCL           = class;
+       TCLPlatfos      = TCLPlatfos<TOpenCL>;
+         TCLPlatfo     = TCLPlatfo <TOpenCL>;
+           TCLDevices  = TCLDevices<TCLPlatfo>;
+             TCLDevice = TCLDevice <TCLPlatfo>;
 
      TCLContex = TCLContex<TCLPlatfo,TCLDevice>;
 

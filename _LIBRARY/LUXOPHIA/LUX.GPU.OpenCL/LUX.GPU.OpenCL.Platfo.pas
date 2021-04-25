@@ -26,8 +26,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLPlatfo<TOpenCL_:class> = class( TListChildr<TOpenCL_,TCLPlatfos<TOpenCL_>> )
      private
        type TCLPlatfos_ = TCLPlatfos<TOpenCL_>;
-            TCLPlatfo_  = TCLPlatfo<TOpenCL_>;
-            TCLDevice_  = TCLDevice<TCLPlatfo_>;
+            TCLPlatfo_  = TCLPlatfo <TOpenCL_>;
+            TCLDevices_ = TCLDevices<TCLPlatfo_>;
+            TCLDevice_  = TCLDevice <TCLPlatfo_>;
             TCLContex_  = TCLContex<TCLPlatfo_,TCLDevice_>;
        ///// メソッド
        function GetInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
@@ -37,7 +38,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _Handle  :T_cl_platform_id;
        _Extenss :TStringList;
-       _Devices :TObjectList<TCLDevice_>;
+       _Devices :TCLDevices_;
        _Contexs :TObjectList<TCLContex_>;
        ///// アクセス
        function GetProfile :String;
@@ -45,8 +46,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetName :String;
        function GetVendor :String;
        function GetHostTimerResolution :T_cl_ulong;
-       ///// メソッド
-       procedure MakeDevices;
      public
        constructor Create; override;
        constructor Create( const Parent_:TCLPlatfos_; const Handle_:T_cl_platform_id ); overload; virtual;
@@ -61,7 +60,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Vendor              :String                  read GetVendor             ;
        property Extenss             :TStringList             read   _Extenss            ;
        property HostTimerResolution :T_cl_ulong              read GetHostTimerResolution;  { OpenCL 2.1 }
-       property Devices             :TObjectList<TCLDevice_> read   _Devices            ;
+       property Devices             :TCLDevices_             read   _Devices            ;
        property Contexs             :TObjectList<TCLContex_> read   _Contexs            ;
      end;
 
@@ -76,6 +75,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
        constructor Create; override;
        destructor Destroy; override;
+       ///// プロパティ
+       property OpenCL :TOpenCL_ read GetOwnere;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -164,25 +165,6 @@ begin
      {$ENDIF}
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
-
-procedure TCLPlatfo<TOpenCL_>.MakeDevices;
-const
-     DEVICETYPE = CL_DEVICE_TYPE_ALL;
-var
-   DsN :T_cl_uint;
-   Ds :TArray<T_cl_device_id>;
-   D :T_cl_device_id;
-begin
-     AssertCL( clGetDeviceIDs( _Handle, DEVICETYPE, 0, nil, @DsN ) );
-
-     SetLength( Ds, DsN );
-
-     AssertCL( clGetDeviceIDs( _Handle, DEVICETYPE, DsN, @Ds[0], nil ) );
-
-     for D in Ds do _Devices.Add( TCLDevice_.Create( Self, D ) );
-end;
-
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 constructor TCLPlatfo<TOpenCL_>.Create;
@@ -190,7 +172,7 @@ begin
      inherited;
 
      _Extenss := TStringList.Create;
-     _Devices := TObjectList<TCLDevice_>.Create;
+     _Devices := TCLDevices_.Create( Self );
      _Contexs := TObjectList<TCLContex_>.Create;
 end;
 
@@ -205,7 +187,7 @@ begin
      for E in GetInfoString( CL_PLATFORM_EXTENSIONS ).Split( [ ' ' ] )
      do _Extenss.Add( E );
 
-     MakeDevices;
+     _Devices.FindDevices;
 end;
 
 destructor TCLPlatfo<TOpenCL_>.Destroy;
