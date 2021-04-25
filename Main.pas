@@ -75,7 +75,7 @@ begin
                P := _OpenCL_.Platfos[ PI ];
 
                Add( '┃' );
-               Add( '┣・Platform[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
+               Add( '┣・Platfos[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
                Add( '┃　├・Profile   ：' + P.Profile );
                Add( '┃　├・Version   ：' + P.Version );
                Add( '┃　├・Name      ：' + P.Name    );
@@ -111,7 +111,7 @@ begin
                     D := P.Devices[ DI ];
 
                     Add( '┃　│' );
-                    Add( '┃　┝・Device[ ' + DI.ToString + ' ]<' + Longint( D.Handle ).ToHexString + '>' );
+                    Add( '┃　┝・Devices[ ' + DI.ToString + ' ]<' + Longint( D.Handle ).ToHexString + '>' );
                     Add( '┃　│　├・DEVICE_TYPE     ：'  + IntTosTr( D.DEVICE_TYPE      ) );
                     Add( '┃　│　├・DEVICE_VENDOR   ：'  +           D.DEVICE_VENDOR      );
                     Add( '┃　│　├・DEVICE_VENDOR_ID：'  + IntToStr( D.DEVICE_VENDOR_ID ) );
