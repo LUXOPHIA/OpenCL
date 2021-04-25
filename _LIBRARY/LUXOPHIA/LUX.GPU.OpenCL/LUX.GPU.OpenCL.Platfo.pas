@@ -6,6 +6,7 @@ uses System.Classes, System.Generics.Collections,
      cl_version,
      cl_platform,
      cl,
+     LUX.Data.List,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
      LUX.GPU.OpenCL.Device,
@@ -13,25 +14,26 @@ uses System.Classes, System.Generics.Collections,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
+     TCLPlatfos<_TOpenCL_:class>  = class;
+       TCLPlatfo<_TOpenCL_:class> = class;
+
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevice<_TOpenCL_>
-
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfo<_TOpenCL_>
 
-     TCLPlatfo<_TOpenCL_:class> = class
+     TCLPlatfo<_TOpenCL_:class> = class( TListChildr<_TOpenCL_,TCLPlatfos<_TOpenCL_>> )
      private
-       type TCLDevice = TCLDevice<TCLPlatfo<_TOpenCL_>>;
-       type TCLContex = TCLContex<TCLPlatfo<_TOpenCL_>,TCLDevice>;
+       type TCLPlatfos = TCLPlatfos<_TOpenCL_>;
+            TCLDevice  = TCLDevice<TCLPlatfo<_TOpenCL_>>;
+            TCLContex  = TCLContex<TCLPlatfo<_TOpenCL_>,TCLDevice>;
        ///// メソッド
        function GetPlatformInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
        function GetPlatformInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
        function GetPlatformInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
        function GetPlatformInfoString( const Name_:T_cl_platform_info ) :String;
      protected
-       _Parent  :_TOpenCL_;
        _Handle  :T_cl_platform_id;
        _Extenss :TStringList;
        _Devices :TObjectList<TCLDevice>;
@@ -45,10 +47,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// メソッド
        procedure MakeDevices;
      public
-       constructor Create( const Parent_:_TOpenCL_; const ID_:T_cl_platform_id );
+       constructor Create; override;
+       constructor Create( const Parent_:TCLPlatfos; const Handle_:T_cl_platform_id ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property OpenCL              :_TOpenCL_              read   _Parent             ;
+       property OpenCL              :_TOpenCL_              read GetOwnere             ;
+       property Platfos             :TCLPlatfos             read GetParent             ;
        property Handle              :T_cl_platform_id       read   _Handle             ;
        property Profile             :String                 read GetProfile            ;
        property Version             :String                 read GetVersion            ;
@@ -58,6 +62,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property HostTimerResolution :T_cl_ulong             read GetHostTimerResolution;  { OpenCL 2.1 }
        property Devices             :TObjectList<TCLDevice> read   _Devices            ;
        property Contexs             :TObjectList<TCLContex> read   _Contexs            ;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfos<_TOpenCL_>
+
+     TCLPlatfos<_TOpenCL_:class> = class( TListParent<_TOpenCL_,TCLPlatfo<_TOpenCL_>> )
+     private
+     protected
+     public
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -166,18 +178,22 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLPlatfo<_TOpenCL_>.Create( const Parent_:_TOpenCL_; const ID_:T_cl_platform_id );
-var
-   E :String;
+constructor TCLPlatfo<_TOpenCL_>.Create;
 begin
-     inherited Create;
+     inherited;
 
      _Extenss := TStringList.Create;
      _Devices := TObjectList<TCLDevice>.Create;
      _Contexs := TObjectList<TCLContex>.Create;
+end;
 
-     _Parent := Parent_;
-     _Handle := ID_;
+constructor TCLPlatfo<_TOpenCL_>.Create( const Parent_:TCLPlatfos; const Handle_:T_cl_platform_id );
+var
+   E :String;
+begin
+     Create( Parent_ );
+
+     _Handle := Handle_;
 
      for E in GetPlatformInfoString( CL_PLATFORM_EXTENSIONS ).Split( [ ' ' ] )
      do _Extenss.Add( E );
@@ -194,12 +210,14 @@ begin
      inherited;
 end;
 
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfos<_TOpenCL_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
-
-//############################################################################## □
-
-initialization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 初期化
-
-finalization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 最終化
 
 end. //######################################################################### ■
