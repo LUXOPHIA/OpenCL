@@ -30,10 +30,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLDevice_  = TCLDevice<TCLPlatfo_>;
             TCLContex_  = TCLContex<TCLPlatfo_,TCLDevice_>;
        ///// メソッド
-       function GetPlatformInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
-       function GetPlatformInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
-       function GetPlatformInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
-       function GetPlatformInfoString( const Name_:T_cl_platform_info ) :String;
+       function GetInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
+       function GetInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
+       function GetInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
+       function GetInfoString( const Name_:T_cl_platform_info ) :String;
      protected
        _Handle  :T_cl_platform_id;
        _Extenss :TStringList;
@@ -72,7 +72,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLPlatfo_ = TCLPlatfo<TOpenCL_>;
      protected
        ///// メソッド
-       procedure FindPlatforms;
+       procedure FindPlatfos;
      public
        constructor Create; override;
        destructor Destroy; override;
@@ -99,25 +99,25 @@ uses System.SysUtils,
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLPlatfo<TOpenCL_>.GetPlatformInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
+function TCLPlatfo<TOpenCL_>.GetInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
 begin
      AssertCL( clGetPlatformInfo( _Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLPlatfo<TOpenCL_>.GetPlatformInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
+function TCLPlatfo<TOpenCL_>.GetInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
 begin
      AssertCL( clGetPlatformInfo( _Handle, Name_, 0, nil, @Result ) );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLPlatfo<TOpenCL_>.GetPlatformInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
+function TCLPlatfo<TOpenCL_>.GetInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
 var
    S :T_size_t;
 begin
-     S := GetPlatformInfoSize( Name_ );
+     S := GetInfoSize( Name_ );
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
@@ -126,9 +126,9 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLPlatfo<TOpenCL_>.GetPlatformInfoString( const Name_:T_cl_platform_info ) :String;
+function TCLPlatfo<TOpenCL_>.GetInfoString( const Name_:T_cl_platform_info ) :String;
 begin
-     Result := String( P_char( GetPlatformInfos<T_char>( Name_ ) ) );
+     Result := String( P_char( GetInfos<T_char>( Name_ ) ) );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
@@ -137,28 +137,28 @@ end;
 
 function TCLPlatfo<TOpenCL_>.GetProfile :String;
 begin
-     Result := GetPlatformInfoString( CL_PLATFORM_PROFILE );
+     Result := GetInfoString( CL_PLATFORM_PROFILE );
 end;
 
 function TCLPlatfo<TOpenCL_>.GetVersion :String;
 begin
-     Result := GetPlatformInfoString( CL_PLATFORM_VERSION );
+     Result := GetInfoString( CL_PLATFORM_VERSION );
 end;
 
 function TCLPlatfo<TOpenCL_>.GetName :String;
 begin
-     Result := GetPlatformInfoString( CL_PLATFORM_NAME );
+     Result := GetInfoString( CL_PLATFORM_NAME );
 end;
 
 function TCLPlatfo<TOpenCL_>.GetVendor :String;
 begin
-     Result := GetPlatformInfoString( CL_PLATFORM_VENDOR );
+     Result := GetInfoString( CL_PLATFORM_VENDOR );
 end;
 
 function TCLPlatfo<TOpenCL_>.GetHostTimerResolution :T_cl_ulong;
 begin
      {$IF CL_VERSION_2_1 <> 0 }
-     Result := GetPlatformInfo<T_cl_ulong>( CL_PLATFORM_HOST_TIMER_RESOLUTION );
+     Result := GetInfo<T_cl_ulong>( CL_PLATFORM_HOST_TIMER_RESOLUTION );
      {$ELSE}
      Result := 0;
      {$ENDIF}
@@ -202,7 +202,7 @@ begin
 
      _Handle := Handle_;
 
-     for E in GetPlatformInfoString( CL_PLATFORM_EXTENSIONS ).Split( [ ' ' ] )
+     for E in GetInfoString( CL_PLATFORM_EXTENSIONS ).Split( [ ' ' ] )
      do _Extenss.Add( E );
 
      MakeDevices;
@@ -225,7 +225,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLPlatfos<TOpenCL_>.FindPlatforms;
+procedure TCLPlatfos<TOpenCL_>.FindPlatfos;
 var
    PsN :T_cl_uint;
    Ps :TArray<T_cl_platform_id>;
@@ -246,7 +246,7 @@ constructor TCLPlatfos<TOpenCL_>.Create;
 begin
      inherited;
 
-     FindPlatforms;
+     FindPlatfos;
 end;
 
 destructor TCLPlatfos<TOpenCL_>.Destroy;
