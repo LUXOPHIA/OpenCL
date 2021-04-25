@@ -50,8 +50,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TOpenCL = class
      private
        _Platfos :TCLPlatfos;
-       ///// メソッド
-       procedure MakePlatforms;
      protected
        ///// アクセス
        function GetPlatfo0 :TCLPlatfo;
@@ -83,23 +81,6 @@ implementation //###############################################################
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
-/////////////////////////////////////////////////////////////////////// メソッド
-
-procedure TOpenCL.MakePlatforms;
-var
-   PsN :T_cl_uint;
-   Ps :TArray<T_cl_platform_id>;
-   P :T_cl_platform_id;
-begin
-     AssertCL( clGetPlatformIDs( 0, nil, @PsN ) );
-
-     SetLength( Ps, PsN );
-
-     AssertCL( clGetPlatformIDs( PsN, @Ps[0], nil ) );
-
-     for P in Ps do TCLPlatfo.Create( _Platfos, P );
-end;
-
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 /////////////////////////////////////////////////////////////////////// アクセス
@@ -121,8 +102,6 @@ begin
      inherited;
 
      _Platfos := TCLPlatfos.Create( Self );
-
-     MakePlatforms;
 end;
 
 destructor TOpenCL.Destroy;
