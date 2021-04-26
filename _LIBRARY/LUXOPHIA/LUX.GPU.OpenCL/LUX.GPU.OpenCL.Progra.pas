@@ -72,11 +72,11 @@ uses LUX.GPU.OpenCL;
 
 procedure TCLProgra<_TContext_>.SetParent( const Parent_:_TContext_ );
 begin
-     if Assigned( _Parent ) then TCLContex( _Parent ).Programs.Remove( TCLProgra( Self ) );
+     if Assigned( _Parent ) then TCLContex( _Parent ).Progras.Remove( TCLProgra( Self ) );
 
                   _Parent := Parent_;
 
-     if Assigned( _Parent ) then TCLContex( _Parent ).Programs.Add   ( TCLProgra( Self ) );
+     if Assigned( _Parent ) then TCLContex( _Parent ).Progras.Add   ( TCLProgra( Self ) );
 end;
 
 //------------------------------------------------------------------------------
