@@ -72,9 +72,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        ///// メソッド
        procedure FindPlatfos;
+       ///// イベント
+       procedure OnInit; override;
      public
-       constructor Create; override;
-       destructor Destroy; override;
        ///// プロパティ
        property OpenCL :TOpenCL_ read GetOwnere;
      end;
@@ -186,8 +186,6 @@ begin
 
      for E in GetInfoString( CL_PLATFORM_EXTENSIONS ).Split( [ ' ' ] )
      do _Extenss.Add( E );
-
-     _Devices.FindDevices;
 end;
 
 destructor TCLPlatfo<TOpenCL_>.Destroy;
@@ -222,20 +220,14 @@ begin
      for P in Ps do TCLPlatfo_.Create( Self, P );
 end;
 
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+/////////////////////////////////////////////////////////////////////// イベント
 
-constructor TCLPlatfos<TOpenCL_>.Create;
+procedure TCLPlatfos<TOpenCL_>.OnInit;
 begin
-     inherited;
-
      FindPlatfos;
 end;
 
-destructor TCLPlatfos<TOpenCL_>.Destroy;
-begin
-
-     inherited;
-end;
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
 
