@@ -149,9 +149,9 @@ begin
                     Add( '┃　│' );
                     Add( '┃　┝・Contexs[ ' + CI.ToString + ' ]<' + LongInt( C.Handle ).ToHexString + '>' );
 
-                    for QI := 0 to C.Commands.Count-1 do
+                    for QI := 0 to C.Commans.Count-1 do
                     begin
-                         Q := C.Commands[ QI ];
+                         Q := C.Commans[ QI ];
 
                          Add( '┃　│　│' );
                          Add( '┃　│　├・Commans[ ' + QI.ToString + ' ]<' + LongInt( Q.Handle ).ToHexString + '>'
@@ -172,10 +172,10 @@ var
    I :Integer;
 begin
      ///// Platform
-     ShowPlatfos;                                                               // 一覧表示
+     ShowPlatfos;                                                               // プラットフォームの一覧表示
 
      ///// Device
-     ShowDevices;  // 一覧表示
+     ShowDevices;                                                               // デバイスの一覧表示
 
      ///// Context
      _Contex := TCLContex.Create( _OpenCL_.Platfos[ 0 ] );                      // 生成
@@ -199,8 +199,8 @@ begin
      _BufferB.Count := 10;                                                      // 要素数の設定
      _BufferC.Count := 10;                                                      // 要素数の設定
 
-     A := TCLBufferIter<T_float>.Create( _Contex.Commands[ 0 ], _BufferA );     // マップ
-     B := TCLBufferIter<T_float>.Create( _Contex.Commands[ 0 ], _BufferB );     // マップ
+     A := TCLBufferIter<T_float>.Create( _Contex.Commans[ 0 ], _BufferA );     // マップ
+     B := TCLBufferIter<T_float>.Create( _Contex.Commans[ 0 ], _BufferB );     // マップ
      for I := 0 to _BufferA.Count-1 do A.Values[ I ] := Random( 10 );           // 書き込み
      for I := 0 to _BufferB.Count-1 do B.Values[ I ] := Random( 10 );           // 書き込み
      A.Free;                                                                    // アンマップ
@@ -213,13 +213,13 @@ begin
      _Kernel.Memorys.Add( _BufferC );                                           // Buffer の登録
      _Kernel.GlobalWorkSize := [ 10 ];                                          // ループ回数の設定
 
-     _Kernel.Run( _Contex.Commands[ 0 ] );                                      // 実行
+     _Kernel.Run( _Contex.Commans[ 0 ] );                                      // 実行
 
      ///// Buffer
      MemoPR.Lines.Add( 'A[i] + B[i] = C[i]' );
-     A := TCLBufferIter<T_float>.Create( _Contex.Commands[ 0 ], _BufferA );     // マップ
-     B := TCLBufferIter<T_float>.Create( _Contex.Commands[ 0 ], _BufferB );     // マップ
-     C := TCLBufferIter<T_float>.Create( _Contex.Commands[ 0 ], _BufferC );     // マップ
+     A := TCLBufferIter<T_float>.Create( _Contex.Commans[ 0 ], _BufferA );     // マップ
+     B := TCLBufferIter<T_float>.Create( _Contex.Commans[ 0 ], _BufferB );     // マップ
+     C := TCLBufferIter<T_float>.Create( _Contex.Commans[ 0 ], _BufferC );     // マップ
      for I := 0 to _BufferC.Count-1 do
      begin
           MemoPR.Lines.Add( FloatToStr( A.Values[ I ] ) + ' * '                 // 読み込み
