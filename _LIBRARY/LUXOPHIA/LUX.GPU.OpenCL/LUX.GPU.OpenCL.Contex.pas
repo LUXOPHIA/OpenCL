@@ -4,6 +4,7 @@ interface //####################################################################
 
 uses System.Generics.Collections,
      cl_version, cl_platform, cl,
+     LUX.Data.List,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
      LUX.GPU.OpenCL.Comman,
@@ -12,26 +13,28 @@ uses System.Generics.Collections,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
+     TCLContexs<TCLPlatfo_,TCLDevice_:class> = class;
+       TCLContex<TCLPlatfo_,TCLDevice_:class> = class;
+
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContex<TCLPlatfo_,TCLDevice_>
 
-     TCLContex<TCLPlatfo_,TCLDevice_:class> = class
+     TCLContex<TCLPlatfo_,TCLDevice_:class> = class( TListChildr<TCLPlatfo_,TCLContexs<TCLPlatfo_,TCLDevice_>> )
      private
-       type TCLContex_ = TCLContex<TCLPlatfo_,TCLDevice_>;
-            TCLComman_ = TCLComman<TCLContex_,TCLDevice_>;
-            TCLProgra_ = TCLProgra<TCLContex_>;
-            TCLMemory_ = TCLMemory<TCLContex_>;
+       type TCLContexs_ = TCLContexs<TCLPlatfo_,TCLDevice_>;
+            TCLContex_  = TCLContex <TCLPlatfo_,TCLDevice_>;
+            TCLComman_  = TCLComman <TCLContex_,TCLDevice_>;
+            TCLProgra_  = TCLProgra <TCLContex_>;
+            TCLMemory_  = TCLMemory <TCLContex_>;
      protected
-       _Parent  :TCLPlatfo_;
        _Commans :TObjectList<TCLComman_>;
        _Handle  :T_cl_context;
        _Progras :TObjectList<TCLProgra_>;
        _Memorys :TObjectList<TCLMemory_>;
        ///// アクセス
-       procedure SetParent( const Parent_:TCLPlatfo_ );
        function GetHandle :T_cl_context;
        function GetavHandle :Boolean;
        procedure SetavHandle( const avHandle_:Boolean );
@@ -39,12 +42,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure BeginHandle;
        procedure EndHandle;
      public
-       constructor Create; overload;
-       constructor Create( const Parent_:TCLPlatfo_ ); overload;
-       constructor Create( const Parent_:TCLPlatfo_; const Devices_:TArray<TCLDevice_> ); overload;
+       constructor Create; override;
+       constructor Create( const Platfo_:TCLPlatfo_ ); overload; virtual;
+       constructor Create( const Platfo_:TCLPlatfo_; const Devices_:TArray<TCLDevice_> ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Parent   :TCLPlatfo_              read   _Parent   write SetParent  ;
+       property Platfo   :TCLPlatfo_              read GetOwnere                    ;
+       property Contexs  :TCLContexs_             read GetParent                    ;
        property Commans  :TObjectList<TCLComman_> read   _Commans                   ;
        property Handle   :T_cl_context            read GetHandle                    ;
        property avHandle :Boolean                 read GetavHandle write SetavHandle;
@@ -54,6 +58,16 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure Add( const Device_:TCLDevice_ );
        procedure Remove( const Device_:TCLDevice_ );
        function GetDevices :TArray<T_cl_device_id>;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLPlatfo_,TCLDevice_>
+
+     TCLContexs<TCLPlatfo_,TCLDevice_:class> = class( TListParent<TCLPlatfo_,TCLContex<TCLPlatfo_,TCLDevice_>> )
+     private
+     protected
+     public
+       ///// プロパティ
+       property Platfo :TCLPlatfo_ read GetOwnere;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -77,17 +91,6 @@ uses LUX.GPU.OpenCL;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 /////////////////////////////////////////////////////////////////////// アクセス
-
-procedure TCLContex<TCLPlatfo_,TCLDevice_>.SetParent( const Parent_:TCLPlatfo_ );
-begin
-     if Assigned( _Parent ) then TCLPlatfo( _Parent ).Contexs.Remove( TCLContex( Self ) );
-
-                  _Parent := Parent_;
-
-     if Assigned( _Parent ) then TCLPlatfo( _Parent ).Contexs.Add   ( TCLContex( Self ) );
-end;
-
-//------------------------------------------------------------------------------
 
 function TCLContex<TCLPlatfo_,TCLDevice_>.GetHandle :T_cl_context;
 begin
@@ -116,7 +119,7 @@ var
    Ds :TArray<T_cl_device_id>;
 begin
      Ps[ 0 ] := CL_CONTEXT_PLATFORM;
-     Ps[ 1 ] := NativeInt( TCLPlatfo( _Parent ).Handle );
+     Ps[ 1 ] := T_cl_context_properties( TCLPlatfo( Platfo ).Handle );
      Ps[ 2 ] := 0;
 
      Ds := GetDevices;
@@ -137,37 +140,34 @@ constructor TCLContex<TCLPlatfo_,TCLDevice_>.Create;
 begin
      inherited;
 
+     _Handle := nil;
+
      _Commans := TObjectList<TCLComman_>.Create;
      _Progras := TObjectList<TCLProgra_>.Create;
      _Memorys := TObjectList<TCLMemory_>.Create;
-
-     _Parent := nil;
-     _Handle := nil;
 end;
 
-constructor TCLContex<TCLPlatfo_,TCLDevice_>.Create( const Parent_:TCLPlatfo_ );
+constructor TCLContex<TCLPlatfo_,TCLDevice_>.Create( const Platfo_:TCLPlatfo_ );
 begin
-     Create;
-
-     Parent := Parent_;
+     Create( TCLContexs_( TCLPlatfo( Platfo_ ).Contexs ) );
 end;
 
-constructor TCLContex<TCLPlatfo_,TCLDevice_>.Create( const Parent_:TCLPlatfo_; const Devices_:TArray<TCLDevice_> );
+constructor TCLContex<TCLPlatfo_,TCLDevice_>.Create( const Platfo_:TCLPlatfo_; const Devices_:TArray<TCLDevice_> );
 var
    D :TCLDevice_;
 begin
-     Create( Parent_ );
+     Create( Platfo_ );
 
      for D in Devices_ do Add( D );
 end;
 
 destructor TCLContex<TCLPlatfo_,TCLDevice_>.Destroy;
 begin
-     if avHandle then EndHandle;
-
      _Commans.Free;
      _Progras.Free;
      _Memorys.Free;
+
+     if avHandle then EndHandle;
 
      inherited;
 end;
@@ -207,12 +207,14 @@ begin
      end;
 end;
 
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLPlatfo_,TCLDevice_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
-
-//############################################################################## □
-
-initialization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 初期化
-
-finalization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 最終化
 
 end. //######################################################################### ■
