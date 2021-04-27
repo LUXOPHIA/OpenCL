@@ -29,7 +29,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLPlatfo_  = TCLPlatfo <TOpenCL_>;
             TCLDevices_ = TCLDevices<TCLPlatfo_>;
             TCLDevice_  = TCLDevice <TCLPlatfo_>;
-            TCLContex_  = TCLContex<TCLPlatfo_,TCLDevice_>;
+            TCLContexs_ = TCLContexs<TCLPlatfo_,TCLDevice_>;
        ///// メソッド
        function GetInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
        function GetInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
@@ -39,7 +39,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Handle  :T_cl_platform_id;
        _Extenss :TStringList;
        _Devices :TCLDevices_;
-       _Contexs :TObjectList<TCLContex_>;
+       _Contexs :TCLContexs_;
        ///// アクセス
        function GetProfile :String;
        function GetVersion :String;
@@ -51,17 +51,17 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Parent_:TCLPlatfos_; const Handle_:T_cl_platform_id ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property OpenCL              :TOpenCL_                read GetOwnere             ;
-       property Platfos             :TCLPlatfos_             read GetParent             ;
-       property Handle              :T_cl_platform_id        read   _Handle             ;
-       property Profile             :String                  read GetProfile            ;
-       property Version             :String                  read GetVersion            ;
-       property Name                :String                  read GetName               ;
-       property Vendor              :String                  read GetVendor             ;
-       property Extenss             :TStringList             read   _Extenss            ;
-       property HostTimerResolution :T_cl_ulong              read GetHostTimerResolution;  { OpenCL 2.1 }
-       property Devices             :TCLDevices_             read   _Devices            ;
-       property Contexs             :TObjectList<TCLContex_> read   _Contexs            ;
+       property OpenCL              :TOpenCL_         read GetOwnere             ;
+       property Platfos             :TCLPlatfos_      read GetParent             ;
+       property Handle              :T_cl_platform_id read   _Handle             ;
+       property Profile             :String           read GetProfile            ;
+       property Version             :String           read GetVersion            ;
+       property Name                :String           read GetName               ;
+       property Vendor              :String           read GetVendor             ;
+       property Extenss             :TStringList      read   _Extenss            ;
+       property HostTimerResolution :T_cl_ulong       read GetHostTimerResolution;  { OpenCL 2.1 }
+       property Devices             :TCLDevices_      read   _Devices            ;
+       property Contexs             :TCLContexs_      read   _Contexs            ;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfos<TOpenCL_>
@@ -173,7 +173,7 @@ begin
 
      _Extenss := TStringList.Create;
      _Devices := TCLDevices_.Create( Self );
-     _Contexs := TObjectList<TCLContex_>.Create;
+     _Contexs := TCLContexs_.Create( Self );
 end;
 
 constructor TCLPlatfo<TOpenCL_>.Create( const Parent_:TCLPlatfos_; const Handle_:T_cl_platform_id );

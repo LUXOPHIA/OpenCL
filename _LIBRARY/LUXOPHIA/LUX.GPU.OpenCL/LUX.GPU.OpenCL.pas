@@ -25,8 +25,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
          TCLPlatfo     = TCLPlatfo <TOpenCL>;
            TCLDevices  = TCLDevices<TCLPlatfo>;
              TCLDevice = TCLDevice <TCLPlatfo>;
-
-     TCLContex = TCLContex<TCLPlatfo,TCLDevice>;
+           TCLContexs  = TCLContexs<TCLPlatfo,TCLDevice>;
+             TCLContex = TCLContex <TCLPlatfo,TCLDevice>;
 
      TCLComman = TCLComman<TCLContex,TCLDevice>;
 
