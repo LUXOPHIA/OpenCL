@@ -28,11 +28,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLContexs_ = TCLContexs<TCLPlatfo_>;
             TCLDevice_  = TCLDevice <TCLPlatfo_>;
             TCLContex_  = TCLContex <TCLPlatfo_>;
+            TCLCommans_ = TCLCommans<TCLContex_,TCLDevice_>;
             TCLComman_  = TCLComman <TCLContex_,TCLDevice_>;
             TCLProgra_  = TCLProgra <TCLContex_>;
             TCLMemory_  = TCLMemory <TCLContex_>;
      protected
-       _Commans :TObjectList<TCLComman_>;
+       _Commans :TCLCommans_;
        _Handle  :T_cl_context;
        _Progras :TObjectList<TCLProgra_>;
        _Memorys :TObjectList<TCLMemory_>;
@@ -45,19 +46,16 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
        constructor Create; override;
        constructor Create( const Platfo_:TCLPlatfo_ ); overload; virtual;
-       constructor Create( const Platfo_:TCLPlatfo_; const Devices_:TArray<TCLDevice_> ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
        property Platfo  :TCLPlatfo_              read GetOwnere                 ;
        property Contexs :TCLContexs_             read GetParent                 ;
-       property Commans :TObjectList<TCLComman_> read   _Commans                ;
+       property Commans :TCLCommans_             read   _Commans                ;
        property Handle  :T_cl_context            read GetHandle  write SetHandle;
        property Progras :TObjectList<TCLProgra_> read   _Progras                ;
        property Memorys :TObjectList<TCLMemory_> read   _Memorys                ;
        ///// メソッド
-       procedure Add( const Device_:TCLDevice_ );
-       procedure Remove( const Device_:TCLDevice_ );
-       function GetDevices :TArray<T_cl_device_id>;
+       function GetDeviceIDs :TArray<T_cl_device_id>;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLPlatfo_>
@@ -117,7 +115,7 @@ begin
      Ps[ 1 ] := T_cl_context_properties( TCLPlatfo( Platfo ).Handle );
      Ps[ 2 ] := 0;
 
-     Ds := GetDevices;
+     Ds := GetDeviceIDs;
 
      _Handle := clCreateContext( @Ps[0], Length( Ds ), @Ds[0], nil, nil, nil );
 end;
@@ -137,23 +135,14 @@ begin
 
      _Handle := nil;
 
-     _Commans := TObjectList<TCLComman_>.Create;
+     _Commans := TCLCommans_.Create( Self );
      _Progras := TObjectList<TCLProgra_>.Create;
      _Memorys := TObjectList<TCLMemory_>.Create;
 end;
 
 constructor TCLContex<TCLPlatfo_>.Create( const Platfo_:TCLPlatfo_ );
 begin
-     Create( TCLContexs_( TCLPlatfo( Platfo_ ).Contexs ) );
-end;
-
-constructor TCLContex<TCLPlatfo_>.Create( const Platfo_:TCLPlatfo_; const Devices_:TArray<TCLDevice_> );
-var
-   D :TCLDevice_;
-begin
-     Create( Platfo_ );
-
-     for D in Devices_ do Add( D );
+     inherited Create( TCLPlatfo( Platfo_ ).Contexs );
 end;
 
 destructor TCLContex<TCLPlatfo_>.Destroy;
@@ -169,28 +158,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLContex<TCLPlatfo_>.Add( const Device_:TCLDevice_ );
-begin
-     _Commans.Add( TCLComman_.Create( Self, Device_ ) );
-
-     Handle := nil;
-end;
-
-procedure TCLContex<TCLPlatfo_>.Remove( const Device_:TCLDevice_ );
-var
-   C :TCLComman_;
-begin
-     for C in _Commans do
-     begin
-          if C.Device = Device_ then C.Free;
-     end;
-
-     Handle := nil;
-end;
-
-//------------------------------------------------------------------------------
-
-function TCLContex<TCLPlatfo_>.GetDevices :TArray<T_cl_device_id>;
+function TCLContex<TCLPlatfo_>.GetDeviceIDs :TArray<T_cl_device_id>;
 var
    I :Integer;
 begin
@@ -198,7 +166,7 @@ begin
      begin
           SetLength( Result, Count );
 
-          for I := 0 to Count-1 do Result[ I ] := TCLDevice( Items[ I ].Device ).Handle;
+          for I := 0 to Count-1 do Result[ I ] := TCLComman( Items[ I ] ).Device.Handle;
      end;
 end;
 
