@@ -2,10 +2,8 @@
 
 interface //#################################################################### ■
 
-uses System.Classes, System.Generics.Collections,
-     cl_version,
-     cl_platform,
-     cl,
+uses System.Classes,
+     cl_version, cl_platform, cl,
      LUX.Data.List,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
