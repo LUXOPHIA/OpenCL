@@ -70,7 +70,7 @@ end;
 
 function TCLComman<_TContext_,_TDevice_>.GetavHandle :Boolean;
 begin
-     Result := TCLContex( _Parent ).avHandle and Assigned( _Handle );
+     Result := Assigned( TCLContex( _Parent )._Handle ) and Assigned( _Handle );
 end;
 
 procedure TCLComman<_TContext_,_TDevice_>.SetavHandle( const avHandle_:Boolean );
@@ -119,7 +119,7 @@ destructor TCLComman<_TContext_,_TDevice_>.Destroy;
 begin
      if avHandle then EndHandle;
 
-     TCLContex( _Parent ).avHandle := False;
+     TCLContex( _Parent ).Handle := nil;
 
      inherited;
 end;
