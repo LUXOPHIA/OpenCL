@@ -37,7 +37,10 @@ type
     { private 宣言 }
   public
     { public 宣言 }
+    _Platfo  :TCLPlatfo;
+    _Device  :TCLDevice;
     _Contex  :TCLContex;
+    _Comman  :TCLComman;
     _Progra  :TCLProgra;
     _Kernel  :TCLKernel;
     _BufferA :TCLHostBuffer<T_float>;
@@ -171,24 +174,32 @@ var
    A, B, C :TCLBufferIter<T_float>;
    I :Integer;
 begin
-     ///// Platform
-     ShowPlatfos;                                                               // プラットフォームの一覧表示
+     ///// Platfo
+     _Platfo := _OpenCL_.Platfos[ 0 ];                                          // 選択
+
+     ShowPlatfos;                                                               // 一覧表示
 
      ///// Device
-     ShowDevices;                                                               // デバイスの一覧表示
+     _Device := _Platfo.Devices[ 0 ];                                           // 選択
+
+     ShowDevices;                                                               // 一覧表示
 
      ///// Context
-     _Contex := TCLContex.Create( _OpenCL_.Platfos[ 0 ] );                      // 生成
-     _Contex.Add( _OpenCL_.Platfos[ 0 ].Devices[ 0 ] );                         // デバイスの登録
+     _Contex := TCLContex.Create( _Platfo );                                    // 生成
 
      ShowContexs;                                                               // 一覧表示
 
-     ///// Program
+     ///// Context
+     _Comman := TCLComman.Create( _Contex, _Device );                           // 生成
+
+     _Contex.Commans.Add( _Comman );                                            // 登録
+
+     ///// Progra
      _Progra := TCLProgra.Create( _Contex );                                    // 生成
-     _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースの読み込み
+     _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードの読み込み
      _Progra.Build;                                                             // ビルド
 
-     MemoPC.Lines.Assign( _Progra.Source );                                     // ソースの表示
+     MemoPC.Lines.Assign( _Progra.Source );                                     // ソースコードの表示
 
      ///// Buffer
      _BufferA := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
@@ -199,8 +210,8 @@ begin
      _BufferB.Count := 10;                                                      // 要素数の設定
      _BufferC.Count := 10;                                                      // 要素数の設定
 
-     A := TCLBufferIter<T_float>.Create( _Contex.Commans[ 0 ], _BufferA );     // マップ
-     B := TCLBufferIter<T_float>.Create( _Contex.Commans[ 0 ], _BufferB );     // マップ
+     A := TCLBufferIter<T_float>.Create( _Comman, _BufferA );                   // マップ
+     B := TCLBufferIter<T_float>.Create( _Comman, _BufferB );                   // マップ
      for I := 0 to _BufferA.Count-1 do A.Values[ I ] := Random( 10 );           // 書き込み
      for I := 0 to _BufferB.Count-1 do B.Values[ I ] := Random( 10 );           // 書き込み
      A.Free;                                                                    // アンマップ
@@ -213,13 +224,13 @@ begin
      _Kernel.Memorys.Add( _BufferC );                                           // Buffer の登録
      _Kernel.GlobalWorkSize := [ 10 ];                                          // ループ回数の設定
 
-     _Kernel.Run( _Contex.Commans[ 0 ] );                                      // 実行
+     _Kernel.Run( _Comman );                                                    // 実行
 
      ///// Buffer
      MemoPR.Lines.Add( 'A[i] + B[i] = C[i]' );
-     A := TCLBufferIter<T_float>.Create( _Contex.Commans[ 0 ], _BufferA );     // マップ
-     B := TCLBufferIter<T_float>.Create( _Contex.Commans[ 0 ], _BufferB );     // マップ
-     C := TCLBufferIter<T_float>.Create( _Contex.Commans[ 0 ], _BufferC );     // マップ
+     A := TCLBufferIter<T_float>.Create( _Comman, _BufferA );                   // マップ
+     B := TCLBufferIter<T_float>.Create( _Comman, _BufferB );                   // マップ
+     C := TCLBufferIter<T_float>.Create( _Comman, _BufferC );                   // マップ
      for I := 0 to _BufferC.Count-1 do
      begin
           MemoPR.Lines.Add( FloatToStr( A.Values[ I ] ) + ' * '                 // 読み込み
