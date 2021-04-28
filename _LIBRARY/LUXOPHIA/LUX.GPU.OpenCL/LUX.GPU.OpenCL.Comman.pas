@@ -4,21 +4,25 @@ interface //####################################################################
 
 uses System.Generics.Collections,
      cl_version, cl_platform, cl,
+     LUX.Data.List,
      LUX.Code.C,
      LUX.GPU.OpenCL.root;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
+     TCLCommans <TCLContex_,TCLDevice_:class> = class;
+       TCLComman<TCLContex_,TCLDevice_:class> = class;
+
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLComman<_TContext_,_TDevice_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLComman<TCLContex_,TCLDevice_>
 
-     TCLComman<TCLContex_,TCLDevice_:class> = class
+     TCLComman<TCLContex_,TCLDevice_:class> = class( TListChildr<TCLContex_,TCLCommans<TCLContex_,TCLDevice_>> )
      private
+       type TCLCommans_ = TCLCommans<TCLContex_,TCLDevice_>;
      protected
-       _Contex :TCLContex_;
        _Device :TCLDevice_;
        _Handle :T_cl_command_queue;
        ///// アクセス
@@ -28,13 +32,24 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure CreateHandle;
        procedure DestroHandle;
      public
-       constructor Create; overload;
-       constructor Create( const Contex_:TCLContex_; const Device_:TCLDevice_ ); overload;
+       constructor Create; override;
+       constructor Create( const Contex_:TCLContex_; const Device_:TCLDevice_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Contex :TCLContex_         read   _Contex                ;
-       property Device :TCLDevice_         read   _Device                ;
-       property Handle :T_cl_command_queue read GetHandle write SetHandle;
+       property Contex  :TCLContex_         read GetOwnere                ;
+       property Commans :TCLCommans_        read GetParent                ;
+       property Device  :TCLDevice_         read   _Device                ;
+       property Handle  :T_cl_command_queue read GetHandle write SetHandle;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLCommans<TCLContex_,TCLDevice_>
+
+     TCLCommans<TCLContex_,TCLDevice_:class> = class( TListParent<TCLContex_,TCLComman<TCLContex_,TCLDevice_>> )
+     private
+     protected
+     public
+       ///// プロパティ
+       property Contex :TCLContex_ read GetOwnere;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -51,7 +66,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLComman<_TContext_,_TDevice_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLComman<TContext_,TDevice_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -102,9 +117,8 @@ end;
 
 constructor TCLComman<TCLContex_,TCLDevice_>.Create( const Contex_:TCLContex_; const Device_:TCLDevice_ );
 begin
-     Create;
+     inherited Create( TCLContex( Contex_ ).Commans );
 
-     _Contex := Contex_;
      _Device := Device_;
 end;
 
@@ -117,12 +131,14 @@ begin
      inherited;
 end;
 
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLCommans<TCLContex_,TCLDevice_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
-
-//############################################################################## □
-
-initialization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 初期化
-
-finalization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 最終化
 
 end. //######################################################################### ■
