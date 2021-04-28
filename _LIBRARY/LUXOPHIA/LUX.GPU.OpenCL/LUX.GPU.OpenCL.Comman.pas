@@ -23,8 +23,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Handle :T_cl_command_queue;
        ///// アクセス
        function GetHandle :T_cl_command_queue;
-       function GetavHandle :Boolean;
-       procedure SetavHandle( const avHandle_:Boolean );
+       procedure SetHandle( const Handle_:T_cl_command_queue );
        ///// メソッド
        procedure CreateHandle;
        procedure DestroHandle;
@@ -33,10 +32,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Parent_:_TContext_; const Device_:_TDevice_ ); overload;
        destructor Destroy; override;
        ///// プロパティ
-       property Parent   :_TContext_         read   _Parent                    ;
-       property Device   :_TDevice_          read   _Device                    ;
-       property Handle   :T_cl_command_queue read GetHandle                    ;
-       property avHandle :Boolean            read GetavHandle write SetavHandle;
+       property Parent :_TContext_         read   _Parent                ;
+       property Device :_TDevice_          read   _Device                ;
+       property Handle :T_cl_command_queue read GetHandle write SetHandle;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -63,21 +61,16 @@ uses LUX.GPU.OpenCL;
 
 function TCLComman<_TContext_,_TDevice_>.GetHandle :T_cl_command_queue;
 begin
-     if not avHandle then CreateHandle;
+     if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-function TCLComman<_TContext_,_TDevice_>.GetavHandle :Boolean;
+procedure TCLComman<_TContext_,_TDevice_>.SetHandle( const Handle_:T_cl_command_queue );
 begin
-     Result := Assigned( TCLContex( _Parent )._Handle ) and Assigned( _Handle );
-end;
+     if Assigned( _Handle ) then DestroHandle;
 
-procedure TCLComman<_TContext_,_TDevice_>.SetavHandle( const avHandle_:Boolean );
-begin
-     if avHandle  then DestroHandle;
-
-     if avHandle_ then CreateHandle;
+     _Handle := Handle_;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
@@ -117,7 +110,7 @@ end;
 
 destructor TCLComman<_TContext_,_TDevice_>.Destroy;
 begin
-     if avHandle then DestroHandle;
+      Handle := nil;
 
      TCLContex( _Parent ).Handle := nil;
 
