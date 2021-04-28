@@ -23,8 +23,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// アクセス
        procedure SetParent( const Parent_:_TContext_ );
        function GetHandle :T_cl_mem;
-       function GetavHandle :Boolean;
-       procedure SetavHandle( const avHandle_:Boolean );
+       procedure SetHandle( const Handle_:T_cl_mem );
        ///// メソッド
        procedure CreateHandle; virtual; abstract;
        procedure DestroHandle; virtual;
@@ -33,9 +32,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Parent_:_TContext_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Parent   :_TContext_ read   _Parent   write SetParent  ;
-       property Handle   :T_cl_mem   read GetHandle                    ;
-       property avHandle :Boolean    read GetavHandle write SetavHandle;
+       property Parent :_TContext_ read   _Parent write SetParent;
+       property Handle :T_cl_mem   read GetHandle write SetHandle;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -73,21 +71,16 @@ end;
 
 function TCLMemory<_TContext_>.GetHandle :T_cl_mem;
 begin
-     if not avHandle then CreateHandle;
+     if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-function TCLMemory<_TContext_>.GetavHandle :Boolean;
+procedure TCLMemory<_TContext_>.SetHandle( const Handle_:T_cl_mem );
 begin
-     Result := Assigned( TCLContex( _Parent )._Handle ) and Assigned( _Handle );
-end;
+     if Assigned( _Handle ) then DestroHandle;
 
-procedure TCLMemory<_TContext_>.SetavHandle( const avHandle_:Boolean );
-begin
-     if avHandle  then DestroHandle;
-
-     if avHandle_ then CreateHandle;
+     _Handle := Handle_;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
@@ -105,9 +98,10 @@ constructor TCLMemory<_TContext_>.Create;
 begin
      inherited;
 
-     _Parent  := nil;
-     _Handle  := nil;
-     _Kind    := CL_MEM_READ_WRITE;
+     _Handle := nil;
+
+     _Parent := nil;
+     _Kind   := CL_MEM_READ_WRITE;
 end;
 
 constructor TCLMemory<_TContext_>.Create( const Parent_:_TContext_ );
@@ -119,7 +113,7 @@ end;
 
 destructor TCLMemory<_TContext_>.Destroy;
 begin
-     if avHandle then DestroHandle;
+      Handle := nil;
 
      inherited;
 end;

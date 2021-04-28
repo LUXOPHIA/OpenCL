@@ -84,7 +84,7 @@ end;
 
 procedure TCLBuffer<_TContext_,_TValue_>.SetCount( const Count_:Integer );
 begin
-     avHandle := False;
+     Handle := nil;
 
      _Count := Count_;
 end;
