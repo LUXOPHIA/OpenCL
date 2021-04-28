@@ -15,11 +15,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLComman<_TContext_,_TDevice_>
 
-     TCLComman<_TContext_,_TDevice_:class> = class
+     TCLComman<TCLContex_,TCLDevice_:class> = class
      private
      protected
-       _Parent :_TContext_;
-       _Device :_TDevice_;
+       _Parent :TCLContex_;
+       _Device :TCLDevice_;
        _Handle :T_cl_command_queue;
        ///// アクセス
        function GetHandle :T_cl_command_queue;
@@ -29,11 +29,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure DestroHandle;
      public
        constructor Create; overload;
-       constructor Create( const Parent_:_TContext_; const Device_:_TDevice_ ); overload;
+       constructor Create( const Parent_:TCLContex_; const Device_:TCLDevice_ ); overload;
        destructor Destroy; override;
        ///// プロパティ
-       property Parent :_TContext_         read   _Parent                ;
-       property Device :_TDevice_          read   _Device                ;
+       property Parent :TCLContex_         read   _Parent                ;
+       property Device :TCLDevice_         read   _Device                ;
        property Handle :T_cl_command_queue read GetHandle write SetHandle;
      end;
 
@@ -59,14 +59,14 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLComman<_TContext_,_TDevice_>.GetHandle :T_cl_command_queue;
+function TCLComman<TCLContex_,TCLDevice_>.GetHandle :T_cl_command_queue;
 begin
      if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-procedure TCLComman<_TContext_,_TDevice_>.SetHandle( const Handle_:T_cl_command_queue );
+procedure TCLComman<TCLContex_,TCLDevice_>.SetHandle( const Handle_:T_cl_command_queue );
 begin
      if Assigned( _Handle ) then DestroHandle;
 
@@ -75,7 +75,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLComman<_TContext_,_TDevice_>.CreateHandle;
+procedure TCLComman<TCLContex_,TCLDevice_>.CreateHandle;
 begin
      {$IF CL_VERSION_2_0 <> 0 }
      _Handle := clCreateCommandQueueWithProperties( TCLContex( _Parent ).Handle, TCLDevice( _Device ).Handle, nil, nil );
@@ -84,7 +84,7 @@ begin
      {$ENDIF}
 end;
 
-procedure TCLComman<_TContext_,_TDevice_>.DestroHandle;
+procedure TCLComman<TCLContex_,TCLDevice_>.DestroHandle;
 begin
      clReleaseCommandQueue( _Handle );
 
@@ -93,14 +93,14 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLComman<_TContext_,_TDevice_>.Create;
+constructor TCLComman<TCLContex_,TCLDevice_>.Create;
 begin
      inherited;
 
      _Handle := nil;
 end;
 
-constructor TCLComman<_TContext_,_TDevice_>.Create( const Parent_:_TContext_; const Device_:_TDevice_ );
+constructor TCLComman<TCLContex_,TCLDevice_>.Create( const Parent_:TCLContex_; const Device_:TCLDevice_ );
 begin
      Create;
 
@@ -108,7 +108,7 @@ begin
      _Device := Device_;
 end;
 
-destructor TCLComman<_TContext_,_TDevice_>.Destroy;
+destructor TCLComman<TCLContex_,TCLDevice_>.Destroy;
 begin
       Handle := nil;
 
