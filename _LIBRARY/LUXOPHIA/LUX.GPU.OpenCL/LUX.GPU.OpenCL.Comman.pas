@@ -18,7 +18,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLComman<TCLContex_,TCLDevice_:class> = class
      private
      protected
-       _Parent :TCLContex_;
+       _Contex :TCLContex_;
        _Device :TCLDevice_;
        _Handle :T_cl_command_queue;
        ///// アクセス
@@ -29,10 +29,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure DestroHandle;
      public
        constructor Create; overload;
-       constructor Create( const Parent_:TCLContex_; const Device_:TCLDevice_ ); overload;
+       constructor Create( const Contex_:TCLContex_; const Device_:TCLDevice_ ); overload;
        destructor Destroy; override;
        ///// プロパティ
-       property Parent :TCLContex_         read   _Parent                ;
+       property Contex :TCLContex_         read   _Contex                ;
        property Device :TCLDevice_         read   _Device                ;
        property Handle :T_cl_command_queue read GetHandle write SetHandle;
      end;
@@ -78,9 +78,9 @@ end;
 procedure TCLComman<TCLContex_,TCLDevice_>.CreateHandle;
 begin
      {$IF CL_VERSION_2_0 <> 0 }
-     _Handle := clCreateCommandQueueWithProperties( TCLContex( _Parent ).Handle, TCLDevice( _Device ).Handle, nil, nil );
+     _Handle := clCreateCommandQueueWithProperties( TCLContex( Contex ).Handle, TCLDevice( Device ).Handle, nil, nil );
      {$ELSE}
-     _Handle := clCreateCommandQueue              ( TCLContex( _Parent ).Handle, TCLDevice( _Device ).Handle, nil, nil );
+     _Handle := clCreateCommandQueue              ( TCLContex( Contex ).Handle, TCLDevice( Device ).Handle, nil, nil );
      {$ENDIF}
 end;
 
@@ -100,11 +100,11 @@ begin
      _Handle := nil;
 end;
 
-constructor TCLComman<TCLContex_,TCLDevice_>.Create( const Parent_:TCLContex_; const Device_:TCLDevice_ );
+constructor TCLComman<TCLContex_,TCLDevice_>.Create( const Contex_:TCLContex_; const Device_:TCLDevice_ );
 begin
      Create;
 
-     _Parent := Parent_;
+     _Contex := Contex_;
      _Device := Device_;
 end;
 
@@ -112,7 +112,7 @@ destructor TCLComman<TCLContex_,TCLDevice_>.Destroy;
 begin
       Handle := nil;
 
-     TCLContex( _Parent ).Handle := nil;
+     TCLContex( Contex ).Handle := nil;
 
      inherited;
 end;
