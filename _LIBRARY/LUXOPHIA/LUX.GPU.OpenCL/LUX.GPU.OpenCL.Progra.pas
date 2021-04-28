@@ -14,19 +14,19 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<_TContext_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<TCLContex_>
 
-     TCLProgra<_TContext_:class> = class
+     TCLProgra<TCLContex_:class> = class
      private
-       type TCLKernel = TCLKernel<_TContext_,TCLProgra<_TContext_>>;
+       type TCLKernel = TCLKernel<TCLContex_,TCLProgra<TCLContex_>>;
      protected
-       _Parent  :_TContext_;
+       _Contex  :TCLContex_;
        _Handle  :T_cl_program;
        _Source  :TStringList;
        _LangVer :TCLVersion;
        _Kernels :TObjectList<TCLKernel>;
        ///// アクセス
-       procedure SetParent( const Parent_:_TContext_ );
+       procedure SetContex( const Contex_:TCLContex_ );
        function GetHandle :T_cl_program;
        procedure SetHandle( const Handle_:T_cl_program );
        ///// メソッド
@@ -34,10 +34,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure DestroHandle;
      public
        constructor Create; overload;
-       constructor Create( const Parent_:_TContext_ ); overload;
+       constructor Create( const Contex_:TCLContex_ ); overload;
        destructor Destroy; override;
        ///// プロパティ
-       property Parent  :_TContext_             read   _Parent  write SetParent;
+       property Contex  :TCLContex_             read   _Contex  write SetContex;
        property Handle  :T_cl_program           read GetHandle  write SetHandle;
        property Source  :TStringList            read   _Source                 ;
        property LangVer :TCLVersion             read   _LangVer                ;
@@ -60,7 +60,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<_TContext_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -68,25 +68,25 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-procedure TCLProgra<_TContext_>.SetParent( const Parent_:_TContext_ );
+procedure TCLProgra<TCLContex_>.SetContex( const Contex_:TCLContex_ );
 begin
-     if Assigned( _Parent ) then TCLContex( _Parent ).Progras.Remove( TCLProgra( Self ) );
+     if Assigned( _Contex ) then TCLContex( _Contex ).Progras.Remove( TCLProgra( Self ) );
 
-                  _Parent := Parent_;
+                  _Contex := Contex_;
 
-     if Assigned( _Parent ) then TCLContex( _Parent ).Progras.Add   ( TCLProgra( Self ) );
+     if Assigned( _Contex ) then TCLContex( _Contex ).Progras.Add   ( TCLProgra( Self ) );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLProgra<_TContext_>.GetHandle :T_cl_program;
+function TCLProgra<TCLContex_>.GetHandle :T_cl_program;
 begin
      if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-procedure TCLProgra<_TContext_>.SetHandle( const Handle_:T_cl_program );
+procedure TCLProgra<TCLContex_>.SetHandle( const Handle_:T_cl_program );
 begin
      if Assigned( _Handle ) then DestroHandle;
 
@@ -95,19 +95,19 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLProgra<_TContext_>.CreateHandle;
+procedure TCLProgra<TCLContex_>.CreateHandle;
 var
    C :P_char;
    E :T_cl_int;
 begin
      C := P_char( AnsiString( _Source.Text ) );
 
-     _Handle := clCreateProgramWithSource( TCLContex( _Parent ).Handle, 1, @C, nil, @E );
+     _Handle := clCreateProgramWithSource( TCLContex( Contex ).Handle, 1, @C, nil, @E );
 
      AssertCL( E );
 end;
 
-procedure TCLProgra<_TContext_>.DestroHandle;
+procedure TCLProgra<TCLContex_>.DestroHandle;
 begin
      clReleaseProgram( _Handle );
 
@@ -116,7 +116,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLProgra<_TContext_>.Create;
+constructor TCLProgra<TCLContex_>.Create;
 begin
      inherited;
 
@@ -125,18 +125,18 @@ begin
      _Source  := TStringList           .Create;
      _Kernels := TObjectList<TCLKernel>.Create;
 
-     _Parent  := nil;
+     _Contex  := nil;
      _LangVer := TCLVersion.From( '2.0' );
 end;
 
-constructor TCLProgra<_TContext_>.Create( const Parent_:_TContext_ );
+constructor TCLProgra<TCLContex_>.Create( const Contex_:TCLContex_ );
 begin
      Create;
 
-     Parent := Parent_;
+     Contex := Contex_;
 end;
 
-destructor TCLProgra<_TContext_>.Destroy;
+destructor TCLProgra<TCLContex_>.Destroy;
 begin
      _Source .Free;
      _Kernels.Free;
@@ -148,12 +148,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLProgra<_TContext_>.Build;
+procedure TCLProgra<TCLContex_>.Build;
 var
    Ds :TArray<T_cl_device_id>;
    Os :String;
 begin
-     Ds :=  TCLContex( _Parent ).GetDeviceIDs;
+     Ds :=  TCLContex( Contex ).GetDeviceIDs;
 
      if Ord( _LangVer ) > 100 then Os := '-cl-std=CL' + _LangVer.ToString
                               else Os := '';
