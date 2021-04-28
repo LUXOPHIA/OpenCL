@@ -30,8 +30,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// アクセス
        procedure SetParent( const Parent_:_TProgram_ );
        function GetHandle :T_cl_kernel;
-       function GetavHandle :Boolean;
-       procedure SetavHandle( const avHandle_:Boolean );
+       procedure SetHandle( const Handle_:T_cl_kernel );
        function GetDimention :T_cl_uint;
        procedure SetGlobalWorkOffset( const GlobalWorkOffset_:TArray<T_size_t> );
        procedure SetGlobalWorkSize( const GlobalWorkSize_:TArray<T_size_t> );
@@ -46,8 +45,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        destructor Destroy; override;
        ///// プロパティ
        property Parent           :_TProgram_       read   _Parent           write SetParent          ;
-       property Handle           :T_cl_kernel      read GetHandle                                    ;
-       property avHandle         :Boolean          read GetavHandle         write SetavHandle        ;
+       property Handle           :T_cl_kernel      read GetHandle           write SetHandle          ;
        property Name             :String           read   _Name             write   _Name            ;
        property Memorys          :TList<TCLMemory> read   _Memorys                                   ;
        property Dimention        :T_cl_uint        read GetDimention                                 ;
@@ -93,21 +91,16 @@ end;
 
 function TCLKernel<_TContext_,_TProgram_>.GetHandle :T_cl_kernel;
 begin
-     if not avHandle then CreateHandle;
+     if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-function TCLKernel<_TContext_,_TProgram_>.GetavHandle :Boolean;
+procedure TCLKernel<_TContext_,_TProgram_>.SetHandle( const Handle_:T_cl_kernel );
 begin
-     Result := Assigned( TCLProgra( _Parent )._Handle ) and Assigned( _Handle );
-end;
+     if Assigned( _Handle ) then DestroHandle;
 
-procedure TCLKernel<_TContext_,_TProgram_>.SetavHandle( const avHandle_:Boolean );
-begin
-     if avHandle  then DestroHandle;
-
-     if avHandle_ then CreateHandle;
+     _Handle := Handle_;
 end;
 
 //------------------------------------------------------------------------------
@@ -165,10 +158,11 @@ constructor TCLKernel<_TContext_,_TProgram_>.Create;
 begin
      inherited;
 
+     _Handle := nil;
+
      _Memorys := TList<TCLMemory>.Create;
 
      _Parent := nil;
-     _Handle := nil;
      _Name   := '';
 
      _GlobalWorkOffset := [];
@@ -192,9 +186,9 @@ end;
 
 destructor TCLKernel<_TContext_,_TProgram_>.Destroy;
 begin
-     if avHandle then DestroHandle;
-
      _Memorys.Free;
+
+      Handle := nil;
 
      inherited;
 end;
