@@ -46,12 +46,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Platfo_:TCLPlatfo_; const Devices_:TArray<TCLDevice_> ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Platfo   :TCLPlatfo_              read GetOwnere                 ;
-       property Contexs  :TCLContexs_             read GetParent                 ;
-       property Commans  :TObjectList<TCLComman_> read   _Commans                ;
-       property Handle   :T_cl_context            read GetHandle  write SetHandle;
-       property Progras  :TObjectList<TCLProgra_> read   _Progras                ;
-       property Memorys  :TObjectList<TCLMemory_> read   _Memorys                ;
+       property Platfo  :TCLPlatfo_              read GetOwnere                 ;
+       property Contexs :TCLContexs_             read GetParent                 ;
+       property Commans :TObjectList<TCLComman_> read   _Commans                ;
+       property Handle  :T_cl_context            read GetHandle  write SetHandle;
+       property Progras :TObjectList<TCLProgra_> read   _Progras                ;
+       property Memorys :TObjectList<TCLMemory_> read   _Memorys                ;
        ///// メソッド
        procedure Add( const Device_:TCLDevice_ );
        procedure Remove( const Device_:TCLDevice_ );
