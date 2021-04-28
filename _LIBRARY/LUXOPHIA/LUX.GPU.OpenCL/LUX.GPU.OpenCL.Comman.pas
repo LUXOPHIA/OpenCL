@@ -26,8 +26,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetavHandle :Boolean;
        procedure SetavHandle( const avHandle_:Boolean );
        ///// メソッド
-       procedure BeginHandle;
-       procedure EndHandle;
+       procedure CreateHandle;
+       procedure DestroHandle;
      public
        constructor Create; overload;
        constructor Create( const Parent_:_TContext_; const Device_:_TDevice_ ); overload;
@@ -63,7 +63,7 @@ uses LUX.GPU.OpenCL;
 
 function TCLComman<_TContext_,_TDevice_>.GetHandle :T_cl_command_queue;
 begin
-     if not avHandle then BeginHandle;
+     if not avHandle then CreateHandle;
 
      Result := _Handle;
 end;
@@ -75,14 +75,14 @@ end;
 
 procedure TCLComman<_TContext_,_TDevice_>.SetavHandle( const avHandle_:Boolean );
 begin
-     if avHandle  then EndHandle;
+     if avHandle  then DestroHandle;
 
-     if avHandle_ then BeginHandle;
+     if avHandle_ then CreateHandle;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLComman<_TContext_,_TDevice_>.BeginHandle;
+procedure TCLComman<_TContext_,_TDevice_>.CreateHandle;
 begin
      {$IF CL_VERSION_2_0 <> 0 }
      _Handle := clCreateCommandQueueWithProperties( TCLContex( _Parent ).Handle, TCLDevice( _Device ).Handle, nil, nil );
@@ -91,7 +91,7 @@ begin
      {$ENDIF}
 end;
 
-procedure TCLComman<_TContext_,_TDevice_>.EndHandle;
+procedure TCLComman<_TContext_,_TDevice_>.DestroHandle;
 begin
      clReleaseCommandQueue( _Handle );
 
@@ -117,7 +117,7 @@ end;
 
 destructor TCLComman<_TContext_,_TDevice_>.Destroy;
 begin
-     if avHandle then EndHandle;
+     if avHandle then DestroHandle;
 
      TCLContex( _Parent ).Handle := nil;
 

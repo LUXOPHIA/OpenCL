@@ -37,8 +37,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetGlobalWorkSize( const GlobalWorkSize_:TArray<T_size_t> );
        procedure SetLocalWorkSize( const LocalWorkSize_:TArray<T_size_t> );
        ///// メソッド
-       procedure BeginHandle;
-       procedure EndHandle;
+       procedure CreateHandle;
+       procedure DestroHandle;
      public
        constructor Create; overload;
        constructor Create( const Parent_:_TProgram_ ); overload;
@@ -93,7 +93,7 @@ end;
 
 function TCLKernel<_TContext_,_TProgram_>.GetHandle :T_cl_kernel;
 begin
-     if not avHandle then BeginHandle;
+     if not avHandle then CreateHandle;
 
      Result := _Handle;
 end;
@@ -105,9 +105,9 @@ end;
 
 procedure TCLKernel<_TContext_,_TProgram_>.SetavHandle( const avHandle_:Boolean );
 begin
-     if avHandle  then EndHandle;
+     if avHandle  then DestroHandle;
 
-     if avHandle_ then BeginHandle;
+     if avHandle_ then CreateHandle;
 end;
 
 //------------------------------------------------------------------------------
@@ -134,7 +134,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLKernel<_TContext_,_TProgram_>.BeginHandle;
+procedure TCLKernel<_TContext_,_TProgram_>.CreateHandle;
 var
    E :T_cl_int;
    I :Integer;
@@ -152,7 +152,7 @@ begin
      end;
 end;
 
-procedure TCLKernel<_TContext_,_TProgram_>.EndHandle;
+procedure TCLKernel<_TContext_,_TProgram_>.DestroHandle;
 begin
      clReleaseKernel( _Handle );
 
@@ -192,7 +192,7 @@ end;
 
 destructor TCLKernel<_TContext_,_TProgram_>.Destroy;
 begin
-     if avHandle then EndHandle;
+     if avHandle then DestroHandle;
 
      _Memorys.Free;
 

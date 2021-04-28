@@ -31,8 +31,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetavHandle :Boolean;
        procedure SetavHandle( const avHandle_:Boolean );
        ///// メソッド
-       procedure BeginHandle;
-       procedure EndHandle;
+       procedure CreateHandle;
+       procedure DestroHandle;
      public
        constructor Create; overload;
        constructor Create( const Parent_:_TContext_ ); overload;
@@ -83,7 +83,7 @@ end;
 
 function TCLProgra<_TContext_>.GetHandle :T_cl_program;
 begin
-     if not avHandle then BeginHandle;
+     if not avHandle then CreateHandle;
 
      Result := _Handle;
 end;
@@ -95,14 +95,14 @@ end;
 
 procedure TCLProgra<_TContext_>.SetavHandle( const avHandle_:Boolean );
 begin
-     if avHandle  then EndHandle;
+     if avHandle  then DestroHandle;
 
-     if avHandle_ then BeginHandle;
+     if avHandle_ then CreateHandle;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLProgra<_TContext_>.BeginHandle;
+procedure TCLProgra<_TContext_>.CreateHandle;
 var
    C :P_char;
    E :T_cl_int;
@@ -114,7 +114,7 @@ begin
      AssertCL( E );
 end;
 
-procedure TCLProgra<_TContext_>.EndHandle;
+procedure TCLProgra<_TContext_>.DestroHandle;
 begin
      clReleaseProgram( _Handle );
 
@@ -144,7 +144,7 @@ end;
 
 destructor TCLProgra<_TContext_>.Destroy;
 begin
-     if avHandle then EndHandle;
+     if avHandle then DestroHandle;
 
      _Source .Free;
      _Kernels.Free;
