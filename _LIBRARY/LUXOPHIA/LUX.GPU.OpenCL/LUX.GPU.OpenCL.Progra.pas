@@ -18,13 +18,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLProgra<TCLContex_:class> = class
      private
-       type TCLKernel = TCLKernel<TCLContex_,TCLProgra<TCLContex_>>;
+       type TCLKernel_ = TCLKernel<TCLContex_,TCLProgra<TCLContex_>>;
      protected
        _Contex  :TCLContex_;
        _Handle  :T_cl_program;
        _Source  :TStringList;
        _LangVer :TCLVersion;
-       _Kernels :TObjectList<TCLKernel>;
+       _Kernels :TObjectList<TCLKernel_>;
        ///// アクセス
        procedure SetContex( const Contex_:TCLContex_ );
        function GetHandle :T_cl_program;
@@ -37,11 +37,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Contex_:TCLContex_ ); overload;
        destructor Destroy; override;
        ///// プロパティ
-       property Contex  :TCLContex_             read   _Contex  write SetContex;
-       property Handle  :T_cl_program           read GetHandle  write SetHandle;
-       property Source  :TStringList            read   _Source                 ;
-       property LangVer :TCLVersion             read   _LangVer                ;
-       property Kernels :TObjectList<TCLKernel> read   _Kernels                ;
+       property Contex  :TCLContex_              read   _Contex  write SetContex;
+       property Handle  :T_cl_program            read GetHandle  write SetHandle;
+       property Source  :TStringList             read   _Source                 ;
+       property LangVer :TCLVersion              read   _LangVer                ;
+       property Kernels :TObjectList<TCLKernel_> read   _Kernels                ;
        ///// メソッド
        procedure Build;
      end;
@@ -122,8 +122,8 @@ begin
 
      _Handle := nil;
 
-     _Source  := TStringList           .Create;
-     _Kernels := TObjectList<TCLKernel>.Create;
+     _Source  := TStringList            .Create;
+     _Kernels := TObjectList<TCLKernel_>.Create;
 
      _Contex  := nil;
      _LangVer := TCLVersion.From( '2.0' );
@@ -162,11 +162,5 @@ begin
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
-
-//############################################################################## □
-
-initialization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 初期化
-
-finalization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 最終化
 
 end. //######################################################################### ■
