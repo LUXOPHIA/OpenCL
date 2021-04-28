@@ -192,15 +192,6 @@ begin
      ///// Context
      _Comman := TCLComman.Create( _Contex, _Device );                           // 生成
 
-     //_Contex.Commans.Add( _Comman );                                            // 登録
-
-     ///// Progra
-     _Progra := TCLProgra.Create( _Contex );                                    // 生成
-     _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードの読み込み
-     _Progra.Build;                                                             // ビルド
-
-     MemoPC.Lines.Assign( _Progra.Source );                                     // ソースコードの表示
-
      ///// Buffer
      _BufferA := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
      _BufferB := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
@@ -217,11 +208,18 @@ begin
      A.Free;                                                                    // アンマップ
      B.Free;                                                                    // アンマップ
 
+     ///// Progra
+     _Progra := TCLProgra.Create( _Contex );                                    // 生成
+     _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードの読み込み
+     _Progra.Build;                                                             // ビルド
+
+     MemoPC.Lines.Assign( _Progra.Source );                                     // ソースコードの表示
+
      ///// Kernel
      _Kernel := TCLKernel.Create( _Progra, 'mul' );                             // 生成
-     _Kernel.Memorys.Add( _BufferA );                                           // Buffer の登録
-     _Kernel.Memorys.Add( _BufferB );                                           // Buffer の登録
-     _Kernel.Memorys.Add( _BufferC );                                           // Buffer の登録
+     _Kernel.Memorys.Add( _BufferA );                                           // バッファの登録
+     _Kernel.Memorys.Add( _BufferB );                                           // バッファの登録
+     _Kernel.Memorys.Add( _BufferC );                                           // バッファの登録
      _Kernel.GlobalWorkSize := [ 10 ];                                          // ループ回数の設定
 
      _Kernel.Run( _Comman );                                                    // 実行
