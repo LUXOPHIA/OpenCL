@@ -18,12 +18,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLKernel<TCLContex_,TCLProgra_:class> = class
      private
-       type TCLMemory = TCLMemory<TCLContex_>;
+       type TCLMemory_ = TCLMemory<TCLContex_>;
      protected
        _Progra           :TCLProgra_;
        _Handle           :T_cl_kernel;
        _Name             :String;
-       _Memorys          :TList<TCLMemory>;
+       _Memorys          :TList<TCLMemory_>;
        _GlobalWorkOffset :TArray<T_size_t>;
        _GlobalWorkSize   :TArray<T_size_t>;
        _LocalWorkSize    :TArray<T_size_t>;
@@ -44,14 +44,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Progra_:TCLProgra_; const Name_:String ); overload;
        destructor Destroy; override;
        ///// プロパティ
-       property Progra           :TCLProgra_       read   _Progra           write SetProgra          ;
-       property Handle           :T_cl_kernel      read GetHandle           write SetHandle          ;
-       property Name             :String           read   _Name             write   _Name            ;
-       property Memorys          :TList<TCLMemory> read   _Memorys                                   ;
-       property Dimention        :T_cl_uint        read GetDimention                                 ;
-       property GlobalWorkOffset :TArray<T_size_t> read   _GlobalWorkOffset write SetGlobalWorkOffset;
-       property GlobalWorkSize   :TArray<T_size_t> read   _GlobalWorkSize   write SetGlobalWorkSize  ;
-       property LocalWorkSize    :TArray<T_size_t> read   _LocalWorkSize    write SetLocalWorkSize   ;
+       property Progra           :TCLProgra_        read   _Progra           write SetProgra          ;
+       property Handle           :T_cl_kernel       read GetHandle           write SetHandle          ;
+       property Name             :String            read   _Name             write   _Name            ;
+       property Memorys          :TList<TCLMemory_> read   _Memorys                                   ;
+       property Dimention        :T_cl_uint         read GetDimention                                 ;
+       property GlobalWorkOffset :TArray<T_size_t>  read   _GlobalWorkOffset write SetGlobalWorkOffset;
+       property GlobalWorkSize   :TArray<T_size_t>  read   _GlobalWorkSize   write SetGlobalWorkSize  ;
+       property LocalWorkSize    :TArray<T_size_t>  read   _LocalWorkSize    write SetLocalWorkSize   ;
        ///// メソッド
        procedure Run( const Command_:TObject );
      end;
@@ -160,7 +160,7 @@ begin
 
      _Handle := nil;
 
-     _Memorys := TList<TCLMemory>.Create;
+     _Memorys := TList<TCLMemory_>.Create;
 
      _Progra := nil;
      _Name   := '';
@@ -209,11 +209,5 @@ begin
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
-
-//############################################################################## □
-
-initialization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 初期化
-
-finalization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 最終化
 
 end. //######################################################################### ■
