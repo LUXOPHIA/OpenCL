@@ -154,7 +154,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetDEVICE_LATEST_CONFORMANCE_VERSION_PASSED :String;
        {$ENDIF}
      public
-       constructor Create( const Parent_:TCLDevices_; const Handle_:T_cl_device_id ); overload; virtual;
+       constructor Create( const Devices_:TCLDevices_; const Handle_:T_cl_device_id ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
        property Platfo                                         :TCLPlatfo_                              read GetOwnere;
@@ -483,9 +483,9 @@ function TCLDevice<TCLPlatfo_>.GetDEVICE_LATEST_CONFORMANCE_VERSION_PASSED :Stri
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLDevice<TCLPlatfo_>.Create( const Parent_:TCLDevices_; const Handle_:T_cl_device_id );
+constructor TCLDevice<TCLPlatfo_>.Create( const Devices_:TCLDevices_; const Handle_:T_cl_device_id );
 begin
-     Create( Parent_ );
+     Create( Devices_ );
 
      _Handle := Handle_;
 end;

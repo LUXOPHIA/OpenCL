@@ -51,7 +51,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        {$ENDIF}
      public
        constructor Create; override;
-       constructor Create( const Parent_:TCLPlatfos_; const Handle_:T_cl_platform_id ); overload; virtual;
+       constructor Create( const Platfos_:TCLPlatfos_; const Handle_:T_cl_platform_id ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
        property OpenCL                :TOpenCL_                  read GetOwnere               ;
@@ -194,11 +194,11 @@ begin
      _Contexs := TCLContexs_.Create( Self );
 end;
 
-constructor TCLPlatfo<TOpenCL_>.Create( const Parent_:TCLPlatfos_; const Handle_:T_cl_platform_id );
+constructor TCLPlatfo<TOpenCL_>.Create( const Platfos_:TCLPlatfos_; const Handle_:T_cl_platform_id );
 var
    E :String;
 begin
-     Create( Parent_ );
+     Create( Platfos_ );
 
      _Handle := Handle_;
 
