@@ -192,7 +192,7 @@ begin
      ///// Context
      _Comman := TCLComman.Create( _Contex, _Device );                           // 生成
 
-     _Contex.Commans.Add( _Comman );                                            // 登録
+     //_Contex.Commans.Add( _Comman );                                            // 登録
 
      ///// Progra
      _Progra := TCLProgra.Create( _Contex );                                    // 生成
