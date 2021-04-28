@@ -7,25 +7,27 @@ uses System.Generics.Collections,
      LUX.Data.List,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
+     LUX.GPU.OpenCL.Device,
      LUX.GPU.OpenCL.Comman,
      LUX.GPU.OpenCL.Progra,
      LUX.GPU.OpenCL.Memory;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLContexs<TCLPlatfo_,TCLDevice_:class> = class;
-       TCLContex<TCLPlatfo_,TCLDevice_:class> = class;
+     TCLContexs<TCLPlatfo_:class> = class;
+       TCLContex<TCLPlatfo_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContex<TCLPlatfo_,TCLDevice_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContex<TCLPlatfo_>
 
-     TCLContex<TCLPlatfo_,TCLDevice_:class> = class( TListChildr<TCLPlatfo_,TCLContexs<TCLPlatfo_,TCLDevice_>> )
+     TCLContex<TCLPlatfo_:class> = class( TListChildr<TCLPlatfo_,TCLContexs<TCLPlatfo_>> )
      private
-       type TCLContexs_ = TCLContexs<TCLPlatfo_,TCLDevice_>;
-            TCLContex_  = TCLContex <TCLPlatfo_,TCLDevice_>;
+       type TCLContexs_ = TCLContexs<TCLPlatfo_>;
+            TCLDevice_  = TCLDevice <TCLPlatfo_>;
+            TCLContex_  = TCLContex <TCLPlatfo_>;
             TCLComman_  = TCLComman <TCLContex_,TCLDevice_>;
             TCLProgra_  = TCLProgra <TCLContex_>;
             TCLMemory_  = TCLMemory <TCLContex_>;
@@ -58,9 +60,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetDevices :TArray<T_cl_device_id>;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLPlatfo_,TCLDevice_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLPlatfo_>
 
-     TCLContexs<TCLPlatfo_,TCLDevice_:class> = class( TListParent<TCLPlatfo_,TCLContex<TCLPlatfo_,TCLDevice_>> )
+     TCLContexs<TCLPlatfo_:class> = class( TListParent<TCLPlatfo_,TCLContex<TCLPlatfo_>> )
      private
      protected
      public
@@ -82,7 +84,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContex<TCLPlatfo_,TCLDevice_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContex<TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -90,14 +92,14 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLContex<TCLPlatfo_,TCLDevice_>.GetHandle :T_cl_context;
+function TCLContex<TCLPlatfo_>.GetHandle :T_cl_context;
 begin
      if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-procedure TCLContex<TCLPlatfo_,TCLDevice_>.SetHandle( const Handle_:T_cl_context );
+procedure TCLContex<TCLPlatfo_>.SetHandle( const Handle_:T_cl_context );
 begin
      if Assigned( _Handle ) then DestroHandle;
 
@@ -106,7 +108,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLContex<TCLPlatfo_,TCLDevice_>.CreateHandle;
+procedure TCLContex<TCLPlatfo_>.CreateHandle;
 var
    Ps :array [ 0..2 ] of T_cl_context_properties;
    Ds :TArray<T_cl_device_id>;
@@ -120,7 +122,7 @@ begin
      _Handle := clCreateContext( @Ps[0], Length( Ds ), @Ds[0], nil, nil, nil );
 end;
 
-procedure TCLContex<TCLPlatfo_,TCLDevice_>.DestroHandle;
+procedure TCLContex<TCLPlatfo_>.DestroHandle;
 begin
      clReleaseContext( _Handle );
 
@@ -129,7 +131,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLContex<TCLPlatfo_,TCLDevice_>.Create;
+constructor TCLContex<TCLPlatfo_>.Create;
 begin
      inherited;
 
@@ -140,12 +142,12 @@ begin
      _Memorys := TObjectList<TCLMemory_>.Create;
 end;
 
-constructor TCLContex<TCLPlatfo_,TCLDevice_>.Create( const Platfo_:TCLPlatfo_ );
+constructor TCLContex<TCLPlatfo_>.Create( const Platfo_:TCLPlatfo_ );
 begin
      Create( TCLContexs_( TCLPlatfo( Platfo_ ).Contexs ) );
 end;
 
-constructor TCLContex<TCLPlatfo_,TCLDevice_>.Create( const Platfo_:TCLPlatfo_; const Devices_:TArray<TCLDevice_> );
+constructor TCLContex<TCLPlatfo_>.Create( const Platfo_:TCLPlatfo_; const Devices_:TArray<TCLDevice_> );
 var
    D :TCLDevice_;
 begin
@@ -154,7 +156,7 @@ begin
      for D in Devices_ do Add( D );
 end;
 
-destructor TCLContex<TCLPlatfo_,TCLDevice_>.Destroy;
+destructor TCLContex<TCLPlatfo_>.Destroy;
 begin
      _Commans.Free;
      _Progras.Free;
@@ -167,14 +169,14 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLContex<TCLPlatfo_,TCLDevice_>.Add( const Device_:TCLDevice_ );
+procedure TCLContex<TCLPlatfo_>.Add( const Device_:TCLDevice_ );
 begin
      _Commans.Add( TCLComman_.Create( Self, Device_ ) );
 
      Handle := nil;
 end;
 
-procedure TCLContex<TCLPlatfo_,TCLDevice_>.Remove( const Device_:TCLDevice_ );
+procedure TCLContex<TCLPlatfo_>.Remove( const Device_:TCLDevice_ );
 var
    C :TCLComman_;
 begin
@@ -188,7 +190,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLContex<TCLPlatfo_,TCLDevice_>.GetDevices :TArray<T_cl_device_id>;
+function TCLContex<TCLPlatfo_>.GetDevices :TArray<T_cl_device_id>;
 var
    I :Integer;
 begin
@@ -200,7 +202,7 @@ begin
      end;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLPlatfo_,TCLDevice_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 

@@ -26,8 +26,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLPlatfos_ = TCLPlatfos<TOpenCL_>;
             TCLPlatfo_  = TCLPlatfo <TOpenCL_>;
             TCLDevices_ = TCLDevices<TCLPlatfo_>;
-            TCLDevice_  = TCLDevice <TCLPlatfo_>;
-            TCLContexs_ = TCLContexs<TCLPlatfo_,TCLDevice_>;
+            TCLContexs_ = TCLContexs<TCLPlatfo_>;
        ///// メソッド
        function GetInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
        function GetInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
