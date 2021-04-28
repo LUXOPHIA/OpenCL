@@ -100,7 +100,7 @@ end;
 
 function TCLKernel<_TContext_,_TProgram_>.GetavHandle :Boolean;
 begin
-     Result := TCLProgra( _Parent ).avHandle and Assigned( _Handle );
+     Result := Assigned( TCLProgra( _Parent )._Handle ) and Assigned( _Handle );
 end;
 
 procedure TCLKernel<_TContext_,_TProgram_>.SetavHandle( const avHandle_:Boolean );
