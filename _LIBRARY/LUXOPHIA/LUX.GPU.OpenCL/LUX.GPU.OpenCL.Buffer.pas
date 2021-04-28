@@ -14,9 +14,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<_TContext_,_TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<TCLContex_,TValue_>
 
-     TCLBuffer<_TContext_:class;_TValue_:record> = class( TCLMemory<_TContext_> )
+     TCLBuffer<TCLContex_:class;TValue_:record> = class( TCLMemory<TCLContex_> )
      private
      protected
        _Count :Integer;
@@ -31,9 +31,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Size  :T_size_t read GetSize                ;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDeviceBuffer<_TContext_,_TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDeviceBuffer<TCLContex_,TValue_>
 
-     TCLDeviceBuffer<_TContext_:class;_TValue_:record> = class( TCLBuffer<_TContext_,_TValue_> )
+     TCLDeviceBuffer<TCLContex_:class;TValue_:record> = class( TCLBuffer<TCLContex_,TValue_> )
      private
      protected
        ///// メソッド
@@ -42,9 +42,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHostBuffer<_TContext_,_TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHostBuffer<TCLContex_,TValue_>
 
-     TCLHostBuffer<_TContext_:class;_TValue_:record> = class( TCLBuffer<_TContext_,_TValue_> )
+     TCLHostBuffer<TCLContex_:class;TValue_:record> = class( TCLBuffer<TCLContex_,TValue_> )
      private
      protected
        _Data :P_void;
@@ -69,7 +69,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<_TContext_,_TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<TCLContex_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -77,12 +77,12 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLBuffer<_TContext_,_TValue_>.GetCount :Integer;
+function TCLBuffer<TCLContex_,TValue_>.GetCount :Integer;
 begin
      Result := _Count;
 end;
 
-procedure TCLBuffer<_TContext_,_TValue_>.SetCount( const Count_:Integer );
+procedure TCLBuffer<TCLContex_,TValue_>.SetCount( const Count_:Integer );
 begin
      Handle := nil;
 
@@ -91,21 +91,21 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLBuffer<_TContext_,_TValue_>.GetSize :T_size_t;
+function TCLBuffer<TCLContex_,TValue_>.GetSize :T_size_t;
 begin
-     Result := SizeOf( _TValue_ ) * _Count;
+     Result := SizeOf( TValue_ ) * _Count;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLBuffer<_TContext_,_TValue_>.Create;
+constructor TCLBuffer<TCLContex_,TValue_>.Create;
 begin
      inherited;
 
      _Count := 1;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDeviceBuffer<_TContext_,_TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDeviceBuffer<TCLContex_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -113,25 +113,25 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLDeviceBuffer<_TContext_,_TValue_>.CreateHandle;
+procedure TCLDeviceBuffer<TCLContex_,TValue_>.CreateHandle;
 var
    E :T_cl_int;
 begin
-     _Handle := clCreateBuffer( TCLContex( _Parent ).Handle, _Kind, Size, nil, @E );
+     _Handle := clCreateBuffer( TCLContex( Contex ).Handle, _Kind, Size, nil, @E );
 
      AssertCL( E );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLDeviceBuffer<_TContext_,_TValue_>.Create;
+constructor TCLDeviceBuffer<TCLContex_,TValue_>.Create;
 begin
      inherited;
 
      _Kind := CL_MEM_READ_WRITE or CL_MEM_ALLOC_HOST_PTR;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHostBuffer<_TContext_,_TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHostBuffer<TCLContex_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -139,7 +139,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLHostBuffer<_TContext_,_TValue_>.CreateHandle;
+procedure TCLHostBuffer<TCLContex_,TValue_>.CreateHandle;
 var
    E :T_cl_int;
 begin
@@ -147,12 +147,12 @@ begin
 
      GetMemAligned( _Data, Ceil2N( Size, 64{Byte} ), 4096{Byte} );
 
-     _Handle := clCreateBuffer( TCLContex( _Parent ).Handle, _Kind, Size, _Data, @E );
+     _Handle := clCreateBuffer( TCLContex( Contex ).Handle, _Kind, Size, _Data, @E );
 
      AssertCL( E );
 end;
 
-procedure TCLHostBuffer<_TContext_,_TValue_>.DestroHandle;
+procedure TCLHostBuffer<TCLContex_,TValue_>.DestroHandle;
 begin
      FreeMemAligned( _Data );
 
@@ -161,7 +161,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLHostBuffer<_TContext_,_TValue_>.Create;
+constructor TCLHostBuffer<TCLContex_,TValue_>.Create;
 begin
      inherited;
 
@@ -171,11 +171,5 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
-
-//############################################################################## □
-
-initialization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 初期化
-
-finalization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 最終化
 
 end. //######################################################################### ■
