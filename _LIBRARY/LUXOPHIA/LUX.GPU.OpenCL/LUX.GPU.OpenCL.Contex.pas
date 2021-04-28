@@ -36,24 +36,22 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Memorys :TObjectList<TCLMemory_>;
        ///// アクセス
        function GetHandle :T_cl_context;
-       function GetavHandle :Boolean;
-       procedure SetavHandle( const avHandle_:Boolean );
+       procedure SetHandle( const Handle_:T_cl_context );
        ///// メソッド
-       procedure BeginHandle;
-       procedure EndHandle;
+       procedure CreateHandle;
+       procedure DestroHandle;
      public
        constructor Create; override;
        constructor Create( const Platfo_:TCLPlatfo_ ); overload; virtual;
        constructor Create( const Platfo_:TCLPlatfo_; const Devices_:TArray<TCLDevice_> ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Platfo   :TCLPlatfo_              read GetOwnere                    ;
-       property Contexs  :TCLContexs_             read GetParent                    ;
-       property Commans  :TObjectList<TCLComman_> read   _Commans                   ;
-       property Handle   :T_cl_context            read GetHandle                    ;
-       property avHandle :Boolean                 read GetavHandle write SetavHandle;
-       property Progras  :TObjectList<TCLProgra_> read   _Progras                   ;
-       property Memorys  :TObjectList<TCLMemory_> read   _Memorys                   ;
+       property Platfo   :TCLPlatfo_              read GetOwnere                 ;
+       property Contexs  :TCLContexs_             read GetParent                 ;
+       property Commans  :TObjectList<TCLComman_> read   _Commans                ;
+       property Handle   :T_cl_context            read GetHandle  write SetHandle;
+       property Progras  :TObjectList<TCLProgra_> read   _Progras                ;
+       property Memorys  :TObjectList<TCLMemory_> read   _Memorys                ;
        ///// メソッド
        procedure Add( const Device_:TCLDevice_ );
        procedure Remove( const Device_:TCLDevice_ );
@@ -94,26 +92,21 @@ uses LUX.GPU.OpenCL;
 
 function TCLContex<TCLPlatfo_,TCLDevice_>.GetHandle :T_cl_context;
 begin
-     if not avHandle then BeginHandle;
+     if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-function TCLContex<TCLPlatfo_,TCLDevice_>.GetavHandle :Boolean;
+procedure TCLContex<TCLPlatfo_,TCLDevice_>.SetHandle( const Handle_:T_cl_context );
 begin
-     Result := Assigned( _Handle );
-end;
+     if Assigned( _Handle ) then DestroHandle;
 
-procedure TCLContex<TCLPlatfo_,TCLDevice_>.SetavHandle( const avHandle_:Boolean );
-begin
-     if avHandle  then EndHandle;
-
-     if avHandle_ then BeginHandle;
+     _Handle := Handle_;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLContex<TCLPlatfo_,TCLDevice_>.BeginHandle;
+procedure TCLContex<TCLPlatfo_,TCLDevice_>.CreateHandle;
 var
    Ps :array [ 0..2 ] of T_cl_context_properties;
    Ds :TArray<T_cl_device_id>;
@@ -127,7 +120,7 @@ begin
      _Handle := clCreateContext( @Ps[0], Length( Ds ), @Ds[0], nil, nil, nil );
 end;
 
-procedure TCLContex<TCLPlatfo_,TCLDevice_>.EndHandle;
+procedure TCLContex<TCLPlatfo_,TCLDevice_>.DestroHandle;
 begin
      clReleaseContext( _Handle );
 
@@ -167,7 +160,7 @@ begin
      _Progras.Free;
      _Memorys.Free;
 
-     if avHandle then EndHandle;
+      Handle := nil;
 
      inherited;
 end;
@@ -178,7 +171,7 @@ procedure TCLContex<TCLPlatfo_,TCLDevice_>.Add( const Device_:TCLDevice_ );
 begin
      _Commans.Add( TCLComman_.Create( Self, Device_ ) );
 
-     avHandle := False;
+     Handle := nil;
 end;
 
 procedure TCLContex<TCLPlatfo_,TCLDevice_>.Remove( const Device_:TCLDevice_ );
@@ -190,7 +183,7 @@ begin
           if C.Device = Device_ then C.Free;
      end;
 
-     avHandle := False;
+     Handle := nil;
 end;
 
 //------------------------------------------------------------------------------

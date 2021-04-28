@@ -80,7 +80,7 @@ end;
 
 function TCLMemory<_TContext_>.GetavHandle :Boolean;
 begin
-     Result := TCLContex( _Parent ).avHandle and Assigned( _Handle );
+     Result := Assigned( TCLContex( _Parent )._Handle ) and Assigned( _Handle );
 end;
 
 procedure TCLMemory<_TContext_>.SetavHandle( const avHandle_:Boolean );
