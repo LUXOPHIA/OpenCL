@@ -26,8 +26,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetavHandle :Boolean;
        procedure SetavHandle( const avHandle_:Boolean );
        ///// メソッド
-       procedure BeginHandle; virtual; abstract;
-       procedure EndHandle; virtual;
+       procedure CreateHandle; virtual; abstract;
+       procedure DestroHandle; virtual;
      public
        constructor Create; overload; virtual;
        constructor Create( const Parent_:_TContext_ ); overload; virtual;
@@ -73,7 +73,7 @@ end;
 
 function TCLMemory<_TContext_>.GetHandle :T_cl_mem;
 begin
-     if not avHandle then BeginHandle;
+     if not avHandle then CreateHandle;
 
      Result := _Handle;
 end;
@@ -85,14 +85,14 @@ end;
 
 procedure TCLMemory<_TContext_>.SetavHandle( const avHandle_:Boolean );
 begin
-     if avHandle  then EndHandle;
+     if avHandle  then DestroHandle;
 
-     if avHandle_ then BeginHandle;
+     if avHandle_ then CreateHandle;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLMemory<_TContext_>.EndHandle;
+procedure TCLMemory<_TContext_>.DestroHandle;
 begin
      clReleaseMemObject( _Handle );
 
@@ -119,7 +119,7 @@ end;
 
 destructor TCLMemory<_TContext_>.Destroy;
 begin
-     if avHandle then EndHandle;
+     if avHandle then DestroHandle;
 
      inherited;
 end;

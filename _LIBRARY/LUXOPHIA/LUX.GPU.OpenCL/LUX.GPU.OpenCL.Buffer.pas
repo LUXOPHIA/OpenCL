@@ -37,7 +37,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        ///// メソッド
-       procedure BeginHandle; override;
+       procedure CreateHandle; override;
      public
        constructor Create; override;
      end;
@@ -49,8 +49,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _Data :P_void;
        ///// メソッド
-       procedure BeginHandle; override;
-       procedure EndHandle; override;
+       procedure CreateHandle; override;
+       procedure DestroHandle; override;
      public
        constructor Create; override;
      end;
@@ -113,7 +113,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLDeviceBuffer<_TContext_,_TValue_>.BeginHandle;
+procedure TCLDeviceBuffer<_TContext_,_TValue_>.CreateHandle;
 var
    E :T_cl_int;
 begin
@@ -139,7 +139,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLHostBuffer<_TContext_,_TValue_>.BeginHandle;
+procedure TCLHostBuffer<_TContext_,_TValue_>.CreateHandle;
 var
    E :T_cl_int;
 begin
@@ -152,7 +152,7 @@ begin
      AssertCL( E );
 end;
 
-procedure TCLHostBuffer<_TContext_,_TValue_>.EndHandle;
+procedure TCLHostBuffer<_TContext_,_TValue_>.DestroHandle;
 begin
      FreeMemAligned( _Data );
 
