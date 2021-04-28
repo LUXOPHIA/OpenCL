@@ -153,7 +153,7 @@ var
    Ds :TArray<T_cl_device_id>;
    Os :String;
 begin
-     Ds :=  TCLContex( _Parent ).GetDevices;
+     Ds :=  TCLContex( _Parent ).GetDeviceIDs;
 
      if Ord( _LangVer ) > 100 then Os := '-cl-std=CL' + _LangVer.ToString
                               else Os := '';
