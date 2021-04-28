@@ -20,15 +20,15 @@ uses System.Generics.Collections,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TOpenCL           = class;
-       TCLPlatfos      = TCLPlatfos<TOpenCL>;
-         TCLPlatfo     = TCLPlatfo <TOpenCL>;
-           TCLDevices  = TCLDevices<TCLPlatfo>;
-             TCLDevice = TCLDevice <TCLPlatfo>;
-           TCLContexs  = TCLContexs<TCLPlatfo>;
-             TCLContex = TCLContex <TCLPlatfo>;
-
-     TCLComman = TCLComman<TCLContex,TCLDevice>;
+     TOpenCL               = class;
+       TCLPlatfos          = TCLPlatfos<TOpenCL>;
+         TCLPlatfo         = TCLPlatfo <TOpenCL>;
+           TCLDevices      = TCLDevices<TCLPlatfo>;
+             TCLDevice     = TCLDevice <TCLPlatfo>;
+           TCLContexs      = TCLContexs<TCLPlatfo>;
+             TCLContex     = TCLContex <TCLPlatfo>;
+               TCLCommans  = TCLCommans<TCLContex,TCLDevice>;
+                 TCLComman = TCLComman <TCLContex,TCLDevice>;
 
      TCLProgra = TCLProgra<TCLContex>;
 
