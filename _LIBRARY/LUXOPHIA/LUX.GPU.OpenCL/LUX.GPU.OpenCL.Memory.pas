@@ -12,16 +12,16 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<_TContext_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<TCLContex_>
 
-     TCLMemory<_TContext_:class> = class
+     TCLMemory<TCLContex_:class> = class
      private
      protected
-       _Parent :_TContext_;
+       _Contex :TCLContex_;
        _Handle :T_cl_mem;
        _Kind   :T_cl_mem_flags;
        ///// アクセス
-       procedure SetParent( const Parent_:_TContext_ );
+       procedure SetContex( const Contex_:TCLContex_ );
        function GetHandle :T_cl_mem;
        procedure SetHandle( const Handle_:T_cl_mem );
        ///// メソッド
@@ -29,10 +29,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure DestroHandle; virtual;
      public
        constructor Create; overload; virtual;
-       constructor Create( const Parent_:_TContext_ ); overload; virtual;
+       constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Parent :_TContext_ read   _Parent write SetParent;
+       property Contex :TCLContex_ read   _Contex write SetContex;
        property Handle :T_cl_mem   read GetHandle write SetHandle;
      end;
 
@@ -50,7 +50,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<_TContext_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -58,25 +58,25 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-procedure TCLMemory<_TContext_>.SetParent( const Parent_:_TContext_ );
+procedure TCLMemory<TCLContex_>.SetContex( const Contex_:TCLContex_ );
 begin
-     if Assigned( _Parent ) then TCLContex( _Parent ).Memorys.Remove( TCLMemory( Self ) );
+     if Assigned( _Contex ) then TCLContex( _Contex ).Memorys.Remove( TCLMemory( Self ) );
 
-                  _Parent := Parent_;
+                  _Contex := Contex_;
 
-     if Assigned( _Parent ) then TCLContex( _Parent ).Memorys.Add   ( TCLMemory( Self ) );
+     if Assigned( _Contex ) then TCLContex( _Contex ).Memorys.Add   ( TCLMemory( Self ) );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLMemory<_TContext_>.GetHandle :T_cl_mem;
+function TCLMemory<TCLContex_>.GetHandle :T_cl_mem;
 begin
      if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-procedure TCLMemory<_TContext_>.SetHandle( const Handle_:T_cl_mem );
+procedure TCLMemory<TCLContex_>.SetHandle( const Handle_:T_cl_mem );
 begin
      if Assigned( _Handle ) then DestroHandle;
 
@@ -85,7 +85,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLMemory<_TContext_>.DestroHandle;
+procedure TCLMemory<TCLContex_>.DestroHandle;
 begin
      clReleaseMemObject( _Handle );
 
@@ -94,24 +94,24 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLMemory<_TContext_>.Create;
+constructor TCLMemory<TCLContex_>.Create;
 begin
      inherited;
 
      _Handle := nil;
 
-     _Parent := nil;
+     _Contex := nil;
      _Kind   := CL_MEM_READ_WRITE;
 end;
 
-constructor TCLMemory<_TContext_>.Create( const Parent_:_TContext_ );
+constructor TCLMemory<TCLContex_>.Create( const Contex_:TCLContex_ );
 begin
      Create;
 
-     Parent := Parent_;
+     Contex := Contex_;
 end;
 
-destructor TCLMemory<_TContext_>.Destroy;
+destructor TCLMemory<TCLContex_>.Destroy;
 begin
       Handle := nil;
 
@@ -119,11 +119,5 @@ begin
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
-
-//############################################################################## □
-
-initialization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 初期化
-
-finalization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 最終化
 
 end. //######################################################################### ■
