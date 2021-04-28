@@ -43,23 +43,35 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetVersion :String;
        function GetName :String;
        function GetVendor :String;
+       {$IF CL_VERSION_2_1 <> 0 }
        function GetHostTimerResolution :T_cl_ulong;
+       {$ENDIF}
+       {$IF CL_VERSION_3_0 <> 0 }
+       function GetNumericVersion :T_cl_version;
+       function GetExtensionsWithVersion :TArray<T_cl_name_version>;
+       {$ENDIF}
      public
        constructor Create; override;
        constructor Create( const Parent_:TCLPlatfos_; const Handle_:T_cl_platform_id ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property OpenCL              :TOpenCL_         read GetOwnere             ;
-       property Platfos             :TCLPlatfos_      read GetParent             ;
-       property Handle              :T_cl_platform_id read   _Handle             ;
-       property Profile             :String           read GetProfile            ;
-       property Version             :String           read GetVersion            ;
-       property Name                :String           read GetName               ;
-       property Vendor              :String           read GetVendor             ;
-       property Extenss             :TStringList      read   _Extenss            ;
-       property HostTimerResolution :T_cl_ulong       read GetHostTimerResolution;  { OpenCL 2.1 }
-       property Devices             :TCLDevices_      read   _Devices            ;
-       property Contexs             :TCLContexs_      read   _Contexs            ;
+       property OpenCL                :TOpenCL_                  read GetOwnere               ;
+       property Platfos               :TCLPlatfos_               read GetParent               ;
+       property Handle                :T_cl_platform_id          read   _Handle               ;
+       property Profile               :String                    read GetProfile              ;
+       property Version               :String                    read GetVersion              ;
+       property Name                  :String                    read GetName                 ;
+       property Vendor                :String                    read GetVendor               ;
+       property Extenss               :TStringList               read   _Extenss              ;
+       {$IF CL_VERSION_2_1 <> 0 }
+       property HostTimerResolution   :T_cl_ulong                read GetHostTimerResolution  ;
+       {$ENDIF}
+       {$IF CL_VERSION_3_0 <> 0 }
+       property NumericVersion        :T_cl_version              read GetNumericVersion       ;
+       property ExtensionsWithVersion :TArray<T_cl_name_version> read GetExtensionsWithVersion;
+       {$ENDIF}
+       property Devices               :TCLDevices_               read   _Devices              ;
+       property Contexs               :TCLContexs_               read   _Contexs              ;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfos<TOpenCL_>
@@ -154,14 +166,23 @@ begin
      Result := GetInfoString( CL_PLATFORM_VENDOR );
 end;
 
+{$IF CL_VERSION_2_1 <> 0 }
 function TCLPlatfo<TOpenCL_>.GetHostTimerResolution :T_cl_ulong;
 begin
-     {$IF CL_VERSION_2_1 <> 0 }
      Result := GetInfo<T_cl_ulong>( CL_PLATFORM_HOST_TIMER_RESOLUTION );
-     {$ELSE}
-     Result := 0;
-     {$ENDIF}
 end;
+{$ENDIF}
+{$IF CL_VERSION_3_0 <> 0 }
+function TCLPlatfo<TOpenCL_>.GetNumericVersion :T_cl_version;
+begin
+     Result := GetInfo<T_cl_version>( CL_PLATFORM_NUMERIC_VERSION );
+end;
+
+function TCLPlatfo<TOpenCL_>.GetExtensionsWithVersion :TArray<T_cl_name_version>;
+begin
+     Result := GetInfos<T_cl_name_version>( CL_PLATFORM_EXTENSIONS_WITH_VERSION );
+end;
+{$ENDIF}
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
