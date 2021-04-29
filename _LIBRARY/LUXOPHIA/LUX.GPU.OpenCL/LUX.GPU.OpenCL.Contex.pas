@@ -27,7 +27,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLDevice_  = TCLDevice <TCLPlatfo_>;
             TCLContexs_ = TCLContexs<TCLPlatfo_>;
             TCLContex_  = TCLContex <TCLPlatfo_>;
-            TCLCommans_ = TCLCommans<TCLContex_,TCLDevice_>;
+            TCLCommans_ = TCLCommans<TCLContex_,TCLPlatfo_>;
             TCLMemorys_ = TCLMemorys<TCLContex_>;
             TCLProgras_ = TCLProgras<TCLContex_>;
      protected
