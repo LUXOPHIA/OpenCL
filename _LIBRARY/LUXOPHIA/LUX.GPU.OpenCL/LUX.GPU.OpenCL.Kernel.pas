@@ -31,7 +31,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetProgra( const Progra_:TCLProgra_ );
        function GetHandle :T_cl_kernel;
        procedure SetHandle( const Handle_:T_cl_kernel );
-       function GetDimention :T_cl_uint;
+       function GetDimension :T_cl_uint;
        procedure SetGlobalWorkOffset( const GlobalWorkOffset_:TArray<T_size_t> );
        procedure SetGlobalWorkSize( const GlobalWorkSize_:TArray<T_size_t> );
        procedure SetLocalWorkSize( const LocalWorkSize_:TArray<T_size_t> );
@@ -48,7 +48,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Handle           :T_cl_kernel       read GetHandle           write SetHandle          ;
        property Name             :String            read   _Name             write   _Name            ;
        property Memorys          :TList<TCLMemory_> read   _Memorys                                   ;
-       property Dimention        :T_cl_uint         read GetDimention                                 ;
+       property Dimension        :T_cl_uint         read GetDimension                                 ;
        property GlobalWorkOffset :TArray<T_size_t>  read   _GlobalWorkOffset write SetGlobalWorkOffset;
        property GlobalWorkSize   :TArray<T_size_t>  read   _GlobalWorkSize   write SetGlobalWorkSize  ;
        property LocalWorkSize    :TArray<T_size_t>  read   _LocalWorkSize    write SetLocalWorkSize   ;
@@ -105,7 +105,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLKernel<TCLContex_,TCLProgra_>.GetDimention :T_cl_uint;
+function TCLKernel<TCLContex_,TCLProgra_>.GetDimension :T_cl_uint;
 begin
      Result := Length( _GlobalWorkSize );
 end;
@@ -199,7 +199,7 @@ procedure TCLKernel<TCLContex_,TCLProgra_>.Run( const Comman_:TObject );
 begin
      AssertCL( clEnqueueNDRangeKernel( TCLComman( Comman_ ).Handle,
                                        Handle,
-                                       Dimention,
+                                       Dimension,
                                        @_GlobalWorkOffset[ 0 ],
                                        @_GlobalWorkSize[ 0 ],
                                        @_LocalWorkSize[ 0 ],
