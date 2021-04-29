@@ -23,6 +23,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TOpenCL                   = class;
        TCLPlatfos              = TCLPlatfos<TOpenCL>;
          TCLPlatfo             = TCLPlatfo <TOpenCL>;
+           TCLExtenss          = TCLExtenss<TCLPlatfo>;
            TCLDevices          = TCLDevices<TCLPlatfo>;
              TCLDevice         = TCLDevice <TCLPlatfo>;
            TCLContexs          = TCLContexs<TCLPlatfo>;
