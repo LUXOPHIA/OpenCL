@@ -100,6 +100,8 @@ var
    PI, DI :Integer;
    P :TCLPlatfo;
    D :TCLDevice;
+   Cs :T_cl_device_svm_capabilities;
+   S :String;
 begin
      with MemoSD.Lines do
      begin
@@ -116,11 +118,21 @@ begin
 
                     Add( '┃　│' );
                     Add( '┃　┝・Devices[ ' + DI.ToString + ' ]<' + Longint( D.Handle ).ToHexString + '>' );
-                    Add( '┃　│　├・DEVICE_TYPE     ：'  + IntTosTr( D.DEVICE_TYPE      ) );
-                    Add( '┃　│　├・DEVICE_VENDOR   ：'  +           D.DEVICE_VENDOR      );
-                    Add( '┃　│　├・DEVICE_VENDOR_ID：'  + IntToStr( D.DEVICE_VENDOR_ID ) );
-                    Add( '┃　│　├・DEVICE_VERSION  ：'  +           D.DEVICE_VERSION     );
-                    Add( '┃　│　├・DRIVER_VERSION  ：'  +           D.DRIVER_VERSION     );
+                    Add( '┃　│　├・DEVICE_TYPE            ：'  + IntTosTr( D.DEVICE_TYPE      ) );
+                    Add( '┃　│　├・DEVICE_VENDOR          ：'  +           D.DEVICE_VENDOR      );
+                    Add( '┃　│　├・DEVICE_VENDOR_ID       ：'  + IntToStr( D.DEVICE_VENDOR_ID ) );
+                    Add( '┃　│　├・DEVICE_VERSION         ：'  +           D.DEVICE_VERSION     );
+                    Add( '┃　│　├・DRIVER_VERSION         ：'  +           D.DRIVER_VERSION     );
+
+                    Cs := D.DEVICE_SVM_CAPABILITIES;
+                    if Cs and CL_DEVICE_SVM_COARSE_GRAIN_BUFFER <> 0 then S := 'OK' else S := 'NO';
+                    Add( '┃　│　├・SVM_COARSE_GRAIN_BUFFER：' + S );
+                    if Cs and CL_DEVICE_SVM_FINE_GRAIN_BUFFER   <> 0 then S := 'OK' else S := 'NO';
+                    Add( '┃　│　├・SVM_FINE_GRAIN_BUFFER  ：' + S );
+                    if Cs and CL_DEVICE_SVM_FINE_GRAIN_SYSTEM   <> 0 then S := 'OK' else S := 'NO';
+                    Add( '┃　│　├・SVM_FINE_GRAIN_SYSTEM  ：' + S );
+                    if Cs and CL_DEVICE_SVM_ATOMICS             <> 0 then S := 'OK' else S := 'NO';
+                    Add( '┃　│　├・SVM_ATOMICS            ：' + S );
                end;
           end;
 
