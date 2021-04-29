@@ -15,27 +15,27 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLContex_,TCLDevice_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLBufferIter<TCLContex_,TCLDevice_:class;TValue_:record> = class
+     TCLBufferIter<TCLContex_,TCLPlatfo_:class;TValue_:record> = class
      private
-       type TCLComman = TCLComman<TCLContex_,TCLDevice_>;
-            TCLBuffer = TCLBuffer<TCLContex_,TValue_>;
-            PValue    = ^TValue_;
+       type TCLComman_ = TCLComman<TCLContex_,TCLPlatfo_>;
+            TCLBuffer_ = TCLBuffer<TCLContex_,TValue_>;
+            PValue_    = ^TValue_;
      private
-       _Comman :TCLComman;
-       _Buffer :TCLBuffer;
+       _Comman :TCLComman_;
+       _Buffer :TCLBuffer_;
        _Mode   :T_cl_map_flags;
-       _Head   :PValue;
+       _Head   :PValue_;
        ///// アクセス
        function GetValues( const I_:Integer ) :TValue_;
        procedure SetValues( const I_:Integer; const Values_:TValue_ );
      public
-       constructor Create( const Comman_:TCLComman; const Buffer_:TCLBuffer; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
+       constructor Create( const Comman_:TCLComman_; const Buffer_:TCLBuffer_; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
        destructor Destroy; override;
        ///// プロパティ
-       property Comman                     :TCLComman      read   _Comman                ;
-       property Buffer                     :TCLBuffer      read   _Buffer                ;
+       property Comman                     :TCLComman_     read   _Comman                ;
+       property Buffer                     :TCLBuffer_     read   _Buffer                ;
        property Mode                       :T_cl_map_flags read   _Mode                  ;
        property Values[ const I_:Integer ] :TValue_        read GetValues write SetValues;
      end;
@@ -54,29 +54,29 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLContex_,TCLDevice_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLBufferIter<TCLContex_,TCLDevice_,TValue_>.GetValues( const I_:Integer ) :TValue_;
+function TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>.GetValues( const I_:Integer ) :TValue_;
 var
-   P :PValue;
+   P :PValue_;
 begin
      P := _Head;  Inc( P, I_ );  Result := P^;
 end;
 
-procedure TCLBufferIter<TCLContex_,TCLDevice_,TValue_>.SetValues( const I_:Integer; const Values_:TValue_ );
+procedure TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>.SetValues( const I_:Integer; const Values_:TValue_ );
 var
-   P :PValue;
+   P :PValue_;
 begin
      P := _Head;  Inc( P, I_ );  P^ := Values_;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLBufferIter<TCLContex_,TCLDevice_,TValue_>.Create( const Comman_:TCLComman; const Buffer_:TCLBuffer; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
+constructor TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>.Create( const Comman_:TCLComman_; const Buffer_:TCLBuffer_; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
 var
    E :T_cl_int;
 begin
@@ -91,7 +91,7 @@ begin
      AssertCL( E );
 end;
 
-destructor TCLBufferIter<TCLContex_,TCLDevice_,TValue_>.Destroy;
+destructor TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>.Destroy;
 begin
      AssertCL( clEnqueueUnmapMemObject( _Comman.Handle, _Buffer.Handle, _Head, 0, nil, nil ) );
 

@@ -27,8 +27,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
              TCLDevice         = TCLDevice <TCLPlatfo>;
            TCLContexs          = TCLContexs<TCLPlatfo>;
              TCLContex         = TCLContex <TCLPlatfo>;
-               TCLCommans      = TCLCommans<TCLContex,TCLDevice>;
-                 TCLComman     = TCLComman <TCLContex,TCLDevice>;
+               TCLCommans      = TCLCommans<TCLContex,TCLPlatfo>;
+                 TCLComman     = TCLComman <TCLContex,TCLPlatfo>;
                TCLMemorys      = TCLMemorys<TCLContex>;
                  TCLMemory     = TCLMemory <TCLContex>;
                TCLProgras      = TCLProgras<TCLContex>;
@@ -39,7 +39,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLDeviceBuffer<TValue_:record> = class( TCLDeviceBuffer<TCLContex,TValue_> );
      TCLHostBuffer  <TValue_:record> = class( TCLHostBuffer  <TCLContex,TValue_> );
 
-     TCLBufferIter<TValue_:record> = class( TCLBufferIter<TCLContex,TCLDevice,TValue_> );
+     TCLBufferIter<TValue_:record> = class( TCLBufferIter<TCLContex,TCLPlatfo,TValue_> );
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
