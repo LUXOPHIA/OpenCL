@@ -4,11 +4,15 @@ interface //####################################################################
 
 uses System.Classes, System.Generics.Collections,
      cl_version, cl_platform, cl,
+     LUX.Data.List,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
      LUX.GPU.OpenCL.Memory;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
+
+     TCLKernels <TCLContex_,TCLProgra_:class> = class;
+       TCLKernel<TCLContex_,TCLProgra_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -16,11 +20,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLContex_,TCLProgra_>
 
-     TCLKernel<TCLContex_,TCLProgra_:class> = class
+     TCLKernel<TCLContex_,TCLProgra_:class> = class( TListChildr<TCLProgra_,TCLKernels<TCLContex_,TCLProgra_>> )
      private
-       type TCLMemory_ = TCLMemory<TCLContex_>;
+       type TCLKernels_ = TCLKernels<TCLContex_,TCLProgra_>;
+            TCLMemory_  = TCLMemory<TCLContex_>;
      protected
-       _Progra           :TCLProgra_;
        _Handle           :T_cl_kernel;
        _Name             :String;
        _Memorys          :TList<TCLMemory_>;
@@ -28,7 +32,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _GlobalWorkSize   :TArray<T_size_t>;
        _LocalWorkSize    :TArray<T_size_t>;
        ///// アクセス
-       procedure SetProgra( const Progra_:TCLProgra_ );
        function GetHandle :T_cl_kernel;
        procedure SetHandle( const Handle_:T_cl_kernel );
        function GetDimension :T_cl_uint;
@@ -39,12 +42,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure CreateHandle;
        procedure DestroHandle;
      public
-       constructor Create; overload;
-       constructor Create( const Progra_:TCLProgra_ ); overload;
-       constructor Create( const Progra_:TCLProgra_; const Name_:String ); overload;
+       constructor Create; override;
+       constructor Create( const Progra_:TCLProgra_ ); overload; virtual;
+       constructor Create( const Progra_:TCLProgra_; const Name_:String ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Progra           :TCLProgra_        read   _Progra           write SetProgra          ;
+       property Progra           :TCLProgra_        read GetOwnere                                    ;
+       property Kernels          :TCLKernels_       read GetParent                                    ;
        property Handle           :T_cl_kernel       read GetHandle           write SetHandle          ;
        property Name             :String            read   _Name             write   _Name            ;
        property Memorys          :TList<TCLMemory_> read   _Memorys                                   ;
@@ -54,6 +58,16 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property LocalWorkSize    :TArray<T_size_t>  read   _LocalWorkSize    write SetLocalWorkSize   ;
        ///// メソッド
        procedure Run( const Comman_:TObject );
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernels<TCLContex_,TCLProgra_>
+
+     TCLKernels<TCLContex_,TCLProgra_:class> = class( TListParent<TCLProgra_,TCLKernel<TCLContex_,TCLProgra_>> )
+     private
+     protected
+     public
+       ///// プロパティ
+       property Progra :TCLProgra_ read GetOwnere;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -77,17 +91,6 @@ uses LUX.GPU.OpenCL;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 /////////////////////////////////////////////////////////////////////// アクセス
-
-procedure TCLKernel<TCLContex_,TCLProgra_>.SetProgra( const Progra_:TCLProgra_ );
-begin
-     if Assigned( _Progra ) then TCLProgra( _Progra ).Kernels.Remove( TCLKernel( Self ) );
-
-                  _Progra := Progra_;
-
-     if Assigned( _Progra ) then TCLProgra( _Progra ).Kernels.Add   ( TCLKernel( Self ) );
-end;
-
-//------------------------------------------------------------------------------
 
 function TCLKernel<TCLContex_,TCLProgra_>.GetHandle :T_cl_kernel;
 begin
@@ -162,7 +165,6 @@ begin
 
      _Memorys := TList<TCLMemory_>.Create;
 
-     _Progra := nil;
      _Name   := '';
 
      _GlobalWorkOffset := [];
@@ -172,9 +174,7 @@ end;
 
 constructor TCLKernel<TCLContex_,TCLProgra_>.Create( const Progra_:TCLProgra_ );
 begin
-     Create;
-
-     Progra := Progra_;
+     inherited Create( TCLProgra( Progra_ ).Kernels );
 end;
 
 constructor TCLKernel<TCLContex_,TCLProgra_>.Create( const Progra_:TCLProgra_; const Name_:String );
