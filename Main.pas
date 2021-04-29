@@ -50,6 +50,7 @@ type
     procedure ShowPlatfos;
     procedure ShowDevices;
     procedure ShowContexs;
+    procedure ShowBuffers;
   end;
 
 var
@@ -167,32 +168,57 @@ begin
      end;
 end;
 
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//------------------------------------------------------------------------------
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TForm1.ShowBuffers;
 var
    A, B, C :TCLBufferIter<T_float>;
    I :Integer;
 begin
-     ///// Platfo
+     MemoPR.Lines.Add( 'A[i] + B[i] = C[i]' );
+
+     A := TCLBufferIter<T_float>.Create( _Comman, _BufferA );
+     B := TCLBufferIter<T_float>.Create( _Comman, _BufferB );
+     C := TCLBufferIter<T_float>.Create( _Comman, _BufferC );
+
+     for I := 0 to _BufferC.Count-1 do
+     begin
+          MemoPR.Lines.Add( FloatToStr( A[ I ] ) + ' * '
+                          + FloatToStr( B[ I ] ) + ' = '
+                          + FloatToStr( C[ I ] ) );
+     end;
+
+     A.Free;
+     B.Free;
+     C.Free;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+procedure TForm1.FormCreate(Sender: TObject);
+var
+   A, B :TCLBufferIter<T_float>;
+   I :Integer;
+begin
+     ///// Platfo                                                               ：プラットフォーム
      _Platfo := _OpenCL_.Platfos[ 0 ];                                          // 選択
 
      ShowPlatfos;                                                               // 一覧表示
 
-     ///// Device
+     ///// Device                                                               ：デバイス
      _Device := _Platfo.Devices[ 0 ];                                           // 選択
 
      ShowDevices;                                                               // 一覧表示
 
-     ///// Context
+     ///// Contex                                                               ：コンテキスト
      _Contex := TCLContex.Create( _Platfo );                                    // 生成
 
      ShowContexs;                                                               // 一覧表示
 
-     ///// Context
+     ///// Comman                                                               ：コマンドキュー
      _Comman := TCLComman.Create( _Contex, _Device );                           // 生成
 
-     ///// Buffer
+     ///// Buffer                                                               ：バッファー
      _BufferA := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
      _BufferB := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
      _BufferC := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
@@ -203,19 +229,21 @@ begin
 
      A := TCLBufferIter<T_float>.Create( _Comman, _BufferA );                   // マップ
      B := TCLBufferIter<T_float>.Create( _Comman, _BufferB );                   // マップ
-     for I := 0 to _BufferA.Count-1 do A.Values[ I ] := Random( 10 );           // 書き込み
-     for I := 0 to _BufferB.Count-1 do B.Values[ I ] := Random( 10 );           // 書き込み
+
+     for I := 0 to _BufferA.Count-1 do A[ I ] := Random( 10 );                  // 書き込み
+     for I := 0 to _BufferB.Count-1 do B[ I ] := Random( 10 );                  // 書き込み
+
      A.Free;                                                                    // アンマップ
      B.Free;                                                                    // アンマップ
 
-     ///// Progra
+     ///// Progra                                                               ：プログラム
      _Progra := TCLProgra.Create( _Contex );                                    // 生成
      _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードの読み込み
      _Progra.Build;                                                             // ビルド
 
      MemoPC.Lines.Assign( _Progra.Source );                                     // ソースコードの表示
 
-     ///// Kernel
+     ///// Kernel                                                               ：カーネル
      _Kernel := TCLKernel.Create( _Progra, 'mul' );                             // 生成
      _Kernel.Memorys.Add( _BufferA );                                           // バッファの登録
      _Kernel.Memorys.Add( _BufferB );                                           // バッファの登録
@@ -224,20 +252,7 @@ begin
 
      _Kernel.Run( _Comman );                                                    // 実行
 
-     ///// Buffer
-     MemoPR.Lines.Add( 'A[i] + B[i] = C[i]' );
-     A := TCLBufferIter<T_float>.Create( _Comman, _BufferA );                   // マップ
-     B := TCLBufferIter<T_float>.Create( _Comman, _BufferB );                   // マップ
-     C := TCLBufferIter<T_float>.Create( _Comman, _BufferC );                   // マップ
-     for I := 0 to _BufferC.Count-1 do
-     begin
-          MemoPR.Lines.Add( FloatToStr( A.Values[ I ] ) + ' * '                 // 読み込み
-                          + FloatToStr( B.Values[ I ] ) + ' = '                 // 読み込み
-                          + FloatToStr( C.Values[ I ] ) );                      // 読み込み
-     end;
-     A.Free;                                                                    // アンマップ
-     B.Free;                                                                    // アンマップ
-     C.Free;                                                                    // アンマップ
+     ShowBuffers;                                                               // 結果表示
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
