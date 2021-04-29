@@ -129,7 +129,7 @@ begin
      _Source  := TStringList.Create;
      _Kernels := TCLKernels_.Create( Self );
 
-     _LangVer := TCLVersion.From( '2.0' );
+     _LangVer := TCLVersion.From( '3.0' );
 end;
 
 constructor TCLProgra<TCLContex_>.Create( const Contex_:TCLContex_ );
