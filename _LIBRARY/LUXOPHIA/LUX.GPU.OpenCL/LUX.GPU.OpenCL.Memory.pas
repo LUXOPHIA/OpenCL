@@ -27,6 +27,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// アクセス
        function GetHandle :T_cl_mem;
        procedure SetHandle( const Handle_:T_cl_mem );
+       function GetSize :T_size_t; virtual; abstract;
        ///// メソッド
        procedure CreateHandle; virtual; abstract;
        procedure DestroHandle; virtual;
@@ -38,6 +39,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Contex  :TCLContex_  read GetOwnere                ;
        property Memorys :TCLMemorys_ read GetParent                ;
        property Handle  :T_cl_mem    read GetHandle write SetHandle;
+       property Size    :T_size_t    read GetSize                  ;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemorys<TCLContex_>
