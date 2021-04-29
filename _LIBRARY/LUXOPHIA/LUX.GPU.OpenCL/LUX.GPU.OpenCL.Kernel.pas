@@ -32,19 +32,19 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLKernel_  = TCLKernel <TCLProgra_,TCLContex_>;
             TCLArgumes_ = TCLArgumes<TCLKernel_,TCLContex_>;
      protected
-       _Handle           :T_cl_kernel;
-       _Name             :String;
-       _Argumes          :TCLArgumes_;
-       _GlobalWorkOffset :TArray<T_size_t>;
-       _GlobalWorkSize   :TArray<T_size_t>;
-       _LocalWorkSize    :TArray<T_size_t>;
+       _Handle       :T_cl_kernel;
+       _Name         :String;
+       _Argumes      :TCLArgumes_;
+       _GlobWorkOffs :TArray<T_size_t>;
+       _GlobWorkSize :TArray<T_size_t>;
+       _LocaWorkSize :TArray<T_size_t>;
        ///// アクセス
        function GetHandle :T_cl_kernel;
        procedure SetHandle( const Handle_:T_cl_kernel );
        function GetDimension :T_cl_uint;
-       procedure SetGlobalWorkOffset( const GlobalWorkOffset_:TArray<T_size_t> );
-       procedure SetGlobalWorkSize( const GlobalWorkSize_:TArray<T_size_t> );
-       procedure SetLocalWorkSize( const LocalWorkSize_:TArray<T_size_t> );
+       procedure SetGlobWorkOffs( const GlobWorkOffs_:TArray<T_size_t> );
+       procedure SetGlobWorkSize( const GlobWorkSize_:TArray<T_size_t> );
+       procedure SetLocaWorkSize( const LocaWorkSize_:TArray<T_size_t> );
        ///// メソッド
        procedure CreateHandle;
        procedure DestroHandle;
@@ -54,15 +54,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Progra_:TCLProgra_; const Name_:String ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Progra           :TCLProgra_       read GetOwnere                                    ;
-       property Kernels          :TCLKernels_      read GetParent                                    ;
-       property Handle           :T_cl_kernel      read GetHandle           write SetHandle          ;
-       property Name             :String           read   _Name             write   _Name            ;
-       property Argumes          :TCLArgumes_      read   _Argumes                                   ;
-       property Dimension        :T_cl_uint        read GetDimension                                 ;
-       property GlobalWorkOffset :TArray<T_size_t> read   _GlobalWorkOffset write SetGlobalWorkOffset;
-       property GlobalWorkSize   :TArray<T_size_t> read   _GlobalWorkSize   write SetGlobalWorkSize  ;
-       property LocalWorkSize    :TArray<T_size_t> read   _LocalWorkSize    write SetLocalWorkSize   ;
+       property Progra       :TCLProgra_       read GetOwnere                            ;
+       property Kernels      :TCLKernels_      read GetParent                            ;
+       property Handle       :T_cl_kernel      read GetHandle       write SetHandle      ;
+       property Name         :String           read   _Name         write   _Name        ;
+       property Argumes      :TCLArgumes_      read   _Argumes                           ;
+       property Dimension    :T_cl_uint        read GetDimension                         ;
+       property GlobWorkOffs :TArray<T_size_t> read   _GlobWorkOffs write SetGlobWorkOffs;
+       property GlobWorkSize :TArray<T_size_t> read   _GlobWorkSize write SetGlobWorkSize;
+       property LocaWorkSize :TArray<T_size_t> read   _LocaWorkSize write SetLocaWorkSize;
        ///// メソッド
        procedure Run( const Comman_:TObject );
      end;
@@ -125,22 +125,22 @@ end;
 
 function TCLKernel<TCLProgra_,TCLContex_>.GetDimension :T_cl_uint;
 begin
-     Result := Length( _GlobalWorkSize );
+     Result := Length( _GlobWorkSize );
 end;
 
-procedure TCLKernel<TCLProgra_,TCLContex_>.SetGlobalWorkOffset( const GlobalWorkOffset_:TArray<T_size_t> );
+procedure TCLKernel<TCLProgra_,TCLContex_>.SetGlobWorkOffs( const GlobWorkOffs_:TArray<T_size_t> );
 begin
-     _GlobalWorkOffset := GlobalWorkOffset_;
+     _GlobWorkOffs := GlobWorkOffs_;
 end;
 
-procedure TCLKernel<TCLProgra_,TCLContex_>.SetGlobalWorkSize( const GlobalWorkSize_:TArray<T_size_t> );
+procedure TCLKernel<TCLProgra_,TCLContex_>.SetGlobWorkSize( const GlobWorkSize_:TArray<T_size_t> );
 begin
-     _GlobalWorkSize := GlobalWorkSize_;
+     _GlobWorkSize := GlobWorkSize_;
 end;
 
-procedure TCLKernel<TCLProgra_,TCLContex_>.SetLocalWorkSize( const LocalWorkSize_:TArray<T_size_t> );
+procedure TCLKernel<TCLProgra_,TCLContex_>.SetLocaWorkSize( const LocaWorkSize_:TArray<T_size_t> );
 begin
-     _LocalWorkSize := LocalWorkSize_;
+     _LocaWorkSize := LocaWorkSize_;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
@@ -182,9 +182,9 @@ begin
 
      _Name   := '';
 
-     _GlobalWorkOffset := [];
-     _GlobalWorkSize   := [ 1 ];
-     _LocalWorkSize    := [];
+     _GlobWorkOffs := [];
+     _GlobWorkSize := [ 1 ];
+     _LocaWorkSize := [];
 end;
 
 constructor TCLKernel<TCLProgra_,TCLContex_>.Create( const Progra_:TCLProgra_ );
@@ -215,9 +215,9 @@ begin
      AssertCL( clEnqueueNDRangeKernel( TCLComman( Comman_ ).Handle,
                                        Handle,
                                        Dimension,
-                                       @_GlobalWorkOffset[ 0 ],
-                                       @_GlobalWorkSize[ 0 ],
-                                       @_LocalWorkSize[ 0 ],
+                                       @_GlobWorkOffs[ 0 ],
+                                       @_GlobWorkSize[ 0 ],
+                                       @_LocaWorkSize[ 0 ],
                                        0, nil, nil ) );
 
      clFinish( TCLComman( Comman_ ).Handle );
