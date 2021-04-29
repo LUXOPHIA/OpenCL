@@ -29,17 +29,17 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
              TCLContex         = TCLContex <TCLPlatfo>;
                TCLCommans      = TCLCommans<TCLContex,TCLDevice>;
                  TCLComman     = TCLComman <TCLContex,TCLDevice>;
+               TCLMemorys      = TCLMemorys<TCLContex>;
+                 TCLMemory     = TCLMemory <TCLContex>;
                TCLProgras      = TCLProgras<TCLContex>;
                  TCLProgra     = TCLProgra <TCLContex>;
                    TCLKernels  = TCLKernels<TCLContex,TCLProgra>;
                      TCLKernel = TCLKernel <TCLContex,TCLProgra>;
 
-     TCLMemory = TCLMemory<TCLContex>;
+     TCLDeviceBuffer<TValue_:record> = class( TCLDeviceBuffer<TCLContex,TValue_> );
+     TCLHostBuffer  <TValue_:record> = class( TCLHostBuffer  <TCLContex,TValue_> );
 
-     TCLDeviceBuffer<_TValue_:record> = class( TCLDeviceBuffer<TCLContex,_TValue_> );
-     TCLHostBuffer  <_TValue_:record> = class( TCLHostBuffer  <TCLContex,_TValue_> );
-
-     TCLBufferIter<_TValue_:record> = class( TCLBufferIter<TCLContex,TCLDevice,_TValue_> );
+     TCLBufferIter<TValue_:record> = class( TCLBufferIter<TCLContex,TCLDevice,TValue_> );
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
