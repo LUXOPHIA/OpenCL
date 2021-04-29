@@ -1,5 +1,5 @@
 ﻿__kernel void
-mul( __global const float *A,
+main( __global const float *A,
      __global const float *B,
      __global       float *C )
 {
