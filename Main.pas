@@ -18,19 +18,15 @@ type
   TForm1 = class(TForm)
     TabControl1: TTabControl;
       TabItemS: TTabItem;
-        TabControlS: TTabControl;
-          TabItemSP: TTabItem;
-            MemoSP: TMemo;
-          TabItemSD: TTabItem;
-            MemoSD: TMemo;
-          TabItemSC: TTabItem;
-            MemoSC: TMemo;
+        MemoS: TMemo;
       TabItemP: TTabItem;
         TabControlP: TTabControl;
           TabItemPC: TTabItem;
-            MemoPC: TMemo;
-          TabItemPR: TTabItem;
-            MemoPR: TMemo;
+            MemoP: TMemo;
+          TabItemE: TTabItem;
+            MemoE: TMemo;
+      TabItemR: TTabItem;
+        MemoR: TMemo;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -41,16 +37,23 @@ type
     _Device  :TCLDevice;
     _Contex  :TCLContex;
     _Comman  :TCLComman;
-    _Progra  :TCLProgra;
-    _Kernel  :TCLKernel;
     _BufferA :TCLHostBuffer<T_float>;
     _BufferB :TCLHostBuffer<T_float>;
     _BufferC :TCLHostBuffer<T_float>;
+    _Progra  :TCLProgra;
+    _Kernel  :TCLKernel;
     ///// メソッド
-    procedure ShowPlatfos;
-    procedure ShowDevices;
-    procedure ShowContexs;
-    procedure ShowBuffers;
+    procedure ShowArgumes( const Argumes_:TCLArgumes );
+    procedure ShowKernels( const Kernels_:TCLKernels );
+    procedure ShowProgras( const Progras_:TCLProgras );
+    procedure ShowMemorys( const Memorys_:TCLMemorys );
+    procedure ShowCommans( const Commans_:TCLCommans );
+    procedure ShowContexs( const Contexs_:TCLContexs );
+    procedure ShowDevices( const Devices_:TCLDevices );
+    procedure ShowExtenss( const Extenss_:TCLExtenss );
+    procedure ShowPlatfos( const Platfos_:TCLPlatfos );
+    procedure ShowSystem( const OpenCL_:TOpenCL );
+    procedure ShowResult;
   end;
 
 var
@@ -66,143 +69,249 @@ uses System.Math;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-procedure TForm1.ShowPlatfos;
+procedure TForm1.ShowArgumes( const Argumes_:TCLArgumes );
 var
-   PI :Integer;
-   P :TCLPlatfo;
-   E :String;
+   I :Integer;
+   M :TCLMemory;
 begin
-     with MemoSP.Lines do
+     with MemoS.Lines do
      begin
-          for PI := 0 to _OpenCL_.Platfos.Count-1 do
+          Add( ' ┃　│　┃　│　┃　│　┃　│' );
+          Add( ' ┃　│　┃　│　┃　│　┃　├ Argumes[*] :TCLArgumes' );
+          for I := 0 to Argumes_.Count-1 do
           begin
-               P := _OpenCL_.Platfos[ PI ];
+               M := Argumes_[ I ];
 
-               Add( '┃' );
-               Add( '┣・Platfos[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
-               Add( '┃　├・Profile   ：' + P.Profile );
-               Add( '┃　├・Version   ：' + P.Version );
-               Add( '┃　├・Name      ：' + P.Name    );
-               Add( '┃　├・Vendor    ：' + P.Vendor  );
-               Add( '┃　├・Extensions：' );
-
-               for E in P.Extenss do Add( '┃　│　 - ' + E );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　├ Argume[' + I.ToString + '] = Memory[' + M.Order.ToString + ']'  );
           end;
-
-          Add( '' );
      end;
 end;
 
-//------------------------------------------------------------------------------
-
-procedure TForm1.ShowDevices;
+procedure TForm1.ShowKernels( const Kernels_:TCLKernels );
 var
-   PI, DI :Integer;
-   P :TCLPlatfo;
+   I :Integer;
+   K :TCLKernel;
+begin
+     with MemoS.Lines do
+     begin
+          Add( ' ┃　│　┃　│　┃　│' );
+          Add( ' ┃　│　┃　│　┃　┝ Kernels[*] :TCLKernels' );
+          for I := 0 to Kernels_.Count-1 do
+          begin
+               K := Kernels_[ I ];
+
+               Add( ' ┃　│　┃　│　┃　│　┃' );
+               Add( ' ┃　│　┃　│　┃　│　┣・Kernel[' + I.ToString + '] :TCLKernel' );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Name      = ' + K.Name               );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Dimension = ' + K.Dimension.ToString );
+
+               ShowArgumes( K.Argumes );
+          end;
+     end;
+end;
+
+procedure TForm1.ShowProgras( const Progras_:TCLProgras );
+var
+   I :Integer;
+   P :TCLProgra;
+begin
+     with MemoS.Lines do
+     begin
+          Add( ' ┃　│　┃　│' );
+          Add( ' ┃　│　┃　┝ Progras[*] :TCLProgras' );
+          for I := 0 to Progras_.Count-1 do
+          begin
+               P := Progras_[ I ];
+
+               Add( ' ┃　│　┃　│　┃' );
+               Add( ' ┃　│　┃　│　┣・Progra[' + I.ToString + '] :TCLProgra' );
+               Add( ' ┃　│　┃　│　┃　├ LangVer = ' + P.LangVer.ToString );
+
+               ShowKernels( P.Kernels );
+          end;
+     end;
+end;
+
+procedure TForm1.ShowMemorys( const Memorys_:TCLMemorys );
+var
+   I :Integer;
+   M :TCLMemory;
+begin
+     with MemoS.Lines do
+     begin
+          Add( ' ┃　│　┃　│' );
+          Add( ' ┃　│　┃　┝ Memorys[*] :TCLMemorys' );
+          for I := 0 to Memorys_.Count-1 do
+          begin
+               M := Memorys_[ I ];
+
+               Add( ' ┃　│　┃　│　┃' );
+               Add( ' ┃　│　┃　│　┣・Memory[' + I.ToString + '] :TCLMemory' );
+               Add( ' ┃　│　┃　│　┃　├ Size = ' + M.Size.ToString );
+          end;
+     end;
+end;
+
+procedure TForm1.ShowCommans( const Commans_:TCLCommans );
+var
+   I :Integer;
+   Q :TCLComman;
+begin
+     with MemoS.Lines do
+     begin
+          Add( ' ┃　│　┃　│' );
+          Add( ' ┃　│　┃　┝ Commans[*] :TCLCommans' );
+          for I := 0 to Commans_.Count-1 do
+          begin
+               Q := Commans_[ I ];
+
+               Add( ' ┃　│　┃　│　┃' );
+               Add( ' ┃　│　┃　│　┣・Comman[' + I.ToString + '] :TCLComman' );
+               Add( ' ┃　│　┃　│　┃　├ Device = Device[' + Q.Device.Order.ToString + ']' );
+          end;
+     end;
+end;
+
+procedure TForm1.ShowContexs( const Contexs_:TCLContexs );
+var
+   I :Integer;
+   C :TCLContex;
+begin
+     with MemoS.Lines do
+     begin
+          Add( ' ┃　│' );
+          Add( ' ┃　┝ Contexs[*] :TCLContexs' );
+          for I := 0 to Contexs_.Count-1 do
+          begin
+               C := Contexs_[ I ];
+
+               Add( ' ┃　│　┃' );
+               Add( ' ┃　│　┣・Contex[' + I.ToString + '] :TCLContex' );
+
+               ShowCommans( C.Commans );
+               ShowMemorys( C.Memorys );
+               ShowProgras( C.Progras );
+          end;
+     end;
+end;
+
+procedure TForm1.ShowDevices( const Devices_:TCLDevices );
+var
+   I :Integer;
    D :TCLDevice;
    Cs :T_cl_device_svm_capabilities;
    S :String;
 begin
-     with MemoSD.Lines do
+     with MemoS.Lines do
      begin
-          for PI := 0 to _OpenCL_.Platfos.Count-1 do
+          Add( ' ┃　│' );
+          Add( ' ┃　┝ Devices[*] :TCLDevices' );
+          for I := 0 to Devices_.Count-1 do
           begin
-               P := _OpenCL_.Platfos[ PI ];
+               D := Devices_[ I ];
 
-               Add( '┃' );
-               Add( '┣・Platfos[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
+               Add( ' ┃　│　┃' );
+               Add( ' ┃　│　┣・Device[' + I.ToString + '] :TCLDevice' );
+               Add( ' ┃　│　┃　├ DEVICE_TYPE             = '  + D.DEVICE_TYPE     .ToString );
+               Add( ' ┃　│　┃　├ DEVICE_VENDOR           = '  + D.DEVICE_VENDOR             );
+               Add( ' ┃　│　┃　├ DEVICE_VENDOR_ID        = '  + D.DEVICE_VENDOR_ID.ToString );
+               Add( ' ┃　│　┃　├ DEVICE_VERSION          = '  + D.DEVICE_VERSION            );
+               Add( ' ┃　│　┃　├ DRIVER_VERSION          = '  + D.DRIVER_VERSION            );
 
-               for DI := 0 to P.Devices.Count-1 do
-               begin
-                    D := P.Devices[ DI ];
-
-                    Add( '┃　│' );
-                    Add( '┃　┝・Devices[ ' + DI.ToString + ' ]<' + Longint( D.Handle ).ToHexString + '>' );
-                    Add( '┃　│　├・DEVICE_TYPE            ：'  + IntTosTr( D.DEVICE_TYPE      ) );
-                    Add( '┃　│　├・DEVICE_VENDOR          ：'  +           D.DEVICE_VENDOR      );
-                    Add( '┃　│　├・DEVICE_VENDOR_ID       ：'  + IntToStr( D.DEVICE_VENDOR_ID ) );
-                    Add( '┃　│　├・DEVICE_VERSION         ：'  +           D.DEVICE_VERSION     );
-                    Add( '┃　│　├・DRIVER_VERSION         ：'  +           D.DRIVER_VERSION     );
-
-                    Cs := D.DEVICE_SVM_CAPABILITIES;
-                    if Cs and CL_DEVICE_SVM_COARSE_GRAIN_BUFFER <> 0 then S := 'OK' else S := 'NO';
-                    Add( '┃　│　├・SVM_COARSE_GRAIN_BUFFER：' + S );
-                    if Cs and CL_DEVICE_SVM_FINE_GRAIN_BUFFER   <> 0 then S := 'OK' else S := 'NO';
-                    Add( '┃　│　├・SVM_FINE_GRAIN_BUFFER  ：' + S );
-                    if Cs and CL_DEVICE_SVM_FINE_GRAIN_SYSTEM   <> 0 then S := 'OK' else S := 'NO';
-                    Add( '┃　│　├・SVM_FINE_GRAIN_SYSTEM  ：' + S );
-                    if Cs and CL_DEVICE_SVM_ATOMICS             <> 0 then S := 'OK' else S := 'NO';
-                    Add( '┃　│　├・SVM_ATOMICS            ：' + S );
-               end;
+               Cs := D.DEVICE_SVM_CAPABILITIES;
+               if Cs and CL_DEVICE_SVM_COARSE_GRAIN_BUFFER <> 0 then S := 'OK' else S := 'NO';
+               Add( ' ┃　│　┃　├ SVM_COARSE_GRAIN_BUFFER = ' + S );
+               if Cs and CL_DEVICE_SVM_FINE_GRAIN_BUFFER   <> 0 then S := 'OK' else S := 'NO';
+               Add( ' ┃　│　┃　├ SVM_FINE_GRAIN_BUFFER   = ' + S );
+               if Cs and CL_DEVICE_SVM_FINE_GRAIN_SYSTEM   <> 0 then S := 'OK' else S := 'NO';
+               Add( ' ┃　│　┃　├ SVM_FINE_GRAIN_SYSTEM   = ' + S );
+               if Cs and CL_DEVICE_SVM_ATOMICS             <> 0 then S := 'OK' else S := 'NO';
+               Add( ' ┃　│　┃　├ SVM_ATOMICS             = ' + S );
           end;
-
-          Add( '' );
      end;
 end;
 
-//------------------------------------------------------------------------------
-
-procedure TForm1.ShowContexs;
+procedure TForm1.ShowExtenss( const Extenss_:TCLExtenss );
 var
-   PI, CI, QI :Integer;
-   P :TCLPlatfo;
-   C :TCLContex;
-   Q :TCLComman;
+   I :Integer;
+   E :String;
 begin
-     with MemoSC.Lines do
+     with MemoS.Lines do
      begin
-          for PI := 0 to _OpenCL_.Platfos.Count-1 do
+          Add( ' ┃　│' );
+          Add( ' ┃　├ Extenss[*] :TCLExtenss' );
+          for I := 0 to Extenss_.Count-1 do
           begin
-               P := _OpenCL_.Platfos[ PI ];
+               E := Extenss_[ I ];
 
-               Add( '┃' );
-               Add( '┣・Platfos[ ' + PI.ToString + ' ]<' + Longint( P.Handle ).ToHexString + '>' );
-
-               for CI := 0 to P.Contexs.Count-1 do
-               begin
-                    C := P.Contexs[ CI ];
-
-                    Add( '┃　│' );
-                    Add( '┃　┝・Contexs[ ' + CI.ToString + ' ]<' + LongInt( C.Handle ).ToHexString + '>' );
-
-                    for QI := 0 to C.Commans.Count-1 do
-                    begin
-                         Q := C.Commans[ QI ];
-
-                         Add( '┃　│　│' );
-                         Add( '┃　│　├・Commans[ ' + QI.ToString + ' ]<' + LongInt( Q.Handle ).ToHexString + '>'
-                            + ' → Device<' + LongInt( Q.Device.Handle ).ToHexString + '>' );
-                    end;
-               end;
+               Add( ' ┃　│　├ Extens[' + I.ToString + '] = ' + E );
           end;
-
-          Add( '' );
      end;
+end;
+
+procedure TForm1.ShowPlatfos( const Platfos_:TCLPlatfos );
+var
+   I :Integer;
+   F :TCLPlatfo;
+begin
+     with MemoS.Lines do
+     begin
+          Add( 'Platfos[*] :TCLPlatfos' );
+
+          for I := 0 to Platfos_.Count-1 do
+          begin
+               F := Platfos_[ I ];
+
+               Add( ' ┃' );
+               Add( ' ┣・Platfo[' + I.ToString + '] :TCLPlatfo' );
+               Add( ' ┃　├ Profile = ' + F.Profile );
+               Add( ' ┃　├ Version = ' + F.Version );
+               Add( ' ┃　├ Name    = ' + F.Name    );
+               Add( ' ┃　├ Vendor  = ' + F.Vendor  );
+
+               ShowExtenss( F.Extenss );
+               ShowDevices( F.Devices );
+               ShowContexs( F.Contexs );
+          end;
+     end;
+end;
+
+procedure TForm1.ShowSystem( const OpenCL_:TOpenCL );
+begin
+     ShowPlatfos( OpenCL_.Platfos );
+
+     MemoS.Lines.Add( '' );
 end;
 
 //------------------------------------------------------------------------------
 
-procedure TForm1.ShowBuffers;
+procedure TForm1.ShowResult;
 var
    A, B, C :TCLBufferIter<T_float>;
    I :Integer;
 begin
-     MemoPR.Lines.Add( 'A[i] + B[i] = C[i]' );
-
-     A := TCLBufferIter<T_float>.Create( _Comman, _BufferA );
-     B := TCLBufferIter<T_float>.Create( _Comman, _BufferB );
-     C := TCLBufferIter<T_float>.Create( _Comman, _BufferC );
-
-     for I := 0 to _BufferC.Count-1 do
+     with MemoR.Lines do
      begin
-          MemoPR.Lines.Add( FloatToStr( A[ I ] ) + ' * '
-                          + FloatToStr( B[ I ] ) + ' = '
-                          + FloatToStr( C[ I ] ) );
-     end;
+          Add( 'A[ i ] * B[ i ] = C[ i ]' );
+          Add( '' );
 
-     A.Free;
-     B.Free;
-     C.Free;
+          A := TCLBufferIter<T_float>.Create( _Comman, _BufferA );
+          B := TCLBufferIter<T_float>.Create( _Comman, _BufferB );
+          C := TCLBufferIter<T_float>.Create( _Comman, _BufferC );
+
+          for I := 0 to _BufferC.Count-1 do
+          begin
+               Add( A[ I ].ToString + ' * '
+                  + B[ I ].ToString + ' = '
+                  + C[ I ].ToString );
+          end;
+
+          A.Free;
+          B.Free;
+          C.Free;
+
+          Add( '' );
+     end;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
@@ -212,25 +321,19 @@ var
    A, B :TCLBufferIter<T_float>;
    I :Integer;
 begin
-     ///// Platfo                                                               ：プラットフォーム
+     ///// プラットフォーム
      _Platfo := _OpenCL_.Platfos[ 0 ];                                          // 選択
 
-     ShowPlatfos;                                                               // 一覧表示
-
-     ///// Device                                                               ：デバイス
+     ///// デバイス
      _Device := _Platfo.Devices[ 0 ];                                           // 選択
 
-     ShowDevices;                                                               // 一覧表示
-
-     ///// Contex                                                               ：コンテキスト
+     ///// コンテキスト
      _Contex := TCLContex.Create( _Platfo );                                    // 生成
 
-     ShowContexs;                                                               // 一覧表示
-
-     ///// Comman                                                               ：コマンドキュー
+     ///// コマンドキュー
      _Comman := TCLComman.Create( _Contex, _Device );                           // 生成
 
-     ///// Buffer                                                               ：バッファー
+     ///// バッファー
      _BufferA := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
      _BufferB := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
      _BufferC := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
@@ -248,28 +351,32 @@ begin
      A.Free;                                                                    // アンマップ
      B.Free;                                                                    // アンマップ
 
-     ///// Progra                                                               ：プログラム
+     ///// プログラム
      _Progra := TCLProgra.Create( _Contex );                                    // 生成
      _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードの読み込み
      _Progra.Build;                                                             // ビルド
 
-     MemoPC.Lines.Assign( _Progra.Source );                                     // ソースコードの表示
+     MemoP.Lines.Assign( _Progra.Source );                                      // ソースコードの表示
 
-     ///// Kernel                                                               ：カーネル
-     _Kernel := TCLKernel.Create( _Progra, 'mul' );                             // 生成
-     _Kernel.Memorys.Add( _BufferA );                                           // バッファの登録
-     _Kernel.Memorys.Add( _BufferB );                                           // バッファの登録
-     _Kernel.Memorys.Add( _BufferC );                                           // バッファの登録
-     _Kernel.GlobalWorkSize := [ 10 ];                                          // ループ回数の設定
+     ///// カーネル
+     _Kernel := TCLKernel.Create( _Progra, 'main' );                            // 生成
+     _Kernel.Argumes.Add( _BufferA );                                           // バッファの登録
+     _Kernel.Argumes.Add( _BufferB );                                           // バッファの登録
+     _Kernel.Argumes.Add( _BufferC );                                           // バッファの登録
+     _Kernel.GlobWorkSize := [ 10 ];                                            // ループ回数の設定
+
+     //////////
+
+     ShowSystem( _OpenCL_ );                                                    // システム表示
 
      _Kernel.Run( _Comman );                                                    // 実行
 
-     ShowBuffers;                                                               // 結果表示
+     ShowResult;                                                                // 結果表示
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
-     /////
+     MemoS.Lines.SaveToFile( 'System.txt' );
 end;
 
 end. //######################################################################### ■
