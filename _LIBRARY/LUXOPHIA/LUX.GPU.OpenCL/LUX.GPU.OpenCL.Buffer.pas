@@ -23,7 +23,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// アクセス
        function GetCount :Integer;
        procedure SetCount( const Count_:Integer );
-       function GetSize :T_size_t;
+       function GetSize :T_size_t; override;
      public
        constructor Create; override;
        ///// プロパティ
