@@ -1,7 +1,7 @@
 ﻿__kernel void
 main( __global const float *A,
-     __global const float *B,
-     __global       float *C )
+      __global const float *B,
+      __global       float *C )
 {
     int i = get_global_id( 0 );
 
