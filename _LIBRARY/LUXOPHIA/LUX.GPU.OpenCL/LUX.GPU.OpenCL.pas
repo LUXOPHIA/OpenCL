@@ -20,19 +20,19 @@ uses System.Generics.Collections,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TOpenCL               = class;
-       TCLPlatfos          = TCLPlatfos<TOpenCL>;
-         TCLPlatfo         = TCLPlatfo <TOpenCL>;
-           TCLDevices      = TCLDevices<TCLPlatfo>;
-             TCLDevice     = TCLDevice <TCLPlatfo>;
-           TCLContexs      = TCLContexs<TCLPlatfo>;
-             TCLContex     = TCLContex <TCLPlatfo>;
-               TCLCommans  = TCLCommans<TCLContex,TCLDevice>;
-                 TCLComman = TCLComman <TCLContex,TCLDevice>;
-               TCLProgras  = TCLProgras<TCLContex>;
-                 TCLProgra = TCLProgra <TCLContex>;
-
-     TCLKernel = TCLKernel<TCLContex,TCLProgra>;
+     TOpenCL                   = class;
+       TCLPlatfos              = TCLPlatfos<TOpenCL>;
+         TCLPlatfo             = TCLPlatfo <TOpenCL>;
+           TCLDevices          = TCLDevices<TCLPlatfo>;
+             TCLDevice         = TCLDevice <TCLPlatfo>;
+           TCLContexs          = TCLContexs<TCLPlatfo>;
+             TCLContex         = TCLContex <TCLPlatfo>;
+               TCLCommans      = TCLCommans<TCLContex,TCLDevice>;
+                 TCLComman     = TCLComman <TCLContex,TCLDevice>;
+               TCLProgras      = TCLProgras<TCLContex>;
+                 TCLProgra     = TCLProgra <TCLContex>;
+                   TCLKernels  = TCLKernels<TCLContex,TCLProgra>;
+                     TCLKernel = TCLKernel <TCLContex,TCLProgra>;
 
      TCLMemory = TCLMemory<TCLContex>;
 

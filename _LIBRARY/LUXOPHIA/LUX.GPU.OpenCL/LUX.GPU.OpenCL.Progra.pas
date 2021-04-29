@@ -23,12 +23,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLProgra<TCLContex_:class> = class( TListChildr<TCLContex_,TCLProgras<TCLContex_>> )
      private
        type TCLProgras_ = TCLProgras<TCLContex_>;
-            TCLKernel_  = TCLKernel<TCLContex_,TCLProgra<TCLContex_>>;
+            TCLProgra_  = TCLProgra <TCLContex_>;
+            TCLKernels_ = TCLKernels<TCLContex_,TCLProgra_>;
      protected
        _Handle  :T_cl_program;
        _Source  :TStringList;
        _LangVer :TCLVersion;
-       _Kernels :TObjectList<TCLKernel_>;
+       _Kernels :TCLKernels_;
        ///// アクセス
        function GetHandle :T_cl_program;
        procedure SetHandle( const Handle_:T_cl_program );
@@ -40,12 +41,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Contex  :TCLContex_              read GetOwnere                 ;
-       property Progras :TCLProgras_             read GetParent                 ;
-       property Handle  :T_cl_program            read GetHandle  write SetHandle;
-       property Source  :TStringList             read   _Source                 ;
-       property LangVer :TCLVersion              read   _LangVer                ;
-       property Kernels :TObjectList<TCLKernel_> read   _Kernels                ;
+       property Contex  :TCLContex_   read GetOwnere                 ;
+       property Progras :TCLProgras_  read GetParent                 ;
+       property Handle  :T_cl_program read GetHandle  write SetHandle;
+       property Source  :TStringList  read   _Source                 ;
+       property LangVer :TCLVersion   read   _LangVer                ;
+       property Kernels :TCLKernels_  read   _Kernels                ;
        ///// メソッド
        procedure Build;
      end;
@@ -125,8 +126,8 @@ begin
 
      _Handle := nil;
 
-     _Source  := TStringList            .Create;
-     _Kernels := TObjectList<TCLKernel_>.Create;
+     _Source  := TStringList.Create;
+     _Kernels := TCLKernels_.Create( Self );
 
      _LangVer := TCLVersion.From( '2.0' );
 end;
