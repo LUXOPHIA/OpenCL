@@ -33,8 +33,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                  TCLMemory     = TCLMemory <TCLContex>;
                TCLProgras      = TCLProgras<TCLContex>;
                  TCLProgra     = TCLProgra <TCLContex>;
-                   TCLKernels  = TCLKernels<TCLContex,TCLProgra>;
-                     TCLKernel = TCLKernel <TCLContex,TCLProgra>;
+                   TCLKernels  = TCLKernels<TCLProgra,TCLContex>;
+                     TCLKernel = TCLKernel <TCLProgra,TCLContex>;
 
      TCLDeviceBuffer<TValue_:record> = class( TCLDeviceBuffer<TCLContex,TValue_> );
      TCLHostBuffer  <TValue_:record> = class( TCLHostBuffer  <TCLContex,TValue_> );
