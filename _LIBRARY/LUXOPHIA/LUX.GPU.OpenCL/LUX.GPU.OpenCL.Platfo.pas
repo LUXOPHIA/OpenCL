@@ -12,6 +12,8 @@ uses System.Classes,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
+     TCLExtenss<TCLPlatfo_:class> = class;
+
      TCLPlatfos<TOpenCL_:class>  = class;
        TCLPlatfo<TOpenCL_:class> = class;
 
@@ -19,12 +21,21 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExtenss<TCLPlatfo_>
+
+     TCLExtenss<TCLPlatfo_:class> = class( TStringList )
+     private
+     protected
+     public
+     end;
+
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfo<TOpenCL_>
 
      TCLPlatfo<TOpenCL_:class> = class( TListChildr<TOpenCL_,TCLPlatfos<TOpenCL_>> )
      private
        type TCLPlatfos_ = TCLPlatfos<TOpenCL_>;
             TCLPlatfo_  = TCLPlatfo <TOpenCL_>;
+            TCLExtenss_ = TCLExtenss<TCLPlatfo_>;
             TCLDevices_ = TCLDevices<TCLPlatfo_>;
             TCLContexs_ = TCLContexs<TCLPlatfo_>;
        ///// メソッド
@@ -34,7 +45,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetInfoString( const Name_:T_cl_platform_info ) :String;
      protected
        _Handle  :T_cl_platform_id;
-       _Extenss :TStringList;
+       _Extenss :TCLExtenss_;
        _Devices :TCLDevices_;
        _Contexs :TCLContexs_;
        ///// アクセス
@@ -61,7 +72,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Version               :String                    read GetVersion              ;
        property Name                  :String                    read GetName                 ;
        property Vendor                :String                    read GetVendor               ;
-       property Extenss               :TStringList               read   _Extenss              ;
+       property Extenss               :TCLExtenss_               read   _Extenss              ;
        {$IF CL_VERSION_2_1 <> 0 }
        property HostTimerResolution   :T_cl_ulong                read GetHostTimerResolution  ;
        {$ENDIF}
@@ -189,7 +200,7 @@ constructor TCLPlatfo<TOpenCL_>.Create;
 begin
      inherited;
 
-     _Extenss := TStringList.Create;
+     _Extenss := TCLExtenss_.Create;
      _Devices := TCLDevices_.Create( Self );
      _Contexs := TCLContexs_.Create( Self );
 end;
