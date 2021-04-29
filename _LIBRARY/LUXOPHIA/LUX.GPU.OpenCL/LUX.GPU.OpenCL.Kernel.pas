@@ -53,7 +53,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property GlobalWorkSize   :TArray<T_size_t>  read   _GlobalWorkSize   write SetGlobalWorkSize  ;
        property LocalWorkSize    :TArray<T_size_t>  read   _LocalWorkSize    write SetLocalWorkSize   ;
        ///// メソッド
-       procedure Run( const Command_:TObject );
+       procedure Run( const Comman_:TObject );
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -195,9 +195,9 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLKernel<TCLContex_,TCLProgra_>.Run( const Command_:TObject );
+procedure TCLKernel<TCLContex_,TCLProgra_>.Run( const Comman_:TObject );
 begin
-     AssertCL( clEnqueueNDRangeKernel( TCLComman( Command_ ).Handle,
+     AssertCL( clEnqueueNDRangeKernel( TCLComman( Comman_ ).Handle,
                                        Handle,
                                        Dimention,
                                        @_GlobalWorkOffset[ 0 ],
@@ -205,7 +205,7 @@ begin
                                        @_LocalWorkSize[ 0 ],
                                        0, nil, nil ) );
 
-     clFinish( TCLComman( Command_ ).Handle );
+     clFinish( TCLComman( Comman_ ).Handle );
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
