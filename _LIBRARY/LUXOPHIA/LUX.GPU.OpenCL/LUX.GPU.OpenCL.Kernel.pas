@@ -11,6 +11,8 @@ uses System.Generics.Collections,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
+     TCLArgumes<TCLKernel_,TCLContex_:class> = class;
+
      TCLKernels <TCLProgra_,TCLContex_:class> = class;
        TCLKernel<TCLProgra_,TCLContex_:class> = class;
 
@@ -18,16 +20,21 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLKernel_,TCLContex_>
+
+     TCLArgumes<TCLKernel_,TCLContex_:class> = class( TList<TCLMemory<TCLContex_>> );
+
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLProgra_,TCLContex_>
 
      TCLKernel<TCLProgra_,TCLContex_:class> = class( TListChildr<TCLProgra_,TCLKernels<TCLProgra_,TCLContex_>> )
      private
-       type TCLMemory_  = TCLMemory <TCLContex_>;
-            TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_>;
+       type TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_>;
+            TCLKernel_  = TCLKernel <TCLProgra_,TCLContex_>;
+            TCLArgumes_ = TCLArgumes<TCLKernel_,TCLContex_>;
      protected
        _Handle           :T_cl_kernel;
        _Name             :String;
-       _Memorys          :TList<TCLMemory_>;
+       _Argumes          :TCLArgumes_;
        _GlobalWorkOffset :TArray<T_size_t>;
        _GlobalWorkSize   :TArray<T_size_t>;
        _LocalWorkSize    :TArray<T_size_t>;
@@ -47,15 +54,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Progra_:TCLProgra_; const Name_:String ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Progra           :TCLProgra_        read GetOwnere                                    ;
-       property Kernels          :TCLKernels_       read GetParent                                    ;
-       property Handle           :T_cl_kernel       read GetHandle           write SetHandle          ;
-       property Name             :String            read   _Name             write   _Name            ;
-       property Memorys          :TList<TCLMemory_> read   _Memorys                                   ;
-       property Dimension        :T_cl_uint         read GetDimension                                 ;
-       property GlobalWorkOffset :TArray<T_size_t>  read   _GlobalWorkOffset write SetGlobalWorkOffset;
-       property GlobalWorkSize   :TArray<T_size_t>  read   _GlobalWorkSize   write SetGlobalWorkSize  ;
-       property LocalWorkSize    :TArray<T_size_t>  read   _LocalWorkSize    write SetLocalWorkSize   ;
+       property Progra           :TCLProgra_       read GetOwnere                                    ;
+       property Kernels          :TCLKernels_      read GetParent                                    ;
+       property Handle           :T_cl_kernel      read GetHandle           write SetHandle          ;
+       property Name             :String           read   _Name             write   _Name            ;
+       property Argumes          :TCLArgumes_      read   _Argumes                                   ;
+       property Dimension        :T_cl_uint        read GetDimension                                 ;
+       property GlobalWorkOffset :TArray<T_size_t> read   _GlobalWorkOffset write SetGlobalWorkOffset;
+       property GlobalWorkSize   :TArray<T_size_t> read   _GlobalWorkSize   write SetGlobalWorkSize  ;
+       property LocalWorkSize    :TArray<T_size_t> read   _LocalWorkSize    write SetLocalWorkSize   ;
        ///// メソッド
        procedure Run( const Comman_:TObject );
      end;
@@ -83,6 +90,14 @@ uses LUX.GPU.OpenCL;
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLKernel_,TCLContex_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLProgra_,TCLContex_>
 
@@ -140,9 +155,9 @@ begin
 
      AssertCL( E );
 
-     for I := 0 to _Memorys.Count-1 do
+     for I := 0 to _Argumes.Count-1 do
      begin
-          H := _Memorys[ I ].Handle;
+          H := _Argumes[ I ].Handle;
 
           AssertCL( clSetKernelArg( _Handle, I, SizeOf( T_cl_mem ), @H ) );
      end;
@@ -163,7 +178,7 @@ begin
 
      _Handle := nil;
 
-     _Memorys := TList<TCLMemory_>.Create;
+     _Argumes := TCLArgumes_.Create;
 
      _Name   := '';
 
@@ -186,7 +201,7 @@ end;
 
 destructor TCLKernel<TCLProgra_,TCLContex_>.Destroy;
 begin
-     _Memorys.Free;
+     _Argumes.Free;
 
       Handle := nil;
 
@@ -207,6 +222,14 @@ begin
 
      clFinish( TCLComman( Comman_ ).Handle );
 end;
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernels<TCLProgra_,TCLContex_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
 

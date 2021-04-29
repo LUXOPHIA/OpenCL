@@ -20,22 +20,23 @@ uses System.Generics.Collections,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TOpenCL                   = class;
-       TCLPlatfos              = TCLPlatfos<TOpenCL>;
-         TCLPlatfo             = TCLPlatfo <TOpenCL>;
-           TCLExtenss          = TCLExtenss<TCLPlatfo>;
-           TCLDevices          = TCLDevices<TCLPlatfo>;
-             TCLDevice         = TCLDevice <TCLPlatfo>;
-           TCLContexs          = TCLContexs<TCLPlatfo>;
-             TCLContex         = TCLContex <TCLPlatfo>;
-               TCLCommans      = TCLCommans<TCLContex,TCLPlatfo>;
-                 TCLComman     = TCLComman <TCLContex,TCLPlatfo>;
-               TCLMemorys      = TCLMemorys<TCLContex>;
-                 TCLMemory     = TCLMemory <TCLContex>;
-               TCLProgras      = TCLProgras<TCLContex>;
-                 TCLProgra     = TCLProgra <TCLContex>;
-                   TCLKernels  = TCLKernels<TCLProgra,TCLContex>;
-                     TCLKernel = TCLKernel <TCLProgra,TCLContex>;
+     TOpenCL                      = class;
+       TCLPlatfos                 = TCLPlatfos<TOpenCL>;
+         TCLPlatfo                = TCLPlatfo <TOpenCL>;
+           TCLExtenss             = TCLExtenss<TCLPlatfo>;
+           TCLDevices             = TCLDevices<TCLPlatfo>;
+             TCLDevice            = TCLDevice <TCLPlatfo>;
+           TCLContexs             = TCLContexs<TCLPlatfo>;
+             TCLContex            = TCLContex <TCLPlatfo>;
+               TCLCommans         = TCLCommans<TCLContex,TCLPlatfo>;
+                 TCLComman        = TCLComman <TCLContex,TCLPlatfo>;
+               TCLMemorys         = TCLMemorys<TCLContex>;
+                 TCLMemory        = TCLMemory <TCLContex>;
+               TCLProgras         = TCLProgras<TCLContex>;
+                 TCLProgra        = TCLProgra <TCLContex>;
+                   TCLKernels     = TCLKernels<TCLProgra,TCLContex>;
+                     TCLKernel    = TCLKernel <TCLProgra,TCLContex>;
+                       TCLArgumes = TCLArgumes<TCLKernel,TCLContex>;
 
      TCLDeviceBuffer<TValue_:record> = class( TCLDeviceBuffer<TCLContex,TValue_> );
      TCLHostBuffer  <TValue_:record> = class( TCLHostBuffer  <TCLContex,TValue_> );
