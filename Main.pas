@@ -374,7 +374,7 @@ end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
-     MemoS.Lines.SaveToFile( 'System.txt' );
+     MemoS.Lines.SaveToFile( 'System.txt', TEncoding.UTF8 );
 end;
 
 end. //######################################################################### ■
