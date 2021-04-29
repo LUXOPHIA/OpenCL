@@ -24,7 +24,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLProgras_ = TCLProgras<TCLContex_>;
             TCLProgra_  = TCLProgra <TCLContex_>;
-            TCLKernels_ = TCLKernels<TCLContex_,TCLProgra_>;
+            TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_>;
      protected
        _Handle  :T_cl_program;
        _Source  :TStringList;

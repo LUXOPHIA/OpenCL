@@ -11,19 +11,19 @@ uses System.Generics.Collections,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLKernels <TCLContex_,TCLProgra_:class> = class;
-       TCLKernel<TCLContex_,TCLProgra_:class> = class;
+     TCLKernels <TCLProgra_,TCLContex_:class> = class;
+       TCLKernel<TCLProgra_,TCLContex_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLContex_,TCLProgra_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLProgra_,TCLContex_>
 
-     TCLKernel<TCLContex_,TCLProgra_:class> = class( TListChildr<TCLProgra_,TCLKernels<TCLContex_,TCLProgra_>> )
+     TCLKernel<TCLProgra_,TCLContex_:class> = class( TListChildr<TCLProgra_,TCLKernels<TCLProgra_,TCLContex_>> )
      private
        type TCLMemory_  = TCLMemory <TCLContex_>;
-            TCLKernels_ = TCLKernels<TCLContex_,TCLProgra_>;
+            TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_>;
      protected
        _Handle           :T_cl_kernel;
        _Name             :String;
@@ -60,9 +60,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure Run( const Comman_:TObject );
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernels<TCLContex_,TCLProgra_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernels<TCLProgra_,TCLContex_>
 
-     TCLKernels<TCLContex_,TCLProgra_:class> = class( TListParent<TCLProgra_,TCLKernel<TCLContex_,TCLProgra_>> )
+     TCLKernels<TCLProgra_,TCLContex_:class> = class( TListParent<TCLProgra_,TCLKernel<TCLProgra_,TCLContex_>> )
      private
      protected
      public
@@ -84,7 +84,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLContex_,TCLProgra_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLProgra_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -92,14 +92,14 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLKernel<TCLContex_,TCLProgra_>.GetHandle :T_cl_kernel;
+function TCLKernel<TCLProgra_,TCLContex_>.GetHandle :T_cl_kernel;
 begin
      if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-procedure TCLKernel<TCLContex_,TCLProgra_>.SetHandle( const Handle_:T_cl_kernel );
+procedure TCLKernel<TCLProgra_,TCLContex_>.SetHandle( const Handle_:T_cl_kernel );
 begin
      if Assigned( _Handle ) then DestroHandle;
 
@@ -108,29 +108,29 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLKernel<TCLContex_,TCLProgra_>.GetDimension :T_cl_uint;
+function TCLKernel<TCLProgra_,TCLContex_>.GetDimension :T_cl_uint;
 begin
      Result := Length( _GlobalWorkSize );
 end;
 
-procedure TCLKernel<TCLContex_,TCLProgra_>.SetGlobalWorkOffset( const GlobalWorkOffset_:TArray<T_size_t> );
+procedure TCLKernel<TCLProgra_,TCLContex_>.SetGlobalWorkOffset( const GlobalWorkOffset_:TArray<T_size_t> );
 begin
      _GlobalWorkOffset := GlobalWorkOffset_;
 end;
 
-procedure TCLKernel<TCLContex_,TCLProgra_>.SetGlobalWorkSize( const GlobalWorkSize_:TArray<T_size_t> );
+procedure TCLKernel<TCLProgra_,TCLContex_>.SetGlobalWorkSize( const GlobalWorkSize_:TArray<T_size_t> );
 begin
      _GlobalWorkSize := GlobalWorkSize_;
 end;
 
-procedure TCLKernel<TCLContex_,TCLProgra_>.SetLocalWorkSize( const LocalWorkSize_:TArray<T_size_t> );
+procedure TCLKernel<TCLProgra_,TCLContex_>.SetLocalWorkSize( const LocalWorkSize_:TArray<T_size_t> );
 begin
      _LocalWorkSize := LocalWorkSize_;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLKernel<TCLContex_,TCLProgra_>.CreateHandle;
+procedure TCLKernel<TCLProgra_,TCLContex_>.CreateHandle;
 var
    E :T_cl_int;
    I :Integer;
@@ -148,7 +148,7 @@ begin
      end;
 end;
 
-procedure TCLKernel<TCLContex_,TCLProgra_>.DestroHandle;
+procedure TCLKernel<TCLProgra_,TCLContex_>.DestroHandle;
 begin
      clReleaseKernel( _Handle );
 
@@ -157,7 +157,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLKernel<TCLContex_,TCLProgra_>.Create;
+constructor TCLKernel<TCLProgra_,TCLContex_>.Create;
 begin
      inherited;
 
@@ -172,19 +172,19 @@ begin
      _LocalWorkSize    := [];
 end;
 
-constructor TCLKernel<TCLContex_,TCLProgra_>.Create( const Progra_:TCLProgra_ );
+constructor TCLKernel<TCLProgra_,TCLContex_>.Create( const Progra_:TCLProgra_ );
 begin
      inherited Create( TCLProgra( Progra_ ).Kernels );
 end;
 
-constructor TCLKernel<TCLContex_,TCLProgra_>.Create( const Progra_:TCLProgra_; const Name_:String );
+constructor TCLKernel<TCLProgra_,TCLContex_>.Create( const Progra_:TCLProgra_; const Name_:String );
 begin
      Create( Progra_ );
 
      _Name := Name_;
 end;
 
-destructor TCLKernel<TCLContex_,TCLProgra_>.Destroy;
+destructor TCLKernel<TCLProgra_,TCLContex_>.Destroy;
 begin
      _Memorys.Free;
 
@@ -195,7 +195,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLKernel<TCLContex_,TCLProgra_>.Run( const Comman_:TObject );
+procedure TCLKernel<TCLProgra_,TCLContex_>.Run( const Comman_:TObject );
 begin
      AssertCL( clEnqueueNDRangeKernel( TCLComman( Comman_ ).Handle,
                                        Handle,
