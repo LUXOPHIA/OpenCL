@@ -2,7 +2,7 @@
 
 interface //#################################################################### ■
 
-uses System.Classes, System.Generics.Collections,
+uses System.Generics.Collections,
      cl_version, cl_platform, cl,
      LUX.Data.List,
      LUX.Code.C,
@@ -22,8 +22,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLKernel<TCLContex_,TCLProgra_:class> = class( TListChildr<TCLProgra_,TCLKernels<TCLContex_,TCLProgra_>> )
      private
-       type TCLKernels_ = TCLKernels<TCLContex_,TCLProgra_>;
-            TCLMemory_  = TCLMemory<TCLContex_>;
+       type TCLMemory_  = TCLMemory <TCLContex_>;
+            TCLKernels_ = TCLKernels<TCLContex_,TCLProgra_>;
      protected
        _Handle           :T_cl_kernel;
        _Name             :String;

@@ -2,7 +2,7 @@
 
 interface //#################################################################### ■
 
-uses System.Classes, System.Generics.Collections,
+uses System.Classes,
      cl_version, cl_platform, cl,
      LUX.Data.List,
      LUX.Code.C,
