@@ -37,7 +37,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Comman                     :TCLComman_     read   _Comman                ;
        property Buffer                     :TCLBuffer_     read   _Buffer                ;
        property Mode                       :T_cl_map_flags read   _Mode                  ;
-       property Values[ const I_:Integer ] :TValue_        read GetValues write SetValues;
+       property Values[ const I_:Integer ] :TValue_        read GetValues write SetValues; default;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
