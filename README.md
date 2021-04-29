@@ -5,21 +5,21 @@
 ----
 ## ■ 1. クラスの依存関係
 
-> ・[`TOpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L50)  
-　┗・[`TCLPlatfos`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L78)：プラットフォームリスト  
-　　　┗・[`TCLPlatfo`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L24)：プラットフォーム  
+> ・[`TOpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L52)  
+　┗・[`TCLPlatfos`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L89)：プラットフォームリスト  
+　　　┗・[`TCLPlatfo`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L34)：プラットフォーム  
 　　　　　┣・[`TCLDevices`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Device.pas#L291)：デバイスリスト  
 　　　　　┃　┗・[`TCLDevice`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Device.pas#L21)：デバイス  
 　　　　　┗・[`TCLContexs`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Contex.pas#L61)：コンテキストリスト  
 　　　　　　　┗・[`TCLContex`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Contex.pas#L25)：コンテキスト  
 　　　　　　　　　┣・[`TCLCommans`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Comman.pas#L48)：コマンドキューリスト  
 　　　　　　　　　┃　┗・[`TCLComman`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Comman.pas#L22)：コマンドキュー  
-　　　　　　　　　┣・[`TCLMemorys`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L45)：メモリーリスト  
+　　　　　　　　　┣・[`TCLMemorys`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L47)：メモリーリスト  
 　　　　　　　　　┃　┗・[`TCLMemory`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L21)：メモリー  
 　　　　　　　　　┗・[`TCLProgras`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L56)：プログラムリスト  
 　　　　　　　　　　　┗・[`TCLProgra`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L23)：プログラム  
-　　　　　　　　　　　　　┗・[`TCLKernels`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L65)：カーネルリスト  
-　　　　　　　　　　　　　　　┗・[`TCLKernel`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L23)：カーネル
+　　　　　　　　　　　　　┗・[`TCLKernels`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L72)：カーネルリスト  
+　　　　　　　　　　　　　　　┗・[`TCLKernel`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L29)：カーネル
 
 ----
 ## ■ 2. 利用方法
@@ -27,14 +27,14 @@
 ライブラリを読み込むと同時に、実行マシンにおけるすべての「**プラットフォーム**」と「**デバイス**」が検出され、「`LUX.GPU.OpenCL`」ユニットで定義されているグローバル変数「`_OpenCL_`」内のリストとして列挙される。
 
 ### ▼ 2.1. プラットフォーム
-すべての Platform へは、以下のようにアクセスでき、
-```C
+すべてのプラットフォームは、以下のように取得できる。
+```pascal
 _OpenCL_.Platfors.Count :Integer      // 全 Platform の数
 _OpenCL_.Platfors[*]    :TCLPlatform  // 全 Platform の配列
 ```
 
 特定のプラットフォームの情報は、以下のように取得できる。
-```C
+```pascal
 _Platfo := _OpenCL_.Platfors[0];         // 特定のプラットフォームの選択
 
 _Platfo.Handle        :T_cl_platform_id  // ポインタ
@@ -48,13 +48,13 @@ _Platfo.Extenss[*]    :String            // 拡張機能の配列
 
 ### ▼ 2.2. デバイス
 プラットフォーム毎に存在している「デバイス」へは、以下のようにアクセスできる。
-```C
+```pascal
 _Platfo.Devices.Count :Integer    // デバイスの数
 _Platfo.Devices[*]    :TCLDevice  // デバイスの配列
 ```
 
 特定のデバイスの情報は、以下のように取得できる。
-```C
+```pascal
 _Device := _Platfo.Devices[0];              // 特定のデバイスの選択
 
 _Device.DEVICE_TYPE      :T_cl_device_type  // タイプ
@@ -68,24 +68,24 @@ _Device.DEVICE_VERSION   :String            // バージョン
 
 ### ▼ 2.3. コンテキスト
 コンテキストは、プラットフォームを元に生成できる。
-```C
+```pascal
 _Contex := TCLContex.Create( _Platfo ); 
 ```
 
 ### ▼ 2.4. コマンドキュー
 コマンドキューは、コンテキストとデバイスを元に生成できる。
-```C
+```pascal
 _Comman := TCLComman.Create( _Contex, _Device ); 
 ```
 
 コマンドキューは、コンテキスト内のリストに登録される。
-```C
+```pascal
 _Contex.Commans.Count :Integer    // コマンドキューの数
 _Contex.Commans[*]    :TCLComman  // コマンドキューの配列
 ```
 
 なお以下のように、Context の親となる Platform に所属していない Device は集約できない。
-```C
+```pascal
 F0 := _OpenCL_.Platfors[0];
 F1 := _OpenCL_.Platfors[1];
 F2 := _OpenCL_.Platfors[2];
