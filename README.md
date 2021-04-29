@@ -84,7 +84,7 @@ _Contex.Commans.Count :Integer    // コマンドキューの数
 _Contex.Commans[*]    :TCLComman  // コマンドキューの配列
 ```
 
-なお以下のように、Context の親となる Platform に所属していない Device は集約できない。
+なお、プラットフォームの異なるコンテキストとデバイスからでは生成できない。
 ```pascal
 F0 := _OpenCL_.Platfors[0];
 F1 := _OpenCL_.Platfors[1];
