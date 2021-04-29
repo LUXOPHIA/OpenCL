@@ -6,9 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Memo.Types, FMX.Controls.Presentation, FMX.ScrollBox, FMX.Memo, FMX.TabControl,
-  cl_version,
-  cl_platform,
-  cl,
+  cl_version, cl_platform, cl,
   LUX,
   LUX.Code.C,
   LUX.GPU.OpenCL.root,
@@ -62,8 +60,6 @@ var
 implementation //############################################################### ■
 
 {$R *.fmx}
-
-uses System.Math;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
