@@ -103,8 +103,12 @@ Q01 := TCLComman.Create( C0, D01 );  // OK
 Q02 := TCLComman.Create( C0, D02 );  // OK
 
 Q10 := TCLComman.Create( C1, D00 );  // Error
-Q11 := TCLComman.Create( C1, D10 );  // OK
-Q12 := TCLComman.Create( C1, D20 );  // Error
+Q11 := TCLComman.Create( C1, D01 );  // Error
+Q12 := TCLComman.Create( C1, D02 );  // Error
+
+Q20 := TCLComman.Create( C2, D00 );  // Error
+Q21 := TCLComman.Create( C2, D10 );  // Error
+Q22 := TCLComman.Create( C2, D20 );  // OK
 ```
 
 
