@@ -4,11 +4,15 @@ interface //####################################################################
 
 uses System.Classes, System.Generics.Collections,
      cl_version, cl_platform, cl,
+     LUX.Data.List,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
      LUX.GPU.OpenCL.Kernel;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
+
+     TCLProgras <TCLContex_:class> = class;
+       TCLProgra<TCLContex_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -16,34 +20,44 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<TCLContex_>
 
-     TCLProgra<TCLContex_:class> = class
+     TCLProgra<TCLContex_:class> = class( TListChildr<TCLContex_,TCLProgras<TCLContex_>> )
      private
-       type TCLKernel_ = TCLKernel<TCLContex_,TCLProgra<TCLContex_>>;
+       type TCLProgras_ = TCLProgras<TCLContex_>;
+            TCLKernel_  = TCLKernel<TCLContex_,TCLProgra<TCLContex_>>;
      protected
-       _Contex  :TCLContex_;
        _Handle  :T_cl_program;
        _Source  :TStringList;
        _LangVer :TCLVersion;
        _Kernels :TObjectList<TCLKernel_>;
        ///// アクセス
-       procedure SetContex( const Contex_:TCLContex_ );
        function GetHandle :T_cl_program;
        procedure SetHandle( const Handle_:T_cl_program );
        ///// メソッド
        procedure CreateHandle;
        procedure DestroHandle;
      public
-       constructor Create; overload;
-       constructor Create( const Contex_:TCLContex_ ); overload;
+       constructor Create; override;
+       constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Contex  :TCLContex_              read   _Contex  write SetContex;
+       property Contex  :TCLContex_              read GetOwnere                 ;
+       property Progras :TCLProgras_             read GetParent                 ;
        property Handle  :T_cl_program            read GetHandle  write SetHandle;
        property Source  :TStringList             read   _Source                 ;
        property LangVer :TCLVersion              read   _LangVer                ;
        property Kernels :TObjectList<TCLKernel_> read   _Kernels                ;
        ///// メソッド
        procedure Build;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgras<TCLContex_>
+
+     TCLProgras<TCLContex_:class> = class( TListParent<TCLContex_,TCLProgra<TCLContex_>> )
+     private
+     protected
+     public
+       ///// プロパティ
+       property Contex :TCLContex_ read GetOwnere;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -67,17 +81,6 @@ uses LUX.GPU.OpenCL;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 /////////////////////////////////////////////////////////////////////// アクセス
-
-procedure TCLProgra<TCLContex_>.SetContex( const Contex_:TCLContex_ );
-begin
-     if Assigned( _Contex ) then TCLContex( _Contex ).Progras.Remove( TCLProgra( Self ) );
-
-                  _Contex := Contex_;
-
-     if Assigned( _Contex ) then TCLContex( _Contex ).Progras.Add   ( TCLProgra( Self ) );
-end;
-
-//------------------------------------------------------------------------------
 
 function TCLProgra<TCLContex_>.GetHandle :T_cl_program;
 begin
@@ -125,15 +128,12 @@ begin
      _Source  := TStringList            .Create;
      _Kernels := TObjectList<TCLKernel_>.Create;
 
-     _Contex  := nil;
      _LangVer := TCLVersion.From( '2.0' );
 end;
 
 constructor TCLProgra<TCLContex_>.Create( const Contex_:TCLContex_ );
 begin
-     Create;
-
-     Contex := Contex_;
+     inherited Create( TCLContex( Contex_ ).Progras );
 end;
 
 destructor TCLProgra<TCLContex_>.Destroy;
@@ -160,6 +160,14 @@ begin
 
      AssertCL( clBuildProgram( Handle, Length( Ds ), @Ds[0], P_char( AnsiString( Os ) ), nil, nil ) );
 end;
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgras<TCLContex_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
 

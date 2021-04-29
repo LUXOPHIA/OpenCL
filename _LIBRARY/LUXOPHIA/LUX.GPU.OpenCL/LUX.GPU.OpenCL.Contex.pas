@@ -25,17 +25,16 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLContex<TCLPlatfo_:class> = class( TListChildr<TCLPlatfo_,TCLContexs<TCLPlatfo_>> )
      private
-       type TCLContexs_ = TCLContexs<TCLPlatfo_>;
-            TCLDevice_  = TCLDevice <TCLPlatfo_>;
+       type TCLDevice_  = TCLDevice <TCLPlatfo_>;
+            TCLContexs_ = TCLContexs<TCLPlatfo_>;
             TCLContex_  = TCLContex <TCLPlatfo_>;
             TCLCommans_ = TCLCommans<TCLContex_,TCLDevice_>;
-            TCLComman_  = TCLComman <TCLContex_,TCLDevice_>;
-            TCLProgra_  = TCLProgra <TCLContex_>;
+            TCLProgras_ = TCLProgras<TCLContex_>;
             TCLMemory_  = TCLMemory <TCLContex_>;
      protected
        _Commans :TCLCommans_;
        _Handle  :T_cl_context;
-       _Progras :TObjectList<TCLProgra_>;
+       _Progras :TCLProgras_;
        _Memorys :TObjectList<TCLMemory_>;
        ///// アクセス
        function GetHandle :T_cl_context;
@@ -52,7 +51,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Contexs :TCLContexs_             read GetParent                 ;
        property Commans :TCLCommans_             read   _Commans                ;
        property Handle  :T_cl_context            read GetHandle  write SetHandle;
-       property Progras :TObjectList<TCLProgra_> read   _Progras                ;
+       property Progras :TCLProgras_             read   _Progras                ;
        property Memorys :TObjectList<TCLMemory_> read   _Memorys                ;
        ///// メソッド
        function GetDeviceIDs :TArray<T_cl_device_id>;
@@ -136,7 +135,7 @@ begin
      _Handle := nil;
 
      _Commans := TCLCommans_.Create( Self );
-     _Progras := TObjectList<TCLProgra_>.Create;
+     _Progras := TCLProgras_.Create( Self );
      _Memorys := TObjectList<TCLMemory_>.Create;
 end;
 

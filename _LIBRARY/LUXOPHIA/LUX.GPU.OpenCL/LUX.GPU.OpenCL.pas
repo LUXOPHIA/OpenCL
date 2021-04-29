@@ -29,8 +29,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
              TCLContex     = TCLContex <TCLPlatfo>;
                TCLCommans  = TCLCommans<TCLContex,TCLDevice>;
                  TCLComman = TCLComman <TCLContex,TCLDevice>;
-
-     TCLProgra = TCLProgra<TCLContex>;
+               TCLProgras  = TCLProgras<TCLContex>;
+                 TCLProgra = TCLProgra <TCLContex>;
 
      TCLKernel = TCLKernel<TCLContex,TCLProgra>;
 
