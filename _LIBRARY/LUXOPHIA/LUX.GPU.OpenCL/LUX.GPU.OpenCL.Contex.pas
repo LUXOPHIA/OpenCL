@@ -2,8 +2,7 @@
 
 interface //#################################################################### ■
 
-uses System.Generics.Collections,
-     cl_version, cl_platform, cl,
+uses cl_version, cl_platform, cl,
      LUX.Data.List,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
@@ -29,13 +28,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLContexs_ = TCLContexs<TCLPlatfo_>;
             TCLContex_  = TCLContex <TCLPlatfo_>;
             TCLCommans_ = TCLCommans<TCLContex_,TCLDevice_>;
+            TCLMemorys_ = TCLMemorys<TCLContex_>;
             TCLProgras_ = TCLProgras<TCLContex_>;
-            TCLMemory_  = TCLMemory <TCLContex_>;
      protected
        _Commans :TCLCommans_;
        _Handle  :T_cl_context;
+       _Memorys :TCLMemorys_;
        _Progras :TCLProgras_;
-       _Memorys :TObjectList<TCLMemory_>;
        ///// アクセス
        function GetHandle :T_cl_context;
        procedure SetHandle( const Handle_:T_cl_context );
@@ -47,12 +46,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Platfo_:TCLPlatfo_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Platfo  :TCLPlatfo_              read GetOwnere                 ;
-       property Contexs :TCLContexs_             read GetParent                 ;
-       property Commans :TCLCommans_             read   _Commans                ;
-       property Handle  :T_cl_context            read GetHandle  write SetHandle;
-       property Progras :TCLProgras_             read   _Progras                ;
-       property Memorys :TObjectList<TCLMemory_> read   _Memorys                ;
+       property Platfo  :TCLPlatfo_   read GetOwnere                 ;
+       property Contexs :TCLContexs_  read GetParent                 ;
+       property Commans :TCLCommans_  read   _Commans                ;
+       property Handle  :T_cl_context read GetHandle  write SetHandle;
+       property Memorys :TCLMemorys_  read   _Memorys                ;
+       property Progras :TCLProgras_  read   _Progras                ;
        ///// メソッド
        function GetDeviceIDs :TArray<T_cl_device_id>;
      end;
@@ -135,8 +134,8 @@ begin
      _Handle := nil;
 
      _Commans := TCLCommans_.Create( Self );
+     _Memorys := TCLMemorys_.Create( Self );
      _Progras := TCLProgras_.Create( Self );
-     _Memorys := TObjectList<TCLMemory_>.Create;
 end;
 
 constructor TCLContex<TCLPlatfo_>.Create( const Platfo_:TCLPlatfo_ );
@@ -146,9 +145,9 @@ end;
 
 destructor TCLContex<TCLPlatfo_>.Destroy;
 begin
-     _Commans.Free;
      _Progras.Free;
      _Memorys.Free;
+     _Commans.Free;
 
       Handle := nil;
 

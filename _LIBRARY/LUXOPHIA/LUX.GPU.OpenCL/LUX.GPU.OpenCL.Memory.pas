@@ -3,10 +3,14 @@
 interface //#################################################################### ■
 
 uses cl_version, cl_platform, cl,
+     LUX.Data.List,
      LUX.Code.C,
      LUX.GPU.OpenCL.root;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
+
+     TCLMemorys <TCLContex_:class> = class;
+       TCLMemory<TCLContex_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -14,26 +18,36 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<TCLContex_>
 
-     TCLMemory<TCLContex_:class> = class
+     TCLMemory<TCLContex_:class> = class( TListChildr<TCLContex_,TCLMemorys<TCLContex_>> )
      private
+       type TCLMemorys_ = TCLMemorys<TCLContex_>;
      protected
-       _Contex :TCLContex_;
        _Handle :T_cl_mem;
        _Kind   :T_cl_mem_flags;
        ///// アクセス
-       procedure SetContex( const Contex_:TCLContex_ );
        function GetHandle :T_cl_mem;
        procedure SetHandle( const Handle_:T_cl_mem );
        ///// メソッド
        procedure CreateHandle; virtual; abstract;
        procedure DestroHandle; virtual;
      public
-       constructor Create; overload; virtual;
+       constructor Create; override;
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Contex :TCLContex_ read   _Contex write SetContex;
-       property Handle :T_cl_mem   read GetHandle write SetHandle;
+       property Contex  :TCLContex_  read GetOwnere                ;
+       property Memorys :TCLMemorys_ read GetParent                ;
+       property Handle  :T_cl_mem    read GetHandle write SetHandle;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemorys<TCLContex_>
+
+     TCLMemorys<TCLContex_:class> = class( TListParent<TCLContex_,TCLMemory<TCLContex_>> )
+     private
+     protected
+     public
+       ///// プロパティ
+       property Contex :TCLContex_ read GetOwnere;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -57,17 +71,6 @@ uses LUX.GPU.OpenCL;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 /////////////////////////////////////////////////////////////////////// アクセス
-
-procedure TCLMemory<TCLContex_>.SetContex( const Contex_:TCLContex_ );
-begin
-     if Assigned( _Contex ) then TCLContex( _Contex ).Memorys.Remove( TCLMemory( Self ) );
-
-                  _Contex := Contex_;
-
-     if Assigned( _Contex ) then TCLContex( _Contex ).Memorys.Add   ( TCLMemory( Self ) );
-end;
-
-//------------------------------------------------------------------------------
 
 function TCLMemory<TCLContex_>.GetHandle :T_cl_mem;
 begin
@@ -100,15 +103,12 @@ begin
 
      _Handle := nil;
 
-     _Contex := nil;
-     _Kind   := CL_MEM_READ_WRITE;
+     _Kind := CL_MEM_READ_WRITE;
 end;
 
 constructor TCLMemory<TCLContex_>.Create( const Contex_:TCLContex_ );
 begin
-     Create;
-
-     Contex := Contex_;
+     inherited Create( TCLContex( Contex_ ).Memorys );
 end;
 
 destructor TCLMemory<TCLContex_>.Destroy;
