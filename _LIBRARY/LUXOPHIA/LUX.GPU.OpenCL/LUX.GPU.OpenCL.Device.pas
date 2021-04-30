@@ -323,14 +323,14 @@ uses LUX.GPU.OpenCL;
 
 function TCLDevice<TCLPlatfo_>.GetInfo<_TYPE_>( const Name_:T_cl_device_info ) :_TYPE_;
 begin
-     AssertCL( clGetDeviceInfo( _Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
+     AssertCL( clGetDeviceInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
 //------------------------------------------------------------------------------
 
 function TCLDevice<TCLPlatfo_>.GetInfoSize( const Name_:T_cl_device_info ) :T_size_t;
 begin
-     AssertCL( clGetDeviceInfo( _Handle, Name_, 0, nil, @Result ) );
+     AssertCL( clGetDeviceInfo( Handle, Name_, 0, nil, @Result ) );
 end;
 
 //------------------------------------------------------------------------------
@@ -343,7 +343,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetDeviceInfo( _Handle, Name_, S, @Result[ 0 ], nil ) );
+     AssertCL( clGetDeviceInfo( Handle, Name_, S, @Result[ 0 ], nil ) );
 end;
 
 //------------------------------------------------------------------------------
