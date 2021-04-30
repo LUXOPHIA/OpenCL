@@ -122,14 +122,14 @@ uses System.SysUtils,
 
 function TCLPlatfo<TOpenCL_>.GetInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
 begin
-     AssertCL( clGetPlatformInfo( _Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
+     AssertCL( clGetPlatformInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
 //------------------------------------------------------------------------------
 
 function TCLPlatfo<TOpenCL_>.GetInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
 begin
-     AssertCL( clGetPlatformInfo( _Handle, Name_, 0, nil, @Result ) );
+     AssertCL( clGetPlatformInfo( Handle, Name_, 0, nil, @Result ) );
 end;
 
 //------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetPlatformInfo( _Handle, Name_, S, @Result[ 0 ], nil ) );
+     AssertCL( clGetPlatformInfo( Handle, Name_, S, @Result[ 0 ], nil ) );
 end;
 
 //------------------------------------------------------------------------------
