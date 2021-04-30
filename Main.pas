@@ -50,7 +50,7 @@ type
     procedure ShowDevices( const Devices_:TCLDevices );
     procedure ShowExtenss( const Extenss_:TCLExtenss );
     procedure ShowPlatfos( const Platfos_:TCLPlatfos );
-    procedure ShowSystem( const OpenCL_:TOpenCL );
+    procedure ShowSystem;
     procedure ShowResult;
   end;
 
@@ -274,9 +274,9 @@ begin
      end;
 end;
 
-procedure TForm1.ShowSystem( const OpenCL_:TOpenCL );
+procedure TForm1.ShowSystem;
 begin
-     ShowPlatfos( OpenCL_.Platfos );
+     ShowPlatfos( _OpenCL_.Platfos );
 
      MemoS.Lines.Add( '' );
 end;
@@ -352,12 +352,11 @@ begin
      ///// プログラム
      _Progra := TCLProgra.Create( _Contex );                                    // 生成
      _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードの読み込み
-     _Progra.Build;                                                             // ビルド
 
      MemoP.Lines.Assign( _Progra.Source );                                      // ソースコードの表示
 
      ///// カーネル
-     _Kernel := TCLKernel.Create( _Progra, 'main' );                            // 生成
+     _Kernel := TCLKernel.Create( _Progra, 'Main' );                            // 生成
      _Kernel.Argumes.Add( _BufferA );                                           // バッファの登録
      _Kernel.Argumes.Add( _BufferB );                                           // バッファの登録
      _Kernel.Argumes.Add( _BufferC );                                           // バッファの登録
@@ -365,7 +364,7 @@ begin
 
      //////////
 
-     ShowSystem( _OpenCL_ );                                                    // システム表示
+     ShowSystem;                                                                // システム表示
 
      _Kernel.Run( _Comman );                                                    // 実行
 
