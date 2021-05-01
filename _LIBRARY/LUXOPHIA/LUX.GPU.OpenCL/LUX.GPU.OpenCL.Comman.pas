@@ -21,8 +21,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLComman<TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLContex_,TCLCommans<TCLContex_,TCLPlatfo_>> )
      private
-       type TCLCommans_ = TCLCommans<TCLContex_,TCLPlatfo_>;
-            TCLDevice_  = TCLDevice <TCLPlatfo_>;
+       type TCLDevice_  = TCLDevice <TCLPlatfo_>;
+            TCLCommans_ = TCLCommans<TCLContex_,TCLPlatfo_>;
      protected
        _Device :TCLDevice_;
        _Handle :T_cl_command_queue;

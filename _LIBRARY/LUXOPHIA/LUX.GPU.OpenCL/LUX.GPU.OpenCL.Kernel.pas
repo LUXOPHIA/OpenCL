@@ -7,10 +7,10 @@ uses System.Generics.Collections,
      LUX.Data.List,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
+     LUX.GPU.OpenCL.Comman,
      LUX.GPU.OpenCL.Memory;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
-
 
      TCLKernels    <TCLProgra_,TCLContex_,TCLPlatfo_:class> = class;
        TCLKernel   <TCLProgra_,TCLContex_,TCLPlatfo_:class> = class;
@@ -28,12 +28,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLProgra_,TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>> )
      private
-       type TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>;
+       type TCLComman_  = TCLComman <TCLContex_,TCLPlatfo_>;
+            TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>;
             TCLKernel_  = TCLKernel <TCLProgra_,TCLContex_,TCLPlatfo_>;
             TCLArgumes_ = TCLArgumes<TCLKernel_,TCLContex_,TCLPlatfo_>;
      protected
        _Handle       :T_cl_kernel;
        _Name         :String;
+       _Comman       :TCLComman_;
        _Argumes      :TCLArgumes_;
        _GlobWorkOffs :TArray<T_size_t>;
        _GlobWorkSize :TArray<T_size_t>;
@@ -52,19 +54,21 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
        constructor Create( const Progra_:TCLProgra_ ); overload; virtual;
        constructor Create( const Progra_:TCLProgra_; const Name_:String ); overload; virtual;
+       constructor Create( const Progra_:TCLProgra_; const Name_:String; const Comman_:TCLComman_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
        property Progra       :TCLProgra_       read GetOwnere                            ;
        property Kernels      :TCLKernels_      read GetParent                            ;
        property Handle       :T_cl_kernel      read GetHandle       write SetHandle      ;
        property Name         :String           read   _Name         write   _Name        ;
+       property Comman       :TCLComman_       read   _Comman                            ;
        property Argumes      :TCLArgumes_      read   _Argumes                           ;
        property Dimension    :T_cl_uint        read GetDimension                         ;
        property GlobWorkOffs :TArray<T_size_t> read   _GlobWorkOffs write SetGlobWorkOffs;
        property GlobWorkSize :TArray<T_size_t> read   _GlobWorkSize write SetGlobWorkSize;
        property LocaWorkSize :TArray<T_size_t> read   _LocaWorkSize write SetLocaWorkSize;
        ///// メソッド
-       procedure Run( const Comman_:TObject );
+       procedure Run;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>
@@ -180,8 +184,8 @@ begin
 
      _Argumes := TCLArgumes_.Create;
 
-     _Name   := '';
-
+     _Name         := '';
+     _Comman       := nil;
      _GlobWorkOffs := [];
      _GlobWorkSize := [ 1 ];
      _LocaWorkSize := [];
@@ -199,6 +203,13 @@ begin
      _Name := Name_;
 end;
 
+constructor TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.Create( const Progra_:TCLProgra_; const Name_:String; const Comman_:TCLComman_ );
+begin
+     Create( Progra_, Name_ );
+
+     _Comman := Comman_;
+end;
+
 destructor TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.Destroy;
 begin
      _Argumes.Free;
@@ -210,9 +221,9 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.Run( const Comman_:TObject );
+procedure TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.Run;
 begin
-     AssertCL( clEnqueueNDRangeKernel( TCLComman( Comman_ ).Handle,
+     AssertCL( clEnqueueNDRangeKernel( _Comman.Handle,
                                        Handle,
                                        Dimension,
                                        @_GlobWorkOffs[ 0 ],
@@ -220,7 +231,7 @@ begin
                                        @_LocaWorkSize[ 0 ],
                                        0, nil, nil ) );
 
-     clFinish( TCLComman( Comman_ ).Handle );
+     clFinish( _Comman.Handle );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>
