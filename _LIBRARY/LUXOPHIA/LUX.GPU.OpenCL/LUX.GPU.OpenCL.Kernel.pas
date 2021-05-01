@@ -33,14 +33,16 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLDeploys_ = TCLDeploys<TCLProgra_,TCLContex_,TCLPlatfo_>;
      protected
        _Device :TCLDevice_;
+       _Log    :String;
        ///// アクセス
        function GetDevice :TCLDevice_;
      public
        constructor Create( const Deploys_:TCLDeploys_; const Device_:TCLDevice_ ); overload; virtual;
        ///// プロパティ
-       property Kernels :TCLKernels_ read GetOwnere;
-       property Deploys :TCLDeploys_ read GetParent;
-       property Device  :TCLDevice_  read GetDevice;
+       property Kernels :TCLKernels_ read GetOwnere             ;
+       property Deploys :TCLDeploys_ read GetParent             ;
+       property Device  :TCLDevice_  read GetDevice             ;
+       property Log     :String      read   _Log    write   _Log;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDeploys<TCLProgra_,TCLContex_,TCLPlatfo_>
