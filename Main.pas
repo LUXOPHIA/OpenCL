@@ -41,6 +41,7 @@ type
     _Progra  :TCLProgra;
     _Kernel  :TCLKernel;
     ///// メソッド
+    procedure ShowDeploys( const Deploys_:TCLDeploys );
     procedure ShowArgumes( const Argumes_:TCLArgumes );
     procedure ShowKernels( const Kernels_:TCLKernels );
     procedure ShowProgras( const Progras_:TCLProgras );
@@ -65,39 +66,51 @@ implementation //###############################################################
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
+procedure TForm1.ShowDeploys( const Deploys_:TCLDeploys );
+var
+   L :TCLDeploy;
+begin
+     with MemoS.Lines do
+     begin
+          Add( ' ┃　│　┃　│　┃　│' );
+          Add( ' ┃　│　┃　│　┃　┝ Deploys[*] :TCLDeploys' );
+          for L in Deploys_ do
+          begin
+               Add( ' ┃　│　┃　│　┃　│　┃' );
+               Add( ' ┃　│　┃　│　┃　│　┣・Deploy[' + L.Order.ToString + '] :TCLDeploy' );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Device = Device[' + L.Device.Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Errors = ' );
+          end;
+     end;
+end;
+
 procedure TForm1.ShowArgumes( const Argumes_:TCLArgumes );
 var
-   I :Integer;
    M :TCLMemory;
 begin
      with MemoS.Lines do
      begin
           Add( ' ┃　│　┃　│　┃　│　┃　│' );
           Add( ' ┃　│　┃　│　┃　│　┃　├ Argumes[*] :TCLArgumes' );
-          for I := 0 to Argumes_.Count-1 do
+          for M in Argumes_ do
           begin
-               M := Argumes_[ I ];
-
-               Add( ' ┃　│　┃　│　┃　│　┃　│　├ Argume[' + I.ToString + '] = Memory[' + M.Order.ToString + ']'  );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　├ Argume[' + M.Order.ToString + '] = Memory[' + M.Order.ToString + ']'  );
           end;
      end;
 end;
 
 procedure TForm1.ShowKernels( const Kernels_:TCLKernels );
 var
-   I :Integer;
    K :TCLKernel;
 begin
      with MemoS.Lines do
      begin
           Add( ' ┃　│　┃　│　┃　│' );
           Add( ' ┃　│　┃　│　┃　┝ Kernels[*] :TCLKernels' );
-          for I := 0 to Kernels_.Count-1 do
+          for K in Kernels_ do
           begin
-               K := Kernels_[ I ];
-
                Add( ' ┃　│　┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┃　│　┣・Kernel[' + I.ToString + '] :TCLKernel' );
+               Add( ' ┃　│　┃　│　┃　│　┣・Kernel[' + K.Order.ToString + '] :TCLKernel' );
                Add( ' ┃　│　┃　│　┃　│　┃　├ Name      = ' + K.Name               );
                Add( ' ┃　│　┃　│　┃　│　┃　├ Dimension = ' + K.Dimension.ToString );
 
@@ -108,41 +121,36 @@ end;
 
 procedure TForm1.ShowProgras( const Progras_:TCLProgras );
 var
-   I :Integer;
    P :TCLProgra;
 begin
      with MemoS.Lines do
      begin
           Add( ' ┃　│　┃　│' );
           Add( ' ┃　│　┃　┝ Progras[*] :TCLProgras' );
-          for I := 0 to Progras_.Count-1 do
+          for P in Progras_ do
           begin
-               P := Progras_[ I ];
-
                Add( ' ┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┣・Progra[' + I.ToString + '] :TCLProgra' );
+               Add( ' ┃　│　┃　│　┣・Progra[' + P.Order.ToString + '] :TCLProgra' );
                Add( ' ┃　│　┃　│　┃　├ LangVer = ' + P.LangVer.ToString );
 
                ShowKernels( P.Kernels );
+               ShowDeploys( P.Deploys );
           end;
      end;
 end;
 
 procedure TForm1.ShowMemorys( const Memorys_:TCLMemorys );
 var
-   I :Integer;
    M :TCLMemory;
 begin
      with MemoS.Lines do
      begin
           Add( ' ┃　│　┃　│' );
           Add( ' ┃　│　┃　┝ Memorys[*] :TCLMemorys' );
-          for I := 0 to Memorys_.Count-1 do
+          for M in Memorys_ do
           begin
-               M := Memorys_[ I ];
-
                Add( ' ┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┣・Memory[' + I.ToString + '] :TCLMemory' );
+               Add( ' ┃　│　┃　│　┣・Memory[' + M.Order.ToString + '] :TCLMemory' );
                Add( ' ┃　│　┃　│　┃　├ Size = ' + M.Size.ToString );
           end;
      end;
@@ -150,19 +158,16 @@ end;
 
 procedure TForm1.ShowCommans( const Commans_:TCLCommans );
 var
-   I :Integer;
    Q :TCLComman;
 begin
      with MemoS.Lines do
      begin
           Add( ' ┃　│　┃　│' );
           Add( ' ┃　│　┃　┝ Commans[*] :TCLCommans' );
-          for I := 0 to Commans_.Count-1 do
+          for Q in Commans_ do
           begin
-               Q := Commans_[ I ];
-
                Add( ' ┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┣・Comman[' + I.ToString + '] :TCLComman' );
+               Add( ' ┃　│　┃　│　┣・Comman[' + Q.Order.ToString + '] :TCLComman' );
                Add( ' ┃　│　┃　│　┃　├ Device = Device[' + Q.Device.Order.ToString + ']' );
           end;
      end;
@@ -170,19 +175,16 @@ end;
 
 procedure TForm1.ShowContexs( const Contexs_:TCLContexs );
 var
-   I :Integer;
    C :TCLContex;
 begin
      with MemoS.Lines do
      begin
           Add( ' ┃　│' );
           Add( ' ┃　┝ Contexs[*] :TCLContexs' );
-          for I := 0 to Contexs_.Count-1 do
+          for C in Contexs_ do
           begin
-               C := Contexs_[ I ];
-
                Add( ' ┃　│　┃' );
-               Add( ' ┃　│　┣・Contex[' + I.ToString + '] :TCLContex' );
+               Add( ' ┃　│　┣・Contex[' + C.Order.ToString + '] :TCLContex' );
 
                ShowCommans( C.Commans );
                ShowMemorys( C.Memorys );
@@ -193,7 +195,6 @@ end;
 
 procedure TForm1.ShowDevices( const Devices_:TCLDevices );
 var
-   I :Integer;
    D :TCLDevice;
    Cs :T_cl_device_svm_capabilities;
    S :String;
@@ -202,12 +203,10 @@ begin
      begin
           Add( ' ┃　│' );
           Add( ' ┃　┝ Devices[*] :TCLDevices' );
-          for I := 0 to Devices_.Count-1 do
+          for D in Devices_ do
           begin
-               D := Devices_[ I ];
-
                Add( ' ┃　│　┃' );
-               Add( ' ┃　│　┣・Device[' + I.ToString + '] :TCLDevice' );
+               Add( ' ┃　│　┣・Device[' + D.Order.ToString + '] :TCLDevice' );
                Add( ' ┃　│　┃　├ DEVICE_TYPE             = '  + D.DEVICE_TYPE     .ToString );
                Add( ' ┃　│　┃　├ DEVICE_VENDOR_ID        = '  + D.DEVICE_VENDOR_ID.ToString );
                Add( ' ┃　│　┃　├ DEVICE_NAME             = '  + D.DEVICE_NAME               );
@@ -249,19 +248,16 @@ end;
 
 procedure TForm1.ShowPlatfos( const Platfos_:TCLPlatfos );
 var
-   I :Integer;
    F :TCLPlatfo;
 begin
      with MemoS.Lines do
      begin
           Add( 'Platfos[*] :TCLPlatfos' );
 
-          for I := 0 to Platfos_.Count-1 do
+          for F in Platfos_ do
           begin
-               F := Platfos_[ I ];
-
                Add( ' ┃' );
-               Add( ' ┣・Platfo[' + I.ToString + '] :TCLPlatfo' );
+               Add( ' ┣・Platfo[' + F.Order.ToString + '] :TCLPlatfo' );
                Add( ' ┃　├ Profile = ' + F.Profile );
                Add( ' ┃　├ Version = ' + F.Version );
                Add( ' ┃　├ Name    = ' + F.Name    );
