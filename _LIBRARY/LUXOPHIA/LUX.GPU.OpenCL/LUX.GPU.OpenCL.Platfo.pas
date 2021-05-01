@@ -148,7 +148,7 @@ end;
 
 function TCLPlatfo<TOpenCL_>.GetInfoString( const Name_:T_cl_platform_info ) :String;
 begin
-     Result := String( P_char( GetInfos<T_char>( Name_ ) ) );
+     Result := TrimRight( String( P_char( GetInfos<T_char>( Name_ ) ) ) );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected

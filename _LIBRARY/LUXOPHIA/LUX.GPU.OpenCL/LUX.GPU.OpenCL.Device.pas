@@ -309,7 +309,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
+uses System.SysUtils,
+     LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -350,7 +351,7 @@ end;
 
 function TCLDevice<TCLPlatfo_>.GetInfoString( const Name_:T_cl_device_info ) :String;
 begin
-     Result := String( P_char( GetInfos<T_char>( Name_ ) ) );
+     Result := TrimRight( String( P_char( GetInfos<T_char>( Name_ ) ) ) );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
