@@ -11,20 +11,20 @@ uses System.Classes,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLProgras <TCLContex_:class> = class;
-       TCLProgra<TCLContex_:class> = class;
+     TCLProgras <TCLContex_,TCLPlatfo_:class> = class;
+       TCLProgra<TCLContex_,TCLPlatfo_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<TCLContex_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<TCLContex_,TCLPlatfo_>
 
-     TCLProgra<TCLContex_:class> = class( TListChildr<TCLContex_,TCLProgras<TCLContex_>> )
+     TCLProgra<TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLContex_,TCLProgras<TCLContex_,TCLPlatfo_>> )
      private
-       type TCLProgras_ = TCLProgras<TCLContex_>;
-            TCLProgra_  = TCLProgra <TCLContex_>;
-            TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_>;
+       type TCLProgras_ = TCLProgras<TCLContex_,TCLPlatfo_>;
+            TCLProgra_  = TCLProgra <TCLContex_,TCLPlatfo_>;
+            TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>;
        ///// メソッド
        function GetInfo<_TYPE_>( const Name_:T_cl_program_info ) :_TYPE_;
        function GetInfoSize( const Name_:T_cl_program_info ) :T_size_t;
@@ -98,9 +98,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure Build;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgras<TCLContex_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgras<TCLContex_,TCLPlatfo_>
 
-     TCLProgras<TCLContex_:class> = class( TListParent<TCLContex_,TCLProgra<TCLContex_>> )
+     TCLProgras<TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLContex_,TCLProgra<TCLContex_,TCLPlatfo_>> )
      private
      protected
      public
@@ -122,27 +122,27 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<TCLContex_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<TCLContex_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLProgra<TCLContex_>.GetInfo<_TYPE_>( const Name_:T_cl_program_info ) :_TYPE_;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetInfo<_TYPE_>( const Name_:T_cl_program_info ) :_TYPE_;
 begin
      AssertCL( clGetProgramInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLProgra<TCLContex_>.GetInfoSize( const Name_:T_cl_program_info ) :T_size_t;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetInfoSize( const Name_:T_cl_program_info ) :T_size_t;
 begin
      AssertCL( clGetProgramInfo( Handle, Name_, 0, nil, @Result ) );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLProgra<TCLContex_>.GetInfos<_TYPE_>( const Name_:T_cl_program_info ) :TArray<_TYPE_>;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetInfos<_TYPE_>( const Name_:T_cl_program_info ) :TArray<_TYPE_>;
 var
    S :T_size_t;
 begin
@@ -155,28 +155,28 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLProgra<TCLContex_>.GetInfoString( const Name_:T_cl_program_info ) :String;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetInfoString( const Name_:T_cl_program_info ) :String;
 begin
      Result := String( P_char( GetInfos<T_char>( Name_ ) ) );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLProgra<TCLContex_>.GetBuildInfo<_TYPE_>( const DeviceID_:T_cl_device_id; const Name_:T_cl_program_build_info ) :_TYPE_;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetBuildInfo<_TYPE_>( const DeviceID_:T_cl_device_id; const Name_:T_cl_program_build_info ) :_TYPE_;
 begin
      AssertCL( clGetProgramBuildInfo( Handle, DeviceID_, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLProgra<TCLContex_>.GetBuildInfoSize( const DeviceID_:T_cl_device_id; const Name_:T_cl_program_build_info ) :T_size_t;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetBuildInfoSize( const DeviceID_:T_cl_device_id; const Name_:T_cl_program_build_info ) :T_size_t;
 begin
      AssertCL( clGetProgramBuildInfo( Handle, DeviceID_, Name_, 0, nil, @Result ) );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLProgra<TCLContex_>.GetBuildInfos<_TYPE_>( const DeviceID_:T_cl_device_id; const Name_:T_cl_program_build_info ) :TArray<_TYPE_>;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetBuildInfos<_TYPE_>( const DeviceID_:T_cl_device_id; const Name_:T_cl_program_build_info ) :TArray<_TYPE_>;
 var
    S :T_size_t;
 begin
@@ -189,7 +189,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLProgra<TCLContex_>.GetBuildInfoString( const DeviceID_:T_cl_device_id; const Name_:T_cl_program_build_info ) :String;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetBuildInfoString( const DeviceID_:T_cl_device_id; const Name_:T_cl_program_build_info ) :String;
 begin
      Result := String( P_char( GetBuildInfos<T_char>( DeviceID_, Name_ ) ) );
 end;
@@ -198,14 +198,14 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLProgra<TCLContex_>.GetHandle :T_cl_program;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_program;
 begin
      if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-procedure TCLProgra<TCLContex_>.SetHandle( const Handle_:T_cl_program );
+procedure TCLProgra<TCLContex_,TCLPlatfo_>.SetHandle( const Handle_:T_cl_program );
 begin
      if Assigned( _Handle ) then DestroHandle;
 
@@ -214,28 +214,28 @@ end;
 
 //---------------------------------------------------------(* cl_program_info *)
 
-function TCLProgra<TCLContex_>.GetPROGRAM_REFERENCE_COUNT :T_cl_uint; begin Result := GetInfo<T_cl_uint>( CL_PROGRAM_REFERENCE_COUNT ); end;
-function TCLProgra<TCLContex_>.GetPROGRAM_CONTEXT :T_cl_context; begin Result := GetInfo<T_cl_context>( CL_PROGRAM_CONTEXT ); end;
-function TCLProgra<TCLContex_>.GetPROGRAM_NUM_DEVICES :T_cl_uint; begin Result := GetInfo<T_cl_uint>( CL_PROGRAM_NUM_DEVICES ); end;
-function TCLProgra<TCLContex_>.GetPROGRAM_DEVICES :TArray<T_cl_device_id>; begin Result := GetInfos<T_cl_device_id>( CL_PROGRAM_DEVICES ); end;
-function TCLProgra<TCLContex_>.GetPROGRAM_SOURCE :String; begin Result := GetInfoString( CL_PROGRAM_SOURCE ); end;
-function TCLProgra<TCLContex_>.GetPROGRAM_BINARY_SIZES :TArray<T_size_t>; begin Result := GetInfos<T_size_t>( CL_PROGRAM_BINARY_SIZES ); end;
-function TCLProgra<TCLContex_>.GetPROGRAM_BINARIES :TArray<P_unsigned_char>; begin Result := GetInfos<P_unsigned_char>( CL_PROGRAM_BINARIES ); end;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetPROGRAM_REFERENCE_COUNT :T_cl_uint; begin Result := GetInfo<T_cl_uint>( CL_PROGRAM_REFERENCE_COUNT ); end;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetPROGRAM_CONTEXT :T_cl_context; begin Result := GetInfo<T_cl_context>( CL_PROGRAM_CONTEXT ); end;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetPROGRAM_NUM_DEVICES :T_cl_uint; begin Result := GetInfo<T_cl_uint>( CL_PROGRAM_NUM_DEVICES ); end;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetPROGRAM_DEVICES :TArray<T_cl_device_id>; begin Result := GetInfos<T_cl_device_id>( CL_PROGRAM_DEVICES ); end;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetPROGRAM_SOURCE :String; begin Result := GetInfoString( CL_PROGRAM_SOURCE ); end;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetPROGRAM_BINARY_SIZES :TArray<T_size_t>; begin Result := GetInfos<T_size_t>( CL_PROGRAM_BINARY_SIZES ); end;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetPROGRAM_BINARIES :TArray<P_unsigned_char>; begin Result := GetInfos<P_unsigned_char>( CL_PROGRAM_BINARIES ); end;
 {$IF CL_VERSION_1_2 <> 0 }
-function TCLProgra<TCLContex_>.GetPROGRAM_NUM_KERNELS :T_size_t; begin Result := GetInfo<T_size_t>( CL_PROGRAM_NUM_KERNELS ); end;
-function TCLProgra<TCLContex_>.GetPROGRAM_KERNEL_NAMES :String; begin Result := GetInfoString( CL_PROGRAM_KERNEL_NAMES ); end;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetPROGRAM_NUM_KERNELS :T_size_t; begin Result := GetInfo<T_size_t>( CL_PROGRAM_NUM_KERNELS ); end;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetPROGRAM_KERNEL_NAMES :String; begin Result := GetInfoString( CL_PROGRAM_KERNEL_NAMES ); end;
 {$ENDIF}
 {$IF CL_VERSION_2_1 <> 0 }
-function TCLProgra<TCLContex_>.GetPROGRAM_IL :String; begin Result := GetInfoString( CL_PROGRAM_IL ); end;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetPROGRAM_IL :String; begin Result := GetInfoString( CL_PROGRAM_IL ); end;
 {$ENDIF}
 {$IF CL_VERSION_2_2 <> 0 }
-function TCLProgra<TCLContex_>.GetPROGRAM_SCOPE_GLOBAL_CTORS_PRESENT :T_cl_bool; begin Result := GetInfo<T_cl_bool>( CL_PROGRAM_SCOPE_GLOBAL_CTORS_PRESENT ); end;
-function TCLProgra<TCLContex_>.GetPROGRAM_SCOPE_GLOBAL_DTORS_PRESENT :T_cl_bool; begin Result := GetInfo<T_cl_bool>( CL_PROGRAM_SCOPE_GLOBAL_DTORS_PRESENT ); end;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetPROGRAM_SCOPE_GLOBAL_CTORS_PRESENT :T_cl_bool; begin Result := GetInfo<T_cl_bool>( CL_PROGRAM_SCOPE_GLOBAL_CTORS_PRESENT ); end;
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetPROGRAM_SCOPE_GLOBAL_DTORS_PRESENT :T_cl_bool; begin Result := GetInfo<T_cl_bool>( CL_PROGRAM_SCOPE_GLOBAL_DTORS_PRESENT ); end;
 {$ENDIF}
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLProgra<TCLContex_>.CreateHandle;
+procedure TCLProgra<TCLContex_,TCLPlatfo_>.CreateHandle;
 var
    C :P_char;
    E :T_cl_int;
@@ -249,7 +249,7 @@ begin
      Build;
 end;
 
-procedure TCLProgra<TCLContex_>.DestroHandle;
+procedure TCLProgra<TCLContex_,TCLPlatfo_>.DestroHandle;
 begin
      clReleaseProgram( _Handle );
 
@@ -258,7 +258,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLProgra<TCLContex_>.Create;
+constructor TCLProgra<TCLContex_,TCLPlatfo_>.Create;
 begin
      inherited;
 
@@ -270,12 +270,12 @@ begin
      _LangVer := TCLVersion.From( '3.0' );
 end;
 
-constructor TCLProgra<TCLContex_>.Create( const Contex_:TCLContex_ );
+constructor TCLProgra<TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_ );
 begin
      inherited Create( TCLContex( Contex_ ).Progras );
 end;
 
-destructor TCLProgra<TCLContex_>.Destroy;
+destructor TCLProgra<TCLContex_,TCLPlatfo_>.Destroy;
 begin
      _Source .Free;
      _Kernels.Free;
@@ -287,7 +287,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLProgra<TCLContex_>.Build;
+procedure TCLProgra<TCLContex_,TCLPlatfo_>.Build;
 var
    Ds :TArray<T_cl_device_id>;
    Os :String;
@@ -300,7 +300,7 @@ begin
      AssertCL( clBuildProgram( Handle, Length( Ds ), @Ds[0], P_char( AnsiString( Os ) ), nil, nil ) );
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgras<TCLContex_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgras<TCLContex_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 

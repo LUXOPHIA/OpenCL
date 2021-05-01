@@ -13,7 +13,7 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLContexs<TCLPlatfo_:class> = class;
+     TCLContexs <TCLPlatfo_:class> = class;
        TCLContex<TCLPlatfo_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
@@ -29,7 +29,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLContex_  = TCLContex <TCLPlatfo_>;
             TCLCommans_ = TCLCommans<TCLContex_,TCLPlatfo_>;
             TCLMemorys_ = TCLMemorys<TCLContex_>;
-            TCLProgras_ = TCLProgras<TCLContex_>;
+            TCLProgras_ = TCLProgras<TCLContex_,TCLPlatfo_>;
      protected
        _Commans :TCLCommans_;
        _Handle  :T_cl_context;

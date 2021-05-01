@@ -12,10 +12,9 @@ uses System.Classes,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLExtenss<TCLPlatfo_:class> = class;
-
-     TCLPlatfos<TOpenCL_:class>  = class;
-       TCLPlatfo<TOpenCL_:class> = class;
+     TCLPlatfos    <TOpenCL_  :class> = class;
+       TCLPlatfo   <TOpenCL_  :class> = class;
+         TCLExtenss<TCLPlatfo_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
