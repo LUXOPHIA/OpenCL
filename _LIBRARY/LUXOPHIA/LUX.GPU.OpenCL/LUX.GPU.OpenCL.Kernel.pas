@@ -37,6 +37,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// アクセス
        function GetDevice :TCLDevice_;
      public
+       constructor Create; override;
        constructor Create( const Deploys_:TCLDeploys_; const Device_:TCLDevice_ ); overload; virtual;
        ///// プロパティ
        property Kernels :TCLKernels_ read GetOwnere             ;
@@ -154,6 +155,14 @@ begin
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+constructor TCLDeploy<TCLProgra_,TCLContex_,TCLPlatfo_>.Create;
+begin
+     inherited;
+
+     _Device := nil;
+     _Log    := '';
+end;
 
 constructor TCLDeploy<TCLProgra_,TCLContex_,TCLPlatfo_>.Create( const Deploys_:TCLDeploys_; const Device_:TCLDevice_ );
 begin
