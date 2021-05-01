@@ -120,7 +120,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
+uses System.SysUtils,
+     LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -161,7 +162,7 @@ end;
 
 function TCLProgra<TCLContex_,TCLPlatfo_>.GetInfoString( const Name_:T_cl_program_info ) :String;
 begin
-     Result := String( P_char( GetInfos<T_char>( Name_ ) ) );
+     Result := TrimRight( String( P_char( GetInfos<T_char>( Name_ ) ) ) );
 end;
 
 //------------------------------------------------------------------------------
@@ -195,7 +196,7 @@ end;
 
 function TCLProgra<TCLContex_,TCLPlatfo_>.GetBuildInfoString( const DeviceID_:T_cl_device_id; const Name_:T_cl_program_build_info ) :String;
 begin
-     Result := String( P_char( GetBuildInfos<T_char>( DeviceID_, Name_ ) ) );
+     Result := TrimRight( String( P_char( GetBuildInfos<T_char>( DeviceID_, Name_ ) ) ) );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
