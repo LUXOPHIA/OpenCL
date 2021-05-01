@@ -26,6 +26,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLProgra_  = TCLProgra <TCLContex_,TCLPlatfo_>;
             TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>;
             TCLDeploys_ = TCLDeploys<TCLProgra_,TCLContex_,TCLPlatfo_>;
+            TCLDeploy_  = TCLDeploy <TCLProgra_,TCLContex_,TCLPlatfo_>;
        ///// メソッド
        function GetInfo<_TYPE_>( const Name_:T_cl_program_info ) :_TYPE_;
        function GetInfoSize( const Name_:T_cl_program_info ) :T_size_t;
@@ -299,15 +300,18 @@ end;
 
 procedure TCLProgra<TCLContex_,TCLPlatfo_>.Build;
 var
-   Ds :TArray<T_cl_device_id>;
    Os :String;
+   L :TCLDeploy_;
 begin
-     Ds :=  TCLContex( Contex ).GetDeviceIDs;
-
      if Ord( _LangVer ) > 100 then Os := '-cl-std=CL' + _LangVer.ToString
                               else Os := '';
 
-     AssertCL( clBuildProgram( Handle, Length( Ds ), @Ds[0], P_char( AnsiString( Os ) ), nil, nil ) );
+     for L in Deploys do
+     begin
+          clBuildProgram( Handle, 1, @L.Device.Handle, P_char( AnsiString( Os ) ), nil, nil );
+
+          L.Log := GetBuildInfoString( L.Device.Handle, CL_PROGRAM_BUILD_LOG );
+     end;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgras<TCLContex_,TCLPlatfo_>
