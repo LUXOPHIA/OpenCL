@@ -25,6 +25,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLProgras_ = TCLProgras<TCLContex_,TCLPlatfo_>;
             TCLProgra_  = TCLProgra <TCLContex_,TCLPlatfo_>;
             TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>;
+            TCLDeploys_ = TCLDeploys<TCLProgra_,TCLContex_,TCLPlatfo_>;
        ///// メソッド
        function GetInfo<_TYPE_>( const Name_:T_cl_program_info ) :_TYPE_;
        function GetInfoSize( const Name_:T_cl_program_info ) :T_size_t;
@@ -42,6 +43,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// アクセス
        function GetHandle :T_cl_program;
        procedure SetHandle( const Handle_:T_cl_program );
+       function GetDeploys :TCLDeploys_;
        (* cl_program_info *)
        function GetPROGRAM_REFERENCE_COUNT :T_cl_uint;
        function GetPROGRAM_CONTEXT :T_cl_context;
@@ -75,6 +77,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Source  :TStringList  read   _Source                 ;
        property LangVer :TCLVersion   read   _LangVer                ;
        property Kernels :TCLKernels_  read   _Kernels                ;
+       property Deploys :TCLDeploys_  read GetDeploys                ;
        (* cl_program_info *)
        property PROGRAM_REFERENCE_COUNT            :T_cl_uint               read GetPROGRAM_REFERENCE_COUNT;
        property PROGRAM_CONTEXT                    :T_cl_context            read GetPROGRAM_CONTEXT;
@@ -210,6 +213,13 @@ begin
      if Assigned( _Handle ) then DestroHandle;
 
      _Handle := Handle_;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLProgra<TCLContex_,TCLPlatfo_>.GetDeploys :TCLDeploys_;
+begin
+     Result := Kernels.Deploys;
 end;
 
 //---------------------------------------------------------(* cl_program_info *)
