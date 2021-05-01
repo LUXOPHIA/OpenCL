@@ -356,7 +356,7 @@ begin
      MemoP.Lines.Assign( _Progra.Source );                                      // ソースコードの表示
 
      ///// カーネル
-     _Kernel := TCLKernel.Create( _Progra, 'Main' );                            // 生成
+     _Kernel := TCLKernel.Create( _Progra, 'Main', _Comman );                   // 生成
      _Kernel.Argumes.Add( _BufferA );                                           // バッファの登録
      _Kernel.Argumes.Add( _BufferB );                                           // バッファの登録
      _Kernel.Argumes.Add( _BufferC );                                           // バッファの登録
@@ -366,7 +366,7 @@ begin
 
      ShowSystem;                                                                // システム表示
 
-     _Kernel.Run( _Comman );                                                    // 実行
+     _Kernel.Run;                                                               // 実行
 
      ShowResult;                                                                // 結果表示
 end;
