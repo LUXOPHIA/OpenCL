@@ -156,20 +156,21 @@ begin
      ///// プログラム
      _Progra := TCLProgra.Create( _Contex );                                    // 生成
      _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードの読み込み
+     _Progra.BuildTo( _Device );                                                // ビルド
 
      MemoC.Lines.Assign( _Progra.Source );                                      // ソースコードの表示
 
-     _Progra.BuildTo( _Device );                                                // ビルド
+     ///// カーネル
+     _Kernel := TCLKernel.Create( _Progra, 'Main', _Comman );                   // 生成
+     _Kernel.Argumes.Add( _BufferA );                                           // バッファの登録
+     _Kernel.Argumes.Add( _BufferB );                                           // バッファの登録
+     _Kernel.Argumes.Add( _BufferC );                                           // バッファの登録
+     _Kernel.GlobWorkSize := [ 10 ];                                            // ループ回数の設定
+
+     //////////
 
      if ShowDeploys then
      begin
-          ///// カーネル
-          _Kernel := TCLKernel.Create( _Progra, 'Main', _Comman );              // 生成
-          _Kernel.Argumes.Add( _BufferA );                                      // バッファの登録
-          _Kernel.Argumes.Add( _BufferB );                                      // バッファの登録
-          _Kernel.Argumes.Add( _BufferC );                                      // バッファの登録
-          _Kernel.GlobWorkSize := [ 10 ];                                       // ループ回数の設定
-
           _Kernel.Run;                                                          // 実行
 
           ShowResult;                                                           // 結果表示
