@@ -2,11 +2,13 @@
 
 interface //#################################################################### ■
 
-uses cl_version,
+uses System.Classes,
+     cl_version,
      cl_platform,
      cl,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
+     LUX.GPU.OpenCL.Show,
      LUX.GPU.OpenCL.Device,
      LUX.GPU.OpenCL.Platfo,
      LUX.GPU.OpenCL.Contex,
@@ -64,6 +66,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Platfos :TCLPlatfos read   _Platfos;
        property Platfo0 :TCLPlatfo  read GetPlatfo0;
        property Device0 :TCLDevice  read GetDevice0;
+       ///// メソッド
+       procedure Show( const Strings_:TStrings );
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -112,6 +116,13 @@ begin
      _Platfos.Free;
 
      inherited;
+end;
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TOpenCL.Show( const Strings_:TStrings );
+begin
+     ShowSystem( Strings_ );
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
