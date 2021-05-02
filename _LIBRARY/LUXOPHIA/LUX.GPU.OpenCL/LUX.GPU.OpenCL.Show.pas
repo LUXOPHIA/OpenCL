@@ -39,7 +39,7 @@ begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│　┃　│　┃　│' );
-          Add( ' ┃　│　┃　│　┃　│　┃　├ Argumes[*] :TCLArgumes' );
+          Add( ' ┃　│　┃　│　┃　│　┃　├ Argumes(' + Argumes_.Count.ToString + ') :TCLArgumes' );
           for M in Argumes_ do
           begin
                Add( ' ┃　│　┃　│　┃　│　┃　│　├ Argume[' + M.Order.ToString + '] = Platfo[' + M.Contex.Platfo.Order.ToString + ']'
@@ -56,7 +56,7 @@ begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│　┃　│' );
-          Add( ' ┃　│　┃　│　┃　┝ Kernels[*] :TCLKernels' );
+          Add( ' ┃　│　┃　│　┃　┝ Kernels(' + Kernels_.Count.ToString + ') :TCLKernels' );
           for K in Kernels_ do
           begin
                Add( ' ┃　│　┃　│　┃　│　┃' );
@@ -79,7 +79,7 @@ begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│　┃　│' );
-          Add( ' ┃　│　┃　│　┃　┝ Deploys[*] :TCLDeploys' );
+          Add( ' ┃　│　┃　│　┃　┝ Deploys(' + Deploys_.Count.ToString + ') :TCLDeploys' );
           for L in Deploys_ do
           begin
                Add( ' ┃　│　┃　│　┃　│　┃' );
@@ -98,7 +98,7 @@ begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│' );
-          Add( ' ┃　│　┃　┝ Progras[*] :TCLProgras' );
+          Add( ' ┃　│　┃　┝ Progras(' + Progras_.Count.ToString + ') :TCLProgras' );
           for P in Progras_ do
           begin
                Add( ' ┃　│　┃　│　┃' );
@@ -118,7 +118,7 @@ begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│' );
-          Add( ' ┃　│　┃　┝ Memorys[*] :TCLMemorys' );
+          Add( ' ┃　│　┃　┝ Memorys(' + Memorys_.Count.ToString + ') :TCLMemorys' );
           for M in Memorys_ do
           begin
                Add( ' ┃　│　┃　│　┃' );
@@ -135,7 +135,7 @@ begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│' );
-          Add( ' ┃　│　┃　┝ Commans[*] :TCLCommans' );
+          Add( ' ┃　│　┃　┝ Commans(' + Commans_.Count.ToString + ') :TCLCommans' );
           for Q in Commans_ do
           begin
                Add( ' ┃　│　┃　│　┃' );
@@ -153,7 +153,7 @@ begin
      with Strings_ do
      begin
           Add( ' ┃　│' );
-          Add( ' ┃　┝ Contexs[*] :TCLContexs' );
+          Add( ' ┃　┝ Contexs(' + Contexs_.Count.ToString + ') :TCLContexs' );
           for C in Contexs_ do
           begin
                Add( ' ┃　│　┃' );
@@ -175,7 +175,7 @@ begin
      with Strings_ do
      begin
           Add( ' ┃　│' );
-          Add( ' ┃　┝ Devices[*] :TCLDevices' );
+          Add( ' ┃　┝ Devices(' + Devices_.Count.ToString + ') :TCLDevices' );
           for D in Devices_ do
           begin
                Add( ' ┃　│　┃' );
@@ -209,7 +209,7 @@ begin
      with Strings_ do
      begin
           Add( ' ┃　│' );
-          Add( ' ┃　├ Extenss[*] :TCLExtenss' );
+          Add( ' ┃　├ Extenss(' + Extenss_.Count.ToString + ') :TCLExtenss' );
           for I := 0 to Extenss_.Count-1 do
           begin
                E := Extenss_[ I ];
@@ -225,7 +225,7 @@ var
 begin
      with Strings_ do
      begin
-          Add( 'Platfos[*] :TCLPlatfos' );
+          Add( 'Platfos(' + Platfos_.Count.ToString + ') :TCLPlatfos' );
           for F in Platfos_ do
           begin
                Add( ' ┃' );
