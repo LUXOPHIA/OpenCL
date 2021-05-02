@@ -41,7 +41,7 @@ type
     _Progra  :TCLProgra;
     _Kernel  :TCLKernel;
     ///// メソッド
-    function ShowDeploys( const Deploys_:TCLDeploys ) :Boolean;
+    function ShowDeploys :Boolean;
     procedure ShowResult;
   end;
 
@@ -56,31 +56,32 @@ implementation //###############################################################
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-function TForm1.ShowDeploys( const Deploys_:TCLDeploys ) :Boolean;
+function TForm1.ShowDeploys :Boolean;
 var
    L :TCLDeploy;
 begin
-     with MemoL.Lines do
+     Result := True;
+
+     for L in _Progra.Deploys do
      begin
-          Result := True;
-
-          for L in Deploys_ do
+          if L.State <> CL_BUILD_SUCCESS then
           begin
-               if L.State <> CL_BUILD_SUCCESS then
-               begin
-                    Result := False;
+               Result := False;
 
-                    Add( '▼ Device[' + L.Device.Order.ToString + ']' );
+               with MemoL.Lines do
+               begin
+                    Add( '▼ Platfo[' + L.Device.Platfo.Order.ToString + ']'
+                         + '.Device[' + L.Device       .Order.ToString + ']' );
                     Add( L.Log );
                     Add( '' );
                end;
           end;
+     end;
 
-          if not Result then
-          begin
-               TabControl1.ActiveTab := TabItemP;
-               TabControlP.ActiveTab := TabItemL;
-          end;
+     if not Result then
+     begin
+          TabControl1.ActiveTab := TabItemP;
+          TabControlP.ActiveTab := TabItemL;
      end;
 end;
 
@@ -160,7 +161,7 @@ begin
 
      _Progra.BuildTo( _Device );                                                // ビルド
 
-     if ShowDeploys( _Progra.Deploys ) then
+     if ShowDeploys then
      begin
           ///// カーネル
           _Kernel := TCLKernel.Create( _Progra, 'Main', _Comman );              // 生成
