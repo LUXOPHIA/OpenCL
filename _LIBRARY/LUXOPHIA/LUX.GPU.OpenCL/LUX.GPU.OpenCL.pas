@@ -33,11 +33,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                  TCLMemory        = TCLMemory <TCLContex>;
                TCLProgras         = TCLProgras<TCLContex,TCLPlatfo>;
                  TCLProgra        = TCLProgra <TCLContex,TCLPlatfo>;
+                   TCLDeploys     = TCLDeploys<TCLContex,TCLPlatfo>;
+                     TCLDeploy    = TCLDeploy <TCLContex,TCLPlatfo>;
                    TCLKernels     = TCLKernels<TCLProgra,TCLContex,TCLPlatfo>;
                      TCLKernel    = TCLKernel <TCLProgra,TCLContex,TCLPlatfo>;
                        TCLArgumes = TCLArgumes<TCLKernel,TCLContex,TCLPlatfo>;
-                     TCLDeploys   = TCLDeploys<TCLProgra,TCLContex,TCLPlatfo>;
-                       TCLDeploy  = TCLDeploy <TCLProgra,TCLContex,TCLPlatfo>;
 
      TCLDeviceBuffer<TValue_:record> = class( TCLDeviceBuffer<TCLContex,TValue_> );
      TCLHostBuffer  <TValue_:record> = class( TCLHostBuffer  <TCLContex,TValue_> );
