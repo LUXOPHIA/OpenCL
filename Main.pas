@@ -19,10 +19,10 @@ type
         MemoS: TMemo;
       TabItemP: TTabItem;
         TabControlP: TTabControl;
-          TabItemPC: TTabItem;
-            MemoP: TMemo;
-          TabItemE: TTabItem;
-            MemoE: TMemo;
+          TabItemC: TTabItem;
+            MemoC: TMemo;
+          TabItemL: TTabItem;
+            MemoL: TMemo;
       TabItemR: TTabItem;
         MemoR: TMemo;
     procedure FormDestroy(Sender: TObject);
@@ -41,9 +41,9 @@ type
     _Progra  :TCLProgra;
     _Kernel  :TCLKernel;
     ///// メソッド
-    procedure ShowDeploys( const Deploys_:TCLDeploys );
     procedure ShowArgumes( const Argumes_:TCLArgumes );
     procedure ShowKernels( const Kernels_:TCLKernels );
+    procedure ShowDeploys( const Deploys_:TCLDeploys );
     procedure ShowProgras( const Progras_:TCLProgras );
     procedure ShowMemorys( const Memorys_:TCLMemorys );
     procedure ShowCommans( const Commans_:TCLCommans );
@@ -65,24 +65,6 @@ implementation //###############################################################
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-procedure TForm1.ShowDeploys( const Deploys_:TCLDeploys );
-var
-   L :TCLDeploy;
-begin
-     with MemoS.Lines do
-     begin
-          Add( ' ┃　│　┃　│　┃　│' );
-          Add( ' ┃　│　┃　│　┃　┝ Deploys[*] :TCLDeploys' );
-          for L in Deploys_ do
-          begin
-               Add( ' ┃　│　┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┃　│　┣・Deploy[' + L.Order.ToString + '] :TCLDeploy' );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ Device = Device[' + L.Device.Order.ToString + ']' );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ Errors = ' );
-          end;
-     end;
-end;
 
 procedure TForm1.ShowArgumes( const Argumes_:TCLArgumes );
 var
@@ -111,10 +93,48 @@ begin
           begin
                Add( ' ┃　│　┃　│　┃　│　┃' );
                Add( ' ┃　│　┃　│　┃　│　┣・Kernel[' + K.Order.ToString + '] :TCLKernel' );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ Name      = ' + K.Name               );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Name      = ' + K.Name );
                Add( ' ┃　│　┃　│　┃　│　┃　├ Dimension = ' + K.Dimension.ToString );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Comman    = Comman[' + K.Comman.Order.ToString + ']' );
 
                ShowArgumes( K.Argumes );
+          end;
+     end;
+end;
+
+procedure TForm1.ShowDeploys( const Deploys_:TCLDeploys );
+var
+   L :TCLDeploy;
+begin
+     with MemoS.Lines do
+     begin
+          Add( ' ┃　│　┃　│　┃　│' );
+          Add( ' ┃　│　┃　│　┃　┝ Deploys[*] :TCLDeploys' );
+          for L in Deploys_ do
+          begin
+               Add( ' ┃　│　┃　│　┃　│　┃' );
+               Add( ' ┃　│　┃　│　┃　│　┣・Deploy[' + L.Order.ToString + '] :TCLDeploy' );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Device = Device[' + L.Device.Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ State  = ' + L.State.ToString );
+          end;
+     end;
+
+     with MemoL.Lines do
+     begin
+          for L in Deploys_ do
+          begin
+               if L.State <> CL_BUILD_SUCCESS then
+               begin
+                    Add( '▼ Device[' + L.Device.Order.ToString + ']' );
+                    Add( L.Log );
+                    Add( '' );
+               end;
+          end;
+
+          if Count > 0 then
+          begin
+               TabControl1.ActiveTab := TabItemP;
+               TabControlP.ActiveTab := TabItemL;
           end;
      end;
 end;
@@ -133,8 +153,8 @@ begin
                Add( ' ┃　│　┃　│　┣・Progra[' + P.Order.ToString + '] :TCLProgra' );
                Add( ' ┃　│　┃　│　┃　├ LangVer = ' + P.LangVer.ToString );
 
-               ShowKernels( P.Kernels );
                ShowDeploys( P.Deploys );
+               ShowKernels( P.Kernels );
           end;
      end;
 end;
@@ -349,7 +369,7 @@ begin
      _Progra := TCLProgra.Create( _Contex );                                    // 生成
      _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードの読み込み
 
-     MemoP.Lines.Assign( _Progra.Source );                                      // ソースコードの表示
+     MemoC.Lines.Assign( _Progra.Source );                                      // ソースコードの表示
 
      ///// カーネル
      _Kernel := TCLKernel.Create( _Progra, 'Main', _Comman );                   // 生成
@@ -360,10 +380,9 @@ begin
 
      //////////
 
-     ShowSystem;                                                                // システム表示
-
      _Kernel.Run;                                                               // 実行
 
+     ShowSystem;                                                                // システム表示
      ShowResult;                                                                // 結果表示
 end;
 
