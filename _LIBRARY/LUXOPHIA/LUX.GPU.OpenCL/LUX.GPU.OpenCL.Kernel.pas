@@ -16,52 +16,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLKernels    <TCLProgra_,TCLContex_,TCLPlatfo_:class> = class;
        TCLKernel   <TCLProgra_,TCLContex_,TCLPlatfo_:class> = class;
          TCLArgumes<TCLKernel_,TCLContex_,TCLPlatfo_:class> = class;
-       TCLDeploys  <TCLProgra_,TCLContex_,TCLPlatfo_:class> = class;
-         TCLDeploy <TCLProgra_,TCLContex_,TCLPlatfo_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
-
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDeploy<TCLProgra_,TCLContex_,TCLPlatfo_>
-
-     TCLDeploy<TCLProgra_,TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>,
-                                                                            TCLDeploys<TCLProgra_,TCLContex_,TCLPlatfo_>> )
-     private
-       type TCLDevice_  = TCLDevice <TCLPlatfo_>;
-            TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>;
-            TCLDeploys_ = TCLDeploys<TCLProgra_,TCLContex_,TCLPlatfo_>;
-     protected
-       _Device :TCLDevice_;
-       _Log    :String;
-       ///// アクセス
-       function GetDevice :TCLDevice_;
-     public
-       constructor Create; override;
-       constructor Create( const Deploys_:TCLDeploys_; const Device_:TCLDevice_ ); overload; virtual;
-       ///// プロパティ
-       property Kernels :TCLKernels_ read GetOwnere             ;
-       property Deploys :TCLDeploys_ read GetParent             ;
-       property Device  :TCLDevice_  read GetDevice             ;
-       property Log     :String      read   _Log    write   _Log;
-     end;
-
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDeploys<TCLProgra_,TCLContex_,TCLPlatfo_>
-
-     TCLDeploys<TCLProgra_,TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>,
-                                                                             TCLDeploy <TCLProgra_,TCLContex_,TCLPlatfo_>> )
-     private
-       type TCLDevice_  = TCLDevice <TCLPlatfo_>;
-            TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>;
-            TCLKernel_  = TCLKernel <TCLProgra_,TCLContex_,TCLPlatfo_>;
-            TCLDeploy_  = TCLDeploy <TCLProgra_,TCLContex_,TCLPlatfo_>;
-     protected
-       ///// イベント
-       procedure OnInit; override;
-     public
-       ///// プロパティ
-       property Kernels :TCLKernels_ read GetOwnere;
-     end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLKernel_,TCLContex_,TCLPlatfo_>
 
@@ -118,15 +76,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLProgra_,TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>> )
      private
-       type TCLDeploys_ = TCLDeploys<TCLProgra_,TCLContex_,TCLPlatfo_>;
      protected
-       _Deploys :TCLDeploys_;
      public
-       constructor Create; override;
-       destructor Destroy; override;
        ///// プロパティ
-       property Progra  :TCLProgra_  read GetOwnere ;
-       property Deploys :TCLDeploys_ read   _Deploys;
+       property Progra :TCLProgra_ read GetOwnere ;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -142,64 +95,6 @@ uses LUX.GPU.OpenCL;
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDeploy<TCLProgra_,TCLContex_,TCLPlatfo_>
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
-function TCLDeploy<TCLProgra_,TCLContex_,TCLPlatfo_>.GetDevice :TCLDevice_;
-begin
-     Result := _Device;
-end;
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-constructor TCLDeploy<TCLProgra_,TCLContex_,TCLPlatfo_>.Create;
-begin
-     inherited;
-
-     _Device := nil;
-     _Log    := '';
-end;
-
-constructor TCLDeploy<TCLProgra_,TCLContex_,TCLPlatfo_>.Create( const Deploys_:TCLDeploys_; const Device_:TCLDevice_ );
-begin
-     inherited Create( Deploys_ );
-
-     _Device := Device_;
-end;
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDeploys<TCLProgra_,TCLContex_,TCLPlatfo_>
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
-/////////////////////////////////////////////////////////////////////// イベント
-
-procedure TCLDeploys<TCLProgra_,TCLContex_,TCLPlatfo_>.OnInit;
-var
-   DLs :TDictionary<TCLDevice_,TCLDeploy_>;
-   K :TCLKernel_;
-   D :TCLDevice_;
-begin
-     inherited;
-
-     DLs := TDictionary<TCLDevice_,TCLDeploy_>.Create;
-
-     for K in Kernels do
-     begin
-          D := K.Comman.Device;
-
-          if not DLs.ContainsKey( D ) then DLs.Add( D, TCLDeploy_.Create( Self, D ) );
-     end;
-
-     DLs.Free;
-end;
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLKernel_,TCLContex_>
 
@@ -261,6 +156,8 @@ var
    I :Integer;
    H :T_cl_mem;
 begin
+     TCLProgra( Progra ).BuildTo( TCLComman( Comman ).Device );
+
      _Handle := clCreateKernel( TCLProgra( Progra ).Handle, P_char( AnsiString( _Name ) ), @E );
 
      AssertCL( E );
@@ -347,20 +244,6 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-constructor TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>.Create;
-begin
-     inherited;
-
-     _Deploys := TCLDeploys_.Create( Self );
-end;
-
-destructor TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>.Destroy;
-begin
-     _Deploys.Free;
-
-     inherited;
-end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
 
