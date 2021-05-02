@@ -42,7 +42,9 @@ begin
           Add( ' ┃　│　┃　│　┃　│　┃　├ Argumes[*] :TCLArgumes' );
           for M in Argumes_ do
           begin
-               Add( ' ┃　│　┃　│　┃　│　┃　│　├ Argume[' + M.Order.ToString + '] = Memory[' + M.Order.ToString + ']'  );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　├ Argume[' + M.Order.ToString + '] = Platfo[' + M.Contex.Platfo.Order.ToString + ']'
+                                                                                        + '.Contex[' + M.Contex       .Order.ToString + ']'
+                                                                                        + '.Memory[' + M              .Order.ToString + ']' );
           end;
      end;
 end;
@@ -61,7 +63,9 @@ begin
                Add( ' ┃　│　┃　│　┃　│　┣・Kernel[' + K.Order.ToString + '] :TCLKernel' );
                Add( ' ┃　│　┃　│　┃　│　┃　├ Name      = ' + K.Name );
                Add( ' ┃　│　┃　│　┃　│　┃　├ Dimension = ' + K.Dimension.ToString );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ Comman    = Comman[' + K.Comman.Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Comman    = Platfo[' + K.Comman.Contex.Platfo.Order.ToString + ']'
+                                                             + '.Contex[' + K.Comman.Contex       .Order.ToString + ']'
+                                                             + '.Comman[' + K.Comman              .Order.ToString + ']' );
 
                ShowArgumes( Strings_, K.Argumes );
           end;
@@ -80,7 +84,8 @@ begin
           begin
                Add( ' ┃　│　┃　│　┃　│　┃' );
                Add( ' ┃　│　┃　│　┃　│　┣・Deploy[' + L.Order.ToString + '] :TCLDeploy' );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ Device = Device[' + L.Device.Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Device = Platfo[' + L.Device.Platfo.Order.ToString + ']'
+                                                          + '.Device[' + L.Device       .Order.ToString + ']' );
                Add( ' ┃　│　┃　│　┃　│　┃　├ State  = ' + L.State.ToString );
           end;
      end;
@@ -135,7 +140,8 @@ begin
           begin
                Add( ' ┃　│　┃　│　┃' );
                Add( ' ┃　│　┃　│　┣・Comman[' + Q.Order.ToString + '] :TCLComman' );
-               Add( ' ┃　│　┃　│　┃　├ Device = Device[' + Q.Device.Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　├ Device = Platfo[' + Q.Device.Platfo.Order.ToString + ']'
+                                                  + '.Device[' + Q.Device       .Order.ToString + ']' );
           end;
      end;
 end;
