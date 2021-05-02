@@ -391,11 +391,11 @@ constructor TCLProgra<TCLContex_,TCLPlatfo_>.Create;
 begin
      inherited;
 
-     _Handle := nil;
-
      _Source  := TStringList.Create;
      _Deploys := TCLDeploys_.Create( Self );
      _Kernels := TCLKernels_.Create( Self );
+
+     _Handle := nil;
 
      _LangVer := TCLVersion.From( '3.0' );
 end;
@@ -407,11 +407,11 @@ end;
 
 destructor TCLProgra<TCLContex_,TCLPlatfo_>.Destroy;
 begin
+      Handle := nil;
+
      _Kernels.Free;
      _Deploys.Free;
      _Source .Free;
-
-      Handle := nil;
 
      inherited;
 end;
