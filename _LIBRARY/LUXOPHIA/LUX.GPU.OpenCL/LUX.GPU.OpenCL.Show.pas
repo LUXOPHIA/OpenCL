@@ -220,7 +220,6 @@ begin
      with Strings_ do
      begin
           Add( 'Platfos[*] :TCLPlatfos' );
-
           for F in Platfos_ do
           begin
                Add( ' ┃' );
