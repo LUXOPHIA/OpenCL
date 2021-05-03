@@ -33,6 +33,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>;
             TCLKernel_  = TCLKernel <TCLProgra_,TCLContex_,TCLPlatfo_>;
             TCLArgumes_ = TCLArgumes<TCLKernel_,TCLContex_,TCLPlatfo_>;
+       ///// メソッド
+       function GetInfo<_TYPE_>( const Name_:T_cl_kernel_info ) :_TYPE_;
+       function GetInfoSize( const Name_:T_cl_kernel_info ) :T_size_t;
+       function GetInfos<_TYPE_>( const Name_:T_cl_kernel_info ) :TArray<_TYPE_>;
+       function GetInfoString( const Name_:T_cl_kernel_info ) :String;
      protected
        _Handle       :T_cl_kernel;
        _Name         :String;
@@ -48,6 +53,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetGlobWorkOffs( const GlobWorkOffs_:TArray<T_size_t> );
        procedure SetGlobWorkSize( const GlobWorkSize_:TArray<T_size_t> );
        procedure SetLocaWorkSize( const LocaWorkSize_:TArray<T_size_t> );
+       (* cl_kernel_info *)
+       function GetKERNEL_FUNCTION_NAME :String;
+       function GetKERNEL_NUM_ARGS :T_cl_uint;
+       function GetKERNEL_REFERENCE_COUNT :T_cl_uint;
+       function GetKERNEL_CONTEXT :T_cl_context;
+       function GetKERNEL_PROGRAM :T_cl_program;
+       {$IF CL_VERSION_1_2 <> 0 }
+       function GetKERNEL_ATTRIBUTES :String;
+       {$ENDIF}
        ///// メソッド
        procedure CreateHandle;
        procedure DestroHandle;
@@ -68,6 +82,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property GlobWorkOffs :TArray<T_size_t> read   _GlobWorkOffs write SetGlobWorkOffs;
        property GlobWorkSize :TArray<T_size_t> read   _GlobWorkSize write SetGlobWorkSize;
        property LocaWorkSize :TArray<T_size_t> read   _LocaWorkSize write SetLocaWorkSize;
+       (* cl_kernel_info *)
+       property KERNEL_FUNCTION_NAME   :String       read GetKERNEL_FUNCTION_NAME;
+       property KERNEL_NUM_ARGS        :T_cl_uint    read GetKERNEL_NUM_ARGS;
+       property KERNEL_REFERENCE_COUNT :T_cl_uint    read GetKERNEL_REFERENCE_COUNT;
+       property KERNEL_CONTEXT         :T_cl_context read GetKERNEL_CONTEXT;
+       property KERNEL_PROGRAM         :T_cl_program read GetKERNEL_PROGRAM;
+       {$IF CL_VERSION_1_2 <> 0 }
+       property KERNEL_ATTRIBUTES      :String       read GetKERNEL_ATTRIBUTES;
+       {$ENDIF}
        ///// メソッド
        procedure Run;
      end;
@@ -90,7 +113,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
+uses System.SysUtils,
+     LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -107,6 +131,40 @@ uses LUX.GPU.OpenCL;
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetInfo<_TYPE_>( const Name_:T_cl_kernel_info ) :_TYPE_;
+begin
+     AssertCL( clGetKernelInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetInfoSize( const Name_:T_cl_kernel_info ) :T_size_t;
+begin
+     AssertCL( clGetKernelInfo( Handle, Name_, 0, nil, @Result ) );
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetInfos<_TYPE_>( const Name_:T_cl_kernel_info ) :TArray<_TYPE_>;
+var
+   S :T_size_t;
+begin
+     S := GetInfoSize( Name_ );
+
+     SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
+
+     AssertCL( clGetKernelInfo( Handle, Name_, S, @Result[ 0 ], nil ) );
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetInfoString( const Name_:T_cl_kernel_info ) :String;
+begin
+     Result := TrimRight( String( P_char( GetInfos<T_char>( Name_ ) ) ) );
+end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
@@ -147,6 +205,40 @@ procedure TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.SetLocaWorkSize( const Loc
 begin
      _LocaWorkSize := LocaWorkSize_;
 end;
+
+//----------------------------------------------------------(* cl_kernel_info *)
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetKERNEL_FUNCTION_NAME :String;
+begin
+     Result := GetInfoString( CL_KERNEL_FUNCTION_NAME );
+end;
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetKERNEL_NUM_ARGS :T_cl_uint;
+begin
+     Result := GetInfo<T_cl_uint>( CL_KERNEL_NUM_ARGS );
+end;
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetKERNEL_REFERENCE_COUNT :T_cl_uint;
+begin
+     Result := GetInfo<T_cl_uint>( CL_KERNEL_REFERENCE_COUNT );
+end;
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetKERNEL_CONTEXT :T_cl_context;
+begin
+     Result := GetInfo<T_cl_context>( CL_KERNEL_CONTEXT );
+end;
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetKERNEL_PROGRAM :T_cl_program;
+begin
+     Result := GetInfo<T_cl_program>( CL_KERNEL_PROGRAM );
+end;
+
+{$IF CL_VERSION_1_2 <> 0 }
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetKERNEL_ATTRIBUTES :String;
+begin
+     Result := GetInfoString( CL_KERNEL_ATTRIBUTES );
+end;
+{$ENDIF}
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
