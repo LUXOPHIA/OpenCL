@@ -194,21 +194,15 @@ begin
      Result := clBuildProgram( Progra.Handle, 1, @Device.Handle, P_char( AnsiString( Os ) ), nil, nil );
 end;
 
-//------------------------------------------------------------------------------
-
 function TCLDeploy<TCLContex_,TCLPlatfo_>.GetInfo<_TYPE_>( const Name_:T_cl_program_build_info ) :_TYPE_;
 begin
      AssertCL( clGetProgramBuildInfo( Progra.Handle, Device.Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
-//------------------------------------------------------------------------------
-
 function TCLDeploy<TCLContex_,TCLPlatfo_>.GetInfoSize( const Name_:T_cl_program_build_info ) :T_size_t;
 begin
      AssertCL( clGetProgramBuildInfo( Progra.Handle, Device.Handle, Name_, 0, nil, @Result ) );
 end;
-
-//------------------------------------------------------------------------------
 
 function TCLDeploy<TCLContex_,TCLPlatfo_>.GetInfos<_TYPE_>( const Name_:T_cl_program_build_info ) :TArray<_TYPE_>;
 var
@@ -220,8 +214,6 @@ begin
 
      AssertCL( clGetProgramBuildInfo( Progra.Handle, Device.Handle, Name_, S, @Result[ 0 ], nil ) );
 end;
-
-//------------------------------------------------------------------------------
 
 function TCLDeploy<TCLContex_,TCLPlatfo_>.GetInfoString( const Name_:T_cl_program_build_info ) :String;
 begin
@@ -296,14 +288,10 @@ begin
      AssertCL( clGetProgramInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
-//------------------------------------------------------------------------------
-
 function TCLProgra<TCLContex_,TCLPlatfo_>.GetInfoSize( const Name_:T_cl_program_info ) :T_size_t;
 begin
      AssertCL( clGetProgramInfo( Handle, Name_, 0, nil, @Result ) );
 end;
-
-//------------------------------------------------------------------------------
 
 function TCLProgra<TCLContex_,TCLPlatfo_>.GetInfos<_TYPE_>( const Name_:T_cl_program_info ) :TArray<_TYPE_>;
 var
@@ -315,8 +303,6 @@ begin
 
      AssertCL( clGetProgramInfo( Handle, Name_, S, @Result[ 0 ], nil ) );
 end;
-
-//------------------------------------------------------------------------------
 
 function TCLProgra<TCLContex_,TCLPlatfo_>.GetInfoString( const Name_:T_cl_program_info ) :String;
 begin
