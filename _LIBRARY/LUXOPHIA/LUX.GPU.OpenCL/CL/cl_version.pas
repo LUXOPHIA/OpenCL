@@ -20,7 +20,7 @@ interface //####################################################################
 
 (* Detect which version to target *)
 {$IF not defined(CL_TARGET_OPENCL_VERSION) }
-{$MESSAGE 'cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 300 (OpenCL 3.0)' }
+//{$MESSAGE 'cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 300 (OpenCL 3.0)' }
 const CL_TARGET_OPENCL_VERSION = 300;
 {$ENDIF}
 {$IF ( CL_TARGET_OPENCL_VERSION <> 100 ) and
