@@ -40,24 +40,24 @@ const CL_TARGET_OPENCL_VERSION = 300;
 {$IF ( CL_TARGET_OPENCL_VERSION >= 300 ) and not defined(CL_VERSION_3_0) }
 const CL_VERSION_3_0  = 1;
 {$ENDIF}
-{$IF ( CL_TARGET_OPENCL_VERSION >= 220 ) and not defined(CL_VERSION_2_2) }
+//{$IF ( CL_TARGET_OPENCL_VERSION >= 220 ) and not defined(CL_VERSION_2_2) }
 const CL_VERSION_2_2  = 1;
-{$ENDIF}
-{$IF ( CL_TARGET_OPENCL_VERSION >= 210 ) and not defined(CL_VERSION_2_1) }
+//{$ENDIF}
+//{$IF ( CL_TARGET_OPENCL_VERSION >= 210 ) and not defined(CL_VERSION_2_1) }
 const CL_VERSION_2_1  = 1;
-{$ENDIF}
-{$IF ( CL_TARGET_OPENCL_VERSION >= 200 ) and not defined(CL_VERSION_2_0) }
+//{$ENDIF}
+//{$IF ( CL_TARGET_OPENCL_VERSION >= 200 ) and not defined(CL_VERSION_2_0) }
 const CL_VERSION_2_0  = 1;
-{$ENDIF}
-{$IF ( CL_TARGET_OPENCL_VERSION >= 120 ) and not defined(CL_VERSION_1_2) }
+//{$ENDIF}
+//{$IF ( CL_TARGET_OPENCL_VERSION >= 120 ) and not defined(CL_VERSION_1_2) }
 const CL_VERSION_1_2  = 1;
-{$ENDIF}
-{$IF ( CL_TARGET_OPENCL_VERSION >= 110 ) and not defined(CL_VERSION_1_1) }
+//{$ENDIF}
+//{$IF ( CL_TARGET_OPENCL_VERSION >= 110 ) and not defined(CL_VERSION_1_1) }
 const CL_VERSION_1_1  = 1;
-{$ENDIF}
-{$IF ( CL_TARGET_OPENCL_VERSION >= 100 ) and not defined(CL_VERSION_1_0) }
+//{$ENDIF}
+//{$IF ( CL_TARGET_OPENCL_VERSION >= 100 ) and not defined(CL_VERSION_1_0) }
 const CL_VERSION_1_0  = 1;
-{$ENDIF}
+//{$ENDIF}
 
 (* Allow deprecated APIs for older OpenCL versions. *)
 //{$IF ( CL_TARGET_OPENCL_VERSION <= 220 ) and not defined(CL_USE_DEPRECATED_OPENCL_2_2_APIS) }
