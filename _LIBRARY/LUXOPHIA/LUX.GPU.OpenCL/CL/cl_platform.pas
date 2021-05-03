@@ -482,10 +482,10 @@ type T_cl_GLenum = T_unsigned_int;
 {$ENDIF}
 
 (* Define capabilities for anonymous struct members. *)
-{$IF not defined( __cplusplus ) and defined( __STDC_VERSION__ ) and ( __STDC_VERSION__ >= 201112 ) }
-const __CL_HAS_ANON_STRUCT__ = 1;
-#define  __CL_ANON_STRUCT__
-{$ELSEIF defined( __GNUC__ ) and not defined( __STRICT_ANSI__ ) }
+//{$IF not defined( __cplusplus ) and defined( __STDC_VERSION__ ) and ( __STDC_VERSION__ >= 201112 ) }  //[dcc64 警告] cl_platform.pas(485): W1021 比較結果は常に False になります
+//const __CL_HAS_ANON_STRUCT__ = 1;
+//#define  __CL_ANON_STRUCT__
+{$IF defined( __GNUC__ ) and not defined( __STRICT_ANSI__ ) }
 const __CL_HAS_ANON_STRUCT__ = 1;
 #define  __CL_ANON_STRUCT__ __extension__
 {$ELSEIF defined( _WIN32 ) and defined( _MSC_VER ) and not defined(__STDC__) }
