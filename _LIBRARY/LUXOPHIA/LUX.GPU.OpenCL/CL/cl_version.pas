@@ -23,17 +23,17 @@ interface //####################################################################
 //{$MESSAGE 'cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 300 (OpenCL 3.0)' }
 const CL_TARGET_OPENCL_VERSION = 300;
 {$ENDIF}
-{$IF ( CL_TARGET_OPENCL_VERSION <> 100 ) and
-     ( CL_TARGET_OPENCL_VERSION <> 110 ) and
-     ( CL_TARGET_OPENCL_VERSION <> 120 ) and
-     ( CL_TARGET_OPENCL_VERSION <> 200 ) and
-     ( CL_TARGET_OPENCL_VERSION <> 210 ) and
-     ( CL_TARGET_OPENCL_VERSION <> 220 ) and
-     ( CL_TARGET_OPENCL_VERSION <> 300 ) }
-{$MESSAGE 'cl_version: CL_TARGET_OPENCL_VERSION is not a valid value (100, 110, 120, 200, 210, 220, 300). Defaulting to 300 (OpenCL 3.0)' }
-{#UNDEF CL_TARGET_OPENCL_VERSION }
-const CL_TARGET_OPENCL_VERSION = 300;
-{$ENDIF}
+//{$IF ( CL_TARGET_OPENCL_VERSION <> 100 ) and
+//     ( CL_TARGET_OPENCL_VERSION <> 110 ) and
+//     ( CL_TARGET_OPENCL_VERSION <> 120 ) and
+//     ( CL_TARGET_OPENCL_VERSION <> 200 ) and
+//     ( CL_TARGET_OPENCL_VERSION <> 210 ) and
+//     ( CL_TARGET_OPENCL_VERSION <> 220 ) and
+//     ( CL_TARGET_OPENCL_VERSION <> 300 ) }
+//{$MESSAGE 'cl_version: CL_TARGET_OPENCL_VERSION is not a valid value (100, 110, 120, 200, 210, 220, 300). Defaulting to 300 (OpenCL 3.0)' }
+//{#UNDEF CL_TARGET_OPENCL_VERSION }
+//const CL_TARGET_OPENCL_VERSION = 300;
+//{$ENDIF}
 
 
 (* OpenCL Version *)
