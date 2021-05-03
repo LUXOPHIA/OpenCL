@@ -108,6 +108,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property KERNEL_ARG_TYPE_QUALIFIER[ const I_:T_cl_uint ]    :T_cl_kernel_arg_type_qualifier    read GetKERNEL_ARG_TYPE_QUALIFIER;
        property KERNEL_ARG_NAME[ const I_:T_cl_uint ]              :String                            read GetKERNEL_ARG_NAME;
        ///// メソッド
+       function ArgNameToIndex( const Name_:String ) :T_cl_uint;
        procedure Run;
      end;
 
@@ -380,6 +381,19 @@ begin
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.ArgNameToIndex( const Name_:String ) :T_cl_uint;
+var
+   I :Integer;
+begin
+     for I := 0 to KERNEL_NUM_ARGS-1 do
+     begin
+          if KERNEL_ARG_NAME[ I ] = Name_ then
+          begin
+               Result := I;  Exit;
+          end;
+     end;
+end;
 
 procedure TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.Run;
 begin
