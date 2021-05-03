@@ -327,14 +327,10 @@ begin
      AssertCL( clGetDeviceInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
-//------------------------------------------------------------------------------
-
 function TCLDevice<TCLPlatfo_>.GetInfoSize( const Name_:T_cl_device_info ) :T_size_t;
 begin
      AssertCL( clGetDeviceInfo( Handle, Name_, 0, nil, @Result ) );
 end;
-
-//------------------------------------------------------------------------------
 
 function TCLDevice<TCLPlatfo_>.GetInfos<_TYPE_>( const Name_:T_cl_device_info ) :TArray<_TYPE_>;
 var
@@ -346,8 +342,6 @@ begin
 
      AssertCL( clGetDeviceInfo( Handle, Name_, S, @Result[ 0 ], nil ) );
 end;
-
-//------------------------------------------------------------------------------
 
 function TCLDevice<TCLPlatfo_>.GetInfoString( const Name_:T_cl_device_info ) :String;
 begin

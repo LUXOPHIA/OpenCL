@@ -124,14 +124,10 @@ begin
      AssertCL( clGetPlatformInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
-//------------------------------------------------------------------------------
-
 function TCLPlatfo<TOpenCL_>.GetInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
 begin
      AssertCL( clGetPlatformInfo( Handle, Name_, 0, nil, @Result ) );
 end;
-
-//------------------------------------------------------------------------------
 
 function TCLPlatfo<TOpenCL_>.GetInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
 var
@@ -143,8 +139,6 @@ begin
 
      AssertCL( clGetPlatformInfo( Handle, Name_, S, @Result[ 0 ], nil ) );
 end;
-
-//------------------------------------------------------------------------------
 
 function TCLPlatfo<TOpenCL_>.GetInfoString( const Name_:T_cl_platform_info ) :String;
 begin

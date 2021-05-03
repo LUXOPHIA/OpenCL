@@ -38,6 +38,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetInfoSize( const Name_:T_cl_kernel_info ) :T_size_t;
        function GetInfos<_TYPE_>( const Name_:T_cl_kernel_info ) :TArray<_TYPE_>;
        function GetInfoString( const Name_:T_cl_kernel_info ) :String;
+       function GetArgInfo<_TYPE_>( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :_TYPE_;
+       function GetArgInfoSize( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :T_size_t;
+       function GetArgInfos<_TYPE_>( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :TArray<_TYPE_>;
+       function GetArgInfoString( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :String;
      protected
        _Handle       :T_cl_kernel;
        _Name         :String;
@@ -62,6 +66,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        {$IF CL_VERSION_1_2 <> 0 }
        function GetKERNEL_ATTRIBUTES :String;
        {$ENDIF}
+       (* cl_kernel_arg_info *)
+       function GetKERNEL_ARG_ADDRESS_QUALIFIER( const I_:T_cl_uint ) :T_cl_kernel_arg_address_qualifier;
+       function GetKERNEL_ARG_ACCESS_QUALIFIER( const I_:T_cl_uint ) :T_cl_kernel_arg_access_qualifier;
+       function GetKERNEL_ARG_TYPE_NAME( const I_:T_cl_uint ) :String;
+       function GetKERNEL_ARG_TYPE_QUALIFIER( const I_:T_cl_uint ) :T_cl_kernel_arg_type_qualifier;
+       function GetKERNEL_ARG_NAME( const I_:T_cl_uint ) :String;
        ///// メソッド
        procedure CreateHandle;
        procedure DestroHandle;
@@ -91,6 +101,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        {$IF CL_VERSION_1_2 <> 0 }
        property KERNEL_ATTRIBUTES      :String       read GetKERNEL_ATTRIBUTES;
        {$ENDIF}
+       (* cl_kernel_arg_info *)
+       property KERNEL_ARG_ADDRESS_QUALIFIER[ const I_:T_cl_uint ] :T_cl_kernel_arg_address_qualifier read GetKERNEL_ARG_ADDRESS_QUALIFIER;
+       property KERNEL_ARG_ACCESS_QUALIFIER[ const I_:T_cl_uint ]  :T_cl_kernel_arg_access_qualifier  read GetKERNEL_ARG_ACCESS_QUALIFIER;
+       property KERNEL_ARG_TYPE_NAME[ const I_:T_cl_uint ]         :String                            read GetKERNEL_ARG_TYPE_NAME;
+       property KERNEL_ARG_TYPE_QUALIFIER[ const I_:T_cl_uint ]    :T_cl_kernel_arg_type_qualifier    read GetKERNEL_ARG_TYPE_QUALIFIER;
+       property KERNEL_ARG_NAME[ const I_:T_cl_uint ]              :String                            read GetKERNEL_ARG_NAME;
        ///// メソッド
        procedure Run;
      end;
@@ -139,14 +155,10 @@ begin
      AssertCL( clGetKernelInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
-//------------------------------------------------------------------------------
-
 function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetInfoSize( const Name_:T_cl_kernel_info ) :T_size_t;
 begin
      AssertCL( clGetKernelInfo( Handle, Name_, 0, nil, @Result ) );
 end;
-
-//------------------------------------------------------------------------------
 
 function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetInfos<_TYPE_>( const Name_:T_cl_kernel_info ) :TArray<_TYPE_>;
 var
@@ -159,11 +171,37 @@ begin
      AssertCL( clGetKernelInfo( Handle, Name_, S, @Result[ 0 ], nil ) );
 end;
 
-//------------------------------------------------------------------------------
-
 function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetInfoString( const Name_:T_cl_kernel_info ) :String;
 begin
      Result := TrimRight( String( P_char( GetInfos<T_char>( Name_ ) ) ) );
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetArgInfo<_TYPE_>( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :_TYPE_;
+begin
+     AssertCL( clGetKernelArgInfo( Handle, I_, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
+end;
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetArgInfoSize( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :T_size_t;
+begin
+     AssertCL( clGetKernelArgInfo( Handle, I_, Name_, 0, nil, @Result ) );
+end;
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetArgInfos<_TYPE_>( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :TArray<_TYPE_>;
+var
+   S :T_size_t;
+begin
+     S := GetArgInfoSize( I_, Name_ );
+
+     SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
+
+     AssertCL( clGetKernelArgInfo( Handle, I_, Name_, S, @Result[ 0 ], nil ) );
+end;
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetArgInfoString( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :String;
+begin
+     Result := TrimRight( String( P_char( GetArgInfos<T_char>( I_, Name_ ) ) ) );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
@@ -239,6 +277,33 @@ begin
      Result := GetInfoString( CL_KERNEL_ATTRIBUTES );
 end;
 {$ENDIF}
+
+//------------------------------------------------------(* cl_kernel_arg_info *)
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetKERNEL_ARG_ADDRESS_QUALIFIER( const I_:T_cl_uint ) :T_cl_kernel_arg_address_qualifier;
+begin
+     Result := GetArgInfo<T_cl_kernel_arg_address_qualifier>( I_, CL_KERNEL_ARG_ADDRESS_QUALIFIER );
+end;
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetKERNEL_ARG_ACCESS_QUALIFIER( const I_:T_cl_uint ) :T_cl_kernel_arg_access_qualifier;
+begin
+     Result := GetArgInfo<T_cl_kernel_arg_access_qualifier>( I_, CL_KERNEL_ARG_ACCESS_QUALIFIER );
+end;
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetKERNEL_ARG_TYPE_NAME( const I_:T_cl_uint ) :String;
+begin
+     Result := GetArgInfoString( I_, CL_KERNEL_ARG_TYPE_NAME );
+end;
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetKERNEL_ARG_TYPE_QUALIFIER( const I_:T_cl_uint ) :T_cl_kernel_arg_type_qualifier;
+begin
+     Result := GetArgInfo<T_cl_kernel_arg_type_qualifier>( I_, CL_KERNEL_ARG_TYPE_QUALIFIER );
+end;
+
+function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.GetKERNEL_ARG_NAME( const I_:T_cl_uint ) :String;
+begin
+     Result := GetArgInfoString( I_, CL_KERNEL_ARG_NAME );
+end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
