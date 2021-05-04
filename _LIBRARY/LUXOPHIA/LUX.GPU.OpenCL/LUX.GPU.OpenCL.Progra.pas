@@ -29,16 +29,16 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLDevice_  = TCLDevice <TCLPlatfo_>;
             TCLProgra_  = TCLProgra <TCLContex_,TCLPlatfo_>;
             TCLDeploys_ = TCLDeploys<TCLContex_,TCLPlatfo_>;
-     protected
-       _Device :TCLDevice_;
-       _State  :T_cl_build_status;
-       _Log    :String;
        ///// メソッド
        function Build :T_cl_int;
        function GetInfo<_TYPE_>( const Name_:T_cl_program_build_info ) :_TYPE_;
        function GetInfoSize( const Name_:T_cl_program_build_info ) :T_size_t;
        function GetInfos<_TYPE_>( const Name_:T_cl_program_build_info ) :TArray<_TYPE_>;
        function GetInfoString( const Name_:T_cl_program_build_info ) :String;
+     protected
+       _Device :TCLDevice_;
+       _State  :T_cl_build_status;
+       _Log    :String;
      public
        constructor Create( const Deploys_:TCLDeploys_; const Device_:TCLDevice_ ); overload; virtual;
        procedure AfterConstruction; override;
@@ -180,8 +180,6 @@ uses System.SysUtils,
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
 /////////////////////////////////////////////////////////////////////// メソッド
 
 function TCLDeploy<TCLContex_,TCLPlatfo_>.Build :T_cl_int;
@@ -193,6 +191,8 @@ begin
 
      Result := clBuildProgram( Progra.Handle, 1, @Device.Handle, P_char( AnsiString( Os ) ), nil, nil );
 end;
+
+//------------------------------------------------------------------------------
 
 function TCLDeploy<TCLContex_,TCLPlatfo_>.GetInfo<_TYPE_>( const Name_:T_cl_program_build_info ) :_TYPE_;
 begin
@@ -219,6 +219,8 @@ function TCLDeploy<TCLContex_,TCLPlatfo_>.GetInfoString( const Name_:T_cl_progra
 begin
      Result := TrimRight( String( P_char( GetInfos<T_char>( Name_ ) ) ) );
 end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
