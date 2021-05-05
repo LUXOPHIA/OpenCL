@@ -41,8 +41,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Log    :String;
      public
        constructor Create( const Deploys_:TCLDeploys_; const Device_:TCLDevice_ ); overload; virtual;
-       procedure AfterConstruction; override;
-       destructor Destroy; override;
        ///// プロパティ
        property Progra  :TCLProgra_        read GetOwnere;
        property Deploys :TCLDeploys_       read GetParent;
@@ -62,6 +60,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLDevDeps = TDictionary<TCLDevice_,TCLDeploy_>;
      protected
        _DevDeps :TCLDevDeps;
+       ///// イベント
+       procedure OnInsertChild( const Childr_:TCLDeploy_ ); override;
+       procedure OnRemoveChild( const Childr_:TCLDeploy_ ); override;
      public
        constructor Create; override;
        destructor Destroy; override;
@@ -230,24 +231,10 @@ begin
 
      _Device := Device_;
 
-     Deploys._DevDeps.Add( Device, Self );
-end;
-
-procedure TCLDeploy<TCLContex_,TCLPlatfo_>.AfterConstruction;
-begin
-     inherited;
-
      Build;
 
      _State := GetInfo<T_cl_build_status>( CL_PROGRAM_BUILD_STATUS );
      _Log   := GetInfoString             ( CL_PROGRAM_BUILD_LOG    );
-end;
-
-destructor TCLDeploy<TCLContex_,TCLPlatfo_>.Destroy;
-begin
-     Deploys._DevDeps.Remove( Device );
-
-     inherited;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDeploys<TCLContex_,TCLPlatfo_>
@@ -255,6 +242,22 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// イベント
+
+procedure TCLDeploys<TCLContex_,TCLPlatfo_>.OnInsertChild( const Childr_:TCLDeploy_ );
+begin
+     inherited;
+
+     _DevDeps.Add( Childr_.Device, Childr_ );
+end;
+
+procedure TCLDeploys<TCLContex_,TCLPlatfo_>.OnRemoveChild( const Childr_:TCLDeploy_ );
+begin
+     inherited;
+
+     _DevDeps.Remove( Childr_.Device );
+end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
