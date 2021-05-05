@@ -162,9 +162,9 @@ begin
 
      ///// カーネル
      _Kernel := TCLKernel.Create( _Progra, 'Main', _Queuer );                   // 生成
-     _Kernel.Argumes.Add( 'A', _BufferA );                                      // バッファの登録
-     _Kernel.Argumes.Add( 'B', _BufferB );                                      // バッファの登録
-     _Kernel.Argumes.Add( 'C', _BufferC );                                      // バッファの登録
+     _Kernel.Argumes['A'] := _BufferA;                                          // バッファの登録
+     _Kernel.Argumes['B'] := _BufferB;                                          // バッファの登録
+     _Kernel.Argumes['C'] := _BufferC;                                          // バッファの登録
      _Kernel.GlobWorkSize := [ 10 ];                                            // ループ回数の設定
 
      //////////
