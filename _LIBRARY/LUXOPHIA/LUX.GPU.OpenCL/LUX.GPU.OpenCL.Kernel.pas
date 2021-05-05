@@ -31,11 +31,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLKernel_  = TCLKernel <TCLProgra_,TCLContex_,TCLPlatfo_>;
             TCLArgumes_ = TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>;
      protected
-       _Name   :String;
-       _NameI  :T_cl_uint;
-       _Memory :TCLMemory_;
+       _Name    :String;
+       _ParameI :T_cl_uint;
+       _Memory  :TCLMemory_;
        ///// アクセス
-       function GetNameI :T_cl_uint; virtual;
+       function GetName :String; virtual;
+       procedure SetName( const Name_:String ); virtual;
+       function GetParameI :T_cl_uint; virtual;
        function GetMemory :TCLMemory_; virtual;
        procedure SetMemory( const Memory_:TCLMemory_ ); virtual;
      public
@@ -43,11 +45,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Argumes_:TCLArgumes_; const Name_:String ); overload; virtual;
        constructor Create( const Argumes_:TCLArgumes_; const Name_:String; const Memory_:TCLMemory_ ); overload; virtual;
        ///// プロパティ
-       property Kernel  :TCLKernel_  read GetOwnere                ;
-       property Argumes :TCLArgumes_ read GetParent                ;
-       property Name    :String      read   _Name                  ;
-       property NameI   :T_cl_uint   read GetNameI                 ;
-       property Memory  :TCLMemory_  read GetMemory write SetMemory;
+       property Kernel  :TCLKernel_  read GetOwnere                 ;
+       property Argumes :TCLArgumes_ read GetParent                 ;
+       property Name    :String      read GetName    write SetName  ;
+       property ParameI :T_cl_uint   read GetParameI                ;
+       property Memory  :TCLMemory_  read GetMemory  write SetMemory;
        ///// メソッド
        procedure Bind;
      end;
@@ -211,11 +213,25 @@ uses System.SysUtils,
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.GetNameI :T_cl_uint;
+function TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.GetName :String;
+begin
+     Result := _Name;
+end;
+
+procedure TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.SetName( const Name_:String );
+begin
+     _Name := Name_;
+
+     Argumes.FindsOK := False;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.GetParameI :T_cl_uint;
 begin
      Argumes.FindsOK;
 
-     Result := _NameI;
+     Result := _ParameI;
 end;
 
 //------------------------------------------------------------------------------
@@ -238,9 +254,9 @@ constructor TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.Create;
 begin
      inherited;
 
-     _Name   := '';
-     _NameI  := 0;
-     _Memory := nil;
+     _Name    := '';
+     _ParameI := 0;
+     _Memory  := nil;
 end;
 
 constructor TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.Create( const Argumes_:TCLArgumes_; const Name_:String );
@@ -265,7 +281,7 @@ var
 begin
      H := Memory.Handle;
 
-     AssertCL( clSetKernelArg( Kernel.Handle, NameI, SizeOf( T_cl_mem ), @H ) );
+     AssertCL( clSetKernelArg( Kernel.Handle, ParameI, SizeOf( T_cl_mem ), @H ) );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>
@@ -310,7 +326,7 @@ begin
      if not _FindsOK then
      begin
           for I := 0 to Kernel.KERNEL_NUM_ARGS-1
-	     do Items[ Kernel.KERNEL_ARG_NAME[ I ] ]._NameI := I;
+          do Items[ Kernel.KERNEL_ARG_NAME[ I ] ]._ParameI := I;
 
           _FindsOK := True;
      end;
