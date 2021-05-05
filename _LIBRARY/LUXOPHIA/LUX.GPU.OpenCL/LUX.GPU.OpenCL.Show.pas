@@ -39,12 +39,16 @@ begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│　┃　│　┃　│' );
-          Add( ' ┃　│　┃　│　┃　│　┃　├ Argumes(' + Argumes_.Count.ToString + ') :TCLArgumes' );
+          Add( ' ┃　│　┃　│　┃　│　┃　┝ Argumes(' + Argumes_.Count.ToString + ') :TCLArgumes' );
           for A in Argumes_ do
           begin
-               Add( ' ┃　│　┃　│　┃　│　┃　│　├ Argume[ ' + A.Name + ' ] = Platfo[' + A.Memory.Contex.Platfo.Order.ToString + ']'
-                                                                                + '.Contex[' + A.Memory.Contex       .Order.ToString + ']'
-                                                                                + '.Memory[' + A.Memory              .Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┃' );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┣・Argume[ ' + A.Name + ' ] :TCLArgume' );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Name   = ' + A.Name  );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ ParaI  = ' + A.NameI.ToString );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Memory = Platfo[' + A.Memory.Contex.Platfo.Order.ToString + ']'
+                                                                  + '.Contex[' + A.Memory.Contex       .Order.ToString + ']'
+                                                                  + '.Memory[' + A.Memory              .Order.ToString + ']' );
           end;
      end;
 end;
