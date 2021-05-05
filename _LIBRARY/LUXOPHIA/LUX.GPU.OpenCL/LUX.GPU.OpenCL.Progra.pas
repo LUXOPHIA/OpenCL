@@ -187,8 +187,9 @@ function TCLDeploy<TCLContex_,TCLPlatfo_>.Build :T_cl_int;
 var
    Os :String;
 begin
-     if Ord( Progra.LangVer ) > 100 then Os := '-cl-std=CL' + Progra.LangVer.ToString
-                                    else Os := '';
+     Os := '-cl-kernel-arg-info';
+
+     if Ord( Progra.LangVer ) > 100 then Os := Os + ' -cl-std=CL' + Progra.LangVer.ToString;
 
      Result := clBuildProgram( Progra.Handle, 1, @Device.Handle, P_char( AnsiString( Os ) ), nil, nil );
 end;
