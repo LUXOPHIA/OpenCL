@@ -43,7 +43,7 @@ begin
           for A in Argumes_ do
           begin
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┃　│　┃　│　┣・Argume[ ' + A.Name + ' ] :TCLArgume' );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┣・Argume[' + A.Order.ToString + '] :TCLArgume' );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Name   = ' + A.Name  );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ ParaI  = ' + A.ParameI.ToString );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Memory = Platfo[' + A.Memory.Contex.Platfo.Order.ToString + ']'
