@@ -12,8 +12,8 @@ uses System.Classes,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLPlatfos    <TOpenCL_  :class> = class;
-       TCLPlatfo   <TOpenCL_  :class> = class;
+     TCLPlatfos    <TCLOpenCL_:class> = class;
+       TCLPlatfo   <TCLOpenCL_:class> = class;
          TCLExtenss<TCLPlatfo_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
@@ -28,12 +28,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfo<TOpenCL_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfo<TCLOpenCL_>
 
-     TCLPlatfo<TOpenCL_:class> = class( TListChildr<TOpenCL_,TCLPlatfos<TOpenCL_>> )
+     TCLPlatfo<TCLOpenCL_:class> = class( TListChildr<TCLOpenCL_,TCLPlatfos<TCLOpenCL_>> )
      private
-       type TCLPlatfos_ = TCLPlatfos<TOpenCL_>;
-            TCLPlatfo_  = TCLPlatfo <TOpenCL_>;
+       type TCLPlatfos_ = TCLPlatfos<TCLOpenCL_>;
+            TCLPlatfo_  = TCLPlatfo <TCLOpenCL_>;
             TCLExtenss_ = TCLExtenss<TCLPlatfo_>;
             TCLDevices_ = TCLDevices<TCLPlatfo_>;
             TCLContexs_ = TCLContexs<TCLPlatfo_>;
@@ -64,7 +64,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Platfos_:TCLPlatfos_; const Handle_:T_cl_platform_id ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property OpenCL                :TOpenCL_                  read GetOwnere               ;
+       property OpenCL                :TCLOpenCL_                read GetOwnere               ;
        property Platfos               :TCLPlatfos_               read GetParent               ;
        property Handle                :T_cl_platform_id          read   _Handle               ;
        property Profile               :String                    read GetProfile              ;
@@ -83,11 +83,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Contexs               :TCLContexs_               read   _Contexs              ;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfos<TOpenCL_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfos<TCLOpenCL_>
 
-     TCLPlatfos<TOpenCL_:class> = class( TListParent<TOpenCL_,TCLPlatfo<TOpenCL_>> )
+     TCLPlatfos<TCLOpenCL_:class> = class( TListParent<TCLOpenCL_,TCLPlatfo<TCLOpenCL_>> )
      private
-       type TCLPlatfo_ = TCLPlatfo<TOpenCL_>;
+       type TCLPlatfo_ = TCLPlatfo<TCLOpenCL_>;
      protected
        ///// メソッド
        procedure FindPlatfos;
@@ -95,7 +95,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure OnInit; override;
      public
        ///// プロパティ
-       property OpenCL :TOpenCL_ read GetOwnere;
+       property OpenCL :TCLOpenCL_ read GetOwnere;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -113,23 +113,23 @@ uses System.SysUtils,
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfo<TOpenCL_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfo<TCLOpenCL_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLPlatfo<TOpenCL_>.GetInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
+function TCLPlatfo<TCLOpenCL_>.GetInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
 begin
      AssertCL( clGetPlatformInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
 end;
 
-function TCLPlatfo<TOpenCL_>.GetInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
+function TCLPlatfo<TCLOpenCL_>.GetInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
 begin
      AssertCL( clGetPlatformInfo( Handle, Name_, 0, nil, @Result ) );
 end;
 
-function TCLPlatfo<TOpenCL_>.GetInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
+function TCLPlatfo<TCLOpenCL_>.GetInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
 var
    S :T_size_t;
 begin
@@ -140,7 +140,7 @@ begin
      AssertCL( clGetPlatformInfo( Handle, Name_, S, @Result[ 0 ], nil ) );
 end;
 
-function TCLPlatfo<TOpenCL_>.GetInfoString( const Name_:T_cl_platform_info ) :String;
+function TCLPlatfo<TCLOpenCL_>.GetInfoString( const Name_:T_cl_platform_info ) :String;
 begin
      Result := TrimRight( String( P_char( GetInfos<T_char>( Name_ ) ) ) );
 end;
@@ -149,39 +149,39 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLPlatfo<TOpenCL_>.GetProfile :String;
+function TCLPlatfo<TCLOpenCL_>.GetProfile :String;
 begin
      Result := GetInfoString( CL_PLATFORM_PROFILE );
 end;
 
-function TCLPlatfo<TOpenCL_>.GetVersion :String;
+function TCLPlatfo<TCLOpenCL_>.GetVersion :String;
 begin
      Result := GetInfoString( CL_PLATFORM_VERSION );
 end;
 
-function TCLPlatfo<TOpenCL_>.GetName :String;
+function TCLPlatfo<TCLOpenCL_>.GetName :String;
 begin
      Result := GetInfoString( CL_PLATFORM_NAME );
 end;
 
-function TCLPlatfo<TOpenCL_>.GetVendor :String;
+function TCLPlatfo<TCLOpenCL_>.GetVendor :String;
 begin
      Result := GetInfoString( CL_PLATFORM_VENDOR );
 end;
 
 {$IF CL_VERSION_2_1 <> 0 }
-function TCLPlatfo<TOpenCL_>.GetHostTimerResolution :T_cl_ulong;
+function TCLPlatfo<TCLOpenCL_>.GetHostTimerResolution :T_cl_ulong;
 begin
      Result := GetInfo<T_cl_ulong>( CL_PLATFORM_HOST_TIMER_RESOLUTION );
 end;
 {$ENDIF}
 {$IF CL_VERSION_3_0 <> 0 }
-function TCLPlatfo<TOpenCL_>.GetNumericVersion :T_cl_version;
+function TCLPlatfo<TCLOpenCL_>.GetNumericVersion :T_cl_version;
 begin
      Result := GetInfo<T_cl_version>( CL_PLATFORM_NUMERIC_VERSION );
 end;
 
-function TCLPlatfo<TOpenCL_>.GetExtensionsWithVersion :TArray<T_cl_name_version>;
+function TCLPlatfo<TCLOpenCL_>.GetExtensionsWithVersion :TArray<T_cl_name_version>;
 begin
      Result := GetInfos<T_cl_name_version>( CL_PLATFORM_EXTENSIONS_WITH_VERSION );
 end;
@@ -189,7 +189,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLPlatfo<TOpenCL_>.Create;
+constructor TCLPlatfo<TCLOpenCL_>.Create;
 begin
      inherited;
 
@@ -198,7 +198,7 @@ begin
      _Contexs := TCLContexs_.Create( Self );
 end;
 
-constructor TCLPlatfo<TOpenCL_>.Create( const Platfos_:TCLPlatfos_; const Handle_:T_cl_platform_id );
+constructor TCLPlatfo<TCLOpenCL_>.Create( const Platfos_:TCLPlatfos_; const Handle_:T_cl_platform_id );
 var
    E :String;
 begin
@@ -210,7 +210,7 @@ begin
      do _Extenss.Add( E );
 end;
 
-destructor TCLPlatfo<TOpenCL_>.Destroy;
+destructor TCLPlatfo<TCLOpenCL_>.Destroy;
 begin
      _Extenss.Free;
      _Devices.Free;
@@ -219,7 +219,7 @@ begin
      inherited;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfos<TOpenCL_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfos<TCLOpenCL_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -227,7 +227,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLPlatfos<TOpenCL_>.FindPlatfos;
+procedure TCLPlatfos<TCLOpenCL_>.FindPlatfos;
 var
    PsN :T_cl_uint;
    Ps :TArray<T_cl_platform_id>;
@@ -244,7 +244,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// イベント
 
-procedure TCLPlatfos<TOpenCL_>.OnInit;
+procedure TCLPlatfos<TCLOpenCL_>.OnInit;
 begin
      FindPlatfos;
 end;
