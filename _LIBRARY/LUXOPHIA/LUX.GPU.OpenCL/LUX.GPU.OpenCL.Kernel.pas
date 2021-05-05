@@ -13,17 +13,61 @@ uses System.Generics.Collections,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLKernels    <TCLProgra_,TCLContex_,TCLPlatfo_:class> = class;
-       TCLKernel   <TCLProgra_,TCLContex_,TCLPlatfo_:class> = class;
-         TCLArgumes<TCLKernel_,TCLContex_,TCLPlatfo_:class> = class;
+     TCLKernels     <TCLProgra_,TCLContex_,TCLPlatfo_:class> = class;
+       TCLKernel    <TCLProgra_,TCLContex_,TCLPlatfo_:class> = class;
+         TCLArgumes <TCLProgra_,TCLContex_,TCLPlatfo_:class> = class;
+           TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLKernel_,TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>
 
-     TCLArgumes<TCLKernel_,TCLContex_,TCLPlatfo_:class> = class( TList<TCLMemory<TCLContex_>> );
+     TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLKernel <TCLProgra_,TCLContex_,TCLPlatfo_>,
+                                                                            TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>> )
+     private
+       type TCLMemory_  = TCLMemory <TCLContex_>;
+            TCLKernel_  = TCLKernel <TCLProgra_,TCLContex_,TCLPlatfo_>;
+            TCLArgumes_ = TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>;
+     protected
+       _Name   :String;
+       _Memory :TCLMemory_;
+     public
+       constructor Create( const Argumes_:TCLArgumes_; const Name_:String; const Memory_:TCLMemory_ ); overload; virtual;
+       ///// プロパティ
+       property Kernel  :TCLKernel_  read GetOwnere;
+       property Argumes :TCLArgumes_ read GetParent;
+       property Name    :String      read   _Name  ;
+       property Memory  :TCLMemory_  read   _Memory;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>
+
+     TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>,
+                                                                             TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>> )
+     private
+       type TCLMemory_ = TCLMemory<TCLContex_>;
+            TCLKernel_ = TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>;
+            TCLArgume_ = TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>;
+            TCLVarArgs = TDictionary<String,TCLArgume_>;
+     protected
+       _VarArgs :TCLVarArgs;
+       ///// アクセス
+       function GetChildr( const Name_:String ) :TCLArgume_; overload; virtual;
+       procedure SetChildr( const Name_:String; const Childr_:TCLArgume_ ); overload; virtual;
+       ///// イベント
+       procedure OnInsertChild( const Childr_:TCLArgume_ ); override;
+       procedure OnRemoveChild( const Childr_:TCLArgume_ ); override;
+     public
+       constructor Create; override;
+       destructor Destroy; override;
+       ///// プロパティ
+       property Kernel                        :TCLKernel_ read GetOwnere                         ;
+       property Childrs[ const Name_:String ] :TCLArgume_ read GetChildr write SetChildr; default;
+       ///// メソッド
+       procedure Add( const Name_:String; const Memory_:TCLMemory_ ); overload;
+     end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>
 
@@ -32,7 +76,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLQueuer_  = TCLQueuer <TCLContex_,TCLPlatfo_>;
             TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>;
             TCLKernel_  = TCLKernel <TCLProgra_,TCLContex_,TCLPlatfo_>;
-            TCLArgumes_ = TCLArgumes<TCLKernel_,TCLContex_,TCLPlatfo_>;
+            TCLArgumes_ = TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>;
+            TCLArgume_  = TCLArgume <TCLProgra_,TCLContex_,TCLPlatfo_>;
        ///// メソッド
        function GetInfo<_TYPE_>( const Name_:T_cl_kernel_info ) :_TYPE_;
        function GetInfoSize( const Name_:T_cl_kernel_info ) :T_size_t;
@@ -137,13 +182,80 @@ uses System.SysUtils,
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLKernel_,TCLContex_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+constructor TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.Create( const Argumes_:TCLArgumes_; const Name_:String; const Memory_:TCLMemory_ );
+begin
+     inherited Create( Argumes_ );
+
+     _Name   := Name_;
+     _Memory := Memory_;
+end;
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.GetChildr( const Name_:String ) :TCLArgume_;
+begin
+     Result := _VarArgs[ Name_ ];
+end;
+
+procedure TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.SetChildr( const Name_:String; const Childr_:TCLArgume_ );
+begin
+     if _VarArgs.ContainsKey( Name_ ) then _VarArgs[ Name_ ].Free;
+
+     _VarArgs[ Name_ ] := Childr_;
+end;
+
+/////////////////////////////////////////////////////////////////////// イベント
+
+procedure TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.OnInsertChild( const Childr_:TCLArgume_ );
+begin
+     inherited;
+
+     _VarArgs.Add( Childr_.Name, Childr_ );
+end;
+
+procedure TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.OnRemoveChild( const Childr_:TCLArgume_ );
+begin
+     inherited;
+
+     _VarArgs.Remove( Childr_.Name );
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+constructor TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.Create;
+begin
+     inherited;
+
+     _VarArgs := TCLVarArgs.Create;
+end;
+
+destructor TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.Destroy;
+begin
+     _VarArgs.Free;
+
+     inherited;
+end;
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.Add( const Name_:String; const Memory_:TCLMemory_ );
+begin
+     TCLArgume_.Create( Self, Name_, Memory_ );
+end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>
 
@@ -311,7 +423,7 @@ end;
 procedure TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.CreateHandle;
 var
    E :T_cl_int;
-   I :Integer;
+   A :TCLArgume_;
    H :T_cl_mem;
 begin
      TCLProgra( Progra ).BuildTo( TCLQueuer( Queuer ).Device );
@@ -320,11 +432,11 @@ begin
 
      AssertCL( E );
 
-     for I := 0 to _Argumes.Count-1 do
+     for A in _Argumes do
      begin
-          H := _Argumes[ I ].Handle;
+          H := A.Memory.Handle;
 
-          AssertCL( clSetKernelArg( _Handle, I, SizeOf( T_cl_mem ), @H ) );
+          AssertCL( clSetKernelArg( _Handle, A.Order, SizeOf( T_cl_mem ), @H ) );
      end;
 end;
 

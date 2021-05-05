@@ -34,17 +34,17 @@ uses System.SysUtils,
 
 procedure ShowArgumes( const Strings_:TStrings; const Argumes_:TCLArgumes );
 var
-   M :TCLMemory;
+   A :TCLArgume;
 begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│　┃　│　┃　│' );
           Add( ' ┃　│　┃　│　┃　│　┃　├ Argumes(' + Argumes_.Count.ToString + ') :TCLArgumes' );
-          for M in Argumes_ do
+          for A in Argumes_ do
           begin
-               Add( ' ┃　│　┃　│　┃　│　┃　│　├ Argume[' + M.Order.ToString + '] = Platfo[' + M.Contex.Platfo.Order.ToString + ']'
-                                                                                        + '.Contex[' + M.Contex       .Order.ToString + ']'
-                                                                                        + '.Memory[' + M              .Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　├ Argume[ ' + A.Name + ' ] = Platfo[' + A.Memory.Contex.Platfo.Order.ToString + ']'
+                                                                                + '.Contex[' + A.Memory.Contex       .Order.ToString + ']'
+                                                                                + '.Memory[' + A.Memory              .Order.ToString + ']' );
           end;
      end;
 end;
