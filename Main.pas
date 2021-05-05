@@ -34,7 +34,7 @@ type
     _Platfo  :TCLPlatfo;
     _Device  :TCLDevice;
     _Contex  :TCLContex;
-    _Comman  :TCLComman;
+    _Queuer  :TCLQueuer;
     _BufferA :TCLHostBuffer<T_float>;
     _BufferB :TCLHostBuffer<T_float>;
     _BufferC :TCLHostBuffer<T_float>;
@@ -97,9 +97,9 @@ begin
           Add( 'A[ i ] * B[ i ] = C[ i ]' );
           Add( '' );
 
-          A := TCLBufferIter<T_float>.Create( _Comman, _BufferA );
-          B := TCLBufferIter<T_float>.Create( _Comman, _BufferB );
-          C := TCLBufferIter<T_float>.Create( _Comman, _BufferC );
+          A := TCLBufferIter<T_float>.Create( _Queuer, _BufferA );
+          B := TCLBufferIter<T_float>.Create( _Queuer, _BufferB );
+          C := TCLBufferIter<T_float>.Create( _Queuer, _BufferC );
 
           for I := 0 to _BufferC.Count-1 do
           begin
@@ -133,7 +133,7 @@ begin
      _Contex := TCLContex.Create( _Platfo );                                    // 生成
 
      ///// コマンドキュー
-     _Comman := TCLComman.Create( _Contex, _Device );                           // 生成
+     _Queuer := TCLQueuer.Create( _Contex, _Device );                           // 生成
 
      ///// バッファー
      _BufferA := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
@@ -144,8 +144,8 @@ begin
      _BufferB.Count := 10;                                                      // 要素数の設定
      _BufferC.Count := 10;                                                      // 要素数の設定
 
-     A := TCLBufferIter<T_float>.Create( _Comman, _BufferA );                   // マップ
-     B := TCLBufferIter<T_float>.Create( _Comman, _BufferB );                   // マップ
+     A := TCLBufferIter<T_float>.Create( _Queuer, _BufferA );                   // マップ
+     B := TCLBufferIter<T_float>.Create( _Queuer, _BufferB );                   // マップ
 
      for I := 0 to _BufferA.Count-1 do A[ I ] := Random( 10 );                  // 書き込み
      for I := 0 to _BufferB.Count-1 do B[ I ] := Random( 10 );                  // 書き込み
@@ -161,7 +161,7 @@ begin
      MemoC.Lines.Assign( _Progra.Source );                                      // ソースコードの表示
 
      ///// カーネル
-     _Kernel := TCLKernel.Create( _Progra, 'Main', _Comman );                   // 生成
+     _Kernel := TCLKernel.Create( _Progra, 'Main', _Queuer );                   // 生成
      _Kernel.Argumes.Add( _BufferA );                                           // バッファの登録
      _Kernel.Argumes.Add( _BufferB );                                           // バッファの登録
      _Kernel.Argumes.Add( _BufferC );                                           // バッファの登録
