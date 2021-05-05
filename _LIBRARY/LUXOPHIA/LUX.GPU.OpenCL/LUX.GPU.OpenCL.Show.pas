@@ -63,9 +63,9 @@ begin
                Add( ' ┃　│　┃　│　┃　│　┣・Kernel[' + K.Order.ToString + '] :TCLKernel' );
                Add( ' ┃　│　┃　│　┃　│　┃　├ Name      = ' + K.Name );
                Add( ' ┃　│　┃　│　┃　│　┃　├ Dimension = ' + K.Dimension.ToString );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ Comman    = Platfo[' + K.Comman.Contex.Platfo.Order.ToString + ']'
-                                                             + '.Contex[' + K.Comman.Contex       .Order.ToString + ']'
-                                                             + '.Comman[' + K.Comman              .Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Queuer    = Platfo[' + K.Queuer.Contex.Platfo.Order.ToString + ']'
+                                                             + '.Contex[' + K.Queuer.Contex       .Order.ToString + ']'
+                                                             + '.Queuer[' + K.Queuer              .Order.ToString + ']' );
 
                ShowArgumes( Strings_, K.Argumes );
           end;
@@ -128,18 +128,18 @@ begin
      end;
 end;
 
-procedure ShowCommans( const Strings_:TStrings; const Commans_:TCLCommans );
+procedure ShowQueuers( const Strings_:TStrings; const Queuers_:TCLQueuers );
 var
-   Q :TCLComman;
+   Q :TCLQueuer;
 begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│' );
-          Add( ' ┃　│　┃　┝ Commans(' + Commans_.Count.ToString + ') :TCLCommans' );
-          for Q in Commans_ do
+          Add( ' ┃　│　┃　┝ Queuers(' + Queuers_.Count.ToString + ') :TCLQueuers' );
+          for Q in Queuers_ do
           begin
                Add( ' ┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┣・Comman[' + Q.Order.ToString + '] :TCLComman' );
+               Add( ' ┃　│　┃　│　┣・Queuer[' + Q.Order.ToString + '] :TCLQueuer' );
                Add( ' ┃　│　┃　│　┃　├ Device = Platfo[' + Q.Device.Platfo.Order.ToString + ']'
                                                   + '.Device[' + Q.Device       .Order.ToString + ']' );
           end;
@@ -159,7 +159,7 @@ begin
                Add( ' ┃　│　┃' );
                Add( ' ┃　│　┣・Contex[' + C.Order.ToString + '] :TCLContex' );
 
-               ShowCommans( Strings_, C.Commans );
+               ShowQueuers( Strings_, C.Queuers );
                ShowMemorys( Strings_, C.Memorys );
                ShowProgras( Strings_, C.Progras );
           end;
