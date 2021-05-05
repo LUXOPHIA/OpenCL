@@ -32,14 +32,22 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLArgumes_ = TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>;
      protected
        _Name   :String;
+       _NameI  :T_cl_uint;
        _Memory :TCLMemory_;
+       ///// アクセス
+       function GetNameI :T_cl_uint;
      public
+       constructor Create; override;
+       constructor Create( const Argumes_:TCLArgumes_; const Name_:String ); overload; virtual;
        constructor Create( const Argumes_:TCLArgumes_; const Name_:String; const Memory_:TCLMemory_ ); overload; virtual;
        ///// プロパティ
        property Kernel  :TCLKernel_  read GetOwnere;
        property Argumes :TCLArgumes_ read GetParent;
        property Name    :String      read   _Name  ;
+       property NameI   :T_cl_uint   read GetNameI ;
        property Memory  :TCLMemory_  read   _Memory;
+       ///// メソッド
+       procedure Bind;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>
@@ -53,9 +61,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLVarArgs = TDictionary<String,TCLArgume_>;
      protected
        _VarArgs :TCLVarArgs;
+       _FindsOK :Boolean;
+       _BindsOK :Boolean;
        ///// アクセス
        function GetChildr( const Name_:String ) :TCLArgume_; overload; virtual;
        procedure SetChildr( const Name_:String; const Childr_:TCLArgume_ ); overload; virtual;
+       function GetFindsOK :Boolean; virtual;
+       procedure SetFindsOK( const FindsOK_:Boolean ); virtual;
+       function GetBindsOK :Boolean; virtual;
+       procedure SetBindsOK( const BindsOK_:Boolean ); virtual;
        ///// イベント
        procedure OnInsertChild( const Childr_:TCLArgume_ ); override;
        procedure OnRemoveChild( const Childr_:TCLArgume_ ); override;
@@ -63,8 +77,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
        destructor Destroy; override;
        ///// プロパティ
-       property Kernel                        :TCLKernel_ read GetOwnere                         ;
-       property Childrs[ const Name_:String ] :TCLArgume_ read GetChildr write SetChildr; default;
+       property Kernel                        :TCLKernel_ read GetOwnere                  ;
+       property Childrs[ const Name_:String ] :TCLArgume_ read GetChildr  write SetChildr ; default;
+       property Items  [ const Name_:String ] :TCLArgume_ read GetChildr  write SetChildr ;
+       property FindsOK                       :Boolean    read GetFindsOK write SetFindsOK;
+       property BindsOK                       :Boolean    read GetBindsOK write SetBindsOK;
        ///// メソッド
        procedure Add( const Name_:String; const Memory_:TCLMemory_ ); overload;
      end;
@@ -153,7 +170,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property KERNEL_ARG_TYPE_QUALIFIER[ const I_:T_cl_uint ]    :T_cl_kernel_arg_type_qualifier    read GetKERNEL_ARG_TYPE_QUALIFIER;
        property KERNEL_ARG_NAME[ const I_:T_cl_uint ]              :String                            read GetKERNEL_ARG_NAME;
        ///// メソッド
-       function ArgNameToIndex( const Name_:String ) :T_cl_uint;
        procedure Run;
      end;
 
@@ -188,14 +204,49 @@ uses System.SysUtils,
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.GetNameI :T_cl_uint;
+begin
+     Argumes.FindsOK;
+
+     Result := _NameI;
+end;
+
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.Create( const Argumes_:TCLArgumes_; const Name_:String; const Memory_:TCLMemory_ );
+constructor TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.Create;
+begin
+     inherited;
+
+     _Name   := '';
+     _NameI  := 0;
+     _Memory := nil;
+end;
+
+constructor TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.Create( const Argumes_:TCLArgumes_; const Name_:String );
 begin
      inherited Create( Argumes_ );
 
-     _Name   := Name_;
+     _Name := Name_;
+end;
+
+constructor TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.Create( const Argumes_:TCLArgumes_; const Name_:String; const Memory_:TCLMemory_ );
+begin
+     Create( Argumes_, Name_ );
+
      _Memory := Memory_;
+end;
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.Bind;
+var
+   H :T_cl_mem;
+begin
+     H := Memory.Handle;
+
+     AssertCL( clSetKernelArg( Kernel.Handle, NameI, SizeOf( T_cl_mem ), @H ) );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>
@@ -216,6 +267,54 @@ begin
      if _VarArgs.ContainsKey( Name_ ) then _VarArgs[ Name_ ].Free;
 
      _VarArgs[ Name_ ] := Childr_;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.GetFindsOK :Boolean;
+var
+   I :T_cl_uint;
+begin
+     if not _FindsOK then
+     begin
+          for I := 0 to Kernel.KERNEL_NUM_ARGS-1 do
+          begin
+               Items[ Kernel.KERNEL_ARG_NAME[ I ] ]._NameI := I;
+          end;
+
+          _FindsOK := True;
+     end;
+
+     Result := _FindsOK;
+end;
+
+procedure TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.SetFindsOK( const FindsOK_:Boolean );
+begin
+     _FindsOK := FindsOK_;
+     _BindsOK := False;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.GetBindsOK :Boolean;
+var
+   A :TCLArgume_;
+begin
+     FindsOK;
+
+     if not _BindsOK then
+     begin
+          for A in Self do A.Bind;
+
+          _BindsOK := True;
+     end;
+
+     Result := _BindsOK;
+end;
+
+procedure TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.SetBindsOK( const BindsOK_:Boolean );
+begin
+     _BindsOK := BindsOK_;
 end;
 
 /////////////////////////////////////////////////////////////////////// イベント
@@ -241,6 +340,9 @@ begin
      inherited;
 
      _VarArgs := TCLVarArgs.Create;
+
+     _FindsOK := False;
+     _BindsOK := False;
 end;
 
 destructor TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.Destroy;
@@ -446,7 +548,7 @@ begin
 
      _Handle := nil;
 
-     _Argumes := TCLArgumes_.Create;
+     _Argumes := TCLArgumes_.Create( Self );
 
      _Name         := '';
      _Queuer       := nil;
@@ -485,30 +587,9 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.ArgNameToIndex( const Name_:String ) :T_cl_uint;
-var
-   I :Integer;
-begin
-     for I := 0 to KERNEL_NUM_ARGS-1 do
-     begin
-          if KERNEL_ARG_NAME[ I ] = Name_ then
-          begin
-               Result := I;  Exit;
-          end;
-     end;
-end;
-
 procedure TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.Run;
-var
-   I :Integer;
-   H :T_cl_mem;
 begin
-     for I := 0 to KERNEL_NUM_ARGS-1 do
-     begin
-          H := Argumes[ KERNEL_ARG_NAME[ I ] ].Memory.Handle;
-
-          AssertCL( clSetKernelArg( Handle, I, SizeOf( T_cl_mem ), @H ) );
-     end;
+     Argumes.BindsOK;
 
      AssertCL( clEnqueueNDRangeKernel( _Queuer.Handle,
                                        Handle,
