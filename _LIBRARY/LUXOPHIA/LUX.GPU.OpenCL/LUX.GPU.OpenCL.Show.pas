@@ -45,7 +45,7 @@ begin
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃' );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┣・Argume[ ' + A.Name + ' ] :TCLArgume' );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Name   = ' + A.Name  );
-               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ ParaI  = ' + A.NameI.ToString );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ ParaI  = ' + A.ParameI.ToString );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Memory = Platfo[' + A.Memory.Contex.Platfo.Order.ToString + ']'
                                                                   + '.Contex[' + A.Memory.Contex       .Order.ToString + ']'
                                                                   + '.Memory[' + A.Memory              .Order.ToString + ']' );
