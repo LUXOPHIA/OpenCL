@@ -7,7 +7,7 @@ uses cl_version, cl_platform, cl,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
      LUX.GPU.OpenCL.Device,
-     LUX.GPU.OpenCL.Comman,
+     LUX.GPU.OpenCL.Queuer,
      LUX.GPU.OpenCL.Progra,
      LUX.GPU.OpenCL.Memory;
 

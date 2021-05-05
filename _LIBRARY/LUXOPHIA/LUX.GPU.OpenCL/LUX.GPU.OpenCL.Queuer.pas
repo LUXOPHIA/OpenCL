@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Comman;
+﻿unit LUX.GPU.OpenCL.Queuer;
 
 interface //#################################################################### ■
 
