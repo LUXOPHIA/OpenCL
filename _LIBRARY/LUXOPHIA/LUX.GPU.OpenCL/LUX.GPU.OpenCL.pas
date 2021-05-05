@@ -21,25 +21,26 @@ uses System.Classes,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLOpenCL                    = class;
-       TCLPlatfos                 = TCLPlatfos<TCLOpenCL>;
-         TCLPlatfo                = TCLPlatfo <TCLOpenCL>;
-           TCLExtenss             = TCLExtenss<TCLPlatfo>;
-           TCLDevices             = TCLDevices<TCLPlatfo>;
-             TCLDevice            = TCLDevice <TCLPlatfo>;
-           TCLContexs             = TCLContexs<TCLPlatfo>;
-             TCLContex            = TCLContex <TCLPlatfo>;
-               TCLQueuers         = TCLQueuers<TCLContex,TCLPlatfo>;
-                 TCLQueuer        = TCLQueuer <TCLContex,TCLPlatfo>;
-               TCLMemorys         = TCLMemorys<TCLContex>;
-                 TCLMemory        = TCLMemory <TCLContex>;
-               TCLProgras         = TCLProgras<TCLContex,TCLPlatfo>;
-                 TCLProgra        = TCLProgra <TCLContex,TCLPlatfo>;
-                   TCLDeploys     = TCLDeploys<TCLContex,TCLPlatfo>;
-                     TCLDeploy    = TCLDeploy <TCLContex,TCLPlatfo>;
-                   TCLKernels     = TCLKernels<TCLProgra,TCLContex,TCLPlatfo>;
-                     TCLKernel    = TCLKernel <TCLProgra,TCLContex,TCLPlatfo>;
-                       TCLArgumes = TCLArgumes<TCLKernel,TCLContex,TCLPlatfo>;
+     TCLOpenCL                     = class;
+       TCLPlatfos                  = TCLPlatfos<TCLOpenCL>;
+         TCLPlatfo                 = TCLPlatfo <TCLOpenCL>;
+           TCLExtenss              = TCLExtenss<TCLPlatfo>;
+           TCLDevices              = TCLDevices<TCLPlatfo>;
+             TCLDevice             = TCLDevice <TCLPlatfo>;
+           TCLContexs              = TCLContexs<TCLPlatfo>;
+             TCLContex             = TCLContex <TCLPlatfo>;
+               TCLQueuers          = TCLQueuers<TCLContex,TCLPlatfo>;
+                 TCLQueuer         = TCLQueuer <TCLContex,TCLPlatfo>;
+               TCLMemorys          = TCLMemorys<TCLContex>;
+                 TCLMemory         = TCLMemory <TCLContex>;
+               TCLProgras          = TCLProgras<TCLContex,TCLPlatfo>;
+                 TCLProgra         = TCLProgra <TCLContex,TCLPlatfo>;
+                   TCLDeploys      = TCLDeploys<TCLContex,TCLPlatfo>;
+                     TCLDeploy     = TCLDeploy <TCLContex,TCLPlatfo>;
+                   TCLKernels      = TCLKernels<TCLProgra,TCLContex,TCLPlatfo>;
+                     TCLKernel     = TCLKernel <TCLProgra,TCLContex,TCLPlatfo>;
+                       TCLArgumes  = TCLArgumes<TCLProgra,TCLContex,TCLPlatfo>;
+                         TCLArgume = TCLArgume <TCLProgra,TCLContex,TCLPlatfo>;
 
      TCLDeviceBuffer<TValue_:record> = class( TCLDeviceBuffer<TCLContex,TValue_> );
      TCLHostBuffer  <TValue_:record> = class( TCLHostBuffer  <TCLContex,TValue_> );
