@@ -21,9 +21,9 @@ uses System.Classes,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TOpenCL                      = class;
-       TCLPlatfos                 = TCLPlatfos<TOpenCL>;
-         TCLPlatfo                = TCLPlatfo <TOpenCL>;
+     TCLOpenCL                    = class;
+       TCLPlatfos                 = TCLPlatfos<TCLOpenCL>;
+         TCLPlatfo                = TCLPlatfo <TCLOpenCL>;
            TCLExtenss             = TCLExtenss<TCLPlatfo>;
            TCLDevices             = TCLDevices<TCLPlatfo>;
              TCLDevice            = TCLDevice <TCLPlatfo>;
@@ -50,9 +50,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TOpenCL
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLOpenCL
 
-     TOpenCL = class
+     TCLOpenCL = class
      private
        _Platfos :TCLPlatfos;
      protected
@@ -74,7 +74,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 var //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【変数】
 
-    _OpenCL_ :TOpenCL;
+    _OpenCL_ :TCLOpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
 
@@ -84,7 +84,7 @@ implementation //###############################################################
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TOpenCL
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLOpenCL
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -92,26 +92,26 @@ implementation //###############################################################
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TOpenCL.GetPlatfo0 :TCLPlatfo;
+function TCLOpenCL.GetPlatfo0 :TCLPlatfo;
 begin
      Result := Platfos[ 0 ];
 end;
 
-function TOpenCL.GetDevice0 :TCLDevice;
+function TCLOpenCL.GetDevice0 :TCLDevice;
 begin
      Result := Platfo0.Devices[ 0 ];
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TOpenCL.Create;
+constructor TCLOpenCL.Create;
 begin
      inherited;
 
      _Platfos := TCLPlatfos.Create( Self );
 end;
 
-destructor TOpenCL.Destroy;
+destructor TCLOpenCL.Destroy;
 begin
      _Platfos.Free;
 
@@ -120,7 +120,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TOpenCL.Show( const Strings_:TStrings );
+procedure TCLOpenCL.Show( const Strings_:TStrings );
 begin
      ShowSystem( Strings_ );
 end;
@@ -131,7 +131,7 @@ end;
 
 initialization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 初期化
 
-     _OpenCL_ := TOpenCL.Create;
+     _OpenCL_ := TCLOpenCL.Create;
 
 finalization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 最終化
 
