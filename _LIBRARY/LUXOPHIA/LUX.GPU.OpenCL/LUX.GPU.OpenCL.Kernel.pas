@@ -423,21 +423,12 @@ end;
 procedure TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.CreateHandle;
 var
    E :T_cl_int;
-   A :TCLArgume_;
-   H :T_cl_mem;
 begin
      TCLProgra( Progra ).BuildTo( TCLQueuer( Queuer ).Device );
 
      _Handle := clCreateKernel( TCLProgra( Progra ).Handle, P_char( AnsiString( _Name ) ), @E );
 
      AssertCL( E );
-
-     for A in _Argumes do
-     begin
-          H := A.Memory.Handle;
-
-          AssertCL( clSetKernelArg( _Handle, A.Order, SizeOf( T_cl_mem ), @H ) );
-     end;
 end;
 
 procedure TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.DestroHandle;
@@ -508,7 +499,17 @@ begin
 end;
 
 procedure TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.Run;
+var
+   I :Integer;
+   H :T_cl_mem;
 begin
+     for I := 0 to KERNEL_NUM_ARGS-1 do
+     begin
+          H := Argumes[ KERNEL_ARG_NAME[ I ] ].Memory.Handle;
+
+          AssertCL( clSetKernelArg( Handle, I, SizeOf( T_cl_mem ), @H ) );
+     end;
+
      AssertCL( clEnqueueNDRangeKernel( _Queuer.Handle,
                                        Handle,
                                        Dimension,
