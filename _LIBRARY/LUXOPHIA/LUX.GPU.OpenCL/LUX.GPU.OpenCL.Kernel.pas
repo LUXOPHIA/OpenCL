@@ -35,17 +35,19 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _NameI  :T_cl_uint;
        _Memory :TCLMemory_;
        ///// アクセス
-       function GetNameI :T_cl_uint;
+       function GetNameI :T_cl_uint; virtual;
+       function GetMemory :TCLMemory_; virtual;
+       procedure SetMemory( const Memory_:TCLMemory_ ); virtual;
      public
        constructor Create; override;
        constructor Create( const Argumes_:TCLArgumes_; const Name_:String ); overload; virtual;
        constructor Create( const Argumes_:TCLArgumes_; const Name_:String; const Memory_:TCLMemory_ ); overload; virtual;
        ///// プロパティ
-       property Kernel  :TCLKernel_  read GetOwnere;
-       property Argumes :TCLArgumes_ read GetParent;
-       property Name    :String      read   _Name  ;
-       property NameI   :T_cl_uint   read GetNameI ;
-       property Memory  :TCLMemory_  read   _Memory;
+       property Kernel  :TCLKernel_  read GetOwnere                ;
+       property Argumes :TCLArgumes_ read GetParent                ;
+       property Name    :String      read   _Name                  ;
+       property NameI   :T_cl_uint   read GetNameI                 ;
+       property Memory  :TCLMemory_  read GetMemory write SetMemory;
        ///// メソッド
        procedure Bind;
      end;
@@ -66,6 +68,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// アクセス
        function GetChildr( const Name_:String ) :TCLArgume_; overload; virtual;
        procedure SetChildr( const Name_:String; const Childr_:TCLArgume_ ); overload; virtual;
+       function GetMemorys( const Name_:String ) :TCLMemory_; virtual;
+       procedure SetMemorys( const Name_:String; const Memory_:TCLMemory_ ); virtual;
        function GetFindsOK :Boolean; virtual;
        procedure SetFindsOK( const FindsOK_:Boolean ); virtual;
        function GetBindsOK :Boolean; virtual;
@@ -78,8 +82,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        destructor Destroy; override;
        ///// プロパティ
        property Kernel                        :TCLKernel_ read GetOwnere                  ;
-       property Childrs[ const Name_:String ] :TCLArgume_ read GetChildr  write SetChildr ; default;
+       property Childrs[ const Name_:String ] :TCLArgume_ read GetChildr  write SetChildr ;
        property Items  [ const Name_:String ] :TCLArgume_ read GetChildr  write SetChildr ;
+       property Memorys[ const Name_:String ] :TCLMemory_ read GetMemorys write SetMemorys; default;
        property FindsOK                       :Boolean    read GetFindsOK write SetFindsOK;
        property BindsOK                       :Boolean    read GetBindsOK write SetBindsOK;
        ///// メソッド
@@ -213,6 +218,20 @@ begin
      Result := _NameI;
 end;
 
+//------------------------------------------------------------------------------
+
+function TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.GetMemory :TCLMemory_;
+begin
+     Result := _Memory;
+end;
+
+procedure TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.SetMemory( const Memory_:TCLMemory_ );
+begin
+     _Memory := Memory_;
+
+     if Assigned( Argumes ) then Argumes.BindsOK := False;
+end;
+
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 constructor TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.Create;
@@ -271,16 +290,27 @@ end;
 
 //------------------------------------------------------------------------------
 
+function TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.GetMemorys( const Name_:String ) :TCLMemory_;
+begin
+     Result := _VarArgs[ Name_ ].Memory;
+end;
+
+procedure TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.SetMemorys( const Name_:String; const Memory_:TCLMemory_ );
+begin
+     if _VarArgs.ContainsKey( Name_ ) then _VarArgs[ Name_ ].Memory := Memory_
+                                      else Add( Name_, Memory_ );
+end;
+
+//------------------------------------------------------------------------------
+
 function TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.GetFindsOK :Boolean;
 var
    I :T_cl_uint;
 begin
      if not _FindsOK then
      begin
-          for I := 0 to Kernel.KERNEL_NUM_ARGS-1 do
-          begin
-               Items[ Kernel.KERNEL_ARG_NAME[ I ] ]._NameI := I;
-          end;
+          for I := 0 to Kernel.KERNEL_NUM_ARGS-1
+	     do Items[ Kernel.KERNEL_ARG_NAME[ I ] ]._NameI := I;
 
           _FindsOK := True;
      end;
