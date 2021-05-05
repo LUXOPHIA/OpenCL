@@ -27,11 +27,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLDevice_  = TCLDevice <TCLPlatfo_>;
             TCLContexs_ = TCLContexs<TCLPlatfo_>;
             TCLContex_  = TCLContex <TCLPlatfo_>;
-            TCLCommans_ = TCLCommans<TCLContex_,TCLPlatfo_>;
+            TCLQueuers_ = TCLQueuers<TCLContex_,TCLPlatfo_>;
             TCLMemorys_ = TCLMemorys<TCLContex_>;
             TCLProgras_ = TCLProgras<TCLContex_,TCLPlatfo_>;
      protected
-       _Commans :TCLCommans_;
+       _Queuers :TCLQueuers_;
        _Handle  :T_cl_context;
        _Memorys :TCLMemorys_;
        _Progras :TCLProgras_;
@@ -48,7 +48,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// プロパティ
        property Platfo  :TCLPlatfo_   read GetOwnere                 ;
        property Contexs :TCLContexs_  read GetParent                 ;
-       property Commans :TCLCommans_  read   _Commans                ;
+       property Queuers :TCLQueuers_  read   _Queuers                ;
        property Handle  :T_cl_context read GetHandle  write SetHandle;
        property Memorys :TCLMemorys_  read   _Memorys                ;
        property Progras :TCLProgras_  read   _Progras                ;
@@ -133,7 +133,7 @@ begin
 
      _Handle := nil;
 
-     _Commans := TCLCommans_.Create( Self );
+     _Queuers := TCLQueuers_.Create( Self );
      _Memorys := TCLMemorys_.Create( Self );
      _Progras := TCLProgras_.Create( Self );
 end;
@@ -147,7 +147,7 @@ destructor TCLContex<TCLPlatfo_>.Destroy;
 begin
      _Progras.Free;
      _Memorys.Free;
-     _Commans.Free;
+     _Queuers.Free;
 
       Handle := nil;
 
@@ -160,11 +160,11 @@ function TCLContex<TCLPlatfo_>.GetDeviceIDs :TArray<T_cl_device_id>;
 var
    I :Integer;
 begin
-     with _Commans do
+     with _Queuers do
      begin
           SetLength( Result, Count );
 
-          for I := 0 to Count-1 do Result[ I ] := TCLComman( Items[ I ] ).Device.Handle;
+          for I := 0 to Count-1 do Result[ I ] := TCLQueuer( Items[ I ] ).Device.Handle;
      end;
 end;
 

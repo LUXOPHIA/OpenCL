@@ -29,7 +29,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLProgra_,TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>> )
      private
-       type TCLComman_  = TCLComman <TCLContex_,TCLPlatfo_>;
+       type TCLQueuer_  = TCLQueuer <TCLContex_,TCLPlatfo_>;
             TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>;
             TCLKernel_  = TCLKernel <TCLProgra_,TCLContex_,TCLPlatfo_>;
             TCLArgumes_ = TCLArgumes<TCLKernel_,TCLContex_,TCLPlatfo_>;
@@ -45,7 +45,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _Handle       :T_cl_kernel;
        _Name         :String;
-       _Comman       :TCLComman_;
+       _Queuer       :TCLQueuer_;
        _Argumes      :TCLArgumes_;
        _GlobWorkOffs :TArray<T_size_t>;
        _GlobWorkSize :TArray<T_size_t>;
@@ -79,14 +79,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
        constructor Create( const Progra_:TCLProgra_ ); overload; virtual;
        constructor Create( const Progra_:TCLProgra_; const Name_:String ); overload; virtual;
-       constructor Create( const Progra_:TCLProgra_; const Name_:String; const Comman_:TCLComman_ ); overload; virtual;
+       constructor Create( const Progra_:TCLProgra_; const Name_:String; const Queuer_:TCLQueuer_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
        property Progra       :TCLProgra_       read GetOwnere                            ;
        property Kernels      :TCLKernels_      read GetParent                            ;
        property Handle       :T_cl_kernel      read GetHandle       write SetHandle      ;
        property Name         :String           read   _Name         write   _Name        ;
-       property Comman       :TCLComman_       read   _Comman                            ;
+       property Queuer       :TCLQueuer_       read   _Queuer                            ;
        property Argumes      :TCLArgumes_      read   _Argumes                           ;
        property Dimension    :T_cl_uint        read GetDimension                         ;
        property GlobWorkOffs :TArray<T_size_t> read   _GlobWorkOffs write SetGlobWorkOffs;
@@ -314,7 +314,7 @@ var
    I :Integer;
    H :T_cl_mem;
 begin
-     TCLProgra( Progra ).BuildTo( TCLComman( Comman ).Device );
+     TCLProgra( Progra ).BuildTo( TCLQueuer( Queuer ).Device );
 
      _Handle := clCreateKernel( TCLProgra( Progra ).Handle, P_char( AnsiString( _Name ) ), @E );
 
@@ -346,7 +346,7 @@ begin
      _Argumes := TCLArgumes_.Create;
 
      _Name         := '';
-     _Comman       := nil;
+     _Queuer       := nil;
      _GlobWorkOffs := [];
      _GlobWorkSize := [ 1 ];
      _LocaWorkSize := [];
@@ -364,11 +364,11 @@ begin
      _Name := Name_;
 end;
 
-constructor TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.Create( const Progra_:TCLProgra_; const Name_:String; const Comman_:TCLComman_ );
+constructor TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.Create( const Progra_:TCLProgra_; const Name_:String; const Queuer_:TCLQueuer_ );
 begin
      Create( Progra_, Name_ );
 
-     _Comman := Comman_;
+     _Queuer := Queuer_;
 end;
 
 destructor TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.Destroy;
@@ -397,7 +397,7 @@ end;
 
 procedure TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>.Run;
 begin
-     AssertCL( clEnqueueNDRangeKernel( _Comman.Handle,
+     AssertCL( clEnqueueNDRangeKernel( _Queuer.Handle,
                                        Handle,
                                        Dimension,
                                        @_GlobWorkOffs[ 0 ],
@@ -405,7 +405,7 @@ begin
                                        @_LocaWorkSize[ 0 ],
                                        0, nil, nil ) );
 
-     clFinish( _Comman.Handle );
+     clFinish( _Queuer.Handle );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>
