@@ -143,7 +143,7 @@ procedure TCLDevBuf<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle;
 var
    E :T_cl_int;
 begin
-     _Handle := clCreateBuffer( TCLContex( Contex ).Handle, _Kind, Size, nil, @E );
+     _Handle := clCreateBuffer( TCLContex( Contex ).Handle, Kind, Size, nil, @E );
 
      AssertCL( E );
 end;
@@ -173,7 +173,7 @@ begin
 
      GetMemAligned( _Data, Ceil2N( Size, 64{Byte} ), 4096{Byte} );
 
-     _Handle := clCreateBuffer( TCLContex( Contex ).Handle, _Kind, Size, _Data, @E );
+     _Handle := clCreateBuffer( TCLContex( Contex ).Handle, Kind, Size, _Data, @E );
 
      AssertCL( E );
 end;
