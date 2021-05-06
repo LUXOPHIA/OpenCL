@@ -125,7 +125,7 @@ var
    I :Integer;
 begin
      ///// プラットフォーム
-     _Platfo := _OpenCL_.Platfos[ 0 ];                                          // 選択
+     _Platfo := TOpenCL.Platfos[ 0 ];                                          // 選択
 
      ///// デバイス
      _Device := _Platfo.Devices[ 0 ];                                           // 選択
@@ -177,7 +177,7 @@ begin
 
      //////////
 
-     _OpenCL_.Show( MemoS.Lines );                                              // システム情報の表示
+     TOpenCL.Show( MemoS.Lines );                                              // システム情報の表示
 
      if ShowDeploys then                                                        // ビルド情報の表示
      begin
