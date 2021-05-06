@@ -130,10 +130,12 @@ begin
      _Device := _Platfo.Devices[ 0 ];                                           // 選択
 
      ///// コンテキスト
-     _Contex := TCLContex.Create( _Platfo );                                    // 生成
+   { _Contex := TCLContex.Create( _Platfo ); }
+     _Contex := _Platfo.Contexs.Add;                                            // 生成
 
      ///// コマンドキュー
-     _Queuer := TCLQueuer.Create( _Contex, _Device );                           // 生成
+   { _Queuer := TCLQueuer.Create( _Contex, _Device ); }
+     _Queuer := _Contex.Queuers.Add( _Device );                                 // 生成
 
      ///// バッファー
      _BufferA := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
@@ -154,29 +156,31 @@ begin
      B.Free;                                                                    // アンマップ
 
      ///// プログラム
-     _Progra := TCLProgra.Create( _Contex );                                    // 生成
-     _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードの読み込み
+   { _Progra := TCLProgra.Create( _Contex ); }
+     _Progra := _Contex.Progras.Add;                                            // 生成
+     _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードのロード
      _Progra.BuildTo( _Device );                                                // ビルド
 
      MemoC.Lines.Assign( _Progra.Source );                                      // ソースコードの表示
 
      ///// カーネル
-     _Kernel := TCLKernel.Create( _Progra, 'Main', _Queuer );                   // 生成
-     _Kernel.Argumes['A'] := _BufferA;                                          // バッファの登録
-     _Kernel.Argumes['B'] := _BufferB;                                          // バッファの登録
-     _Kernel.Argumes['C'] := _BufferC;                                          // バッファの登録
+   { _Kernel := TCLKernel.Create( _Progra, 'Main', _Queuer ); }
+     _Kernel := _Progra.Kernels.Add( 'Main', _Queuer );                         // 生成
+     _Kernel.Argumes['A'] := _BufferA;                                          // メモリーの登録
+     _Kernel.Argumes['B'] := _BufferB;                                          // メモリーの登録
+     _Kernel.Argumes['C'] := _BufferC;                                          // メモリーの登録
      _Kernel.GlobWorkSize := [ 10 ];                                            // ループ回数の設定
 
      //////////
 
-     if ShowDeploys then
+     _OpenCL_.Show( MemoS.Lines );                                              // システム情報の表示
+
+     if ShowDeploys then                                                        // ビルド情報の表示
      begin
           _Kernel.Run;                                                          // 実行
 
           ShowResult;                                                           // 結果表示
      end;
-
-     _OpenCL_.Show( MemoS.Lines );                                              // システム表示
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
