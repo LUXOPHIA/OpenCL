@@ -125,7 +125,7 @@ var
    I :Integer;
 begin
      ///// プラットフォーム
-     _Platfo := TOpenCL.Platfos[ 0 ];                                          // 選択
+     _Platfo := TOpenCL.Platfos[ 0 ];                                           // 選択
 
      ///// デバイス
      _Device := _Platfo.Devices[ 0 ];                                           // 選択
@@ -170,14 +170,14 @@ begin
      ///// カーネル
    { _Kernel := TCLKernel.Create( _Progra, 'Main', _Queuer ); }
      _Kernel := _Progra.Kernels.Add( 'Main', _Queuer );                         // 生成
-     _Kernel.Argumes['A'] := _BufferA;                                          // バッファの登録
-     _Kernel.Argumes['B'] := _BufferB;                                          // バッファの登録
-     _Kernel.Argumes['C'] := _BufferC;                                          // バッファの登録
+     _Kernel.Argumes['BufferA'] := _BufferA;                                    // バッファの登録
+     _Kernel.Argumes['BufferB'] := _BufferB;                                    // バッファの登録
+     _Kernel.Argumes['BufferC'] := _BufferC;                                    // バッファの登録
      _Kernel.GlobWorkSize := [ 10 ];                                            // ループ回数の設定
 
      //////////
 
-     TOpenCL.Show( MemoS.Lines );                                              // システム情報の表示
+     TOpenCL.Show( MemoS.Lines );                                               // システム情報の表示
 
      if ShowDeploys then                                                        // ビルド情報の表示
      begin

@@ -1,9 +1,9 @@
-﻿__kernel void Main( __global const float *A,
-                    __global const float *B,
-                    __global       float *C )
+﻿kernel void Main( global float* BufferA,
+                  global float* BufferB,
+                  global float* BufferC )
 {
     int i = get_global_id( 0 );
 
-    C[ i ] = A[ i ] * B[ i ];
+    BufferC[ i ] = BufferA[ i ] * BufferB[ i ];
 }
 
