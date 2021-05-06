@@ -21,9 +21,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLMemory<TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLContex_,TCLMemorys<TCLContex_,TCLPlatfo_>> )
      private
-       type TCLMemorys_ = TCLMemorys<TCLContex_,TCLPlatfo_>;
+       type TCLQueuer_  = TCLQueuer <TCLContex_,TCLPlatfo_>;
+            TCLMemorys_ = TCLMemorys<TCLContex_,TCLPlatfo_>;
      protected
        _Handle :T_cl_mem;
+       _Queuer :TCLQueuer_;
        _Kind   :T_cl_mem_flags;
        ///// アクセス
        function GetHandle :T_cl_mem; virtual;
@@ -35,11 +37,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
        constructor Create; override;
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
+       constructor Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
        property Contex  :TCLContex_     read GetOwnere                ;
        property Memorys :TCLMemorys_    read GetParent                ;
        property Handle  :T_cl_mem       read GetHandle write SetHandle;
+       property Queuer  :TCLQueuer_     read   _Queuer write   _Queuer;
        property Kind    :T_cl_mem_flags read   _Kind                  ;
        property Size    :T_size_t       read GetSize                  ;
      end;
@@ -66,6 +70,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Mode   :T_cl_map_flags;
        _Handle :P_void;
        ///// アクセス
+       function GetQueuer :TCLQueuer_; virtual;
        function GetHandle :P_void; virtual;
        procedure SetHandle( const Handle_:P_void ); virtual;
        ///// メソッド
@@ -73,10 +78,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure DestroHandle; virtual;
      public
        constructor Create; overload; virtual;
-       constructor Create( const Queuer_:TCLQueuer_; const Memory_:TCLMemory_; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE ); overload; virtual;
+       constructor Create( const Memory_:TCLMemory_; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Queuer :TCLQueuer_     read   _Queuer                ;
+       property Queuer :TCLQueuer_     read GetQueuer                ;
        property Memory :TCLMemory_     read   _Memory                ;
        property Mode   :T_cl_map_flags read   _Mode                  ;
        property Handle :P_void         read GetHandle write SetHandle;
@@ -135,12 +140,20 @@ begin
 
      _Handle := nil;
 
-     _Kind := CL_MEM_READ_WRITE;
+     _Kind   := CL_MEM_READ_WRITE;
+     _Queuer := nil;
 end;
 
 constructor TCLMemory<TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_ );
 begin
      inherited Create( TCLContex( Contex_ ).Memorys );
+end;
+
+constructor TCLMemory<TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ );
+begin
+     Create( Contex_ );
+
+     _Queuer := Queuer_;
 end;
 
 destructor TCLMemory<TCLContex_,TCLPlatfo_>.Destroy;
@@ -163,6 +176,13 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 /////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLMemoryIter<TCLContex_,TCLPlatfo_>.GetQueuer :TCLQueuer_;
+begin
+     Result := Memory.Queuer;
+end;
+
+//------------------------------------------------------------------------------
 
 function TCLMemoryIter<TCLContex_,TCLPlatfo_>.GetHandle :P_void;
 begin
@@ -201,11 +221,10 @@ begin
      _Mode   := 0;
 end;
 
-constructor TCLMemoryIter<TCLContex_,TCLPlatfo_>.Create( const Queuer_:TCLQueuer_; const Memory_:TCLMemory_; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
+constructor TCLMemoryIter<TCLContex_,TCLPlatfo_>.Create( const Memory_:TCLMemory_; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
 begin
      Create;
 
-     _Queuer := Queuer_;
      _Memory := Memory_;
      _Mode   := Mode_;
 end;
