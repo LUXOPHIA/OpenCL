@@ -63,26 +63,21 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLBufferIter<TCLContex_,TCLPlatfo_:class;TValue_:record> = class
+     TCLBufferIter<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemoryIter<TCLContex_,TCLPlatfo_> )
      private
        type TCLQueuer_ = TCLQueuer<TCLContex_,TCLPlatfo_>;
             TCLBuffer_ = TCLBuffer<TCLContex_,TValue_>;
             PValue_    = ^TValue_;
-     private
-       _Queuer :TCLQueuer_;
-       _Buffer :TCLBuffer_;
-       _Mode   :T_cl_map_flags;
-       _Head   :PValue_;
+     protected
        ///// アクセス
-       function GetValues( const I_:Integer ) :TValue_;
-       procedure SetValues( const I_:Integer; const Values_:TValue_ );
+       function GetBuffer :TCLBuffer_; virtual;
+       function GetValues( const I_:Integer ) :TValue_; virtual;
+       procedure SetValues( const I_:Integer; const Values_:TValue_ ); virtual;
+       ///// メソッド
+       procedure CreateHandle; override;
      public
-       constructor Create( const Queuer_:TCLQueuer_; const Buffer_:TCLBuffer_; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
-       destructor Destroy; override;
        ///// プロパティ
-       property Queuer                     :TCLQueuer_     read   _Queuer                ;
-       property Buffer                     :TCLBuffer_     read   _Buffer                ;
-       property Mode                       :T_cl_map_flags read   _Mode                  ;
+       property Buffer                     :TCLBuffer_     read GetBuffer                ;
        property Values[ const I_:Integer ] :TValue_        read GetValues write SetValues; default;
      end;
 
@@ -207,43 +202,39 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
+function TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>.GetBuffer :TCLBuffer_;
+begin
+     Result := TCLBuffer_( Memory );
+end;
+
 function TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>.GetValues( const I_:Integer ) :TValue_;
 var
    P :PValue_;
 begin
-     P := _Head;  Inc( P, I_ );  Result := P^;
+     P := Handle;  Inc( P, I_ );  Result := P^;
 end;
 
 procedure TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>.SetValues( const I_:Integer; const Values_:TValue_ );
 var
    P :PValue_;
 begin
-     P := _Head;  Inc( P, I_ );  P^ := Values_;
+     P := Handle;  Inc( P, I_ );  P^ := Values_;
 end;
 
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+/////////////////////////////////////////////////////////////////////// メソッド
 
-constructor TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>.Create( const Queuer_:TCLQueuer_; const Buffer_:TCLBuffer_; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
+procedure TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle;
 var
    E :T_cl_int;
 begin
-     inherited Create;
+     inherited;
 
-     _Queuer := Queuer_;
-     _Buffer := Buffer_;
-     _Mode   := Mode_;
-
-     _Head := clEnqueueMapBuffer( Queuer_.Handle, Buffer_.Handle, CL_TRUE, Mode_, 0, Buffer_.Size, 0, nil, nil, @E );
+     _Handle := clEnqueueMapBuffer( Queuer.Handle, Buffer.Handle, CL_TRUE, Mode, 0, Buffer.Size, 0, nil, nil, @E );
 
      AssertCL( E );
 end;
 
-destructor TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>.Destroy;
-begin
-     AssertCL( clEnqueueUnmapMemObject( _Queuer.Handle, _Buffer.Handle, _Head, 0, nil, nil ) );
-
-     inherited;
-end;
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
