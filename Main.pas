@@ -35,9 +35,9 @@ type
     _Device  :TCLDevice;
     _Contex  :TCLContex;
     _Queuer  :TCLQueuer;
-    _BufferA :TCLHostBuffer<T_float>;
-    _BufferB :TCLHostBuffer<T_float>;
-    _BufferC :TCLHostBuffer<T_float>;
+    _BufferA :TCLDevBuf<T_float>;
+    _BufferB :TCLDevBuf<T_float>;
+    _BufferC :TCLDevBuf<T_float>;
     _Progra  :TCLProgra;
     _Deploy  :TCLDeploy;
     _Kernel  :TCLKernel;
@@ -139,9 +139,9 @@ begin
      _Queuer := _Contex.Queuers.Add( _Device );                                 // 生成
 
      ///// バッファー
-     _BufferA := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
-     _BufferB := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
-     _BufferC := TCLHostBuffer<T_float>.Create( _Contex );                      // 生成
+     _BufferA := TCLDevBuf<T_float>.Create( _Contex );                          // 生成
+     _BufferB := TCLDevBuf<T_float>.Create( _Contex );                          // 生成
+     _BufferC := TCLDevBuf<T_float>.Create( _Contex );                          // 生成
 
      _BufferA.Count := 10;                                                      // 要素数の設定
      _BufferB.Count := 10;                                                      // 要素数の設定
