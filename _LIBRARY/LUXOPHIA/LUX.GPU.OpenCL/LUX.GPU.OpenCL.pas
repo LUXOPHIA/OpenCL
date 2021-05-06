@@ -3,21 +3,16 @@
 interface //#################################################################### ■
 
 uses System.Classes,
-     cl_version,
-     cl_platform,
-     cl,
-     LUX.Code.C,
      LUX.GPU.OpenCL.root,
      LUX.GPU.OpenCL.Show,
      LUX.GPU.OpenCL.Device,
      LUX.GPU.OpenCL.Platfo,
      LUX.GPU.OpenCL.Contex,
+     LUX.GPU.OpenCL.Memory,
+     LUX.GPU.OpenCL.Memory.Buffer,
      LUX.GPU.OpenCL.Queuer,
      LUX.GPU.OpenCL.Progra,
-     LUX.GPU.OpenCL.Kernel,
-     LUX.GPU.OpenCL.Memory,
-     LUX.GPU.OpenCL.Buffer,
-     LUX.GPU.OpenCL.Buffer.TIter;
+     LUX.GPU.OpenCL.Kernel;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -31,10 +26,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
              TCLDevice             = TCLDevice <TCLPlatfo>;
            TCLContexs              = TCLContexs<TCLPlatfo>;
              TCLContex             = TCLContex <TCLPlatfo>;
-               TCLQueuers          = TCLQueuers<TCLContex,TCLPlatfo>;
-                 TCLQueuer         = TCLQueuer <TCLContex,TCLPlatfo>;
                TCLMemorys          = TCLMemorys<TCLContex>;
                  TCLMemory         = TCLMemory <TCLContex>;
+               TCLQueuers          = TCLQueuers<TCLContex,TCLPlatfo>;
+                 TCLQueuer         = TCLQueuer <TCLContex,TCLPlatfo>;
                TCLProgras          = TCLProgras<TCLContex,TCLPlatfo>;
                  TCLProgra         = TCLProgra <TCLContex,TCLPlatfo>;
                    TCLDeploys      = TCLDeploys<TCLContex,TCLPlatfo>;
