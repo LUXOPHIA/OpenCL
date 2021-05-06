@@ -95,12 +95,12 @@ var
 begin
      with MemoR.Lines do
      begin
-          Add( 'A[ i ] * B[ i ] = C[ i ]' );
+          Add( 'BufferA[ i ] * BufferB[ i ] = BufferC[ i ]' );
           Add( '' );
 
-          A := TCLBufferIter<T_float>.Create( _Queuer, _BufferA );
-          B := TCLBufferIter<T_float>.Create( _Queuer, _BufferB );
-          C := TCLBufferIter<T_float>.Create( _Queuer, _BufferC );
+          A := TCLBufferIter<T_float>.Create( _BufferA );
+          B := TCLBufferIter<T_float>.Create( _BufferB );
+          C := TCLBufferIter<T_float>.Create( _BufferC );
 
           for I := 0 to _BufferC.Count-1 do
           begin
@@ -139,16 +139,16 @@ begin
      _Queuer := _Contex.Queuers.Add( _Device );                                 // 生成
 
      ///// バッファー
-     _BufferA := TCLDevBuf<T_float>.Create( _Contex );                          // 生成
-     _BufferB := TCLDevBuf<T_float>.Create( _Contex );                          // 生成
-     _BufferC := TCLDevBuf<T_float>.Create( _Contex );                          // 生成
+     _BufferA := TCLDevBuf<T_float>.Create( _Contex, _Queuer );                 // 生成
+     _BufferB := TCLDevBuf<T_float>.Create( _Contex, _Queuer );                 // 生成
+     _BufferC := TCLDevBuf<T_float>.Create( _Contex, _Queuer );                 // 生成
 
      _BufferA.Count := 10;                                                      // 要素数の設定
      _BufferB.Count := 10;                                                      // 要素数の設定
      _BufferC.Count := 10;                                                      // 要素数の設定
 
-     A := TCLBufferIter<T_float>.Create( _Queuer, _BufferA );                   // マップ
-     B := TCLBufferIter<T_float>.Create( _Queuer, _BufferB );                   // マップ
+     A := TCLBufferIter<T_float>.Create( _BufferA );                            // マップ
+     B := TCLBufferIter<T_float>.Create( _BufferB );                            // マップ
 
      for I := 0 to _BufferA.Count-1 do A[ I ] := Random( 10 );                  // 書き込み
      for I := 0 to _BufferB.Count-1 do B[ I ] := Random( 10 );                  // 書き込み
@@ -170,9 +170,9 @@ begin
      ///// カーネル
    { _Kernel := TCLKernel.Create( _Progra, 'Main', _Queuer ); }
      _Kernel := _Progra.Kernels.Add( 'Main', _Queuer );                         // 生成
-     _Kernel.Argumes['BufferA'] := _BufferA;                                    // バッファの登録
-     _Kernel.Argumes['BufferB'] := _BufferB;                                    // バッファの登録
-     _Kernel.Argumes['BufferC'] := _BufferC;                                    // バッファの登録
+     _Kernel.Argumes['BufferA'] := _BufferA;                                    // バッファの接続
+     _Kernel.Argumes['BufferB'] := _BufferB;                                    // バッファの接続
+     _Kernel.Argumes['BufferC'] := _BufferC;                                    // バッファの接続
      _Kernel.GlobWorkSize := [ 10 ];                                            // ループ回数の設定
 
      //////////
