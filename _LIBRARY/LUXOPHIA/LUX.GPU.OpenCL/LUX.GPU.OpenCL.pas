@@ -72,7 +72,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TOpenCL = class
      private
-       class var _Self :TCLOpenCL;
+       class var _OpenCL :TCLOpenCL;
      protected
        ///// アクセス
        class function GetPlatfos :TCLPlatfos; static;
@@ -136,19 +136,19 @@ end;
 
 class function TOpenCL.GetPlatfos :TCLPlatfos;
 begin
-     Result := _Self.Platfos;
+     Result := _OpenCL.Platfos;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 class constructor TOpenCL.Create;
 begin
-     _Self := TCLOpenCL.Create;
+     _OpenCL := TCLOpenCL.Create;
 end;
 
 class destructor TOpenCL.Destroy;
 begin
-     _Self.Free;
+     _OpenCL.Free;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
