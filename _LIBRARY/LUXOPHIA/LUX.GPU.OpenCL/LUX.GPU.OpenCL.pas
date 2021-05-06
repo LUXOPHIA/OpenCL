@@ -23,9 +23,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TOpenCL                       = class;
 
-     TCLOpenCL                     = class;
-       TCLPlatfos                  = TCLPlatfos<TCLOpenCL>;
-         TCLPlatfo                 = TCLPlatfo <TCLOpenCL>;
+     TCLSystem                     = class;
+       TCLPlatfos                  = TCLPlatfos<TCLSystem>;
+         TCLPlatfo                 = TCLPlatfo <TCLSystem>;
            TCLExtenss              = TCLExtenss<TCLPlatfo>;
            TCLDevices              = TCLDevices<TCLPlatfo>;
              TCLDevice             = TCLDevice <TCLPlatfo>;
@@ -53,9 +53,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLOpenCL
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSystem
 
-     TCLOpenCL = class
+     TCLSystem = class
      private
      protected
        _Platfos :TCLPlatfos;
@@ -72,7 +72,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TOpenCL = class
      private
-       class var _OpenCL :TCLOpenCL;
+       class var _System :TCLSystem;
      protected
        ///// アクセス
        class function GetPlatfos :TCLPlatfos; static;
@@ -97,7 +97,7 @@ implementation //###############################################################
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLOpenCL
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSystem
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -105,21 +105,21 @@ implementation //###############################################################
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLOpenCL.GetPlatfos :TCLPlatfos;
+function TCLSystem.GetPlatfos :TCLPlatfos;
 begin
      Result := _Platfos;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLOpenCL.Create;
+constructor TCLSystem.Create;
 begin
      inherited;
 
      _Platfos := TCLPlatfos.Create( Self );
 end;
 
-destructor TCLOpenCL.Destroy;
+destructor TCLSystem.Destroy;
 begin
      _Platfos.Free;
 
@@ -136,19 +136,19 @@ end;
 
 class function TOpenCL.GetPlatfos :TCLPlatfos;
 begin
-     Result := _OpenCL.Platfos;
+     Result := _System.Platfos;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 class constructor TOpenCL.Create;
 begin
-     _OpenCL := TCLOpenCL.Create;
+     _System := TCLSystem.Create;
 end;
 
 class destructor TOpenCL.Destroy;
 begin
-     _OpenCL.Free;
+     _System.Free;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
