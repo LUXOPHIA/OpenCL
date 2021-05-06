@@ -184,10 +184,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLProgra_,TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>> )
      private
+       type TCLQueuer_ = TCLQueuer<TCLContex_,TCLPlatfo_>;
+            TCLKernel_ = TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>;
      protected
      public
        ///// プロパティ
-       property Progra :TCLProgra_ read GetOwnere ;
+       property Progra :TCLProgra_ read GetOwnere;
+       ///// メソッド
+       function Add( const Name_:String ) :TCLKernel_; overload;
+       function Add( const Name_:String; const Queuer_:TCLQueuer_ ) :TCLKernel_; overload;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -655,6 +660,16 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+function TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>.Add( const Name_:String ) :TCLKernel_;
+begin
+     Result := TCLKernel_.Create( Progra, Name_ );
+end;
+
+function TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>.Add( const Name_:String; const Queuer_:TCLQueuer_ ) :TCLKernel_;
+begin
+     Result := TCLKernel_.Create( Progra, Name_, Queuer_ );
+end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
 

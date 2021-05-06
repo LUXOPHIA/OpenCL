@@ -47,10 +47,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLQueuers<TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLContex_,TCLQueuer<TCLContex_,TCLPlatfo_>> )
      private
+       type TCLDevice_ = TCLDevice<TCLPlatfo_>;
+            TCLQueuer_ = TCLQueuer<TCLContex_,TCLPlatfo_>;
      protected
      public
        ///// プロパティ
        property Contex :TCLContex_ read GetOwnere;
+       ///// メソッド
+       function Add( const Device_:TCLDevice_ ) :TCLQueuer_; overload;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -139,6 +143,13 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+function TCLQueuers<TCLContex_,TCLPlatfo_>.Add( const Device_:TCLDevice_ ) :TCLQueuer_;
+begin
+     Result := TCLQueuer_.Create( Contex, Device_ );
+end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
 
