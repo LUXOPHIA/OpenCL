@@ -69,7 +69,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// プロパティ
        property Progra :TCLProgra_ read GetOwnere;
        ///// メソッド
-       procedure BuildTo( const Device_:TCLDevice_ ); overload;
+       function Add( const Device_:TCLDevice_ ) :TCLDeploy_; overload;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<TCLContex_,TCLPlatfo_>
@@ -80,6 +80,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLProgras_ = TCLProgras<TCLContex_,TCLPlatfo_>;
             TCLProgra_  = TCLProgra <TCLContex_,TCLPlatfo_>;
             TCLDeploys_ = TCLDeploys<TCLContex_,TCLPlatfo_>;
+            TCLDeploy_  = TCLDeploy <TCLContex_,TCLPlatfo_>;
             TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>;
        ///// メソッド
        function GetInfo<_TYPE_>( const Name_:T_cl_program_info ) :_TYPE_;
@@ -149,7 +150,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property PROGRAM_SCOPE_GLOBAL_DTORS_PRESENT :T_cl_bool               read GetPROGRAM_SCOPE_GLOBAL_DTORS_PRESENT;
        {$ENDIF}
        ///// メソッド
-       procedure BuildTo( const Device_:TCLDevice_ );
+       function BuildTo( const Device_:TCLDevice_ ) :TCLDeploy_;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgras<TCLContex_,TCLPlatfo_>
@@ -281,9 +282,10 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLDeploys<TCLContex_,TCLPlatfo_>.BuildTo( const Device_:TCLDevice_ );
+function TCLDeploys<TCLContex_,TCLPlatfo_>.Add( const Device_:TCLDevice_ ) :TCLDeploy_;
 begin
-     if not _DevDeps.ContainsKey( Device_ ) then TCLDeploy_.Create( Self, Device_ );
+     if _DevDeps.ContainsKey( Device_ ) then Result := _DevDeps[ Device_ ]
+                                        else Result := TCLDeploy_.Create( Self, Device_ );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<TCLContex_,TCLPlatfo_>
@@ -413,9 +415,9 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLProgra<TCLContex_,TCLPlatfo_>.BuildTo( const Device_:TCLDevice_ );
+function TCLProgra<TCLContex_,TCLPlatfo_>.BuildTo( const Device_:TCLDevice_ ) :TCLDeploy_;
 begin
-     Deploys.BuildTo( Device_ );
+     Result := Deploys.Add( Device_ );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgras<TCLContex_,TCLPlatfo_>
