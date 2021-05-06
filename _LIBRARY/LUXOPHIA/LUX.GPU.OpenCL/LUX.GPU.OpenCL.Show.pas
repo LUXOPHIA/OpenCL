@@ -248,7 +248,7 @@ end;
 
 procedure ShowSystem( const Strings_:TStrings );
 begin
-     ShowPlatfos( Strings_, _OpenCL_.Platfos );
+     ShowPlatfos( Strings_, TOpenCL.Platfos );
 
      Strings_.Add( '' );
 end;

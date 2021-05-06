@@ -21,6 +21,8 @@ uses System.Classes,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
+     TOpenCL                       = class;
+
      TCLOpenCL                     = class;
        TCLPlatfos                  = TCLPlatfos<TCLOpenCL>;
          TCLPlatfo                 = TCLPlatfo <TCLOpenCL>;
@@ -55,27 +57,37 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLOpenCL = class
      private
-       _Platfos :TCLPlatfos;
      protected
+       _Platfos :TCLPlatfos;
        ///// アクセス
-       function GetPlatfo0 :TCLPlatfo;
-       function GetDevice0 :TCLDevice;
+       function GetPlatfos :TCLPlatfos;
      public
        constructor Create;
        destructor Destroy; override;
        ///// プロパティ
-       property Platfos :TCLPlatfos read   _Platfos;
-       property Platfo0 :TCLPlatfo  read GetPlatfo0;
-       property Device0 :TCLDevice  read GetDevice0;
+       property Platfos :TCLPlatfos read GetPlatfos;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TOpenCL
+
+     TOpenCL = class
+     private
+       class var _Self :TCLOpenCL;
+     protected
+       ///// アクセス
+       class function GetPlatfos :TCLPlatfos; static;
+     public
+       class constructor Create;
+       class destructor Destroy;
+       ///// プロパティ
+       class property Platfos :TCLPlatfos read GetPlatfos;
        ///// メソッド
-       procedure Show( const Strings_:TStrings );
+       class procedure Show( const Strings_:TStrings );
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
 
-var //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【変数】
-
-    _OpenCL_ :TCLOpenCL;
+//var //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【変数】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
 
@@ -93,14 +105,9 @@ implementation //###############################################################
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLOpenCL.GetPlatfo0 :TCLPlatfo;
+function TCLOpenCL.GetPlatfos :TCLPlatfos;
 begin
-     Result := Platfos[ 0 ];
-end;
-
-function TCLOpenCL.GetDevice0 :TCLDevice;
-begin
-     Result := Platfo0.Devices[ 0 ];
+     Result := _Platfos;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -119,23 +126,38 @@ begin
      inherited;
 end;
 
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TOpenCL
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+class function TOpenCL.GetPlatfos :TCLPlatfos;
+begin
+     Result := _Self.Platfos;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+class constructor TOpenCL.Create;
+begin
+     _Self := TCLOpenCL.Create;
+end;
+
+class destructor TOpenCL.Destroy;
+begin
+     _Self.Free;
+end;
+
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLOpenCL.Show( const Strings_:TStrings );
+class procedure TOpenCL.Show( const Strings_:TStrings );
 begin
      ShowSystem( Strings_ );
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
-
-//############################################################################## □
-
-initialization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 初期化
-
-     _OpenCL_ := TCLOpenCL.Create;
-
-finalization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 最終化
-
-     _OpenCL_.Free;
 
 end. //######################################################################### ■
