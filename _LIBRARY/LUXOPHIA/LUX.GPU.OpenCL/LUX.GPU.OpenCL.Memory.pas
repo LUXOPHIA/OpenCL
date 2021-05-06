@@ -10,18 +10,18 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLMemorys <TCLContex_:class> = class;
-       TCLMemory<TCLContex_:class> = class;
+     TCLMemorys <TCLContex_,TCLPlatfo_:class> = class;
+       TCLMemory<TCLContex_,TCLPlatfo_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<TCLContex_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<TCLContex_,TCLPlatfo_>
 
-     TCLMemory<TCLContex_:class> = class( TListChildr<TCLContex_,TCLMemorys<TCLContex_>> )
+     TCLMemory<TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLContex_,TCLMemorys<TCLContex_,TCLPlatfo_>> )
      private
-       type TCLMemorys_ = TCLMemorys<TCLContex_>;
+       type TCLMemorys_ = TCLMemorys<TCLContex_,TCLPlatfo_>;
      protected
        _Handle :T_cl_mem;
        _Kind   :T_cl_mem_flags;
@@ -44,9 +44,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Size    :T_size_t       read GetSize                  ;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemorys<TCLContex_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemorys<TCLContex_,TCLPlatfo_>
 
-     TCLMemorys<TCLContex_:class> = class( TListParent<TCLContex_,TCLMemory<TCLContex_>> )
+     TCLMemorys<TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLContex_,TCLMemory<TCLContex_,TCLPlatfo_>> )
      private
      protected
      public
@@ -59,7 +59,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLMemoryIter<TCLContex_,TCLPlatfo_:class> = class
      private
        type TCLQueuer_ = TCLQueuer<TCLContex_,TCLPlatfo_>;
-            TCLMemory_ = TCLMemory<TCLContex_>;
+            TCLMemory_ = TCLMemory<TCLContex_,TCLPlatfo_>;
      protected
        _Queuer :TCLQueuer_;
        _Memory :TCLMemory_;
@@ -96,7 +96,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<TCLContex_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<TCLContex_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -104,14 +104,14 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLMemory<TCLContex_>.GetHandle :T_cl_mem;
+function TCLMemory<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_mem;
 begin
      if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-procedure TCLMemory<TCLContex_>.SetHandle( const Handle_:T_cl_mem );
+procedure TCLMemory<TCLContex_,TCLPlatfo_>.SetHandle( const Handle_:T_cl_mem );
 begin
      if Assigned( _Handle ) then DestroHandle;
 
@@ -120,7 +120,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLMemory<TCLContex_>.DestroHandle;
+procedure TCLMemory<TCLContex_,TCLPlatfo_>.DestroHandle;
 begin
      clReleaseMemObject( _Handle );
 
@@ -129,7 +129,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLMemory<TCLContex_>.Create;
+constructor TCLMemory<TCLContex_,TCLPlatfo_>.Create;
 begin
      inherited;
 
@@ -138,19 +138,19 @@ begin
      _Kind := CL_MEM_READ_WRITE;
 end;
 
-constructor TCLMemory<TCLContex_>.Create( const Contex_:TCLContex_ );
+constructor TCLMemory<TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_ );
 begin
      inherited Create( TCLContex( Contex_ ).Memorys );
 end;
 
-destructor TCLMemory<TCLContex_>.Destroy;
+destructor TCLMemory<TCLContex_,TCLPlatfo_>.Destroy;
 begin
       Handle := nil;
 
      inherited;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemorys<TCLContex_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemorys<TCLContex_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 

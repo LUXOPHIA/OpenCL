@@ -11,9 +11,9 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLBuffer<TCLContex_:class;TValue_:record> = class;
-     TCLDevBuf<TCLContex_:class;TValue_:record> = class;
-     TCLHosBuf<TCLContex_:class;TValue_:record> = class;
+     TCLBuffer<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLDevBuf<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLHosBuf<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
      
      TCLBufferIter<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
 
@@ -21,9 +21,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<TCLContex_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLBuffer<TCLContex_:class;TValue_:record> = class( TCLMemory<TCLContex_> )
+     TCLBuffer<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemory<TCLContex_,TCLPlatfo_> )
      private
      protected
        _Count :Integer;
@@ -37,9 +37,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Count :Integer  read GetCount write SetCount;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevBuf<TCLContex_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevBuf<TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLDevBuf<TCLContex_:class;TValue_:record> = class( TCLBuffer<TCLContex_,TValue_> )
+     TCLDevBuf<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLBuffer<TCLContex_,TCLPlatfo_,TValue_> )
      private
      protected
        ///// メソッド
@@ -48,9 +48,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosBuf<TCLContex_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosBuf<TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLHosBuf<TCLContex_:class;TValue_:record> = class( TCLBuffer<TCLContex_,TValue_> )
+     TCLHosBuf<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLBuffer<TCLContex_,TCLPlatfo_,TValue_> )
      private
      protected
        _Data :P_void;
@@ -66,7 +66,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLBufferIter<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemoryIter<TCLContex_,TCLPlatfo_> )
      private
        type TCLQueuer_ = TCLQueuer<TCLContex_,TCLPlatfo_>;
-            TCLBuffer_ = TCLBuffer<TCLContex_,TValue_>;
+            TCLBuffer_ = TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>;
             PValue_    = ^TValue_;
      protected
        ///// アクセス
@@ -95,7 +95,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<TCLContex_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -103,12 +103,12 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLBuffer<TCLContex_,TValue_>.GetCount :Integer;
+function TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>.GetCount :Integer;
 begin
      Result := _Count;
 end;
 
-procedure TCLBuffer<TCLContex_,TValue_>.SetCount( const Count_:Integer );
+procedure TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>.SetCount( const Count_:Integer );
 begin
      Handle := nil;
 
@@ -117,21 +117,21 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLBuffer<TCLContex_,TValue_>.GetSize :T_size_t;
+function TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>.GetSize :T_size_t;
 begin
      Result := SizeOf( TValue_ ) * _Count;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLBuffer<TCLContex_,TValue_>.Create;
+constructor TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>.Create;
 begin
      inherited;
 
      _Count := 1;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevBuf<TCLContex_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevBuf<TCLContex_,TCLPlatfo_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -139,7 +139,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLDevBuf<TCLContex_,TValue_>.CreateHandle;
+procedure TCLDevBuf<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle;
 var
    E :T_cl_int;
 begin
@@ -150,14 +150,14 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLDevBuf<TCLContex_,TValue_>.Create;
+constructor TCLDevBuf<TCLContex_,TCLPlatfo_,TValue_>.Create;
 begin
      inherited;
 
      _Kind := CL_MEM_READ_WRITE or CL_MEM_ALLOC_HOST_PTR;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosBuf<TCLContex_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosBuf<TCLContex_,TCLPlatfo_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -165,7 +165,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLHosBuf<TCLContex_,TValue_>.CreateHandle;
+procedure TCLHosBuf<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle;
 var
    E :T_cl_int;
 begin
@@ -178,7 +178,7 @@ begin
      AssertCL( E );
 end;
 
-procedure TCLHosBuf<TCLContex_,TValue_>.DestroHandle;
+procedure TCLHosBuf<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle;
 begin
      FreeMemAligned( _Data );
 
@@ -187,7 +187,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLHosBuf<TCLContex_,TValue_>.Create;
+constructor TCLHosBuf<TCLContex_,TCLPlatfo_,TValue_>.Create;
 begin
      inherited;
 
