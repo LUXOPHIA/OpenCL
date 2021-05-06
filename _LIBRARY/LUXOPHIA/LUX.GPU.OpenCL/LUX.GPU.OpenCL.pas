@@ -8,9 +8,9 @@ uses System.Classes,
      LUX.GPU.OpenCL.Device,
      LUX.GPU.OpenCL.Platfo,
      LUX.GPU.OpenCL.Contex,
+     LUX.GPU.OpenCL.Queuer,
      LUX.GPU.OpenCL.Memory,
      LUX.GPU.OpenCL.Memory.Buffer,
-     LUX.GPU.OpenCL.Queuer,
      LUX.GPU.OpenCL.Progra,
      LUX.GPU.OpenCL.Kernel;
 
@@ -26,10 +26,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
              TCLDevice             = TCLDevice <TCLPlatfo>;
            TCLContexs              = TCLContexs<TCLPlatfo>;
              TCLContex             = TCLContex <TCLPlatfo>;
-               TCLMemorys          = TCLMemorys<TCLContex>;
-                 TCLMemory         = TCLMemory <TCLContex>;
                TCLQueuers          = TCLQueuers<TCLContex,TCLPlatfo>;
                  TCLQueuer         = TCLQueuer <TCLContex,TCLPlatfo>;
+               TCLMemorys          = TCLMemorys<TCLContex,TCLPlatfo>;
+                 TCLMemory         = TCLMemory <TCLContex,TCLPlatfo>;
                TCLProgras          = TCLProgras<TCLContex,TCLPlatfo>;
                  TCLProgra         = TCLProgra <TCLContex,TCLPlatfo>;
                    TCLDeploys      = TCLDeploys<TCLContex,TCLPlatfo>;
@@ -39,8 +39,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                        TCLArgumes  = TCLArgumes<TCLProgra,TCLContex,TCLPlatfo>;
                          TCLArgume = TCLArgume <TCLProgra,TCLContex,TCLPlatfo>;
 
-     TCLDevBuf<TValue_:record> = class( TCLDevBuf<TCLContex,TValue_> );
-     TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLContex,TValue_> );
+     TCLDevBuf<TValue_:record> = class( TCLDevBuf<TCLContex,TCLPlatfo,TValue_> );
+     TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLContex,TCLPlatfo,TValue_> );
 
      TCLBufferIter<TValue_:record> = class( TCLBufferIter<TCLContex,TCLPlatfo,TValue_> );
 

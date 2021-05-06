@@ -27,7 +27,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLKernel <TCLProgra_,TCLContex_,TCLPlatfo_>,
                                                                             TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>> )
      private
-       type TCLMemory_  = TCLMemory <TCLContex_>;
+       type TCLMemory_  = TCLMemory <TCLContex_,TCLPlatfo_>;
             TCLKernel_  = TCLKernel <TCLProgra_,TCLContex_,TCLPlatfo_>;
             TCLArgumes_ = TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>;
      protected
@@ -59,7 +59,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>,
                                                                              TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>> )
      private
-       type TCLMemory_ = TCLMemory<TCLContex_>;
+       type TCLMemory_ = TCLMemory<TCLContex_,TCLPlatfo_>;
             TCLKernel_ = TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>;
             TCLArgume_ = TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>;
             TCLVarArgs = TDictionary<String,TCLArgume_>;

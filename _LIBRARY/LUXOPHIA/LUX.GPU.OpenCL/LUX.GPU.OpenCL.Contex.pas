@@ -28,7 +28,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLContexs_ = TCLContexs<TCLPlatfo_>;
             TCLContex_  = TCLContex <TCLPlatfo_>;
             TCLQueuers_ = TCLQueuers<TCLContex_,TCLPlatfo_>;
-            TCLMemorys_ = TCLMemorys<TCLContex_>;
+            TCLMemorys_ = TCLMemorys<TCLContex_,TCLPlatfo_>;
             TCLProgras_ = TCLProgras<TCLContex_,TCLPlatfo_>;
      protected
        _Queuers :TCLQueuers_;
