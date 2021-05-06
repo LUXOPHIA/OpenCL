@@ -39,8 +39,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                        TCLArgumes  = TCLArgumes<TCLProgra,TCLContex,TCLPlatfo>;
                          TCLArgume = TCLArgume <TCLProgra,TCLContex,TCLPlatfo>;
 
-     TCLDeviceBuffer<TValue_:record> = class( TCLDeviceBuffer<TCLContex,TValue_> );
-     TCLHostBuffer  <TValue_:record> = class( TCLHostBuffer  <TCLContex,TValue_> );
+     TCLDevBuf<TValue_:record> = class( TCLDevBuf<TCLContex,TValue_> );
+     TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLContex,TValue_> );
 
      TCLBufferIter<TValue_:record> = class( TCLBufferIter<TCLContex,TCLPlatfo,TValue_> );
 
