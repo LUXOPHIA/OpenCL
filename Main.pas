@@ -39,6 +39,7 @@ type
     _BufferB :TCLHostBuffer<T_float>;
     _BufferC :TCLHostBuffer<T_float>;
     _Progra  :TCLProgra;
+    _Deploy  :TCLDeploy;
     _Kernel  :TCLKernel;
     ///// メソッド
     function ShowDeploys :Boolean;
@@ -159,16 +160,19 @@ begin
    { _Progra := TCLProgra.Create( _Contex ); }
      _Progra := _Contex.Progras.Add;                                            // 生成
      _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードのロード
-     _Progra.BuildTo( _Device );                                                // ビルド
 
      MemoC.Lines.Assign( _Progra.Source );                                      // ソースコードの表示
+
+     ///// ビルド
+   { _Deploy := _Progra.Deploys.Add( _Device ); }
+     _Deploy := _Progra.BuildTo( _Device );                                     // 生成
 
      ///// カーネル
    { _Kernel := TCLKernel.Create( _Progra, 'Main', _Queuer ); }
      _Kernel := _Progra.Kernels.Add( 'Main', _Queuer );                         // 生成
-     _Kernel.Argumes['A'] := _BufferA;                                          // メモリーの登録
-     _Kernel.Argumes['B'] := _BufferB;                                          // メモリーの登録
-     _Kernel.Argumes['C'] := _BufferC;                                          // メモリーの登録
+     _Kernel.Argumes['A'] := _BufferA;                                          // バッファの登録
+     _Kernel.Argumes['B'] := _BufferB;                                          // バッファの登録
+     _Kernel.Argumes['C'] := _BufferC;                                          // バッファの登録
      _Kernel.GlobWorkSize := [ 10 ];                                            // ループ回数の設定
 
      //////////
