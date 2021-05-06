@@ -36,10 +36,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Contex  :TCLContex_  read GetOwnere                ;
-       property Memorys :TCLMemorys_ read GetParent                ;
-       property Handle  :T_cl_mem    read GetHandle write SetHandle;
-       property Size    :T_size_t    read GetSize                  ;
+       property Contex  :TCLContex_     read GetOwnere                ;
+       property Memorys :TCLMemorys_    read GetParent                ;
+       property Handle  :T_cl_mem       read GetHandle write SetHandle;
+       property Kind    :T_cl_mem_flags read   _Kind                  ;
+       property Size    :T_size_t       read GetSize                  ;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemorys<TCLContex_>
