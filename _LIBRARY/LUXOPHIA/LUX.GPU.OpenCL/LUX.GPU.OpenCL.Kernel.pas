@@ -374,6 +374,8 @@ procedure TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.OnInsertChild( const Chil
 begin
      inherited;
 
+     if _VarArgs.ContainsKey( Childr_.Name ) then _VarArgs[ Childr_.Name ].Free;
+
      _VarArgs.Add( Childr_.Name, Childr_ );
 end;
 
