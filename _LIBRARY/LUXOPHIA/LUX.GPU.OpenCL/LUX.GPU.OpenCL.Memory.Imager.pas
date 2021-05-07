@@ -2,9 +2,7 @@
 
 interface //#################################################################### ■
 
-uses System.UITypes,
-     FMX.Graphics,
-     cl_version, cl_platform, cl,
+uses cl_version, cl_platform, cl,
      LUX,
      LUX.Code.C,
      LUX.GPU.OpenCL.root,
@@ -18,10 +16,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        TCLHosIma<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
 
      TCLImagerIter<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
-
-     TCLDevImaRGBA<TCLContex_,TCLPlatfo_:class> = class;
-
-     TCLImagerIterRGBA<TCLContex_,TCLPlatfo_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -93,34 +87,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Imager                        :TCLImager_ read GetImager                ;
        property Values[ const X_,Y_:Integer ] :TValue_    read GetValues write SetValues; default;
      end;
-
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevImaRGBA<TCLContex_,TCLPlatfo_>
-
-     TCLDevImaRGBA<TCLContex_,TCLPlatfo_:class> = class( TCLDevIma<TCLContex_,TCLPlatfo_,TAlphaColorF> )
-     private
-       type TCLImagerIter_ = TCLImagerIterRGBA<TCLContex_,TCLPlatfo_>;
-     protected
-     public
-       ///// メソッド
-       procedure DrawTo( const Bitmap_:TBitmap );
-       procedure SaveToFile( const FileName_:String );
-     end;
-
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosImaRGBA<TCLContex_,TCLPlatfo_>
-
-     TCLHosImaRGBA<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma<TCLContex_,TCLPlatfo_,TAlphaColorF> )
-     private
-       type TCLImagerIter_ = TCLImagerIterRGBA<TCLContex_,TCLPlatfo_>;
-     protected
-     public
-       ///// メソッド
-       procedure DrawTo( const Bitmap_:TBitmap );
-       procedure SaveToFile( const FileName_:String );
-     end;
-
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIterRGBA<TCLContex_,TCLPlatfo_>
-
-     TCLImagerIterRGBA<TCLContex_,TCLPlatfo_:class> = class( TCLImagerIter<TCLContex_,TCLPlatfo_,TAlphaColorF> );
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
 
@@ -342,110 +308,6 @@ begin
 
      _RowPit := Integer( RP ) div SizeOf( TValue_ );
 end;
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevImaRGBA<TCLContex_,TCLPlatfo_>
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-procedure TCLDevImaRGBA<TCLContex_,TCLPlatfo_>.DrawTo( const Bitmap_:TBitmap );
-var
-   G :TCLImagerIter_;
-   B :TBitmapData;
-   X, Y :Integer;
-begin
-     G := TCLImagerIter_.Create( Self );
-
-     Bitmap_.SetSize( CountX, CountY );
-
-     Bitmap_.Map( TMapAccess.Write, B );
-
-     for Y := 0 to CountY-1 do
-     begin
-          for X := 0 to CountX-1 do
-          begin
-               B.SetPixel( X, Y, G[ X, Y ].ToAlphaColor );
-          end;
-     end;
-
-     Bitmap_.Unmap( B );
-
-     G.Free;
-end;
-
-procedure TCLDevImaRGBA<TCLContex_,TCLPlatfo_>.SaveToFile( const FileName_:String );
-var
-   B :TBitmap;
-begin
-     B := TBitmap.Create;
-
-     DrawTo( B );
-
-     B.SaveToFile( FileName_ );
-
-     B.Free;
-end;
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosImaRGBA<TCLContex_,TCLPlatfo_>
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-procedure TCLHosImaRGBA<TCLContex_,TCLPlatfo_>.DrawTo( const Bitmap_:TBitmap );
-var
-   G :TCLImagerIter_;
-   B :TBitmapData;
-   X, Y :Integer;
-begin
-     G := TCLImagerIter_.Create( Self );
-
-     Bitmap_.SetSize( CountX, CountY );
-
-     Bitmap_.Map( TMapAccess.Write, B );
-
-     for Y := 0 to CountY-1 do
-     begin
-          for X := 0 to CountX-1 do
-          begin
-               B.SetPixel( X, Y, G[ X, Y ].ToAlphaColor );
-          end;
-     end;
-
-     Bitmap_.Unmap( B );
-
-     G.Free;
-end;
-
-procedure TCLHosImaRGBA<TCLContex_,TCLPlatfo_>.SaveToFile( const FileName_:String );
-var
-   B :TBitmap;
-begin
-     B := TBitmap.Create;
-
-     DrawTo( B );
-
-     B.SaveToFile( FileName_ );
-
-     B.Free;
-end;
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIterRGBA<TCLContex_,TCLPlatfo_>
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
