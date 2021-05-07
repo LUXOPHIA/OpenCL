@@ -50,11 +50,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLImagerIter<TValue_:record> = class( TCLImagerIter<TCLContex,TCLPlatfo,TValue_> );
 
-     TCLDevImaRGBA = TCLDevImaRGBA<TCLContex,TCLPlatfo>;
-     TCLHosImaRGBA = TCLHosImaRGBA<TCLContex,TCLPlatfo>;
-
-     TCLImagerIterRGBA = TCLImagerIterRGBA<TCLContex,TCLPlatfo>;
-
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
