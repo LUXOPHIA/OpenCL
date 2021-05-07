@@ -28,13 +28,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _Count :Integer;
        ///// アクセス
-       function GetCount :Integer;
-       procedure SetCount( const Count_:Integer );
+       function GetCount :Integer; virtual;
+       procedure SetCount( const Count_:Integer ); virtual;
        function GetSize :T_size_t; override;
      public
        constructor Create; override;
        ///// プロパティ
-       property Count :Integer  read GetCount write SetCount;
+       property Count :Integer read GetCount write SetCount;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevBuf<TCLContex_,TCLPlatfo_,TValue_>
@@ -77,8 +77,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure CreateHandle; override;
      public
        ///// プロパティ
-       property Buffer                     :TCLBuffer_     read GetBuffer                ;
-       property Values[ const I_:Integer ] :TValue_        read GetValues write SetValues; default;
+       property Buffer                     :TCLBuffer_ read GetBuffer                ;
+       property Values[ const I_:Integer ] :TValue_    read GetValues write SetValues; default;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -194,8 +194,6 @@ begin
      _Kind := CL_MEM_READ_WRITE or CL_MEM_USE_HOST_PTR;
 end;
 
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
@@ -233,8 +231,6 @@ begin
 
      AssertCL( E );
 end;
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
