@@ -75,9 +75,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLImager_ = TCLImager<TCLContex_,TCLPlatfo_,TValue_>;
             PValue_    = ^TValue_;
      protected
-       _RowPit :Integer;
+       _PitchX :T_size_t;
+       _PitchY :T_size_t;
+       _PitchZ :T_size_t;
        ///// アクセス
        function GetImager :TCLImager_; virtual;
+       function GetValueP( const X_,Y_:Integer ) :PValue_; virtual;
        function GetValues( const X_,Y_:Integer ) :TValue_; virtual;
        procedure SetValues( const X_,Y_:Integer; const Values_:TValue_ ); virtual;
        ///// メソッド
@@ -85,6 +88,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
        ///// プロパティ
        property Imager                        :TCLImager_ read GetImager                ;
+       property ValueP[ const X_,Y_:Integer ] :PValue_    read GetValueP                ;
        property Values[ const X_,Y_:Integer ] :TValue_    read GetValues write SetValues; default;
      end;
 
@@ -267,18 +271,21 @@ begin
      Result := TCLImager_( Memory );
 end;
 
-function TCLImagerIter<TCLContex_,TCLPlatfo_,TValue_>.GetValues( const X_,Y_:Integer ) :TValue_;
+function TCLImagerIter<TCLContex_,TCLPlatfo_,TValue_>.GetValueP( const X_,Y_:Integer ) :PValue_;
 var
-   P :PValue_;
+   P :PByte;
 begin
-     P := Handle;  Inc( P, _RowPit * Y_ + X_ );  Result := P^;
+     P := Handle;  Inc( P, _PitchY * Y_ + _PitchX * X_ );  Result := PValue_( P );
+end;
+
+function TCLImagerIter<TCLContex_,TCLPlatfo_,TValue_>.GetValues( const X_,Y_:Integer ) :TValue_;
+begin
+     Result := ValueP[ X_, Y_ ]^;
 end;
 
 procedure TCLImagerIter<TCLContex_,TCLPlatfo_,TValue_>.SetValues( const X_,Y_:Integer; const Values_:TValue_ );
-var
-   P :PValue_;
 begin
-     P := Handle;  Inc( P, _RowPit * Y_ + X_ );  P^ := Values_;
+     ValueP[ X_, Y_ ]^ := Values_;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
@@ -288,11 +295,12 @@ var
    O, R :record
            X, Y, Z :T_size_t;
          end;
-   RP, SP :T_size_t;
    V :T_cl_event;
    E :T_cl_int;
 begin
      inherited;
+
+     _PitchX := SizeOf( TValue_ );
 
      O.X := 0;
      O.Y := 0;
@@ -302,11 +310,9 @@ begin
      R.Y := Imager.CountY;
      R.Z := 1;
 
-     _Handle := clEnqueueMapImage( Queuer.Handle, Imager.Handle, CL_TRUE, Mode, @O, @R, @RP, @SP, 0, nil, @V, @E );
+     _Handle := clEnqueueMapImage( Queuer.Handle, Imager.Handle, CL_TRUE, Mode, @O, @R, @_PitchY, @_PitchZ, 0, nil, @V, @E );
 
      AssertCL( E );
-
-     _RowPit := Integer( RP ) div SizeOf( TValue_ );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
