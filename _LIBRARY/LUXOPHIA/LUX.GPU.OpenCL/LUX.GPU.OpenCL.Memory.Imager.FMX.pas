@@ -25,7 +25,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
      public
        ///// メソッド
-       procedure DrawTo( const Bitmap_:TBitmap );
+       procedure CopyTo( const Bitmap_:TBitmap );
        procedure SaveToFile( const FileName_:String );
      end;
 
@@ -37,7 +37,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
      public
        ///// メソッド
-       procedure DrawTo( const Bitmap_:TBitmap );
+       procedure CopyTo( const Bitmap_:TBitmap );
        procedure SaveToFile( const FileName_:String );
      end;
 
@@ -69,7 +69,7 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLDevImaRGBA<TCLContex_,TCLPlatfo_>.DrawTo( const Bitmap_:TBitmap );
+procedure TCLDevImaRGBA<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
 var
    G :TCLImagerIter_;
    B :TBitmapData;
@@ -100,7 +100,7 @@ var
 begin
      B := TBitmap.Create;
 
-     DrawTo( B );
+     CopyTo( B );
 
      B.SaveToFile( FileName_ );
 
@@ -117,7 +117,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLHosImaRGBA<TCLContex_,TCLPlatfo_>.DrawTo( const Bitmap_:TBitmap );
+procedure TCLHosImaRGBA<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
 var
    G :TCLImagerIter_;
    B :TBitmapData;
@@ -148,7 +148,7 @@ var
 begin
      B := TBitmap.Create;
 
-     DrawTo( B );
+     CopyTo( B );
 
      B.SaveToFile( FileName_ );
 
