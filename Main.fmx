@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'OpenCL'
-  ClientHeight = 480
-  ClientWidth = 640
+  ClientHeight = 566
+  ClientWidth = 540
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -16,24 +16,24 @@ object Form1: TForm1
     Margins.Top = 10.000000000000000000
     Margins.Right = 10.000000000000000000
     Margins.Bottom = 10.000000000000000000
-    Size.Width = 620.000000000000000000
-    Size.Height = 460.000000000000000000
+    Size.Width = 520.000000000000000000
+    Size.Height = 546.000000000000000000
     Size.PlatformDefault = False
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 0
     TabPosition = PlatformDefault
     Sizes = (
-      620s
-      434s
-      620s
-      434s
-      620s
-      434s)
+      520s
+      520s
+      520s
+      520s
+      520s
+      520s)
     object TabItemS: TTabItem
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       Size.Width = 58.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -52,12 +52,12 @@ object Form1: TForm1
         Margins.Top = 10.000000000000000000
         Margins.Right = 10.000000000000000000
         Margins.Bottom = 10.000000000000000000
-        Size.Width = 600.000000000000000000
-        Size.Height = 414.000000000000000000
+        Size.Width = 500.000000000000000000
+        Size.Height = 500.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
-        Viewport.Width = 596.000000000000000000
-        Viewport.Height = 410.000000000000000000
+        Viewport.Width = 496.000000000000000000
+        Viewport.Height = 496.000000000000000000
       end
     end
     object TabItemP: TTabItem
@@ -79,17 +79,17 @@ object Form1: TForm1
         Margins.Top = 10.000000000000000000
         Margins.Right = 10.000000000000000000
         Margins.Bottom = 10.000000000000000000
-        Size.Width = 600.000000000000000000
-        Size.Height = 414.000000000000000000
+        Size.Width = 500.000000000000000000
+        Size.Height = 500.000000000000000000
         Size.PlatformDefault = False
         TabIndex = 0
         TabOrder = 0
         TabPosition = PlatformDefault
         Sizes = (
-          600s
-          388s
-          600s
-          388s)
+          500s
+          474s
+          500s
+          474s)
         object TabItemC: TTabItem
           CustomIcon = <
             item
@@ -113,12 +113,12 @@ object Form1: TForm1
             Margins.Top = 10.000000000000000000
             Margins.Right = 10.000000000000000000
             Margins.Bottom = 10.000000000000000000
-            Size.Width = 580.000000000000000000
-            Size.Height = 368.000000000000000000
+            Size.Width = 480.000000000000000000
+            Size.Height = 454.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
-            Viewport.Width = 576.000000000000000000
-            Viewport.Height = 364.000000000000000000
+            Viewport.Width = 476.000000000000000000
+            Viewport.Height = 450.000000000000000000
           end
         end
         object TabItemL: TTabItem
@@ -144,12 +144,12 @@ object Form1: TForm1
             Margins.Top = 10.000000000000000000
             Margins.Right = 10.000000000000000000
             Margins.Bottom = 10.000000000000000000
-            Size.Width = 580.000000000000000000
-            Size.Height = 368.000000000000000000
+            Size.Width = 480.000000000000000000
+            Size.Height = 454.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 0
-            Viewport.Width = 576.000000000000000000
-            Viewport.Height = 364.000000000000000000
+            Viewport.Width = 476.000000000000000000
+            Viewport.Height = 450.000000000000000000
           end
         end
       end
@@ -158,7 +158,7 @@ object Form1: TForm1
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       Size.Width = 52.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -167,23 +167,29 @@ object Form1: TForm1
       Text = 'Result'
       ExplicitSize.cx = 52.000000000000000000
       ExplicitSize.cy = 26.000000000000000000
-      object MemoR: TMemo
-        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
-        DataDetectorTypes = []
-        StyledSettings = [Size, Style, FontColor]
-        TextSettings.Font.Family = 'MS Gothic'
-        Align = Client
+      object Image1: TImage
+        MultiResBitmap = <
+          item
+          end>
+        Align = Fit
+        DisableInterpolation = True
         Margins.Left = 10.000000000000000000
         Margins.Top = 10.000000000000000000
         Margins.Right = 10.000000000000000000
         Margins.Bottom = 10.000000000000000000
-        Size.Width = 600.000000000000000000
-        Size.Height = 414.000000000000000000
+        Size.Width = 500.000000000000000000
+        Size.Height = 500.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 0
-        Viewport.Width = 596.000000000000000000
-        Viewport.Height = 410.000000000000000000
+        WrapMode = Stretch
+        OnMouseWheel = Image1MouseWheel
       end
     end
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = Timer1Timer
+    Left = 35
+    Top = 60
   end
 end
