@@ -18,61 +18,85 @@ TDoubleAreaC;
 
 ///////////////////////////////////////////////////////////////////////// 演算子
 
-TDoubleC Add( TDoubleC A, TDoubleC B )
+TDoubleC Add( const TDoubleC A, const TDoubleC B )
 {
   TDoubleC Result;
+
   Result.R = A.R + B.R;
   Result.I = A.I + B.I;
+
   return Result;
 }
 
-TDoubleC Sub( TDoubleC A, TDoubleC B )
+TDoubleC Sub( const TDoubleC A, const TDoubleC B )
 {
   TDoubleC Result;
+
   Result.R = A.R - B.R;
   Result.I = A.I - B.I;
+
   return Result;
 }
 
-TDoubleC Mul( TDoubleC A, TDoubleC B )
+TDoubleC Mul( const TDoubleC A, const TDoubleC B )
 {
   TDoubleC Result;
+
   Result.R = A.R * B.R - A.I * B.I;
   Result.I = A.R * B.I + A.I * B.R;
+
   return Result;
 }
 
-TDoubleC Pow2( TDoubleC C )
+TDoubleC Pow2( const TDoubleC C )
 {
   return Mul( C, C );
 }
 
-double Abs( TDoubleC C )
+double Abs( const TDoubleC C )
 {
   return sqrt( C.R * C.R + C.I * C.I );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TDoubleC ScreenToComplex( int2 P, int2 S, TDoubleAreaC A )
+TDoubleC ScreenToComplex( const int2 P, const int2 S, const TDoubleAreaC A )
 {
   TDoubleC Result;
+
   Result.R = ( A.Max.R - A.Min.R ) * ( P.x + 0.5 ) / S.x + A.Min.R;
   Result.I = ( A.Min.I - A.Max.I ) * ( P.y + 0.5 ) / S.y + A.Max.I;
+
   return Result;
 }
 
-float ComplexToColor( TDoubleC C )
+float ComplexToColor( const TDoubleC C, const int MaxN )
 {
-  const int MaxN = 1000;
-
   TDoubleC Z = { 0, 0 };
+
   for ( int N = 1; N < MaxN; N++ )
   {
     Z = Add( Pow2( Z ), C );
     if ( Abs( Z ) > 2 ) return (float)N / MaxN;
   }
+
   return 1;
+}
+
+//------------------------------------------------------------------------------
+
+float4 GammaCorrect( const float4 Color_, const float Gamma_ )
+{
+  float4 Result;
+
+  float G = 1 / Gamma_;
+
+  Result.r = pow( Color_.r, G );
+  Result.g = pow( Color_.g, G );
+  Result.b = pow( Color_.b, G );
+  Result.a =      Color_.a;
+
+  return Result;
 }
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -88,11 +112,11 @@ kernel void Main( global     double*   Buffer,
 
   TDoubleC C = ScreenToComplex( P, S, A );
 
-  float L = ComplexToColor( C );
+  float L = ComplexToColor( C, 1000 );
 
   float4 R = (float4)( L, L, L, 1 );
 
-  write_imagef( Imager, P, R );
+  write_imagef( Imager, P, GammaCorrect( R, 2.2 ) );
 }
 
 //##############################################################################
