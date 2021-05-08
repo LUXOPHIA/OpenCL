@@ -247,6 +247,11 @@
         <DCCReference Include="_LIBRARY\LUXOPHIA\LUX\Data\List\LUX.Data.List.core.pas"/>
         <DCCReference Include="_LIBRARY\LUXOPHIA\LUX\Data\List\LUX.Data.List.pas"/>
         <DCCReference Include="_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Show.pas"/>
+        <DCCReference Include="_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.pas"/>
+        <DCCReference Include="_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.FMX.pas"/>
+        <DCCReference Include="_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.FMX.pas"/>
+        <DCCReference Include="_LIBRARY\LUXOPHIA\LUX\Complex\LUX.Complex.pas"/>
+        <DCCReference Include="_LIBRARY\LUXOPHIA\LUX\LUX.D1.pas"/>
         <None Include="_DATA\Source.cl"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
