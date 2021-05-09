@@ -2,12 +2,10 @@
 
 interface //#################################################################### ■
 
-uses cl_version,
-     cl_platform,
-     cl,
+uses cl_version, cl_platform, cl,
      LUX.Code.C;
 
-type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
+type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -19,7 +17,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$�
                     CL120 = 120,    // OpenCL 1.2
                     CL200 = 200,    // OpenCL 2.0
                     CL210 = 210,    // OpenCL 2.1
-                    CL220 = 220 );  // OpenCL 2.2
+                    CL220 = 220,    // OpenCL 2.1
+                    CL300 = 300 );  // OpenCL 3.0
 
      HCLVersion = record helper for TCLVersion
      {private}
@@ -64,6 +63,8 @@ begin
      if Value_ = '2.1' then Result := TCLVersion.CL210
                        else
      if Value_ = '2.2' then Result := TCLVersion.CL220
+                       else
+     if Value_ = '3.0' then Result := TCLVersion.CL300
                        else Result := TCLVersion.None;
 end;
 
@@ -76,6 +77,7 @@ begin
        TCLVersion.CL200: Result := '2.0';
        TCLVersion.CL210: Result := '2.1';
        TCLVersion.CL220: Result := '2.2';
+       TCLVersion.CL300: Result := '3.0';
      end;
 end;
 
@@ -168,11 +170,5 @@ procedure AssertCL( const Error_:T_cl_int );
 begin
      Assert( Error_ = CL_SUCCESS, ErrorToMessage( Error_ ) );
 end;
-
-//############################################################################## □
-
-initialization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 初期化
-
-finalization //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 最終化
 
 end. //######################################################################### ■

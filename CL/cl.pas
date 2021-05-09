@@ -284,7 +284,7 @@ const CL_PLATFORM_EXTENSIONS                       = $0904;
 {$IF CL_VERSION_2_1 <> 0 }
 const CL_PLATFORM_HOST_TIMER_RESOLUTION            = $0905;
 {$ENDIF}
-{$IFDEF CL_VERSION_3_0 <> 0 }
+{$IF CL_VERSION_3_0 <> 0 }
 const CL_PLATFORM_NUMERIC_VERSION                  = $0906;
 const CL_PLATFORM_EXTENSIONS_WITH_VERSION          = $0907;
 {$ENDIF}
