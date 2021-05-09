@@ -26,13 +26,25 @@ uses LUX.Code.C,
 //#endif
 
 //{$IF defined( _WIN32 ) }
-//    #define CL_API_ENTRY
-//    #define CL_API_CALL     __stdcall
-//    #define CL_CALLBACK     __stdcall
+//    #if !defined(CL_API_ENTRY)
+//        #define CL_API_ENTRY
+//    #endif
+//    #if !defined(CL_API_CALL)
+//        #define CL_API_CALL     __stdcall
+//    #endif
+//    #if !defined(CL_CALLBACK)
+//        #define CL_CALLBACK     __stdcall
+//    #endif
 //{$ELSE}
-//    #define CL_API_ENTRY
-//    #define CL_API_CALL
-//    #define CL_CALLBACK
+//    #if !defined(CL_API_ENTRY)
+//        #define CL_API_ENTRY
+//    #endif
+//    #if !defined(CL_API_CALL)
+//        #define CL_API_CALL
+//    #endif
+//    #if !defined(CL_CALLBACK)
+//        #define CL_CALLBACK
+//    #endif
 //{$ENDIF}
 
 (*
@@ -124,6 +136,12 @@ uses LUX.Code.C,
 //#endif
 
 {$IF defined( _WIN32 ) and defined( _MSC_VER ) }
+
+(* intptr_t is used in cl.h and provided by stddef.h in Visual C++, but not in clang *)
+(* stdint.h was missing before Visual Studio 2010, include it for later versions and for clang *)
+//#if defined(__clang__) || _MSC_VER >= 1600
+//    #include <stdint.h>
+//#endif
 
 (* scalar types  *)
 type T_cl_char   = T_signed___int8;
