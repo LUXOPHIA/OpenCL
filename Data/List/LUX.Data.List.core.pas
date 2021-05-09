@@ -5,8 +5,8 @@ interface //####################################################################
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
      TListObject = class;
-     TListParent = class;
      TListChildr = class;
+     TListParent = class;
      TListEnumer = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
@@ -34,60 +34,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Next :TListChildr read GetNext;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TListParent
-
-     TListParent = class( TListObject )
-     private
-       ///// アクセス
-       function GetOrigin :TListChildr;
-       procedure SetOrigin( const Origin_:TListChildr );
-       function GetIndexes( const I_:Integer ) :TListChildr;
-       procedure SetIndexes( const I_:Integer; const Indexe_:TListChildr );
-       function GetIndexesN :Integer;
-       procedure SetIndexesN( const IndexesN_:Integer );
-     protected
-       _Indexes  :TArray<TListChildr>;
-       _MaxOrder :Integer;
-       _ChildrsN :Integer;
-       ///// アクセス
-       function GetHeader :TListChildr; virtual;
-       function GetTailer :TListChildr; virtual;
-       function GetChildrs( const I_:Integer ) :TListChildr; virtual;
-       procedure SetChildrs( const I_:Integer; const Childr_:TListChildr ); virtual;
-       function GetChildrsN :Integer; virtual;
-       ///// プロパティ
-       property Origin                      :TListChildr read GetOrigin   write SetOrigin  ;
-       property Indexes[ const I_:Integer ] :TListChildr read GetIndexes  write SetIndexes ;
-       property IndexesN                    :Integer     read GetIndexesN write SetIndexesN;
-       ///// メソッド
-       procedure FindTo( const Childr_:TListChildr ); overload;
-       procedure FindTo( const Order_:Integer   ); overload;
-       procedure InsertBind( const C0_,C1_,C2_:TListChildr );
-       procedure _InsertHead( const Childr_:TListChildr );
-       procedure _InsertTail( const Childr_:TListChildr );
-       ///// イベント
-       procedure OnInsertChild( const Childr_:TListChildr ); virtual;
-       procedure OnRemoveChild( const Childr_:TListChildr ); virtual;
-     public
-       constructor Create; overload; override;
-       destructor Destroy; override;
-       ///// プロパティ
-       property Header                      :TListChildr read GetHeader                   ;
-       property Tailer                      :TListChildr read GetTailer                   ;
-       property Childrs[ const I_:Integer ] :TListChildr read GetChildrs  write SetChildrs; default;
-       property Items[ const I_:Integer ]   :TListChildr read GetChildrs  write SetChildrs;
-       property ChildrsN                    :Integer     read GetChildrsN                 ;
-       property Count                       :Integer     read GetChildrsN                 ;
-       ///// メソッド
-       procedure Clear; virtual;
-       procedure InsertHead( const Childr_:TListChildr ); overload;
-       procedure InsertTail( const Childr_:TListChildr ); overload;
-       procedure Add( const Childr_:TListChildr ); overload;
-       class procedure Swap( const C1_,C2_:TListChildr ); overload;
-       procedure Swap( const I1_,I2_:Integer ); overload;
-       function GetEnumerator: TListEnumer;
-     end;
-
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TListChildr
 
      TListChildr = class( TListObject )
@@ -109,6 +55,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
        constructor Create; overload; override;
        constructor Create( const Parent_:TListParent ); overload; virtual;
+       procedure AfterConstruction; override;
        destructor Destroy; override;
        ///// プロパティ
        property Parent :TListParent read GetParent write SetParent;
@@ -119,19 +66,74 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure InsertNext( const Siblin_:TListChildr );
      end;
 
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TListParent
+
+     TListParent = class( TListObject )
+     private
+       ///// アクセス
+       function GetOrigin :TListChildr;
+       procedure SetOrigin( const Origin_:TListChildr );
+       function GetIndexes( const I_:Integer ) :TListChildr;
+       procedure SetIndexes( const I_:Integer; const Indexe_:TListChildr );
+       function GetIndexesN :Integer;
+       procedure SetIndexesN( const IndexesN_:Integer );
+     protected
+       _Indexes  :TArray<TListChildr>;
+       _MaxOrder :Integer;
+       _ChildrsN :Integer;
+       ///// アクセス
+       function GetHeader :TListChildr; virtual;
+       function GetTailer :TListChildr; virtual;
+       function GetChildrs( const I_:Integer ) :TListChildr; overload; virtual;
+       procedure SetChildrs( const I_:Integer; const Childr_:TListChildr ); overload; virtual;
+       function GetChildrsN :Integer; virtual;
+       ///// プロパティ
+       property Origin                      :TListChildr read GetOrigin   write SetOrigin  ;
+       property Indexes[ const I_:Integer ] :TListChildr read GetIndexes  write SetIndexes ;
+       property IndexesN                    :Integer     read GetIndexesN write SetIndexesN;
+       ///// メソッド
+       procedure FindTo( const Childr_:TListChildr ); overload;
+       procedure FindTo( const Order_:Integer   ); overload;
+       procedure InsertBind( const C0_,C1_,C2_:TListChildr );
+       procedure _InsertHead( const Childr_:TListChildr );
+       procedure _InsertTail( const Childr_:TListChildr );
+       ///// イベント
+       procedure OnInit; virtual;
+       procedure OnInsertChild( const Childr_:TListChildr ); overload; virtual;
+       procedure OnRemoveChild( const Childr_:TListChildr ); overload; virtual;
+     public
+       constructor Create; overload; override;
+       destructor Destroy; override;
+       ///// プロパティ
+       property Header                      :TListChildr read GetHeader                   ;
+       property Tailer                      :TListChildr read GetTailer                   ;
+       property Childrs[ const I_:Integer ] :TListChildr read GetChildrs  write SetChildrs; default;
+       property Items[ const I_:Integer ]   :TListChildr read GetChildrs  write SetChildrs;
+       property ChildrsN                    :Integer     read GetChildrsN                 ;
+       property Count                       :Integer     read GetChildrsN                 ;
+       ///// メソッド
+       procedure Clear; virtual;
+       procedure InsertHead( const Childr_:TListChildr ); overload;
+       procedure InsertTail( const Childr_:TListChildr ); overload;
+       procedure Add( const Childr_:TListChildr ); overload;
+       class procedure Swap( const C1_,C2_:TListChildr ); overload;
+       procedure Swap( const I1_,I2_:Integer ); overload;
+       function GetEnumerator: TListEnumer;
+     end;
+
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TListEnumer
 
      TListEnumer = class
      private
      protected
-       _Container :TListParent;
-       _Current   :TListChildr;
+       _Parent :TListParent;
+       _Childr :TListChildr;
        ///// アクセス
-       function GetCurrent: TListChildr; virtual;
+       function GetChildr: TListChildr; virtual;
      public
-       constructor Create( Container_:TListParent );
+       constructor Create( Parent_:TListParent );
        ///// プロパティ
-       property Current :TListChildr read GetCurrent;
+       property Current :TListChildr read GetChildr;
        ///// メソッド
        function MoveNext :Boolean;
      end;
@@ -197,6 +199,130 @@ begin
      _Next := TListChildr( Self );
 end;
 
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TListChildr
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TListChildr.GetIsOrdered :Boolean;
+begin
+     Result := ( _Order <= _Parent._MaxOrder ) and ( _Parent.Indexes[ _Order ] = Self );
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TListChildr.GetParent :TListParent;
+begin
+     Result := _Parent;
+end;
+
+procedure TListChildr.SetParent( const Parent_:TListParent );
+begin
+     Remove;
+
+     _Parent := Parent_;
+
+     if Assigned( _Parent ) then _Parent._InsertTail( Self );
+end;
+
+//------------------------------------------------------------------------------
+
+function TListChildr.GetOrder :Integer;
+begin
+     if not IsOrdered then _Parent.FindTo( Self );
+
+     Result := _Order;
+end;
+
+procedure TListChildr.SetOrder( const Order_:Integer );
+begin
+     TListParent.Swap( Self, _Parent[ Order_ ] );
+end;
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TListChildr._Remove;
+begin
+     _Parent.OnRemoveChild( Self );
+
+     Bind( _Prev, _Next );
+
+     if IsOrdered then _Parent._MaxOrder := _Order - 1;
+
+     with _Parent do
+     begin
+          Dec( _ChildrsN );
+
+          if _ChildrsN * 2 < IndexesN then IndexesN := _ChildrsN;
+     end;
+
+     _Parent := nil;
+     _Order  := -1;
+     _Prev   := Self;
+     _Next   := Self;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+constructor TListChildr.Create;
+begin
+     inherited;
+
+     _Parent := nil;
+     _Order  := -1;
+end;
+
+constructor TListChildr.Create( const Parent_:TListParent );
+begin
+     Create;
+
+     _Parent := Parent_;
+end;
+
+procedure TListChildr.AfterConstruction;
+begin
+     inherited;
+
+     if Assigned( _Parent ) then _Parent._InsertTail( Self );
+end;
+
+destructor TListChildr.Destroy;
+begin
+     Remove;
+
+     inherited;
+end;
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TListChildr.Remove;
+begin
+     if Assigned( _Parent ) then _Remove;
+end;
+
+//------------------------------------------------------------------------------
+
+procedure TListChildr.InsertPrev( const Siblin_:TListChildr );
+begin
+     Siblin_.Remove;
+
+     _Parent.InsertBind( _Prev, Siblin_, Self );
+
+     if IsOrdered then _Parent._MaxOrder := _Order - 1;
+end;
+
+procedure TListChildr.InsertNext( const Siblin_:TListChildr );
+begin
+     Siblin_.Remove;
+
+     _Parent.InsertBind( Self, Siblin_, _Next );
+
+     if IsOrdered then _Parent._MaxOrder := _Order;
+end;
+
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TListParent
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
@@ -239,11 +365,15 @@ end;
 
 function TListParent.GetHeader :TListChildr;
 begin
+     if _ChildrsN = 0 then OnInit;
+
      Result := Origin._Next;
 end;
 
 function TListParent.GetTailer :TListChildr;
 begin
+     if _ChildrsN = 0 then OnInit;
+
      Result := Origin._Prev;
 end;
 
@@ -251,6 +381,8 @@ end;
 
 function TListParent.GetChildrs( const I_:Integer ) :TListChildr;
 begin
+     if _ChildrsN = 0 then OnInit;
+
      if I_ > _MaxOrder then FindTo( I_ );
 
      Result := Indexes[ I_ ];
@@ -274,6 +406,8 @@ end;
 
 function TListParent.GetChildrsN :Integer;
 begin
+     if _ChildrsN = 0 then OnInit;
+
      Result := _ChildrsN;
 end;
 
@@ -320,8 +454,6 @@ end;
 
 procedure TListParent.InsertBind( const C0_,C1_,C2_:TListChildr );
 begin
-     C1_._Parent := Self;
-
      Bind( C0_, C1_, C2_ );
 
      Inc( _ChildrsN );
@@ -331,17 +463,24 @@ end;
 
 procedure TListParent._InsertHead( const Childr_:TListChildr );
 begin
-     InsertBind( Origin, Childr_, Header );
-
      _MaxOrder := -1;
+
+     InsertBind( Origin, Childr_, Origin._Next );
 end;
 
 procedure TListParent._InsertTail( const Childr_:TListChildr );
 begin
-     InsertBind( Tailer, Childr_, Origin );
+     InsertBind( Origin._Prev, Childr_, Origin );
 end;
 
 /////////////////////////////////////////////////////////////////////// イベント
+
+procedure TListParent.OnInit;
+begin
+
+end;
+
+//------------------------------------------------------------------------------
 
 procedure TListParent.OnInsertChild( const Childr_:TListChildr );
 begin
@@ -385,12 +524,20 @@ end;
 
 procedure TListParent.InsertHead( const Childr_:TListChildr );
 begin
-     Childr_.Remove;  _InsertHead( Childr_ );
+     Childr_.Remove;
+
+     Childr_._Parent := Self;
+
+     _InsertHead( Childr_ );
 end;
 
 procedure TListParent.InsertTail( const Childr_:TListChildr );
 begin
-     Childr_.Remove;  _InsertTail( Childr_ );
+     Childr_.Remove;
+
+     Childr_._Parent := Self;
+
+     _InsertTail( Childr_ );
 end;
 
 procedure TListParent.Add( const Childr_:TListChildr );
@@ -463,119 +610,6 @@ begin
      Result := TListEnumer.Create( Self );
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TListChildr
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-/////////////////////////////////////////////////////////////////////// アクセス
-
-function TListChildr.GetIsOrdered :Boolean;
-begin
-     Result := ( _Order <= _Parent._MaxOrder ) and ( _Parent.Indexes[ _Order ] = Self );
-end;
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
-/////////////////////////////////////////////////////////////////////// アクセス
-
-function TListChildr.GetParent :TListParent;
-begin
-     Result := _Parent;
-end;
-
-procedure TListChildr.SetParent( const Parent_:TListParent );
-begin
-     Remove;
-
-     if Assigned( Parent_ ) then Parent_._InsertTail( Self );
-end;
-
-//------------------------------------------------------------------------------
-
-function TListChildr.GetOrder :Integer;
-begin
-     if not IsOrdered then _Parent.FindTo( Self );
-
-     Result := _Order;
-end;
-
-procedure TListChildr.SetOrder( const Order_:Integer );
-begin
-     TListParent.Swap( Self, _Parent.Childrs[ Order_ ] );
-end;
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-procedure TListChildr._Remove;
-begin
-     Bind( _Prev, _Next );
-
-     if IsOrdered then _Parent._MaxOrder := _Order - 1;
-
-     with _Parent do
-     begin
-          Dec( _ChildrsN );
-
-          if _ChildrsN * 2 < IndexesN then IndexesN := _ChildrsN;
-     end;
-
-     _Parent := nil;
-     _Order  := -1;
-     _Prev   := Self;
-     _Next   := Self;
-end;
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-constructor TListChildr.Create;
-begin
-     inherited;
-
-     _Parent := nil;
-     _Order  := -1;
-end;
-
-constructor TListChildr.Create( const Parent_:TListParent );
-begin
-     Create;
-
-     Parent_._InsertTail( Self );
-end;
-
-destructor TListChildr.Destroy;
-begin
-     Remove;
-
-     inherited;
-end;
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-procedure TListChildr.Remove;
-begin
-     if Assigned( _Parent ) then _Remove;
-end;
-
-//------------------------------------------------------------------------------
-
-procedure TListChildr.InsertPrev( const Siblin_:TListChildr );
-begin
-     Siblin_.Remove;
-
-     _Parent.InsertBind( _Prev, Siblin_, Self );
-
-     if IsOrdered then _Parent._MaxOrder := _Order - 1;
-end;
-
-procedure TListChildr.InsertNext( const Siblin_:TListChildr );
-begin
-     Siblin_.Remove;
-
-     _Parent.InsertBind( Self, Siblin_, _Next );
-
-     if IsOrdered then _Parent._MaxOrder := _Order;
-end;
-
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TListEnumer
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
@@ -584,28 +618,30 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TListEnumer.GetCurrent: TListChildr;
+function TListEnumer.GetChildr: TListChildr;
 begin
-     Result := _Current;
+     Result := _Childr;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TListEnumer.Create( Container_:TListParent );
+constructor TListEnumer.Create( Parent_:TListParent );
 begin
      inherited Create;
 
-     _Container := Container_;
-     _Current   := Container_.Origin;
+     with Parent_ do if _ChildrsN = 0 then OnInit;
+
+     _Parent := Parent_;
+     _Childr := Parent_.Origin;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
 function TListEnumer.MoveNext :Boolean;
 begin
-     _Current := _Current.Next;
+     _Childr := _Childr.Next;
 
-     Result := _Current <> _Container.Origin;
+     Result := _Childr <> _Parent.Origin;
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
