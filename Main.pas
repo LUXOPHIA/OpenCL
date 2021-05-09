@@ -95,7 +95,6 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 var
    B :TCLBufferIter<Double>;
-   I :Integer;
 begin
      ///// プラットフォーム
      _Platfo := TOpenCL.Platfos[ 0 ];                                           // 選択
@@ -161,6 +160,8 @@ begin
 
      Image1.Bitmap.SaveToFile( 'Imager.png' )
 end;
+
+////////////////////////////////////////////////////////////////////////////////
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
