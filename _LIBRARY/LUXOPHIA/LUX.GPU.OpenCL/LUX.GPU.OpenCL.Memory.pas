@@ -25,8 +25,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLMemorys_ = TCLMemorys<TCLContex_,TCLPlatfo_>;
      protected
        _Handle :T_cl_mem;
-       _Queuer :TCLQueuer_;
        _Kind   :T_cl_mem_flags;
+       _Queuer :TCLQueuer_;
        ///// アクセス
        function GetHandle :T_cl_mem; virtual;
        procedure SetHandle( const Handle_:T_cl_mem ); virtual;
@@ -43,9 +43,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Contex  :TCLContex_     read GetOwnere                ;
        property Memorys :TCLMemorys_    read GetParent                ;
        property Handle  :T_cl_mem       read GetHandle write SetHandle;
-       property Queuer  :TCLQueuer_     read   _Queuer write   _Queuer;
        property Kind    :T_cl_mem_flags read   _Kind                  ;
        property Size    :T_size_t       read GetSize                  ;
+       property Queuer  :TCLQueuer_     read   _Queuer write   _Queuer;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemorys<TCLContex_,TCLPlatfo_>
@@ -85,6 +85,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Memory :TCLMemory_     read   _Memory                ;
        property Mode   :T_cl_map_flags read   _Mode                  ;
        property Handle :P_void         read GetHandle write SetHandle;
+       ///// メソッド
+       procedure Map; virtual;
+       procedure Unmap; virtual;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -198,7 +201,6 @@ begin
      _Handle := Handle_;
 end;
 
-
 /////////////////////////////////////////////////////////////////////// メソッド
 
 procedure TCLMemoryIter<TCLContex_,TCLPlatfo_>.DestroHandle;
@@ -218,7 +220,7 @@ begin
 
      _Queuer := nil;
      _Memory := nil;
-     _Mode   := 0;
+     _Mode   := CL_MAP_READ or CL_MAP_WRITE;
 end;
 
 constructor TCLMemoryIter<TCLContex_,TCLPlatfo_>.Create( const Memory_:TCLMemory_; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
@@ -236,7 +238,17 @@ begin
      inherited;
 end;
 
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TCLMemoryIter<TCLContex_,TCLPlatfo_>.Map;
+begin
+     Handle;
+end;
+
+procedure TCLMemoryIter<TCLContex_,TCLPlatfo_>.Unmap;
+begin
+     Handle := nil;
+end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
 
