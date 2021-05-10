@@ -25,22 +25,26 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLImager<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemory<TCLContex_,TCLPlatfo_> )
      private
+       type TCLStorag_ = TCLImagerIter<TCLContex_,TCLPlatfo_,TValue_>;
      protected
        _Format :T_cl_image_format;
        _Descri :T_cl_image_desc;
        _CountX :Integer;
        _CountY :Integer;
        ///// アクセス
+       function GetStorag :TCLStorag_; reintroduce; virtual;
+       procedure SetStorag( const Storag_:TCLStorag_ ); reintroduce; virtual;
+       function GetSize :T_size_t; override;
        function GetCountX :Integer; virtual;
        procedure SetCountX( const CountX_:Integer ); virtual;
        function GetCountY :Integer; virtual;
        procedure SetCountY( const CountY_:Integer ); virtual;
-       function GetSize :T_size_t; override;
      public
        constructor Create; override;
        ///// プロパティ
-       property CountX :Integer read GetCountX write SetCountX;
-       property CountY :Integer read GetCountY write SetCountY;
+       property Storag :TCLStorag_ read GetStorag write SetStorag;
+       property CountX :Integer    read GetCountX write SetCountX;
+       property CountY :Integer    read GetCountY write SetCountY;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma<TCLContex_,TCLPlatfo_,TValue_>
@@ -114,6 +118,25 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
+function TCLImager<TCLContex_,TCLPlatfo_,TValue_>.GetStorag :TCLStorag_;
+begin
+     Result := TCLStorag_( inherited Storag );
+end;
+
+procedure TCLImager<TCLContex_,TCLPlatfo_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
+begin
+     inherited Storag := Storag_;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLImager<TCLContex_,TCLPlatfo_,TValue_>.GetSize :T_size_t;
+begin
+     Result := SizeOf( TValue_ ) * _CountX * _CountY;
+end;
+
+//------------------------------------------------------------------------------
+
 function TCLImager<TCLContex_,TCLPlatfo_,TValue_>.GetCountX :Integer;
 begin
      Result := _CountX;
@@ -138,18 +161,13 @@ begin
      _CountY := CountY_;
 end;
 
-//------------------------------------------------------------------------------
-
-function TCLImager<TCLContex_,TCLPlatfo_,TValue_>.GetSize :T_size_t;
-begin
-     Result := SizeOf( TValue_ ) * _CountX * _CountY;
-end;
-
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 constructor TCLImager<TCLContex_,TCLPlatfo_,TValue_>.Create;
 begin
      inherited;
+
+     _Storag := TCLStorag_.Create( Self );
 
      _CountX := 1;
      _CountY := 1;
