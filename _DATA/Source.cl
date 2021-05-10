@@ -18,7 +18,7 @@ TDoubleAreaC;
 
 ///////////////////////////////////////////////////////////////////////// 演算子
 
-TDoubleC Add( const TDoubleC A, const TDoubleC B )
+TDoubleC __attribute__((overloadable)) Add( const TDoubleC A, const TDoubleC B )
 {
   TDoubleC Result;
 
@@ -28,7 +28,7 @@ TDoubleC Add( const TDoubleC A, const TDoubleC B )
   return Result;
 }
 
-TDoubleC Sub( const TDoubleC A, const TDoubleC B )
+TDoubleC __attribute__((overloadable)) Sub( const TDoubleC A, const TDoubleC B )
 {
   TDoubleC Result;
 
@@ -38,7 +38,7 @@ TDoubleC Sub( const TDoubleC A, const TDoubleC B )
   return Result;
 }
 
-TDoubleC Mul( const TDoubleC A, const TDoubleC B )
+TDoubleC __attribute__((overloadable)) Mul( const TDoubleC A, const TDoubleC B )
 {
   TDoubleC Result;
 
@@ -48,12 +48,12 @@ TDoubleC Mul( const TDoubleC A, const TDoubleC B )
   return Result;
 }
 
-TDoubleC Pow2( const TDoubleC C )
+TDoubleC __attribute__((overloadable)) Pow2( const TDoubleC C )
 {
   return Mul( C, C );
 }
 
-double Abs( const TDoubleC C )
+double __attribute__((overloadable)) Abs( const TDoubleC C )
 {
   return sqrt( C.R * C.R + C.I * C.I );
 }
