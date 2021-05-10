@@ -26,7 +26,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
        ///// メソッド
        procedure CopyTo( const Bitmap_:TBitmap );
+       procedure CopyFrom( const Bitmap_:TBitmap );
        procedure SaveToFile( const FileName_:String );
+       procedure LoadFromFile( const FileName_:String );
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosImaRGBA<TCLContex_,TCLPlatfo_>
@@ -38,7 +40,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
        ///// メソッド
        procedure CopyTo( const Bitmap_:TBitmap );
+       procedure CopyFrom( const Bitmap_:TBitmap );
        procedure SaveToFile( const FileName_:String );
+       procedure LoadFromFile( const FileName_:String );
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIterRGBA<TCLContex_,TCLPlatfo_>
@@ -71,12 +75,9 @@ uses LUX.GPU.OpenCL;
 
 procedure TCLDevImaRGBA<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
 var
-   G :TCLImagerIter_;
    B :TBitmapData;
    X, Y :Integer;
 begin
-     G := TCLImagerIter_.Create( Self );
-
      Bitmap_.SetSize( CountX, CountY );
 
      Bitmap_.Map( TMapAccess.Write, B );
@@ -85,13 +86,35 @@ begin
      begin
           for X := 0 to CountX-1 do
           begin
-               B.SetPixel( X, Y, G[ X, Y ].ToAlphaColor );
+               B.SetPixel( X, Y, Storag[ X, Y ].ToAlphaColor );
           end;
      end;
 
-     Bitmap_.Unmap( B );
+     Storag.Unmap;
 
-     G.Free;
+     Bitmap_.Unmap( B );
+end;
+
+procedure TCLDevImaRGBA<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
+var
+   B :TBitmapData;
+   X, Y :Integer;
+begin
+     Bitmap_.SetSize( CountX, CountY );
+
+     Bitmap_.Map( TMapAccess.Read, B );
+
+     for Y := 0 to CountY-1 do
+     begin
+          for X := 0 to CountX-1 do
+          begin
+               Storag[ X, Y ] := TAlphaColorF.Create( B.GetPixel( X, Y ) );
+          end;
+     end;
+
+     Storag.Unmap;
+
+     Bitmap_.Unmap( B );
 end;
 
 procedure TCLDevImaRGBA<TCLContex_,TCLPlatfo_>.SaveToFile( const FileName_:String );
@@ -103,6 +126,19 @@ begin
      CopyTo( B );
 
      B.SaveToFile( FileName_ );
+
+     B.Free;
+end;
+
+procedure TCLDevImaRGBA<TCLContex_,TCLPlatfo_>.LoadFromFile( const FileName_:String );
+var
+   B :TBitmap;
+begin
+     B := TBitmap.Create;
+
+     B.LoadFromFile( FileName_ );
+
+     CopyFrom( B );
 
      B.Free;
 end;
@@ -119,12 +155,9 @@ end;
 
 procedure TCLHosImaRGBA<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
 var
-   G :TCLImagerIter_;
    B :TBitmapData;
    X, Y :Integer;
 begin
-     G := TCLImagerIter_.Create( Self );
-
      Bitmap_.SetSize( CountX, CountY );
 
      Bitmap_.Map( TMapAccess.Write, B );
@@ -133,13 +166,35 @@ begin
      begin
           for X := 0 to CountX-1 do
           begin
-               B.SetPixel( X, Y, G[ X, Y ].ToAlphaColor );
+               B.SetPixel( X, Y, Storag[ X, Y ].ToAlphaColor );
           end;
      end;
 
-     Bitmap_.Unmap( B );
+     Storag.Unmap;
 
-     G.Free;
+     Bitmap_.Unmap( B );
+end;
+
+procedure TCLHosImaRGBA<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
+var
+   B :TBitmapData;
+   X, Y :Integer;
+begin
+     Bitmap_.SetSize( CountX, CountY );
+
+     Bitmap_.Map( TMapAccess.Read, B );
+
+     for Y := 0 to CountY-1 do
+     begin
+          for X := 0 to CountX-1 do
+          begin
+               Storag[ X, Y ] := TAlphaColorF.Create( B.GetPixel( X, Y ) );
+          end;
+     end;
+
+     Storag.Unmap;
+
+     Bitmap_.Unmap( B );
 end;
 
 procedure TCLHosImaRGBA<TCLContex_,TCLPlatfo_>.SaveToFile( const FileName_:String );
@@ -151,6 +206,19 @@ begin
      CopyTo( B );
 
      B.SaveToFile( FileName_ );
+
+     B.Free;
+end;
+
+procedure TCLHosImaRGBA<TCLContex_,TCLPlatfo_>.LoadFromFile( const FileName_:String );
+var
+   B :TBitmap;
+begin
+     B := TBitmap.Create;
+
+     B.LoadFromFile( FileName_ );
+
+     CopyFrom( B );
 
      B.Free;
 end;
