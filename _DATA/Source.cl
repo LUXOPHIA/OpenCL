@@ -101,14 +101,13 @@ float4 GammaCorrect( const float4 Color_, const float Gamma_ )
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-kernel void Main( global     double*   Buffer,
+kernel void Main( global     TDoubleC* Buffer,
                   write_only image2d_t Imager )
 {
   const int2 P = { get_global_id  ( 0 ), get_global_id  ( 1 ) };
   const int2 S = { get_global_size( 0 ), get_global_size( 1 ) };
 
-  const TDoubleAreaC A = { { Buffer[0], Buffer[1] },
-                           { Buffer[2], Buffer[3] } };
+  const TDoubleAreaC A = { Buffer[0], Buffer[1] };
 
   TDoubleC C = ScreenToComplex( P, S, A );
 
