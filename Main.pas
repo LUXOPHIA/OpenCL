@@ -135,7 +135,7 @@ begin
 
      ///// ビルド
    { _Deploy := _Progra.Deploys.Add( _Device ); }
-     _Deploy := _Progra.BuildTo( _Device );
+     _Deploy := _Progra.BuildTo( _Device );                                     // 生成
 
      if ShowDeploys then                                                        // ビルド情報の表示
      begin
@@ -146,7 +146,8 @@ begin
           _Kernel.Argumes['Imager'] := _Imager;                                 // イメージの接続
           _Kernel.GlobWorkSize := [ _Imager.CountX, _Imager.CountY ];           // ループ回数の設定
 
-          Timer1.Enabled := True;
+          if _Kernel.Argumes.BindsOK then Timer1.Enabled := True                // 描画ループ開始
+                                     else TabControl1.ActiveTab := TabItemS;    // 引数のバインドエラー
      end;
 
      TOpenCL.Show( MemoS.Lines );                                               // システム情報の表示
@@ -163,30 +164,30 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
+     ///// カーネル
      _Kernel.Run;                                                               // 実行
 
-     _Imager.CopyTo( Image1.Bitmap );                                           // 結果表示
+     ///// イメージ
+     _Imager.CopyTo( Image1.Bitmap );                                           // 画像表示
 end;
 
 procedure TForm1.Image1MouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
 var
-   S :Double;
+   P :TPointF;
    C :TDoubleC;
+   S :Double;
 begin
+     P := Image1.AbsoluteToLocal( ScreenToClient( Screen.MousePos ) );
+
+     C.R := _AreaC.Min.R + _AreaC.SizeR * P.X / Image1.Width ;
+     C.I := _AreaC.Max.I - _AreaC.SizeI * P.Y / Image1.Height;
+
      S := Power( 1.1, WheelDelta / 120 );
 
-     with _AreaC do
-     begin
-          with Image1.AbsoluteToLocal( ScreenToClient( Screen.MousePos ) ) do
-          begin
-               C.R := Min.R + SizeR * X / Image1.Width ;
-               C.I := Max.I - SizeI * Y / Image1.Height;
-          end;
+     _AreaC.Min := ( _AreaC.Min - C ) * S + C;
+     _AreaC.Max := ( _AreaC.Max - C ) * S + C;
 
-          Min := ( Min - C ) * S + C;
-          Max := ( Max - C ) * S + C;
-     end;
-
+     ///// バッファー
      _Buffer.Storag.Map;                                                        // マップ
      _Buffer.Storag[ 0 ] := _AreaC.Min.R;                                       // 書き込み
      _Buffer.Storag[ 1 ] := _AreaC.Min.I;                                       // 書き込み
