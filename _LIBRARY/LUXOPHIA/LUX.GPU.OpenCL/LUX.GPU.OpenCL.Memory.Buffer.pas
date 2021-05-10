@@ -25,16 +25,20 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLBuffer<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemory<TCLContex_,TCLPlatfo_> )
      private
+       type TCLStorag_ = TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>;
      protected
-       _Count :Integer;
+       _Count  :Integer;
+       _Storag :TCLStorag_;
        ///// アクセス
        function GetCount :Integer; virtual;
        procedure SetCount( const Count_:Integer ); virtual;
        function GetSize :T_size_t; override;
      public
        constructor Create; override;
+       destructor Destroy; override;
        ///// プロパティ
-       property Count :Integer read GetCount write SetCount;
+       property Count  :Integer    read GetCount  write SetCount;
+       property Storag :TCLStorag_ read   _Storag               ;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevBuf<TCLContex_,TCLPlatfo_,TValue_>
@@ -128,7 +132,17 @@ constructor TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>.Create;
 begin
      inherited;
 
-     _Count := 1;
+     _Count  := 1;
+     _Storag := TCLStorag_.Create( Self );
+end;
+
+destructor TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>.Destroy;
+begin
+     _Storag.Free;
+
+      Handle := nil;
+
+     inherited;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevBuf<TCLContex_,TCLPlatfo_,TValue_>
