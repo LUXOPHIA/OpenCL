@@ -39,7 +39,7 @@ type
     _Device :TCLDevice;
     _Contex :TCLContex;
     _Queuer :TCLQueuer;
-    _Buffer :TCLDevBuf<Double>;
+    _Buffer :TCLDevBuf<TDoubleC>;
     _Imager :TCLDevImaRGBA;
     _Progra :TCLProgra;
     _Deploy :TCLDeploy;
@@ -109,16 +109,14 @@ begin
      _Queuer := _Contex.Queuers.Add( _Device );                                 // 生成
 
      ///// バッファー
-     _Buffer := TCLDevBuf<Double>.Create( _Contex, _Queuer );                   // 生成
-     _Buffer.Count := 4;                                                        // 要素数の設定
+     _Buffer := TCLDevBuf<TDoubleC>.Create( _Contex, _Queuer );                 // 生成
+     _Buffer.Count := 2;                                                        // 要素数の設定
 
      _AreaC := TDoubleAreaC.Create( -2, -2, +2, +2 );
 
      _Buffer.Storag.Map;                                                        // マップ
-     _Buffer.Storag[ 0 ] := _AreaC.Min.R;                                       // 書き込み
-     _Buffer.Storag[ 1 ] := _AreaC.Min.I;                                       // 書き込み
-     _Buffer.Storag[ 2 ] := _AreaC.Max.R;                                       // 書き込み
-     _Buffer.Storag[ 3 ] := _AreaC.Max.I;                                       // 書き込み
+     _Buffer.Storag[ 0 ] := _AreaC.Min;                                         // 書き込み
+     _Buffer.Storag[ 1 ] := _AreaC.Max;                                         // 書き込み
      _Buffer.Storag.Unmap;                                                      // アンマップ
 
      ///// イメージ
@@ -189,10 +187,8 @@ begin
 
      ///// バッファー
      _Buffer.Storag.Map;                                                        // マップ
-     _Buffer.Storag[ 0 ] := _AreaC.Min.R;                                       // 書き込み
-     _Buffer.Storag[ 1 ] := _AreaC.Min.I;                                       // 書き込み
-     _Buffer.Storag[ 2 ] := _AreaC.Max.R;                                       // 書き込み
-     _Buffer.Storag[ 3 ] := _AreaC.Max.I;                                       // 書き込み
+     _Buffer.Storag[ 0 ] := _AreaC.Min;                                         // 書き込み
+     _Buffer.Storag[ 1 ] := _AreaC.Max;                                         // 書き込み
      _Buffer.Storag.Unmap;                                                      // アンマップ
 end;
 
