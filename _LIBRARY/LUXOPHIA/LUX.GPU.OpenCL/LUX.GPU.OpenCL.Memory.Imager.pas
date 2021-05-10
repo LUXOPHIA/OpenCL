@@ -79,9 +79,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLImager_ = TCLImager<TCLContex_,TCLPlatfo_,TValue_>;
             PValue_    = ^TValue_;
      protected
-       _PitchX :T_size_t;
-       _PitchY :T_size_t;
-       _PitchZ :T_size_t;
+       _PitchX :Integer;
+       _PitchY :Integer;
+       _PitchZ :Integer;
        ///// アクセス
        function GetImager :TCLImager_; virtual;
        function GetValueP( const X_,Y_:Integer ) :PValue_; virtual;
@@ -318,8 +318,6 @@ var
 begin
      inherited;
 
-     _PitchX := SizeOf( TValue_ );
-
      O.X := 0;
      O.Y := 0;
      O.Z := 0;
@@ -327,6 +325,8 @@ begin
      R.X := Imager.CountX;
      R.Y := Imager.CountY;
      R.Z := 1;
+
+     _PitchX := SizeOf( TValue_ );
 
      _Handle := clEnqueueMapImage( Queuer.Handle, Imager.Handle, CL_TRUE, Mode, @O, @R, @_PitchY, @_PitchZ, 0, nil, @V, @E );
 
