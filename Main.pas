@@ -93,8 +93,6 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 procedure TForm1.FormCreate(Sender: TObject);
-var
-   B :TCLBufferIter<Double>;
 begin
      ///// プラットフォーム
      _Platfo := TOpenCL.Platfos[ 0 ];                                           // 選択
@@ -116,12 +114,12 @@ begin
 
      _AreaC := TDoubleAreaC.Create( -2, -2, +2, +2 );
 
-     B := TCLBufferIter<Double>.Create( _Buffer );                              // マップ
-     B[ 0 ] := _AreaC.Min.R;                                                    // 書き込み
-     B[ 1 ] := _AreaC.Min.I;                                                    // 書き込み
-     B[ 2 ] := _AreaC.Max.R;                                                    // 書き込み
-     B[ 3 ] := _AreaC.Max.I;                                                    // 書き込み
-     B.Free;                                                                    // アンマップ
+     _Buffer.Storag.Map;                                                        // マップ
+     _Buffer.Storag[ 0 ] := _AreaC.Min.R;                                       // 書き込み
+     _Buffer.Storag[ 1 ] := _AreaC.Min.I;                                       // 書き込み
+     _Buffer.Storag[ 2 ] := _AreaC.Max.R;                                       // 書き込み
+     _Buffer.Storag[ 3 ] := _AreaC.Max.I;                                       // 書き込み
+     _Buffer.Storag.Unmap;                                                      // アンマップ
 
      ///// イメージ
      _Imager := TCLDevImaRGBA.Create( _Contex, _Queuer );                       // 生成
@@ -174,7 +172,6 @@ procedure TForm1.Image1MouseWheel(Sender: TObject; Shift: TShiftState; WheelDelt
 var
    S :Double;
    C :TDoubleC;
-   B :TCLBufferIter<Double>;
 begin
      S := Power( 1.1, WheelDelta / 120 );
 
@@ -190,12 +187,12 @@ begin
           Max := ( Max - C ) * S + C;
      end;
 
-     B := TCLBufferIter<Double>.Create( _Buffer );                              // マップ
-     B[ 0 ] := _AreaC.Min.R;                                                    // 書き込み
-     B[ 1 ] := _AreaC.Min.I;                                                    // 書き込み
-     B[ 2 ] := _AreaC.Max.R;                                                    // 書き込み
-     B[ 3 ] := _AreaC.Max.I;                                                    // 書き込み
-     B.Free;
+     _Buffer.Storag.Map;                                                        // マップ
+     _Buffer.Storag[ 0 ] := _AreaC.Min.R;                                       // 書き込み
+     _Buffer.Storag[ 1 ] := _AreaC.Min.I;                                       // 書き込み
+     _Buffer.Storag[ 2 ] := _AreaC.Max.R;                                       // 書き込み
+     _Buffer.Storag[ 3 ] := _AreaC.Max.I;                                       // 書き込み
+     _Buffer.Storag.Unmap;                                                      // アンマップ
 end;
 
 end. //######################################################################### ■
