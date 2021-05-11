@@ -40,7 +40,7 @@ type
     _Contex :TCLContex;
     _Queuer :TCLQueuer;
     _Buffer :TCLDevBuf<TDoubleC>;
-    _Imager :TCLDevImaRGBA;
+    _Imager :TCLDevImaRGBAxSFlo32;
     _Progra :TCLProgra;
     _Deploy :TCLDeploy;
     _Kernel :TCLKernel;
@@ -120,7 +120,7 @@ begin
      _Buffer.Storag.Unmap;                                                      // アンマップ
 
      ///// イメージ
-     _Imager := TCLDevImaRGBA.Create( _Contex, _Queuer );                       // 生成
+     _Imager := TCLDevImaRGBAxSFlo32.Create( _Contex, _Queuer );                // 生成
      _Imager.CountX := 500;                                                     // ピクセル数の設定
      _Imager.CountY := 500;                                                     // ピクセル数の設定
 
