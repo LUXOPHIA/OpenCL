@@ -40,7 +40,7 @@ type
     _Contex :TCLContex;
     _Queuer :TCLQueuer;
     _Buffer :TCLDevBuf<TDoubleC>;
-    _Imager :TCLDevImaRGBA;
+    _Imager :TCLDevImaRGBAxSFlo32;
     _Progra :TCLProgra;
     _Deploy :TCLDeploy;
     _Kernel :TCLKernel;
@@ -95,47 +95,47 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
      ///// プラットフォーム
-     _Platfo := TOpenCL.Platfos[ 0 ];                            // 選択
+     _Platfo := TOpenCL.Platfos[ 0 ];                             // 選択
 
      ///// デバイス
-     _Device := _Platfo.Devices[ 0 ];                            // 選択
+     _Device := _Platfo.Devices[ 0 ];                             // 選択
 
      ///// コンテキスト
    { _Contex := TCLContex.Create( _Platfo ); }
-     _Contex := _Platfo.Contexs.Add;                             // 生成
+     _Contex := _Platfo.Contexs.Add;                              // 生成
 
      ///// コマンドキュー
    { _Queuer := TCLQueuer.Create( _Contex, _Device ); }
-     _Queuer := _Contex.Queuers.Add( _Device );                  // 生成
+     _Queuer := _Contex.Queuers.Add( _Device );                   // 生成
 
      ///// バッファー
-     _Buffer := TCLDevBuf<TDoubleC>.Create( _Contex, _Queuer );  // 生成
-     _Buffer.Count := 2;                                         // 要素数の設定
+     _Buffer := TCLDevBuf<TDoubleC>.Create( _Contex, _Queuer );   // 生成
+     _Buffer.Count := 2;                                          // 要素数の設定
 
      _AreaC := TDoubleAreaC.Create( -2, -2, +2, +2 );
 
-     _Buffer.Storag.Map;                                         // マップ
-     _Buffer.Storag[ 0 ] := _AreaC.Min;                          // 書き込み
-     _Buffer.Storag[ 1 ] := _AreaC.Max;                          // 書き込み
-     _Buffer.Storag.Unmap;                                       // アンマップ
+     _Buffer.Storag.Map;                                          // マップ
+     _Buffer.Storag[ 0 ] := _AreaC.Min;                           // 書き込み
+     _Buffer.Storag[ 1 ] := _AreaC.Max;                           // 書き込み
+     _Buffer.Storag.Unmap;                                        // アンマップ
 
      ///// イメージ
-     _Imager := TCLDevImaRGBA.Create( _Contex, _Queuer );        // 生成
-     _Imager.CountX := 500;                                      // ピクセル数の設定
-     _Imager.CountY := 500;                                      // ピクセル数の設定
+     _Imager := TCLDevImaRGBAxSFlo32.Create( _Contex, _Queuer );  // 生成
+     _Imager.CountX := 500;                                       // ピクセル数の設定
+     _Imager.CountY := 500;                                       // ピクセル数の設定
 
      ///// プログラム
    { _Progra := TCLProgra.Create( _Contex ); }
-     _Progra := _Contex.Progras.Add;                             // 生成
-     _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );     // ソースコードのロード
+     _Progra := _Contex.Progras.Add;                              // 生成
+     _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );      // ソースコードのロード
 
-     MemoC.Lines.Assign( _Progra.Source );                       // ソースコードの表示
+     MemoC.Lines.Assign( _Progra.Source );                        // ソースコードの表示
 
      ///// ビルド
    { _Deploy := _Progra.Deploys.Add( _Device ); }
-     _Deploy := _Progra.BuildTo( _Device );                      // 生成
+     _Deploy := _Progra.BuildTo( _Device );                       // 生成
 
-     if ShowDeploys then                                         // ビルド情報の表示
+     if ShowDeploys then                                          // ビルド情報の表示
      begin
           ///// カーネル
         { _Kernel := TCLKernel.Create( _Progra, 'Main', _Queuer ); }
@@ -148,7 +148,7 @@ begin
                                      else TabControl1.ActiveTab := TabItemS;  // 引数のバインドエラー
      end;
 
-     TOpenCL.Show( MemoS.Lines );                                // システム情報の表示
+     TOpenCL.Show( MemoS.Lines );                                 // システム情報の表示
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
