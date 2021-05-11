@@ -48,7 +48,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        ///// メソッド
-       procedure CreateHandle; override;
+       function CreateHandle :T_cl_int; override;
      public
        constructor Create; override;
      end;
@@ -60,7 +60,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _Data :P_void;
        ///// メソッド
-       procedure CreateHandle; override;
+       function CreateHandle :T_cl_int; override;
        procedure DestroHandle; override;
      public
        constructor Create; override;
@@ -79,7 +79,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetValues( const I_:Integer ) :TValue_; virtual;
        procedure SetValues( const I_:Integer; const Values_:TValue_ ); virtual;
        ///// メソッド
-       procedure CreateHandle; override;
+       function CreateHandle :T_cl_int; override;
      public
        ///// プロパティ
        property Buffer                     :TCLBuffer_ read GetBuffer                ;
@@ -164,13 +164,9 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLDevBuf<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle;
-var
-   E :T_cl_int;
+function TCLDevBuf<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
 begin
-     _Handle := clCreateBuffer( TCLContex( Contex ).Handle, Kind, Size, nil, @E );
-
-     AssertCL( E );
+     _Handle := clCreateBuffer( TCLContex( Contex ).Handle, Kind, Size, nil, @Result );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -190,17 +186,13 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLHosBuf<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle;
-var
-   E :T_cl_int;
+function TCLHosBuf<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
 begin
      inherited;
 
      GetMemAligned( _Data, Ceil2N( Size, 64{Byte} ), 4096{Byte} );
 
-     _Handle := clCreateBuffer( TCLContex( Contex ).Handle, Kind, Size, _Data, @E );
-
-     AssertCL( E );
+     _Handle := clCreateBuffer( TCLContex( Contex ).Handle, Kind, Size, _Data, @Result );
 end;
 
 procedure TCLHosBuf<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle;
@@ -246,15 +238,11 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle;
-var
-   E :T_cl_int;
+function TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
 begin
      inherited;
 
-     _Handle := clEnqueueMapBuffer( Queuer.Handle, Buffer.Handle, CL_TRUE, Mode, 0, Buffer.Size, 0, nil, nil, @E );
-
-     AssertCL( E );
+     _Handle := clEnqueueMapBuffer( Queuer.Handle, Buffer.Handle, CL_TRUE, Mode, 0, Buffer.Size, 0, nil, nil, @Result );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
