@@ -82,28 +82,30 @@ object Form1: TForm1
         Size.Width = 500.000000000000000000
         Size.Height = 500.000000000000000000
         Size.PlatformDefault = False
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 0
         TabPosition = PlatformDefault
         Sizes = (
           500s
           474s
           500s
+          474s
+          500s
           474s)
-        object TabItemC: TTabItem
+        object TabItemPL: TTabItem
           CustomIcon = <
             item
             end>
-          IsSelected = True
-          Size.Width = 48.000000000000000000
+          IsSelected = False
+          Size.Width = 56.000000000000000000
           Size.Height = 26.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
           TabOrder = 0
-          Text = 'Code'
-          ExplicitSize.cx = 63.000000000000000000
+          Text = 'Library'
+          ExplicitSize.cx = 56.000000000000000000
           ExplicitSize.cy = 26.000000000000000000
-          object MemoC: TMemo
+          object MemoPL: TMemo
             Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
             DataDetectorTypes = []
             StyledSettings = [Size, Style, FontColor]
@@ -121,7 +123,38 @@ object Form1: TForm1
             Viewport.Height = 450.000000000000000000
           end
         end
-        object TabItemL: TTabItem
+        object TabItemPE: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = True
+          Size.Width = 71.000000000000000000
+          Size.Height = 26.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Execution'
+          ExplicitSize.cx = 63.000000000000000000
+          ExplicitSize.cy = 26.000000000000000000
+          object MemoPE: TMemo
+            Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+            DataDetectorTypes = []
+            StyledSettings = [Size, Style, FontColor]
+            TextSettings.Font.Family = 'MS Gothic'
+            Align = Client
+            Margins.Left = 10.000000000000000000
+            Margins.Top = 10.000000000000000000
+            Margins.Right = 10.000000000000000000
+            Margins.Bottom = 10.000000000000000000
+            Size.Width = 480.000000000000000000
+            Size.Height = 454.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            Viewport.Width = 476.000000000000000000
+            Viewport.Height = 450.000000000000000000
+          end
+        end
+        object TabItemPB: TTabItem
           CustomIcon = <
             item
             end>
@@ -134,7 +167,7 @@ object Form1: TForm1
           Text = 'Log'
           ExplicitSize.cx = 62.000000000000000000
           ExplicitSize.cy = 26.000000000000000000
-          object MemoL: TMemo
+          object MemoPB: TMemo
             Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
             DataDetectorTypes = []
             StyledSettings = [Size, Style, FontColor]
@@ -189,7 +222,7 @@ object Form1: TForm1
     Enabled = False
     Interval = 10
     OnTimer = Timer1Timer
-    Left = 35
-    Top = 60
+    Left = 45
+    Top = 95
   end
 end
