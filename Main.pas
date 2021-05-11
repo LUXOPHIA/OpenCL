@@ -132,14 +132,14 @@ begin
      ///// ライブラリ
    { _Librar := TCLLibrar.Create( _Contex ); }
      _Librar := _Contex.Librars.Add;                                            // 生成
-     _Librar.Source.LoadFromFile( '..\..\_DATA\Complex.cl' );                   // ソースコードのロード
+     _Librar.Source.LoadFromFile( '..\..\_DATA\Librar.cl' );                    // ソースコードのロード
 
      MemoPL.Lines.Assign( _Librar.Source );                                     // ソースコードの表示
 
      ///// 実行形式
    { _Execut := TCLExecut.Create( _Contex ); }
      _Execut := _Contex.Executs.Add;                                            // 生成
-     _Execut.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードのロード
+     _Execut.Source.LoadFromFile( '..\..\_DATA\Execut.cl' );                    // ソースコードのロード
 
      MemoPE.Lines.Assign( _Execut.Source );                                     // ソースコードの表示
 
