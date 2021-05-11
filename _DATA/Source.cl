@@ -115,7 +115,11 @@ kernel void Main( global     TDoubleC* Buffer,
 
   float4 R = (float4)( L, L, L, 1 );
 
-  write_imagef( Imager, P, GammaCorrect( R, 2.2 ) );
+  float4 G = GammaCorrect( R, 2.2 );
+
+  uint4 U = convert_uint4_sat_rte( 255 * G );
+
+  write_imageui( Imager, P, U );
 }
 
 //##############################################################################
