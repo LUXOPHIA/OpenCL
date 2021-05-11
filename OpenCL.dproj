@@ -254,6 +254,7 @@
         <DCCReference Include="_LIBRARY\LUXOPHIA\LUX\LUX.D1.pas"/>
         <DCCReference Include="_LIBRARY\LUXOPHIA\LUX\Data\List\LUX.Data.Tree.pas"/>
         <None Include="_DATA\Source.cl"/>
+        <None Include="_DATA\Complex.cl"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -276,6 +277,12 @@
                 </Source>
             </Delphi.Personality>
             <Deployment Version="3">
+                <DeployFile LocalName="_DATA\Complex.cl" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
                         <Overwrite>true</Overwrite>

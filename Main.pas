@@ -19,10 +19,12 @@ type
         MemoS: TMemo;
       TabItemP: TTabItem;
         TabControlP: TTabControl;
-          TabItemC: TTabItem;
-            MemoC: TMemo;
-          TabItemL: TTabItem;
-            MemoL: TMemo;
+          TabItemPL: TTabItem;
+            MemoPL: TMemo;
+          TabItemPE: TTabItem;
+            MemoPE: TMemo;
+          TabItemPB: TTabItem;
+            MemoPB: TMemo;
       TabItemR: TTabItem;
         Image1: TImage;
     Timer1: TTimer;
@@ -41,11 +43,12 @@ type
     _Queuer :TCLQueuer;
     _Buffer :TCLDevBuf<TDoubleC>;
     _Imager :TCLDevImaBGRAxUInt8;
-    _Progra :TCLProgra;
-    _Deploy :TCLDeploy;
+    _Librar :TCLLibrar;
+    _Execut :TCLExecut;
+    _Buildr :TCLBuildr;
     _Kernel :TCLKernel;
     ///// メソッド
-    function ShowDeploys :Boolean;
+    function ShowBuildrs :Boolean;
   end;
 
 var
@@ -61,23 +64,23 @@ uses System.Math;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-function TForm1.ShowDeploys :Boolean;
+function TForm1.ShowBuildrs :Boolean;
 var
-   L :TCLDeploy;
+   B :TCLBuildr;
 begin
      Result := True;
 
-     for L in _Progra.Deploys do
+     for B in _Execut.Buildrs do
      begin
-          if L.State <> CL_BUILD_SUCCESS then
+          if B.CompileStatus <> CL_BUILD_SUCCESS then
           begin
                Result := False;
 
-               with MemoL.Lines do
+               with MemoPB.Lines do
                begin
-                    Add( '▼ Platfo[' + L.Device.Platfo.Order.ToString + ']'
-                         + '.Device[' + L.Device       .Order.ToString + ']' );
-                    Add( L.Log );
+                    Add( '▼ Platfo[' + B.Device.Platfo.Order.ToString + ']'
+                         + '.Device[' + B.Device       .Order.ToString + ']' );
+                    Add( B.CompileLog );
                     Add( '' );
                end;
           end;
@@ -86,7 +89,7 @@ begin
      if not Result then
      begin
           TabControl1.ActiveTab := TabItemP;
-          TabControlP.ActiveTab := TabItemL;
+          TabControlP.ActiveTab := TabItemPB;
      end;
 end;
 
@@ -124,22 +127,31 @@ begin
      _Imager.CountX := 500;                                                     // ピクセル数の設定
      _Imager.CountY := 500;                                                     // ピクセル数の設定
 
-     ///// プログラム
-   { _Progra := TCLProgra.Create( _Contex ); }
-     _Progra := _Contex.Progras.Add;                                            // 生成
-     _Progra.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードのロード
+     ////////// プログラム
 
-     MemoC.Lines.Assign( _Progra.Source );                                      // ソースコードの表示
+     ///// ライブラリ
+   { _Librar := TCLLibrar.Create( _Contex ); }
+     _Librar := _Contex.Librars.Add;                                            // 生成
+     _Librar.Source.LoadFromFile( '..\..\_DATA\Complex.cl' );                   // ソースコードのロード
+
+     MemoPL.Lines.Assign( _Librar.Source );                                     // ソースコードの表示
+
+     ///// 実行形式
+   { _Execut := TCLExecut.Create( _Contex ); }
+     _Execut := _Contex.Executs.Add;                                            // 生成
+     _Execut.Source.LoadFromFile( '..\..\_DATA\Source.cl' );                    // ソースコードのロード
+
+     MemoPE.Lines.Assign( _Execut.Source );                                     // ソースコードの表示
 
      ///// ビルド
-   { _Deploy := _Progra.Deploys.Add( _Device ); }
-     _Deploy := _Progra.BuildTo( _Device );                                     // 生成
+   { _Buildr := _Execut.Buildrs.Add( _Device ); }
+     _Buildr := _Execut.BuildTo( _Device );                                     // 生成
 
-     if ShowDeploys then                                                        // ビルド情報の表示
+     if ShowBuildrs then                                                        // ビルド情報の表示
      begin
           ///// カーネル
-        { _Kernel := TCLKernel.Create( _Progra, 'Main', _Queuer ); }
-          _Kernel := _Progra.Kernels.Add( 'Main', _Queuer );                    // 生成
+        { _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer ); }
+          _Kernel := _Execut.Kernels.Add( 'Main', _Queuer );                    // 生成
           _Kernel.Argumes['Buffer'] := _Buffer;                                 // バッファの接続
           _Kernel.Argumes['Imager'] := _Imager;                                 // イメージの接続
           _Kernel.GlobWorkSize := [ _Imager.CountX, _Imager.CountY ];           // ループ回数の設定
