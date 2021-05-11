@@ -44,11 +44,11 @@ begin
           begin
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃' );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┣・Argume[' + A.Order.ToString + '] :TCLArgume' );
-               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Name   = ' + A.Name  );
-               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ ParaI  = ' + A.ParameI.ToString );
-               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Memory = Platfo[' + A.Memory.Contex.Platfo.Order.ToString + ']'
-                                                                  + '.Contex[' + A.Memory.Contex       .Order.ToString + ']'
-                                                                  + '.Memory[' + A.Memory              .Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Name    = ' + A.Name  );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ ParameI = ' + A.ParameI.ToString );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Memory  = Platfo[' + A.Memory.Contex.Platfo.Order.ToString + ']'
+                                                                   + '.Contex[' + A.Memory.Contex       .Order.ToString + ']'
+                                                                   + '.Memory[' + A.Memory              .Order.ToString + ']' );
           end;
      end;
 end;
