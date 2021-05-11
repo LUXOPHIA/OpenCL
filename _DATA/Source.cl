@@ -89,12 +89,8 @@ float4 GammaCorrect( const float4 Color_, const float Gamma_ )
 {
   float4 Result;
 
-  float G = 1 / Gamma_;
-
-  Result.r = pow( Color_.r, G );
-  Result.g = pow( Color_.g, G );
-  Result.b = pow( Color_.b, G );
-  Result.a =      Color_.a;
+  Result.rgb = pow( Color_.rgb, 1/Gamma_ );
+  Result.a   =      Color_.a              ;
 
   return Result;
 }
