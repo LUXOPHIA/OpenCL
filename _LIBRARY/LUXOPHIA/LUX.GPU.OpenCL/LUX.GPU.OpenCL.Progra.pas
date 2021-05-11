@@ -14,6 +14,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLProgras     <TCLContex_,TCLPlatfo_:class> = class;
        TCLProgra    <TCLContex_,TCLPlatfo_:class> = class;
+         TCLSource  <TCLContex_,TCLPlatfo_:class> = class;
          TCLDeploys <TCLContex_,TCLPlatfo_:class> = class;
            TCLDeploy<TCLContex_,TCLPlatfo_:class> = class;
 
@@ -72,6 +73,20 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function Add( const Device_:TCLDevice_ ) :TCLDeploy_; overload;
      end;
 
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSource<TCLContex_,TCLPlatfo_>
+
+     TCLSource<TCLContex_,TCLPlatfo_:class> = class( TStringList )
+     private
+       type TCLProgra_ = TCLProgra<TCLContex_,TCLPlatfo_>;
+     protected
+       _Progra :TCLProgra_;
+       ///// メソッド
+       procedure Changed; override;
+     public
+       constructor Create; overload; virtual;
+       constructor Create( const Progra_:TCLProgra_ ); overload; virtual;
+     end;
+
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<TCLContex_,TCLPlatfo_>
 
      TCLProgra<TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLContex_,TCLProgras<TCLContex_,TCLPlatfo_>> )
@@ -79,6 +94,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLDevice_  = TCLDevice <TCLPlatfo_>;
             TCLProgras_ = TCLProgras<TCLContex_,TCLPlatfo_>;
             TCLProgra_  = TCLProgra <TCLContex_,TCLPlatfo_>;
+            TCLSource_  = TCLSource <TCLContex_,TCLPlatfo_>;
             TCLDeploys_ = TCLDeploys<TCLContex_,TCLPlatfo_>;
             TCLDeploy_  = TCLDeploy <TCLContex_,TCLPlatfo_>;
             TCLKernels_ = TCLKernels<TCLProgra_,TCLContex_,TCLPlatfo_>;
@@ -89,7 +105,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetInfoString( const Name_:T_cl_program_info ) :String;
      protected
        _Handle  :T_cl_program;
-       _Source  :TStringList;
+       _Source  :TCLSource_;
        _LangVer :TCLVersion;
        _Deploys :TCLDeploys_;
        _Kernels :TCLKernels_;
@@ -126,7 +142,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Contex  :TCLContex_   read GetOwnere                 ;
        property Progras :TCLProgras_  read GetParent                 ;
        property Handle  :T_cl_program read GetHandle  write SetHandle;
-       property Source  :TStringList  read   _Source                 ;
+       property Source  :TCLSource_   read   _Source                 ;
        property LangVer :TCLVersion   read   _LangVer                ;
        property Deploys :TCLDeploys_  read   _Deploys                ;
        property Kernels :TCLKernels_  read   _Kernels                ;
@@ -288,6 +304,36 @@ begin
                                         else Result := TCLDeploy_.Create( Self, Device_ );
 end;
 
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSource<TCLContex_,TCLPlatfo_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TCLSource<TCLContex_,TCLPlatfo_>.Changed;
+begin
+     inherited;
+
+     _Progra.Handle := nil;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+constructor TCLSource<TCLContex_,TCLPlatfo_>.Create;
+begin
+     inherited;
+
+end;
+
+constructor TCLSource<TCLContex_,TCLPlatfo_>.Create( const Progra_:TCLProgra_ );
+begin
+     Create;
+
+     _Progra := Progra_;
+end;
+
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgra<TCLContex_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
@@ -388,7 +434,7 @@ constructor TCLProgra<TCLContex_,TCLPlatfo_>.Create;
 begin
      inherited;
 
-     _Source  := TStringList.Create;
+     _Source  := TCLSource_ .Create( Self );
      _Deploys := TCLDeploys_.Create( Self );
      _Kernels := TCLKernels_.Create( Self );
 
