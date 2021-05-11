@@ -32,6 +32,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _CountX :Integer;
        _CountY :Integer;
        ///// アクセス
+       function GetPixChan :T_cl_channel_order; virtual; abstract;
+       function GetPixType :T_cl_channel_type; virtual; abstract;
        function GetStorag :TCLStorag_; reintroduce; virtual;
        procedure SetStorag( const Storag_:TCLStorag_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
@@ -189,8 +191,8 @@ begin
 
      with _Format do
      begin
-          image_channel_order     := CL_RGBA;
-          image_channel_data_type := CL_FLOAT;
+          image_channel_order     := GetPixChan;
+          image_channel_data_type := GetPixType;
      end;
 
      with _Descri do
@@ -239,8 +241,8 @@ begin
 
      with _Format do
      begin
-          image_channel_order     := CL_RGBA;
-          image_channel_data_type := CL_FLOAT;
+          image_channel_order     := GetPixChan;
+          image_channel_data_type := GetPixType;
      end;
 
      with _Descri do
