@@ -25,22 +25,28 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLImager<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemory<TCLContex_,TCLPlatfo_> )
      private
+       type TCLStorag_ = TCLImagerIter<TCLContex_,TCLPlatfo_,TValue_>;
      protected
        _Format :T_cl_image_format;
        _Descri :T_cl_image_desc;
        _CountX :Integer;
        _CountY :Integer;
        ///// アクセス
+       function GetPixChan :T_cl_channel_order; virtual; abstract;
+       function GetPixType :T_cl_channel_type; virtual; abstract;
+       function GetStorag :TCLStorag_; reintroduce; virtual;
+       procedure SetStorag( const Storag_:TCLStorag_ ); reintroduce; virtual;
+       function GetSize :T_size_t; override;
        function GetCountX :Integer; virtual;
        procedure SetCountX( const CountX_:Integer ); virtual;
        function GetCountY :Integer; virtual;
        procedure SetCountY( const CountY_:Integer ); virtual;
-       function GetSize :T_size_t; override;
      public
        constructor Create; override;
        ///// プロパティ
-       property CountX :Integer read GetCountX write SetCountX;
-       property CountY :Integer read GetCountY write SetCountY;
+       property Storag :TCLStorag_ read GetStorag write SetStorag;
+       property CountX :Integer    read GetCountX write SetCountX;
+       property CountY :Integer    read GetCountY write SetCountY;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma<TCLContex_,TCLPlatfo_,TValue_>
@@ -75,9 +81,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLImager_ = TCLImager<TCLContex_,TCLPlatfo_,TValue_>;
             PValue_    = ^TValue_;
      protected
-       _PitchX :T_size_t;
-       _PitchY :T_size_t;
-       _PitchZ :T_size_t;
+       _PitchX :Integer;
+       _PitchY :Integer;
+       _PitchZ :Integer;
        ///// アクセス
        function GetImager :TCLImager_; virtual;
        function GetValueP( const X_,Y_:Integer ) :PValue_; virtual;
@@ -114,6 +120,25 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
+function TCLImager<TCLContex_,TCLPlatfo_,TValue_>.GetStorag :TCLStorag_;
+begin
+     Result := TCLStorag_( inherited Storag );
+end;
+
+procedure TCLImager<TCLContex_,TCLPlatfo_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
+begin
+     inherited Storag := Storag_;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLImager<TCLContex_,TCLPlatfo_,TValue_>.GetSize :T_size_t;
+begin
+     Result := SizeOf( TValue_ ) * _CountX * _CountY;
+end;
+
+//------------------------------------------------------------------------------
+
 function TCLImager<TCLContex_,TCLPlatfo_,TValue_>.GetCountX :Integer;
 begin
      Result := _CountX;
@@ -138,18 +163,13 @@ begin
      _CountY := CountY_;
 end;
 
-//------------------------------------------------------------------------------
-
-function TCLImager<TCLContex_,TCLPlatfo_,TValue_>.GetSize :T_size_t;
-begin
-     Result := SizeOf( TValue_ ) * _CountX * _CountY;
-end;
-
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 constructor TCLImager<TCLContex_,TCLPlatfo_,TValue_>.Create;
 begin
      inherited;
+
+     _Storag := TCLStorag_.Create( Self );
 
      _CountX := 1;
      _CountY := 1;
@@ -171,8 +191,8 @@ begin
 
      with _Format do
      begin
-          image_channel_order     := CL_RGBA;
-          image_channel_data_type := CL_FLOAT;
+          image_channel_order     := GetPixChan;
+          image_channel_data_type := GetPixType;
      end;
 
      with _Descri do
@@ -221,8 +241,8 @@ begin
 
      with _Format do
      begin
-          image_channel_order     := CL_RGBA;
-          image_channel_data_type := CL_FLOAT;
+          image_channel_order     := GetPixChan;
+          image_channel_data_type := GetPixType;
      end;
 
      with _Descri do
@@ -300,8 +320,6 @@ var
 begin
      inherited;
 
-     _PitchX := SizeOf( TValue_ );
-
      O.X := 0;
      O.Y := 0;
      O.Z := 0;
@@ -309,6 +327,8 @@ begin
      R.X := Imager.CountX;
      R.Y := Imager.CountY;
      R.Z := 1;
+
+     _PitchX := SizeOf( TValue_ );
 
      _Handle := clEnqueueMapImage( Queuer.Handle, Imager.Handle, CL_TRUE, Mode, @O, @R, @_PitchY, @_PitchZ, 0, nil, @V, @E );
 
