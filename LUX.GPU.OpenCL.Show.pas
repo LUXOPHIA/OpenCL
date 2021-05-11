@@ -76,41 +76,60 @@ begin
      end;
 end;
 
-procedure ShowDeploys( const Strings_:TStrings; const Deploys_:TCLDeploys );
+procedure ShowBuildrs( const Strings_:TStrings; const Buildrs_:TCLBuildrs );
 var
-   L :TCLDeploy;
+   B :TCLBuildr;
 begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│　┃　│' );
-          Add( ' ┃　│　┃　│　┃　┝ Deploys(' + Deploys_.Count.ToString + ') :TCLDeploys' );
-          for L in Deploys_ do
+          Add( ' ┃　│　┃　│　┃　┝ Buildrs(' + Buildrs_.Count.ToString + ') :TCLBuildrs' );
+          for B in Buildrs_ do
           begin
                Add( ' ┃　│　┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┃　│　┣・Deploy[' + L.Order.ToString + '] :TCLDeploy' );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ Device = Platfo[' + L.Device.Platfo.Order.ToString + ']'
-                                                          + '.Device[' + L.Device       .Order.ToString + ']' );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ State  = ' + L.State.ToString );
+               Add( ' ┃　│　┃　│　┃　│　┣・Buildr[' + B.Order.ToString + '] :TCLBuildr' );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Device       = Platfo[' + B.Device.Platfo.Order.ToString + ']'
+                                                                + '.Device[' + B.Device       .Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ CompileState = ' + B.CompileStatus.ToString );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ LinkState    = ' + B.LinkStatus.ToString );
           end;
      end;
 end;
 
-procedure ShowProgras( const Strings_:TStrings; const Progras_:TCLProgras );
+procedure ShowExecuts( const Strings_:TStrings; const Executs_:TCLExecuts );
 var
-   P :TCLProgra;
+   E :TCLExecut;
 begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│' );
-          Add( ' ┃　│　┃　┝ Progras(' + Progras_.Count.ToString + ') :TCLProgras' );
-          for P in Progras_ do
+          Add( ' ┃　│　┃　┝ Executs(' + Executs_.Count.ToString + ') :TCLExecuts' );
+          for E in Executs_ do
           begin
                Add( ' ┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┣・Progra[' + P.Order.ToString + '] :TCLProgra' );
-               Add( ' ┃　│　┃　│　┃　├ LangVer = ' + P.LangVer.ToString );
+               Add( ' ┃　│　┃　│　┣・Execut[' + E.Order.ToString + '] :TCLExecut' );
+               Add( ' ┃　│　┃　│　┃　├ Name    = ' + E.Name );
+               Add( ' ┃　│　┃　│　┃　├ LangVer = ' + E.LangVer.ToString );
 
-               ShowDeploys( Strings_, P.Deploys );
-               ShowKernels( Strings_, P.Kernels );
+               ShowBuildrs( Strings_, E.Buildrs );
+               ShowKernels( Strings_, E.Kernels );
+          end;
+     end;
+end;
+
+procedure ShowLibrars( const Strings_:TStrings; const Librars_:TCLLibrars );
+var
+   L :TCLLibrar;
+begin
+     with Strings_ do
+     begin
+          Add( ' ┃　│　┃　│' );
+          Add( ' ┃　│　┃　┝ Librars(' + Librars_.Count.ToString + ') :TCLLibrars' );
+          for L in Librars_ do
+          begin
+               Add( ' ┃　│　┃　│　┃' );
+               Add( ' ┃　│　┃　│　┣・Librar[' + L.Order.ToString + '] :TCLLibrar' );
+               Add( ' ┃　│　┃　│　┃　├ Name = ' + L.Name );
           end;
      end;
 end;
@@ -165,7 +184,8 @@ begin
 
                ShowQueuers( Strings_, C.Queuers );
                ShowMemorys( Strings_, C.Memorys );
-               ShowProgras( Strings_, C.Progras );
+               ShowLibrars( Strings_, C.Librars );
+               ShowExecuts( Strings_, C.Executs );
           end;
      end;
 end;
