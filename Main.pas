@@ -72,7 +72,8 @@ begin
 
      for B in _Execut.Buildrs do
      begin
-          if B.CompileStatus <> CL_BUILD_SUCCESS then
+          if ( B.CompileStatus <> CL_BUILD_SUCCESS ) or
+             ( B.   LinkStatus <> CL_BUILD_SUCCESS ) then
           begin
                Result := False;
 
@@ -80,7 +81,10 @@ begin
                begin
                     Add( '▼ Platfo[' + B.Device.Platfo.Order.ToString + ']'
                          + '.Device[' + B.Device       .Order.ToString + ']' );
+                    Add( '▽ Compile' );
                     Add( B.CompileLog );
+                    Add( '▽ Link' );
+                    Add( B.LinkLog );
                     Add( '' );
                end;
           end;
