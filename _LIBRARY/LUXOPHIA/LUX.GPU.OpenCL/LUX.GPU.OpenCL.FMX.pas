@@ -7,6 +7,9 @@ uses LUX.GPU.OpenCL,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
+     TCLDevImaBGRAxUInt8 = TCLDevImaBGRAxUInt8<TCLContex,TCLPlatfo>;
+     TCLHosImaBGRAxUInt8 = TCLHosImaBGRAxUInt8<TCLContex,TCLPlatfo>;
+
      TCLDevImaRGBAxSFlo32 = TCLDevImaRGBAxSFlo32<TCLContex,TCLPlatfo>;
      TCLHosImaRGBAxSFlo32 = TCLHosImaRGBAxSFlo32<TCLContex,TCLPlatfo>;
 
