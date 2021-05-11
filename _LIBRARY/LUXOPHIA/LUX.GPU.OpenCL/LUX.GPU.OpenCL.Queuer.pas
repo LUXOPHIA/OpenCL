@@ -30,8 +30,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetHandle :T_cl_command_queue;
        procedure SetHandle( const Handle_:T_cl_command_queue );
        ///// メソッド
-       procedure CreateHandle;
-       procedure DestroHandle;
+       function CreateHandle :T_cl_int; virtual;
+       procedure DestroHandle; virtual;
      public
        constructor Create; override;
        constructor Create( const Contex_:TCLContex_; const Device_:TCLDevice_ ); overload; virtual;
@@ -81,7 +81,7 @@ uses LUX.GPU.OpenCL;
 
 function TCLQueuer<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_command_queue;
 begin
-     if not Assigned( _Handle ) then CreateHandle;
+     if not Assigned( _Handle ) then AssertCL( CreateHandle );
 
      Result := _Handle;
 end;
@@ -95,12 +95,18 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLQueuer<TCLContex_,TCLPlatfo_>.CreateHandle;
+function TCLQueuer<TCLContex_,TCLPlatfo_>.CreateHandle :T_cl_int;
 begin
      {$IF CL_VERSION_2_0 <> 0 }
-     _Handle := clCreateCommandQueueWithProperties( TCLContex( Contex ).Handle, TCLDevice( Device ).Handle, nil, nil );
+     _Handle := clCreateCommandQueueWithProperties( TCLContex( Contex ).Handle,
+                                                    TCLDevice( Device ).Handle,
+                                                    nil,
+                                                    @Result );
      {$ELSE}
-     _Handle := clCreateCommandQueue              ( TCLContex( Contex ).Handle, TCLDevice( Device ).Handle, nil, nil );
+     _Handle := clCreateCommandQueue              ( TCLContex( Contex ).Handle,
+                                                    TCLDevice( Device ).Handle,
+                                                    nil,
+                                                    @Result );
      {$ENDIF}
 end;
 

@@ -31,14 +31,16 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                  TCLQueuer         = TCLQueuer <TCLContex,TCLPlatfo>;
                TCLMemorys          = TCLMemorys<TCLContex,TCLPlatfo>;
                  TCLMemory         = TCLMemory <TCLContex,TCLPlatfo>;
-               TCLProgras          = TCLProgras<TCLContex,TCLPlatfo>;
-                 TCLProgra         = TCLProgra <TCLContex,TCLPlatfo>;
-                   TCLDeploys      = TCLDeploys<TCLContex,TCLPlatfo>;
-                     TCLDeploy     = TCLDeploy <TCLContex,TCLPlatfo>;
-                   TCLKernels      = TCLKernels<TCLProgra,TCLContex,TCLPlatfo>;
-                     TCLKernel     = TCLKernel <TCLProgra,TCLContex,TCLPlatfo>;
-                       TCLArgumes  = TCLArgumes<TCLProgra,TCLContex,TCLPlatfo>;
-                         TCLArgume = TCLArgume <TCLProgra,TCLContex,TCLPlatfo>;
+               TCLLibrars          = TCLLibrars<TCLContex,TCLPlatfo>;
+                 TCLLibrar         = TCLLibrar <TCLContex,TCLPlatfo>;
+               TCLExecuts          = TCLExecuts<TCLContex,TCLPlatfo>;
+                 TCLExecut         = TCLExecut <TCLContex,TCLPlatfo>;
+                   TCLBuildrs      = TCLBuildrs<TCLContex,TCLPlatfo>;
+                     TCLBuildr     = TCLBuildr <TCLContex,TCLPlatfo>;
+                   TCLKernels      = TCLKernels<TCLExecut,TCLContex,TCLPlatfo>;
+                     TCLKernel     = TCLKernel <TCLExecut,TCLContex,TCLPlatfo>;
+                       TCLArgumes  = TCLArgumes<TCLExecut,TCLContex,TCLPlatfo>;
+                         TCLArgume = TCLArgume <TCLExecut,TCLContex,TCLPlatfo>;
 
      TCLDevBuf<TValue_:record> = class( TCLDevBuf<TCLContex,TCLPlatfo,TValue_> );
      TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLContex,TCLPlatfo,TValue_> );
