@@ -7,10 +7,8 @@ uses LUX.GPU.OpenCL,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLDevImaRGBA = TCLDevImaRGBA<TCLContex,TCLPlatfo>;
-     TCLHosImaRGBA = TCLHosImaRGBA<TCLContex,TCLPlatfo>;
-
-     TCLImagerIterRGBA = TCLImagerIterRGBA<TCLContex,TCLPlatfo>;
+     TCLDevImaRGBAxSFlo32 = TCLDevImaRGBAxSFlo32<TCLContex,TCLPlatfo>;
+     TCLHosImaRGBAxSFlo32 = TCLHosImaRGBAxSFlo32<TCLContex,TCLPlatfo>;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
