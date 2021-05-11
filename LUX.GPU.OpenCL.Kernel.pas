@@ -32,12 +32,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLArgumes_ = TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>;
      protected
        _Name    :String;
-       _ParameI :T_cl_uint;
+       _ParameI :Integer;
        _Memory  :TCLMemory_;
        ///// アクセス
        function GetName :String; virtual;
        procedure SetName( const Name_:String ); virtual;
-       function GetParameI :T_cl_uint; virtual;
+       function GetParameI :Integer; virtual;
        function GetMemory :TCLMemory_; virtual;
        procedure SetMemory( const Memory_:TCLMemory_ ); virtual;
      public
@@ -48,7 +48,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Kernel  :TCLKernel_  read GetOwnere                 ;
        property Argumes :TCLArgumes_ read GetParent                 ;
        property Name    :String      read GetName    write SetName  ;
-       property ParameI :T_cl_uint   read GetParameI                ;
+       property ParameI :Integer     read GetParameI                ;
        property Memory  :TCLMemory_  read GetMemory  write SetMemory;
        ///// メソッド
        procedure Bind;
@@ -91,6 +91,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property BindsOK                       :Boolean    read GetBindsOK write SetBindsOK;
        ///// メソッド
        procedure Add( const Name_:String; const Memory_:TCLMemory_ ); overload;
+       function Contains( const Name_:String ) :Boolean;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>
@@ -232,7 +233,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.GetParameI :T_cl_uint;
+function TCLArgume<TCLProgra_,TCLContex_,TCLPlatfo_>.GetParameI :Integer;
 begin
      Argumes.FindsOK;
 
@@ -260,7 +261,7 @@ begin
      inherited;
 
      _Name    := '';
-     _ParameI := 0;
+     _ParameI := -1;
      _Memory  := nil;
 end;
 
@@ -286,7 +287,7 @@ var
 begin
      H := Memory.Handle;
 
-     AssertCL( clSetKernelArg( Kernel.Handle, ParameI, SizeOf( T_cl_mem ), @H ) );
+     AssertCL( clSetKernelArg( Kernel.Handle, T_cl_uint( ParameI ), SizeOf( T_cl_mem ), @H ) );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>
@@ -327,13 +328,19 @@ end;
 function TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.GetFindsOK :Boolean;
 var
    I :T_cl_uint;
+   K :String;
 begin
      if not _FindsOK then
      begin
-          for I := 0 to Kernel.KERNEL_NUM_ARGS-1
-          do Items[ Kernel.KERNEL_ARG_NAME[ I ] ]._ParameI := I;
-
           _FindsOK := True;
+
+          for I := 0 to Kernel.KERNEL_NUM_ARGS-1 do
+          begin
+               K := Kernel.KERNEL_ARG_NAME[ I ];
+
+               if Contains( K ) then Items[ K ]._ParameI := I
+                                else _FindsOK := False;
+          end;
      end;
 
      Result := _FindsOK;
@@ -351,9 +358,7 @@ function TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.GetBindsOK :Boolean;
 var
    A :TCLArgume_;
 begin
-     FindsOK;
-
-     if not _BindsOK then
+     if FindsOK and not _BindsOK then
      begin
           for A in Self do A.Bind;
 
@@ -410,6 +415,13 @@ end;
 procedure TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.Add( const Name_:String; const Memory_:TCLMemory_ );
 begin
      TCLArgume_.Create( Self, Name_, Memory_ );
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLArgumes<TCLProgra_,TCLContex_,TCLPlatfo_>.Contains( const Name_:String ) :Boolean;
+begin
+     Result := _VarArgs.ContainsKey( Name_ );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLProgra_,TCLContex_,TCLPlatfo_>
