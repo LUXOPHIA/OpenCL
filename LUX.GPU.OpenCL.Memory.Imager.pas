@@ -55,7 +55,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        ///// メソッド
-       procedure CreateHandle; override;
+       function CreateHandle :T_cl_int; override;
      public
        constructor Create; override;
      end;
@@ -67,7 +67,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _Data :P_void;
        ///// メソッド
-       procedure CreateHandle; override;
+       function CreateHandle :T_cl_int; override;
        procedure DestroHandle; override;
      public
        constructor Create; override;
@@ -90,7 +90,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetValues( const X_,Y_:Integer ) :TValue_; virtual;
        procedure SetValues( const X_,Y_:Integer; const Values_:TValue_ ); virtual;
        ///// メソッド
-       procedure CreateHandle; override;
+       function CreateHandle :T_cl_int; override;
      public
        ///// プロパティ
        property Imager                        :TCLImager_ read GetImager                ;
@@ -183,9 +183,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLDevIma<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle;
-var
-   E :T_cl_int;
+function TCLDevIma<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
 begin
      inherited;
 
@@ -209,9 +207,7 @@ begin
           buffer            := nil;
      end;
 
-     _Handle := clCreateImage( TCLContex( Contex ).Handle, Kind, @_Format, @_Descri, nil, @E );
-
-     AssertCL( E );
+     _Handle := clCreateImage( TCLContex( Contex ).Handle, Kind, @_Format, @_Descri, nil, @Result );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -231,9 +227,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLHosIma<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle;
-var
-   E :T_cl_int;
+function TCLHosIma<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
 begin
      inherited;
 
@@ -259,9 +253,7 @@ begin
           buffer            := nil;
      end;
 
-     _Handle := clCreateImage( TCLContex( Contex ).Handle, Kind, @_Format, @_Descri, _Data, @E );
-
-     AssertCL( E );
+     _Handle := clCreateImage( TCLContex( Contex ).Handle, Kind, @_Format, @_Descri, _Data, @Result );
 end;
 
 procedure TCLHosIma<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle;
@@ -310,13 +302,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLImagerIter<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle;
+function TCLImagerIter<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
 var
    O, R :record
            X, Y, Z :T_size_t;
          end;
    V :T_cl_event;
-   E :T_cl_int;
 begin
      inherited;
 
@@ -330,9 +321,7 @@ begin
 
      _PitchX := SizeOf( TValue_ );
 
-     _Handle := clEnqueueMapImage( Queuer.Handle, Imager.Handle, CL_TRUE, Mode, @O, @R, @_PitchY, @_PitchZ, 0, nil, @V, @E );
-
-     AssertCL( E );
+     _Handle := clEnqueueMapImage( Queuer.Handle, Imager.Handle, CL_TRUE, Mode, @O, @R, @_PitchY, @_PitchZ, 0, nil, @V, @Result );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public

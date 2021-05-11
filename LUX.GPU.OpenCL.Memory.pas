@@ -38,7 +38,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetStorag( const Storag_:TCLStorag_ ); virtual;
        function GetSize :T_size_t; virtual; abstract;
        ///// メソッド
-       procedure CreateHandle; virtual; abstract;
+       function CreateHandle :T_cl_int; virtual; abstract;
        procedure DestroHandle; virtual;
      public
        constructor Create; override;
@@ -81,7 +81,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetHandle :P_void; virtual;
        procedure SetHandle( const Handle_:P_void ); virtual;
        ///// メソッド
-       procedure CreateHandle; virtual; abstract;
+       function CreateHandle :T_cl_int; virtual; abstract;
        procedure DestroHandle; virtual;
      public
        constructor Create; overload; virtual;
@@ -121,7 +121,7 @@ uses LUX.GPU.OpenCL;
 
 function TCLMemory<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_mem;
 begin
-     if not Assigned( _Handle ) then CreateHandle;
+     if not Assigned( _Handle ) then AssertCL( CreateHandle );
 
      Result := _Handle;
 end;
@@ -213,7 +213,7 @@ end;
 
 function TCLMemoryIter<TCLContex_,TCLPlatfo_>.GetHandle :P_void;
 begin
-     if not Assigned( _Handle ) then CreateHandle;
+     if not Assigned( _Handle ) then AssertCL( CreateHandle );
 
      Result := _Handle;
 end;
