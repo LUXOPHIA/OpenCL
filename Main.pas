@@ -158,7 +158,8 @@ begin
           _Kernel := _Execut.Kernels.Add( 'Main', _Queuer );                    // 生成
           _Kernel.Argumes['Buffer'] := _Buffer;                                 // バッファの接続
           _Kernel.Argumes['Imager'] := _Imager;                                 // イメージの接続
-          _Kernel.GlobWorkSize := [ _Imager.CountX, _Imager.CountY ];           // ループ回数の設定
+          _Kernel.GloSizX := _Imager.CountX;                                    // Ｘ方向ループ回数の設定
+          _Kernel.GloSizY := _Imager.CountY;                                    // Ｙ方向ループ回数の設定
 
           if _Kernel.Argumes.BindsOK then Timer1.Enabled := True                // 描画ループ開始
                                      else TabControl1.ActiveTab := TabItemS;    // 引数のバインドエラー
