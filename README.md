@@ -197,16 +197,16 @@ In addition, various classes are derived depending on the layout and bits of the
 Save the image data to the device side.  
 画像データをデバイス側へ保存します。  
   * `TCLDevImaBGRAxUInt8`  
-    ＢＧＲＡ × Byte
+    ＢＧＲＡ × Byte = `System.UITypes.TAlphaColor`
   * `TCLDevImaRGBAxSFlo32`  
-    ＲＧＢＡ × Single
+    ＲＧＢＡ × Single = `System.UITypes.TAlphaColorF`
 * `TCLHosIma`  
 Save the image data to the host side.  
 画像データをホスト側へ保存します。 
   * `TCLHosImaBGRAxUInt8`  
-    ＢＧＲＡ × Byte
+    ＢＧＲＡ × Byte = `System.UITypes.TAlphaColor`
   * `TCLHosImaRGBAxSFlo32`  
-    ＲＧＢＡ × Single
+    ＲＧＢＡ × Single = `System.UITypes.TAlphaColorF`
 
 ```Delphi
 var _Imager :TCLDevImaBGRAxUInt8;
