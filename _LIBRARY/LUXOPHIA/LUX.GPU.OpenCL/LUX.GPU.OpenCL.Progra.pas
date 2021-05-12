@@ -396,6 +396,8 @@ end;
 
 destructor TCLBuildrs<TCLContex_,TCLPlatfo_>.Destroy;
 begin
+     Clear;
+
      _DevDeps.Free;
 
      inherited;
