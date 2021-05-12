@@ -20,6 +20,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TLoop3D
+
+     TLoop3D = record
+       X, Y, Z :T_size_t;
+     end;
+
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgume<TCLExecut_,TCLContex_,TCLPlatfo_>
@@ -113,20 +119,34 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetArgInfos<_TYPE_>( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :TArray<_TYPE_>;
        function GetArgInfoString( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :String;
      protected
-       _Handle       :T_cl_kernel;
-       _Name         :String;
-       _Queuer       :TCLQueuer_;
-       _Argumes      :TCLArgumes_;
-       _GlobWorkOffs :TArray<T_size_t>;
-       _GlobWorkSize :TArray<T_size_t>;
-       _LocaWorkSize :TArray<T_size_t>;
+       _Handle  :T_cl_kernel;
+       _Name    :String;
+       _Queuer  :TCLQueuer_;
+       _Argumes :TCLArgumes_;
+       _GloMin  :TLoop3D;
+       _GloSiz  :TLoop3D;
        ///// アクセス
        function GetHandle :T_cl_kernel;
        procedure SetHandle( const Handle_:T_cl_kernel );
-       function GetDimension :T_cl_uint;
-       procedure SetGlobWorkOffs( const GlobWorkOffs_:TArray<T_size_t> );
-       procedure SetGlobWorkSize( const GlobWorkSize_:TArray<T_size_t> );
-       procedure SetLocaWorkSize( const LocaWorkSize_:TArray<T_size_t> );
+       function GetGloMinX :Integer;
+       procedure SetGloMinX( const GloMinX_:Integer );
+       function GetGloMinY :Integer;
+       procedure SetGloMinY( const GloMinY_:Integer );
+       function GetGloMinZ :Integer;
+       procedure SetGloMinZ( const GloMinZ_:Integer );
+       function GetGloSizX :Integer;
+       procedure SetGloSizX( const GloSizX_:Integer );
+       function GetGloSizY :Integer;
+       procedure SetGloSizY( const GloSizY_:Integer );
+       function GetGloSizZ :Integer;
+       procedure SetGloSizZ( const GloSizZ_:Integer );
+       function GetGloMaxX :Integer;
+       procedure SetGloMaxX( const GloMaxX_:Integer );
+       function GetGloMaxY :Integer;
+       procedure SetGloMaxY( const GloMaxY_:Integer );
+       function GetGloMaxZ :Integer;
+       procedure SetGloMaxZ( const GloMaxZ_:Integer );
+       function GetGloDimN :Integer;
        (* cl_kernel_info *)
        function GetKERNEL_FUNCTION_NAME :String;
        function GetKERNEL_NUM_ARGS :T_cl_uint;
@@ -152,16 +172,22 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Execut_:TCLExecut_; const Name_:String; const Queuer_:TCLQueuer_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Execut       :TCLExecut_       read GetOwnere                            ;
-       property Kernels      :TCLKernels_      read GetParent                            ;
-       property Handle       :T_cl_kernel      read GetHandle       write SetHandle      ;
-       property Name         :String           read   _Name         write   _Name        ;
-       property Queuer       :TCLQueuer_       read   _Queuer                            ;
-       property Argumes      :TCLArgumes_      read   _Argumes                           ;
-       property Dimension    :T_cl_uint        read GetDimension                         ;
-       property GlobWorkOffs :TArray<T_size_t> read   _GlobWorkOffs write SetGlobWorkOffs;
-       property GlobWorkSize :TArray<T_size_t> read   _GlobWorkSize write SetGlobWorkSize;
-       property LocaWorkSize :TArray<T_size_t> read   _LocaWorkSize write SetLocaWorkSize;
+       property Execut  :TCLExecut_  read GetOwnere                  ;
+       property Kernels :TCLKernels_ read GetParent                  ;
+       property Handle  :T_cl_kernel read GetHandle  write SetHandle ;
+       property Name    :String      read   _Name    write   _Name   ;
+       property Queuer  :TCLQueuer_  read   _Queuer                  ;
+       property Argumes :TCLArgumes_ read   _Argumes                 ;
+       property GloMinX :Integer     read GetGloMinX write SetGloMinX;
+       property GloMinY :Integer     read GetGloMinY write SetGloMinY;
+       property GloMinZ :Integer     read GetGloMinZ write SetGloMinZ;
+       property GloSizX :Integer     read GetGloSizX write SetGloSizX;
+       property GloSizY :Integer     read GetGloSizY write SetGloSizY;
+       property GloSizZ :Integer     read GetGloSizZ write SetGloSizZ;
+       property GloMaxX :Integer     read GetGloMaxX write SetGloMaxX;
+       property GloMaxY :Integer     read GetGloMaxY write SetGloMaxY;
+       property GloMaxZ :Integer     read GetGloMaxZ write SetGloMaxZ;
+       property GloDimN :Integer     read GetGloDimN                 ;
        (* cl_kernel_info *)
        property KERNEL_FUNCTION_NAME   :String       read GetKERNEL_FUNCTION_NAME;
        property KERNEL_NUM_ARGS        :T_cl_uint    read GetKERNEL_NUM_ARGS;
@@ -405,6 +431,8 @@ end;
 
 destructor TCLArgumes<TCLExecut_,TCLContex_,TCLPlatfo_>.Destroy;
 begin
+     Clear;
+
      _VarArgs.Free;
 
      inherited;
@@ -504,24 +532,108 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetDimension :T_cl_uint;
+function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloMinX :Integer;
 begin
-     Result := Length( _GlobWorkSize );
+     Result := _GloMin.X;
 end;
 
-procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGlobWorkOffs( const GlobWorkOffs_:TArray<T_size_t> );
+procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGloMinX( const GloMinX_:Integer );
 begin
-     _GlobWorkOffs := GlobWorkOffs_;
+     _GloMin.X := GloMinX_;
 end;
 
-procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGlobWorkSize( const GlobWorkSize_:TArray<T_size_t> );
+function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloMinY :Integer;
 begin
-     _GlobWorkSize := GlobWorkSize_;
+     Result := _GloMin.Y;
 end;
 
-procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetLocaWorkSize( const LocaWorkSize_:TArray<T_size_t> );
+procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGloMinY( const GloMinY_:Integer );
 begin
-     _LocaWorkSize := LocaWorkSize_;
+     _GloMin.Y := GloMinY_;
+end;
+
+function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloMinZ :Integer;
+begin
+     Result := _GloMin.Z;
+end;
+
+procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGloMinZ( const GloMinZ_:Integer );
+begin
+     _GloMin.Z := GloMinZ_;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloSizX :Integer;
+begin
+     Result := _GloSiz.X;
+end;
+
+procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGloSizX( const GloSizX_:Integer );
+begin
+     _GloSiz.X := GloSizX_;
+end;
+
+function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloSizY :Integer;
+begin
+     Result := _GloSiz.Y;
+end;
+
+procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGloSizY( const GloSizY_:Integer );
+begin
+     _GloSiz.Y := GloSizY_;
+end;
+
+function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloSizZ :Integer;
+begin
+     Result := _GloSiz.Z;
+end;
+
+procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGloSizZ( const GloSizZ_:Integer );
+begin
+     _GloSiz.Z := GloSizZ_;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloMaxX :Integer;
+begin
+     Result := GloMinX + GloSizX;
+end;
+
+procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGloMaxX( const GloMaxX_:Integer );
+begin
+     GloSizX := GloMaxX_ - GloMinX;
+end;
+
+function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloMaxY :Integer;
+begin
+     Result := GloMinY + GloSizY;
+end;
+
+procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGloMaxY( const GloMaxY_:Integer );
+begin
+     GloSizY := GloMaxY_ - GloMinY;
+end;
+
+function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloMaxZ :Integer;
+begin
+     Result := GloMinZ + GloSizZ;
+end;
+
+procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGloMaxZ( const GloMaxZ_:Integer );
+begin
+     GloSizZ := GloMaxZ_ - GloMinZ;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloDimN :Integer;
+begin
+     if ( GloMinZ > 0 ) or ( GloSizZ > 1 ) then Result := 3
+                                           else
+     if ( GloMinY > 0 ) or ( GloSizY > 1 ) then Result := 2
+                                           else Result := 1;
 end;
 
 //----------------------------------------------------------(* cl_kernel_info *)
@@ -613,11 +725,11 @@ begin
 
      _Argumes := TCLArgumes_.Create( Self );
 
-     _Name         := '';
-     _Queuer       := nil;
-     _GlobWorkOffs := [];
-     _GlobWorkSize := [ 1 ];
-     _LocaWorkSize := [];
+     _Name   := '';
+     _Queuer := nil;
+
+     _GloMin.X := 0;  _GloMin.Y := 0;  _GloMin.Z := 0;
+     _GloSiz.X := 1;  _GloSiz.Y := 1;  _GloSiz.Z := 1;
 end;
 
 constructor TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.Create( const Execut_:TCLExecut_ );
@@ -654,12 +766,8 @@ procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.Run;
 begin
      Argumes.BindsOK;
 
-     AssertCL( clEnqueueNDRangeKernel( _Queuer.Handle,
-                                       Handle,
-                                       Dimension,
-                                       @_GlobWorkOffs[ 0 ],
-                                       @_GlobWorkSize[ 0 ],
-                                       @_LocaWorkSize[ 0 ],
+     AssertCL( clEnqueueNDRangeKernel( _Queuer.Handle, Handle,
+                                       2, @_GloMin, @_GloSiz, nil,
                                        0, nil, nil ) );
 
      clFinish( _Queuer.Handle );
