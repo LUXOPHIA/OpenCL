@@ -133,17 +133,17 @@ C0 := TCLContex.Create( P0 );
 C1 := TCLContex.Create( P1 ); 
 C2 := TCLContex.Create( P2 );
 
-Q00 := TCLComman.Create( C0, D00 );  // OK
-Q01 := TCLComman.Create( C0, D01 );  // OK
-Q02 := TCLComman.Create( C0, D02 );  // OK
+Q00 := TCLQueuer.Create( C0, D00 );  // OK
+Q01 := TCLQueuer.Create( C0, D01 );  // OK
+Q02 := TCLQueuer.Create( C0, D02 );  // OK
 
-Q10 := TCLComman.Create( C1, D00 );  // Error
-Q11 := TCLComman.Create( C1, D01 );  // Error
-Q12 := TCLComman.Create( C1, D02 );  // Error
+Q10 := TCLQueuer.Create( C1, D00 );  // Error
+Q11 := TCLQueuer.Create( C1, D01 );  // Error
+Q12 := TCLQueuer.Create( C1, D02 );  // Error
 
-Q20 := TCLComman.Create( C2, D00 );  // Error
-Q21 := TCLComman.Create( C2, D10 );  // Error
-Q22 := TCLComman.Create( C2, D20 );  // OK
+Q20 := TCLQueuer.Create( C2, D00 );  // Error
+Q21 := TCLQueuer.Create( C2, D10 );  // Error
+Q22 := TCLQueuer.Create( C2, D20 );  // OK
 ```
 
 ### ▼ 2.5. Memory：メモリー
