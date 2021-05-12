@@ -149,7 +149,7 @@ Q22 := TCLComman.Create( C2, D20 );  // OK
 The "**Memory**" object (`TCLMemory`) stores various data and shares it with the **device**.
 The `TCLMemory` class is created from the `TCLContex` and the `TCLDevice` classes.
 The `TCLMemory` class is abstract and derives the `TCLBuffer` and `TCLImager` classes.  
-“**メモリー**”オブジェクトは、様々なデータを格納し、**デバイス**と共有します。
+“**メモリー**”オブジェクト (`TCLMemory`) は、様々なデータを格納し**デバイス**と共有します。
 `TCLMemory`クラスは、`TCLContex`クラスと`TCLDevice`クラスから生成されます。
 `TCLMemory`クラスは抽象クラスであり、`TCLBuffer`クラスと`TCLImager`クラスを派生させます。  
 
@@ -173,7 +173,7 @@ var _Buffer :TCLDevBuf<TItem>;
 _Buffer := TCLDevBuf<TItem>.Create( _Contex, _Queuer );
 ```
 Read and write array data through the `Storag` property.
-Before reading or writing array data, the memory address must be **map**ped and **unmap**ped after use.  
+Before reading or writing array data, the memory address must be "**map**ped" and "**unmap**ped" after use.  
 `Storag`プロパティを通して、配列データを読み書きします。
 配列データを読み書きする前に、メモリアドレスを“マップ”し、使用後に“アンマップ”する必要があります。
 ```Delphi
@@ -220,7 +220,7 @@ The `TCLProgra` class is abstract and derives the `TCLLibrar` and `TCLExecut` cl
 “**プログラム**”オブジェクト (`TCLProgra`) は、ソースコードを読み込んで、実行可能なバイナリへビルドします。
 `TCLProgra`クラスは抽象クラスであり、ソースコードの種類に応じて、`TCLLibrar`クラスと`TCLExecut`クラスへ派生します。  
 
-#### ▽ 2.6.1. `TCLLibrar`
+#### ▽ 2.6.1. TCLLibrar
 The `TCLLibrar` class is a program that does not include functions to execute directly is called a library type.  
 `TCLLibrar`クラスは、直接実行する関数を含まないプログラムです。  
 ```Delphi
@@ -232,7 +232,7 @@ _Librar := _Contex.Librars.Add;
 _Librar.Source.LoadFromFile( 'Librar.cl' );  // ソースコードのロード
 ```
 
-#### ▽ 2.6.2. `TCLExecut`
+#### ▽ 2.6.2. TCLExecut
 The `TCLExecut` class is a program that includes functions to execute directly.  
 `TCLExecut`クラスは、直接実行する関数を含んだプログラムです。  
 ```Delphi
@@ -245,17 +245,17 @@ _Execut.Source.LoadFromFile( 'Execut.cl' );  // ソースコードのロード
 ```
 
 ### ▼ 2.7. Build：ビルド
-A "**build**" (`TCLBuildr`) is an "action" performed by a **program**, but it is explicitly represented as a class in our library.
-The **kernel** object (see chapter 2.8.) automatically creates the `TCLBuildr` class at runtime.  
-**ビルド** (`TCLBuildr`) は**プログラム**が行う“行為”ですが、我々のライブラリではクラスとして明示的に表現されます。
-**カーネル**オブジェクト（2.8.章参照）は、実行時に`TCLBuildr`クラスを自動生成します。  
+A "**build**" (`TCLBuildr`) is an "action" performed by a **program**, but it is explicitly represented as a class in our library.  
+**ビルド** (`TCLBuildr`) は**プログラム**が行う“行為”ですが、我々のライブラリではクラスとして明示的に表現されます。  
 ```Delphi
 var _Buildr :TCLBuildr;
 _Buildr := _Execut.Buildrs.Add( _Device );
   {or}
 _Buildr := _Execut.BuildTo( _Device );
 ```
+The **kernel** object (see chapter 2.8.) automatically creates the `TCLBuildr` class at runtime.
 However, you can check for compiling and linking errors by creating a `TCLBuildr` class before running the kernel.  
+**カーネル**オブジェクト（2.8.章参照）は、実行時に`TCLBuildr`クラスを自動生成します。
 しかし、カーネルの実行前に`TCLBuildr`クラスを作成することで、コンパイルとリンクのエラーを確認することができます。 
 ```Delphi
 _Buildr.CompileStatus :T_cl_build_status  // コンパイルのスタータス
