@@ -598,32 +598,32 @@ end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloMaxX :Integer;
 begin
-     Result := GloMinX + GloSizX;
+     Result := GloMinX + GloSizX - 1;
 end;
 
 procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGloMaxX( const GloMaxX_:Integer );
 begin
-     GloSizX := GloMaxX_ - GloMinX;
+     GloSizX := GloMaxX_ - GloMinX + 1;
 end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloMaxY :Integer;
 begin
-     Result := GloMinY + GloSizY;
+     Result := GloMinY + GloSizY - 1;
 end;
 
 procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGloMaxY( const GloMaxY_:Integer );
 begin
-     GloSizY := GloMaxY_ - GloMinY;
+     GloSizY := GloMaxY_ - GloMinY + 1;
 end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetGloMaxZ :Integer;
 begin
-     Result := GloMinZ + GloSizZ;
+     Result := GloMinZ + GloSizZ - 1;
 end;
 
 procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetGloMaxZ( const GloMaxZ_:Integer );
 begin
-     GloSizZ := GloMaxZ_ - GloMinZ;
+     GloSizZ := GloMaxZ_ - GloMinZ + 1;
 end;
 
 //------------------------------------------------------------------------------
