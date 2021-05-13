@@ -3,9 +3,9 @@
 interface //#################################################################### ■
 
 uses LUX.GPU.OpenCL,
-     LUX.GPU.OpenCL.Memory.Imager.D1.FMX,
-     LUX.GPU.OpenCL.Memory.Imager.D2.FMX,
-     LUX.GPU.OpenCL.Memory.Imager.D3.FMX;
+     LUX.GPU.OpenCL.Argume.Memory.Imager.D1.FMX,
+     LUX.GPU.OpenCL.Argume.Memory.Imager.D2.FMX,
+     LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 

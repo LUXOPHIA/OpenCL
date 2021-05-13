@@ -11,9 +11,9 @@ uses System.Classes,
      LUX.GPU.OpenCL.Queuer,
      LUX.GPU.OpenCL.Argume,
      LUX.GPU.OpenCL.Argume.Samplr,
-     LUX.GPU.OpenCL.Memory,
-     LUX.GPU.OpenCL.Memory.Buffer,
-     LUX.GPU.OpenCL.Memory.Imager,
+     LUX.GPU.OpenCL.Argume.Memory,
+     LUX.GPU.OpenCL.Argume.Memory.Buffer,
+     LUX.GPU.OpenCL.Argume.Memory.Imager,
      LUX.GPU.OpenCL.Progra,
      LUX.GPU.OpenCL.Kernel;
 

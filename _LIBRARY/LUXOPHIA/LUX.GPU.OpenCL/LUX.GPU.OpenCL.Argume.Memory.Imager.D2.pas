@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Memory.Imager.D3;
+﻿unit LUX.GPU.OpenCL.Argume.Memory.Imager.D2;
 
 interface //#################################################################### ■
 
@@ -6,45 +6,45 @@ uses cl_version, cl_platform, cl,
      LUX,
      LUX.Code.C,
      LUX.GPU.OpenCL.core,
-     LUX.GPU.OpenCL.Memory.Imager.D2;
+     LUX.GPU.OpenCL.Argume.Memory.Imager.D1;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLImager3D  <TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
-       TCLDevIma3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
-       TCLHosIma3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLImager2D  <TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+       TCLDevIma2D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+       TCLHosIma2D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
 
-     TCLImagerIter3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLImagerIter2D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLImager3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager2D<TCLContex_,TCLPlatfo_,TValue_> )
+     TCLImager2D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager1D<TCLContex_,TCLPlatfo_,TValue_> )
      private
-       type TCLStorag_ = TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>;
+       type TCLStorag_ = TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>;
      protected
-       _CountZ :Integer;
+       _CountY :Integer;
        ///// アクセス
        function GetStorag :TCLStorag_; reintroduce; virtual;
        procedure SetStorag( const Storag_:TCLStorag_ ); reintroduce; virtual;
        function GetMemTyp :T_cl_mem_object_type; override;
-       function GetCountZ :Integer; override;
-       procedure SetCountZ( const CountZ_:Integer ); override;
+       function GetCountY :Integer; override;
+       procedure SetCountY( const CountY_:Integer ); override;
        ///// メソッド
        function NewStorag :TObject; override;
      public
        constructor Create; override;
        ///// プロパティ
        property Storag :TCLStorag_ read GetStorag write SetStorag;
-       property CountZ :Integer    read GetCountZ write SetCountZ;
+       property CountY :Integer    read GetCountY write SetCountY;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma3D<TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma2D<TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLDevIma3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager3D<TCLContex_,TCLPlatfo_,TValue_> )
+     TCLDevIma2D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager2D<TCLContex_,TCLPlatfo_,TValue_> )
      private
      protected
        ///// メソッド
@@ -53,9 +53,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma3D<TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma2D<TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLHosIma3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager3D<TCLContex_,TCLPlatfo_,TValue_> )
+     TCLHosIma2D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager2D<TCLContex_,TCLPlatfo_,TValue_> )
      private
      protected
        _Data :P_void;
@@ -66,23 +66,23 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLImagerIter3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_> )
+     TCLImagerIter2D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImagerIter1D<TCLContex_,TCLPlatfo_,TValue_> )
      private
-       type TCLImager_ = TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>;
+       type TCLImager_ = TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>;
             PValue_    = ^TValue_;
      protected
        ///// アクセス
        function GetImager :TCLImager_; reintroduce; virtual;
-       function GetValueP( const X_,Y_,Z_:Integer ) :PByte;
-       function GetValues( const X_,Y_,Z_:Integer ) :TValue_;
-       procedure SetValues( const X_,Y_,Z_:Integer; const Values_:TValue_ );
+       function GetValueP( const X_,Y_:Integer ) :PByte;
+       function GetValues( const X_,Y_:Integer ) :TValue_;
+       procedure SetValues( const X_,Y_:Integer; const Values_:TValue_ );
      public
        ///// プロパティ
-       property Imager                           :TCLImager_ read GetImager                ;
-       property ValueP[ const X_,Y_,Z_:Integer ] :PByte      read GetValueP                ;
-       property Values[ const X_,Y_,Z_:Integer ] :TValue_    read GetValues write SetValues; default;
+       property Imager                        :TCLImager_ read GetImager                ;
+       property ValueP[ const X_,Y_:Integer ] :PByte      read GetValueP                ;
+       property Values[ const X_,Y_:Integer ] :TValue_    read GetValues write SetValues; default;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -99,7 +99,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -107,54 +107,54 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.GetStorag :TCLStorag_;
+function TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.GetStorag :TCLStorag_;
 begin
      Result := TCLStorag_( inherited Storag );
 end;
 
-procedure TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
+procedure TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
 begin
      inherited Storag := Storag_;
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.GetMemTyp :T_cl_mem_object_type;
+function TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.GetMemTyp :T_cl_mem_object_type;
 begin
-     Result := CL_MEM_OBJECT_IMAGE3D;
+     Result := CL_MEM_OBJECT_IMAGE2D;
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.GetCountZ :Integer;
+function TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.GetCountY :Integer;
 begin
-     Result := _CountZ;
+     Result := _CountX;
 end;
 
-procedure TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.SetCountZ( const CountZ_:Integer );
+procedure TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.SetCountY( const CountY_:Integer );
 begin
      inherited;
 
-     _CountZ := CountZ_;
+     _CountY := CountY_;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.NewStorag :TObject;
+function TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.NewStorag :TObject;
 begin
      Result := TCLStorag_.Create( Self );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.Create;
+constructor TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.Create;
 begin
      inherited;
 
-     _CountZ := 1;
+     _CountY := 1;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma3D<TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma2D<TCLContex_,TCLPlatfo_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -162,7 +162,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLDevIma3D<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
+function TCLDevIma2D<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
 var
    F :T_cl_image_format;
    D :T_cl_image_desc;
@@ -177,14 +177,14 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLDevIma3D<TCLContex_,TCLPlatfo_,TValue_>.Create;
+constructor TCLDevIma2D<TCLContex_,TCLPlatfo_,TValue_>.Create;
 begin
      inherited;
 
      _Kind := CL_MEM_READ_WRITE or CL_MEM_ALLOC_HOST_PTR;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma3D<TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma2D<TCLContex_,TCLPlatfo_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -192,7 +192,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLHosIma3D<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
+function TCLHosIma2D<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
 var
    F :T_cl_image_format;
    D :T_cl_image_desc;
@@ -207,7 +207,7 @@ begin
      _Handle := clCreateImage( TCLContex( Contex ).Handle, Kind, @F, @D, _Data, @Result );
 end;
 
-function TCLHosIma3D<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle :T_cl_int;
+function TCLHosIma2D<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle :T_cl_int;
 begin
      FreeMemAligned( _Data );
 
@@ -216,14 +216,14 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLHosIma3D<TCLContex_,TCLPlatfo_,TValue_>.Create;
+constructor TCLHosIma2D<TCLContex_,TCLPlatfo_,TValue_>.Create;
 begin
      inherited;
 
      _Kind := CL_MEM_READ_WRITE or CL_MEM_USE_HOST_PTR;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -231,28 +231,28 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>.GetImager :TCLImager_;
+function TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>.GetImager :TCLImager_;
 begin
      Result := TCLImager_( Imager );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>.GetValueP( const X_,Y_,Z_:Integer ) :PByte;
+function TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>.GetValueP( const X_,Y_:Integer ) :PByte;
 begin
-     Result := inherited GetValueP( X_, Y_ );
+     Result := inherited GetValueP( X_ );
 
-     Inc( Result, _PitchZ * Z_ );
+     Inc( Result, _PitchY * Y_ );
 end;
 
-function TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>.GetValues( const X_,Y_,Z_:Integer ) :TValue_;
+function TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>.GetValues( const X_,Y_:Integer ) :TValue_;
 begin
-     Result := PValue_( ValueP[ X_, Y_, Z_ ] )^;
+     Result := PValue_( ValueP[ X_, Y_ ] )^;
 end;
 
-procedure TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>.SetValues( const X_,Y_,Z_:Integer; const Values_:TValue_ );
+procedure TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>.SetValues( const X_,Y_:Integer; const Values_:TValue_ );
 begin
-     PValue_( ValueP[ X_, Y_, Z_ ] )^ := Values_;
+     PValue_( ValueP[ X_, Y_ ] )^ := Values_;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
