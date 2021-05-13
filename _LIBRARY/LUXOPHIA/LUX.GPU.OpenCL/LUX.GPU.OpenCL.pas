@@ -28,7 +28,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
              TCLContex             = TCLContex <TCLPlatfo>;
                TCLQueuers          = TCLQueuers<TCLContex,TCLPlatfo>;
                  TCLQueuer         = TCLQueuer <TCLContex,TCLPlatfo>;
-               TCLMemorys          = TCLMemorys<TCLContex,TCLPlatfo>;
+               TCLArgumes          = TCLArgumes<TCLContex,TCLPlatfo>;
+                 TCLArgume         = TCLArgume <TCLContex,TCLPlatfo>;
                  TCLMemory         = TCLMemory <TCLContex,TCLPlatfo>;
                TCLLibrars          = TCLLibrars<TCLContex,TCLPlatfo>;
                  TCLLibrar         = TCLLibrar <TCLContex,TCLPlatfo>;

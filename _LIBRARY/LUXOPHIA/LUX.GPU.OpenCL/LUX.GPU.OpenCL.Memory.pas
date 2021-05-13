@@ -10,8 +10,9 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLMemorys <TCLContex_,TCLPlatfo_:class> = class;
-       TCLMemory<TCLContex_,TCLPlatfo_:class> = class;
+     TCLArgumes   <TCLContex_,TCLPlatfo_:class> = class;
+       TCLArgume  <TCLContex_,TCLPlatfo_:class> = class;
+         TCLMemory<TCLContex_,TCLPlatfo_:class> = class;
 
      TCLMemoryIter<TCLContex_,TCLPlatfo_:class> = class;
 
@@ -19,12 +20,35 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgume<TCLContex_,TCLPlatfo_>
+
+     TCLArgume<TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLContex_,TCLArgumes<TCLContex_,TCLPlatfo_>> )
+     private
+       type TCLArgumes_ = TCLArgumes<TCLContex_,TCLPlatfo_>;
+     protected
+       ///// アクセス
+       function GetHanPtr :P_void; virtual; abstract;
+       function GetHanSiz :T_size_t; virtual; abstract;
+       ///// メソッド
+       function CreateHandle :T_cl_int; virtual; abstract;
+       function DestroHandle :T_cl_int; virtual; abstract;
+     public
+       constructor Create; override;
+       constructor Create( const Contex_:TCLContex_ ); overload; virtual;
+       destructor Destroy; override;
+       ///// プロパティ
+       property Contex  :TCLContex_  read GetOwnere;
+       property Argumes :TCLArgumes_ read GetParent;
+       property HanPtr  :P_void      read GetHanPtr;
+       property HanSiz  :T_size_t    read GetHanSiz;
+     end;
+
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<TCLContex_,TCLPlatfo_>
 
-     TCLMemory<TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLContex_,TCLMemorys<TCLContex_,TCLPlatfo_>> )
+     TCLMemory<TCLContex_,TCLPlatfo_:class> = class( TCLArgume<TCLContex_,TCLPlatfo_> )
      private
        type TCLQueuer_  = TCLQueuer <TCLContex_,TCLPlatfo_>;
-            TCLMemorys_ = TCLMemorys<TCLContex_,TCLPlatfo_>;
+            TCLArgumes_ = TCLArgumes<TCLContex_,TCLPlatfo_>;
             TCLStorag_  = TCLMemoryIter<TCLContex_,TCLPlatfo_>;
      protected
        _Handle :T_cl_mem;
@@ -32,23 +56,21 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Storag :TCLStorag_;
        _Queuer :TCLQueuer_;
        ///// アクセス
+       function GetHanPtr :P_void; override;
+       function GetHanSiz :T_size_t; override;
        function GetHandle :T_cl_mem; virtual;
        procedure SetHandle( const Handle_:T_cl_mem ); virtual;
        function GetStorag :TCLStorag_; virtual;
        procedure SetStorag( const Storag_:TCLStorag_ ); virtual;
        function GetSize :T_size_t; virtual; abstract;
        ///// メソッド
-       function CreateHandle :T_cl_int; virtual; abstract;
-       function DestroHandle :T_cl_int; virtual;
+       function DestroHandle :T_cl_int; override;
        function NewStorag :TObject; virtual; abstract;
      public
        constructor Create; override;
-       constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        constructor Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Contex  :TCLContex_     read GetOwnere                ;
-       property Memorys :TCLMemorys_    read GetParent                ;
        property Handle  :T_cl_mem       read GetHandle write SetHandle;
        property Kind    :T_cl_mem_flags read   _Kind                  ;
        property Storag  :TCLStorag_     read GetStorag write SetStorag;
@@ -56,9 +78,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Queuer  :TCLQueuer_     read   _Queuer write   _Queuer;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemorys<TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLContex_,TCLPlatfo_>
 
-     TCLMemorys<TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLContex_,TCLMemory<TCLContex_,TCLPlatfo_>> )
+     TCLArgumes<TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLContex_,TCLArgume<TCLContex_,TCLPlatfo_>> )
      private
      protected
      public
@@ -112,6 +134,31 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgume<TCLContex_,TCLPlatfo_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+constructor TCLArgume<TCLContex_,TCLPlatfo_>.Create;
+begin
+     inherited;
+
+end;
+
+constructor TCLArgume<TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_ );
+begin
+     inherited Create( TCLContex( Contex_ ).Argumes );
+end;
+
+destructor TCLArgume<TCLContex_,TCLPlatfo_>.Destroy;
+begin
+
+     inherited;
+end;
+
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<TCLContex_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
@@ -119,6 +166,16 @@ uses LUX.GPU.OpenCL;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 /////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLMemory<TCLContex_,TCLPlatfo_>.GetHanPtr :P_void;
+begin
+     Result := Handle;
+end;
+
+function TCLMemory<TCLContex_,TCLPlatfo_>.GetHanSiz :T_size_t;
+begin
+     Result := SizeOf( T_cl_mem );
+end;
 
 function TCLMemory<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_mem;
 begin
@@ -170,11 +227,6 @@ begin
      _Queuer := nil;
 end;
 
-constructor TCLMemory<TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_ );
-begin
-     inherited Create( TCLContex( Contex_ ).Memorys );
-end;
-
 constructor TCLMemory<TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ );
 begin
      Create( Contex_ );
@@ -191,7 +243,7 @@ begin
      inherited;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemorys<TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLContex_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
