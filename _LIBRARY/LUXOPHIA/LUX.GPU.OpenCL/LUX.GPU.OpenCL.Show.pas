@@ -134,19 +134,27 @@ begin
      end;
 end;
 
-procedure ShowMemorys( const Strings_:TStrings; const Memorys_:TCLMemorys );
+procedure ShowArgumes( const Strings_:TStrings; const Argumes_:TCLArgumes );
 var
+   A :TCLArgume;
    M :TCLMemory;
 begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│' );
-          Add( ' ┃　│　┃　┝ Memorys(' + Memorys_.Count.ToString + ') :TCLMemorys' );
-          for M in Memorys_ do
+          Add( ' ┃　│　┃　┝ Argumes(' + Argumes_.Count.ToString + ') :TCLArgumes' );
+          for A in Argumes_ do
           begin
                Add( ' ┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┣・Memory[' + M.Order.ToString + '] :TCLMemory' );
-               Add( ' ┃　│　┃　│　┃　├ Size = ' + M.Size.ToString );
+               Add( ' ┃　│　┃　│　┣・Argume[' + A.Order.ToString + '] :TCLArgume' );
+               Add( ' ┃　│　┃　│　┃　├ Class = ' + A.ClassName );
+
+               if A.ClassType = TCLMemory then
+               begin
+                    M := A as TCLMemory;
+
+                    Add( ' ┃　│　┃　│　┃　├ Size  = ' + M.Size.ToString );
+               end;
           end;
      end;
 end;
@@ -183,7 +191,7 @@ begin
                Add( ' ┃　│　┣・Contex[' + C.Order.ToString + '] :TCLContex' );
 
                ShowQueuers( Strings_, C.Queuers );
-               ShowMemorys( Strings_, C.Memorys );
+               ShowArgumes( Strings_, C.Argumes );
                ShowLibrars( Strings_, C.Librars );
                ShowExecuts( Strings_, C.Executs );
           end;
