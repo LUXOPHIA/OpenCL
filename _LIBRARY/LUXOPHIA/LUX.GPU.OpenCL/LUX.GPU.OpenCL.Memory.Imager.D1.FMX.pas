@@ -266,8 +266,7 @@ var
    B :TBitmapData;
    X :Integer;
 begin
-     CountX := Bitmap_.Width ;
-     CountY := Bitmap_.Height;
+     CountX := Bitmap_.Width;
 
      Bitmap_.Map( TMapAccess.Read, B );
 
@@ -325,8 +324,7 @@ var
    B :TBitmapData;
    X, Y :Integer;
 begin
-     CountX := Bitmap_.Width ;
-     CountY := Bitmap_.Height;
+     CountX := Bitmap_.Width;
 
      Bitmap_.Map( TMapAccess.Read, B );
 
@@ -384,8 +382,7 @@ var
    B :TBitmapData;
    X :Integer;
 begin
-     CountX := Bitmap_.Width ;
-     CountY := Bitmap_.Height;
+     CountX := Bitmap_.Width;
 
      Bitmap_.Map( TMapAccess.Read, B );
 
@@ -443,8 +440,7 @@ var
    B :TBitmapData;
    X, Y :Integer;
 begin
-     CountX := Bitmap_.Width ;
-     CountY := Bitmap_.Height;
+     CountX := Bitmap_.Width;
 
      Bitmap_.Map( TMapAccess.Read, B );
 
@@ -503,8 +499,7 @@ var
    B :TBitmapData;
    X :Integer;
 begin
-     CountX := Bitmap_.Width ;
-     CountY := Bitmap_.Height;
+     CountX := Bitmap_.Width;
 
      Bitmap_.Map( TMapAccess.Read, B );
 
@@ -564,8 +559,7 @@ var
    B :TBitmapData;
    X :Integer;
 begin
-     CountX := Bitmap_.Width ;
-     CountY := Bitmap_.Height;
+     CountX := Bitmap_.Width;
 
      Bitmap_.Map( TMapAccess.Read, B );
 
