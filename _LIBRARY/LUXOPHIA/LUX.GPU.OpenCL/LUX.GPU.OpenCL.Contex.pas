@@ -9,7 +9,7 @@ uses cl_version, cl_platform, cl,
      LUX.GPU.OpenCL.Device,
      LUX.GPU.OpenCL.Queuer,
      LUX.GPU.OpenCL.Progra,
-     LUX.GPU.OpenCL.Memory;
+     LUX.GPU.OpenCL.Argume;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
