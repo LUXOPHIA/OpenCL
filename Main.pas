@@ -48,7 +48,7 @@ type
     _Buildr :TCLBuildr;
     _Kernel :TCLKernel;
     ///// メソッド
-    function ShowBuildrs :Boolean;
+    procedure ShowBuildr;
   end;
 
 var
@@ -64,37 +64,27 @@ uses System.Math;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-function TForm1.ShowBuildrs :Boolean;
-var
-   B :TCLBuildr;
+procedure TForm1.ShowBuildr;
 begin
-     Result := True;
-
-     for B in _Execut.Buildrs do
+     with MemoPB.Lines do
      begin
-          if ( B.CompileStatus <> CL_BUILD_SUCCESS ) or
-             ( B.   LinkStatus <> CL_BUILD_SUCCESS ) then
+          if _Buildr.CompileStatus <> CL_BUILD_SUCCESS then
           begin
-               Result := False;
+               Add( '▽ Compile' );
+               Add( _Buildr.CompileLog );
+               Add( '' );
+          end;
 
-               with MemoPB.Lines do
-               begin
-                    Add( '▼ Platfo[' + B.Device.Platfo.Order.ToString + ']'
-                         + '.Device[' + B.Device       .Order.ToString + ']' );
-                    Add( '▽ Compile' );
-                    Add( B.CompileLog );
-                    Add( '▽ Link' );
-                    Add( B.LinkLog );
-                    Add( '' );
-               end;
+          if _Buildr.LinkStatus <> CL_BUILD_SUCCESS then
+          begin
+               Add( '▽ Link' );
+               Add( _Buildr.LinkLog );
+               Add( '' );
           end;
      end;
 
-     if not Result then
-     begin
-          TabControl1.ActiveTab := TabItemP;
-          TabControlP.ActiveTab := TabItemPB;
-     end;
+     TabControl1.ActiveTab := TabItemP;
+     TabControlP.ActiveTab := TabItemPB;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
@@ -115,9 +105,14 @@ begin
    { _Queuer := TCLQueuer.Create( _Contex, _Device ); }
      _Queuer := _Contex.Queuers.Add( _Device );                                 // 生成
 
+     Assert( Assigned( _Contex.Handle ), '_Contex is Error!' );
+     Assert( Assigned( _Queuer.Handle ), '_Queuer is Error!' );
+
      ///// バッファー
      _Buffer := TCLDevBuf<TDoubleC>.Create( _Contex, _Queuer );                 // 生成
      _Buffer.Count := 2;                                                        // 要素数の設定
+
+     Assert( Assigned( _Buffer.Handle ), '_Buffer is Error!' );
 
      _AreaC := TDoubleAreaC.Create( -2, -2, +2, +2 );
 
@@ -131,6 +126,8 @@ begin
      _Imager.CountX := 500;                                                     // ピクセル数の設定
      _Imager.CountY := 500;                                                     // ピクセル数の設定
 
+     Assert( Assigned( _Imager.Handle ), '_Imager is Error!' );
+
      ////////// プログラム
 
      ///// ライブラリ
@@ -140,6 +137,8 @@ begin
 
      MemoPL.Lines.Assign( _Librar.Source );                                     // ソースコードの表示
 
+     Assert( Assigned( _Librar.Handle ), '_Librar is Error!' );
+
      ///// 実行形式
    { _Execut := TCLExecut.Create( _Contex ); }
      _Execut := _Contex.Executs.Add;                                            // 生成
@@ -147,11 +146,13 @@ begin
 
      MemoPE.Lines.Assign( _Execut.Source );                                     // ソースコードの表示
 
+     Assert( Assigned( _Execut.Handle ), '_Execut is Error!' );
+
      ///// ビルド
    { _Buildr := _Execut.Buildrs.Add( _Device ); }
      _Buildr := _Execut.BuildTo( _Device );                                     // 生成
 
-     if ShowBuildrs then                                                        // ビルド情報の表示
+     if Assigned( _Buildr.Handle ) then
      begin
           ///// カーネル
         { _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer ); }
@@ -161,9 +162,12 @@ begin
           _Kernel.GloSizX := _Imager.CountX;                                    // Ｘ方向ループ回数の設定
           _Kernel.GloSizY := _Imager.CountY;                                    // Ｙ方向ループ回数の設定
 
+          Assert( Assigned( _Kernel.Handle ), '_Kernel is Error!' );
+
           if _Kernel.Argumes.BindsOK then Timer1.Enabled := True                // 描画ループ開始
                                      else TabControl1.ActiveTab := TabItemS;    // 引数のバインドエラー
-     end;
+     end
+     else ShowBuildr; { _Buildr is Error! }                                     // ビルド情報の表示
 
      TOpenCL.Show( MemoS.Lines );                                               // システム情報の表示
 end;
