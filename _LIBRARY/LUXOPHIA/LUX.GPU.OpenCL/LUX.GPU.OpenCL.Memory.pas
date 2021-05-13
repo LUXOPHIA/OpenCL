@@ -40,6 +40,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// メソッド
        function CreateHandle :T_cl_int; virtual; abstract;
        function DestroHandle :T_cl_int; virtual;
+       function NewStorag :TObject; virtual; abstract;
      public
        constructor Create; override;
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
@@ -165,7 +166,7 @@ begin
      _Handle := nil;
 
      _Kind   := CL_MEM_READ_WRITE;
-     _Storag := nil;
+     _Storag := TCLStorag_( NewStorag );
      _Queuer := nil;
 end;
 
@@ -183,9 +184,9 @@ end;
 
 destructor TCLMemory<TCLContex_,TCLPlatfo_>.Destroy;
 begin
-      Handle := nil;
+     _Storag.Free;
 
-     if Assigned( _Storag ) then _Storag.Free;
+      Handle := nil;
 
      inherited;
 end;
