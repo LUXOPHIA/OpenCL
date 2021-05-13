@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Memory.Imager.FMX;
+﻿unit LUX.GPU.OpenCL.Memory.Imager.D2.FMX;
 
 interface //#################################################################### ■
 
