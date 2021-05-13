@@ -38,8 +38,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                      TCLBuildr     = TCLBuildr <TCLContex,TCLPlatfo>;
                    TCLKernels      = TCLKernels<TCLExecut,TCLContex,TCLPlatfo>;
                      TCLKernel     = TCLKernel <TCLExecut,TCLContex,TCLPlatfo>;
-                       TCLArgumes  = TCLArgumes<TCLExecut,TCLContex,TCLPlatfo>;
-                         TCLArgume = TCLArgume <TCLExecut,TCLContex,TCLPlatfo>;
+                       TCLParames  = TCLParames<TCLExecut,TCLContex,TCLPlatfo>;
+                         TCLParame = TCLParame <TCLExecut,TCLContex,TCLPlatfo>;
 
      TCLDevBuf<TValue_:record> = class( TCLDevBuf<TCLContex,TCLPlatfo,TValue_> );
      TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLContex,TCLPlatfo,TValue_> );
