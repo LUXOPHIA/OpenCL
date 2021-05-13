@@ -23,11 +23,16 @@ uses
   LUX.Data.List in '_LIBRARY\LUXOPHIA\LUX\Data\List\LUX.Data.List.pas',
   LUX.GPU.OpenCL.Show in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Show.pas',
   LUX.GPU.OpenCL.Memory.Imager in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.pas',
-  LUX.GPU.OpenCL.Memory.Imager.FMX in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.FMX.pas',
+  LUX.GPU.OpenCL.Memory.Imager.D2.FMX in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.D2.FMX.pas',
   LUX.GPU.OpenCL.FMX in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.FMX.pas',
   LUX.Complex in '_LIBRARY\LUXOPHIA\LUX\Complex\LUX.Complex.pas',
   LUX.D1 in '_LIBRARY\LUXOPHIA\LUX\LUX.D1.pas',
-  LUX.Data.Tree in '_LIBRARY\LUXOPHIA\LUX\Data\List\LUX.Data.Tree.pas';
+  LUX.Data.Tree in '_LIBRARY\LUXOPHIA\LUX\Data\List\LUX.Data.Tree.pas',
+  LUX.GPU.OpenCL.Memory.Imager.D1 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.D1.pas',
+  LUX.GPU.OpenCL.Memory.Imager.D2 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.D2.pas',
+  LUX.GPU.OpenCL.Memory.Imager.D3 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.D3.pas',
+  LUX.GPU.OpenCL.Memory.Imager.D3.FMX in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.D3.FMX.pas',
+  LUX.GPU.OpenCL.Memory.Imager.D1.FMX in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.D1.FMX.pas';
 
 {$R *.res}
 

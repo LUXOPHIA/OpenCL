@@ -42,7 +42,7 @@ type
     _Contex :TCLContex;
     _Queuer :TCLQueuer;
     _Buffer :TCLDevBuf<TDoubleC>;
-    _Imager :TCLDevImaBGRAxUInt8;
+    _Imager :TCLDevIma2DxBGRAxUInt8;
     _Librar :TCLLibrar;
     _Execut :TCLExecut;
     _Buildr :TCLBuildr;
@@ -122,7 +122,7 @@ begin
      _Buffer.Storag.Unmap;                                                      // アンマップ
 
      ///// イメージ
-     _Imager := TCLDevImaBGRAxUInt8.Create( _Contex, _Queuer );                 // 生成
+     _Imager := TCLDevIma2DxBGRAxUInt8.Create( _Contex, _Queuer );              // 生成
      _Imager.CountX := 500;                                                     // ピクセル数の設定
      _Imager.CountY := 500;                                                     // ピクセル数の設定
 
