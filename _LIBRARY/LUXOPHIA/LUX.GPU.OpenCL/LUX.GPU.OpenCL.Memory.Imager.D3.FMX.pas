@@ -15,6 +15,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLDevIma3DxBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class;
      TCLHosIma3DxBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class;
 
+     TCLDevIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_:class> = class;
+     TCLHosIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_:class> = class;
+
      TCLDevIma3DxRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class;
      TCLHosIma3DxRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class;
 
@@ -65,6 +68,34 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma3DxBGRAxUInt8<TCLContex_,TCLPlatfo_>
 
      TCLHosIma3DxBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma3DFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
+     private
+     protected
+       ///// アクセス
+       function GetPixChan :T_cl_channel_order; override;
+       function GetPixType :T_cl_channel_type; override;
+     public
+       ///// メソッド
+       procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
+       procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); override;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>
+
+     TCLDevIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLDevIma3DFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
+     private
+     protected
+       ///// アクセス
+       function GetPixChan :T_cl_channel_order; override;
+       function GetPixType :T_cl_channel_type; override;
+     public
+       ///// メソッド
+       procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
+       procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); override;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>
+
+     TCLHosIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma3DFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
      private
      protected
        ///// アクセス
@@ -290,6 +321,124 @@ begin
 end;
 
 procedure TCLHosIma3DxBGRAxUInt8<TCLContex_,TCLPlatfo_>.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
+var
+   B :TBitmapData;
+   X, Y :Integer;
+begin
+     CountX := Bitmap_.Width ;
+     CountY := Bitmap_.Height;
+
+     Bitmap_.Map( TMapAccess.Read, B );
+
+     for Y := 0 to CountY-1 do Move( B.GetScanline( Y )^,
+                                     Storag.ValueP[ 0, Y, Z_ ]^,
+                                     B.BytesPerLine );
+
+     Storag.Unmap;
+
+     Bitmap_.Unmap( B );
+end;
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLDevIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
+begin
+     Result := CL_BGRA;
+end;
+
+function TCLDevIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
+begin
+     Result := CL_UNORM_INT8;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TCLDevIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
+var
+   B :TBitmapData;
+   X, Y :Integer;
+begin
+     Bitmap_.SetSize( CountX, CountY );
+
+     Bitmap_.Map( TMapAccess.Write, B );
+
+     for Y := 0 to CountY-1 do Move( Storag.ValueP[ 0, Y, Z_ ]^,
+                                     B.GetScanline( Y )^,
+                                     B.BytesPerLine );
+
+     Storag.Unmap;
+
+     Bitmap_.Unmap( B );
+end;
+
+procedure TCLDevIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
+var
+   B :TBitmapData;
+   X, Y :Integer;
+begin
+     CountX := Bitmap_.Width ;
+     CountY := Bitmap_.Height;
+
+     Bitmap_.Map( TMapAccess.Read, B );
+
+     for Y := 0 to CountY-1 do Move( B.GetScanline( Y )^,
+                                     Storag.ValueP[ 0, Y, Z_ ]^,
+                                     B.BytesPerLine );
+
+     Storag.Unmap;
+
+     Bitmap_.Unmap( B );
+end;
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLHosIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
+begin
+     Result := CL_BGRA;
+end;
+
+function TCLHosIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
+begin
+     Result := CL_UNORM_INT8;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TCLHosIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
+var
+   B :TBitmapData;
+   X, Y :Integer;
+begin
+     Bitmap_.SetSize( CountX, CountY );
+
+     Bitmap_.Map( TMapAccess.Write, B );
+
+     for Y := 0 to CountY-1 do Move( Storag.ValueP[ 0, Y, Z_ ]^,
+                                     B.GetScanline( Y )^,
+                                     B.BytesPerLine );
+
+     Storag.Unmap;
+
+     Bitmap_.Unmap( B );
+end;
+
+procedure TCLHosIma3DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
    X, Y :Integer;
