@@ -3,7 +3,7 @@
 interface //#################################################################### ■
 
 uses System.Classes,
-     LUX.GPU.OpenCL.root,
+     LUX.GPU.OpenCL.core,
      LUX.GPU.OpenCL.Show,
      LUX.GPU.OpenCL.Device,
      LUX.GPU.OpenCL.Platfo,
