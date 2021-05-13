@@ -32,18 +32,18 @@ uses System.SysUtils,
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
 
-procedure ShowArgumes( const Strings_:TStrings; const Argumes_:TCLArgumes );
+procedure ShowParames( const Strings_:TStrings; const Parames_:TCLParames );
 var
-   A :TCLArgume;
+   A :TCLParame;
 begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│　┃　│　┃　│' );
-          Add( ' ┃　│　┃　│　┃　│　┃　┝ Argumes(' + Argumes_.Count.ToString + ') :TCLArgumes' );
-          for A in Argumes_ do
+          Add( ' ┃　│　┃　│　┃　│　┃　┝ Parames(' + Parames_.Count.ToString + ') :TCLParames' );
+          for A in Parames_ do
           begin
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┃　│　┃　│　┣・Argume[' + A.Order.ToString + '] :TCLArgume' );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┣・Parame[' + A.Order.ToString + '] :TCLParame' );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Name    = ' + A.Name );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ ParameI = ' + A.ParameI.ToString );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Memory  = Platfo[' + A.Memory.Contex.Platfo.Order.ToString + ']'
@@ -71,7 +71,7 @@ begin
                                                            + '.Contex[' + K.Queuer.Contex       .Order.ToString + ']'
                                                            + '.Queuer[' + K.Queuer              .Order.ToString + ']' );
 
-               ShowArgumes( Strings_, K.Argumes );
+               ShowParames( Strings_, K.Parames );
           end;
      end;
 end;
