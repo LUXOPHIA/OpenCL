@@ -5,7 +5,7 @@ interface //####################################################################
 uses cl_version, cl_platform, cl,
      LUX.Data.List,
      LUX.Code.C,
-     LUX.GPU.OpenCL.root;
+     LUX.GPU.OpenCL.core;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 

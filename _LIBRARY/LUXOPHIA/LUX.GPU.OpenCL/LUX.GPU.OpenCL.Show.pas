@@ -23,7 +23,7 @@ implementation //###############################################################
 uses System.SysUtils,
      cl_version, cl_platform, cl,
      LUX.Code.C,
-     LUX.GPU.OpenCL.root,
+     LUX.GPU.OpenCL.core,
      LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
