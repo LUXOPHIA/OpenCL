@@ -33,7 +33,8 @@ uses
   LUX.GPU.OpenCL.Memory.Imager.D3 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.D3.pas',
   LUX.GPU.OpenCL.Memory.Imager.D3.FMX in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.D3.FMX.pas',
   LUX.GPU.OpenCL.Memory.Imager.D1.FMX in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Memory.Imager.D1.FMX.pas',
-  LUX.GPU.OpenCL.Argume in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Argume.pas';
+  LUX.GPU.OpenCL.Argume in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Argume.pas',
+  LUX.GPU.OpenCL.Argume.Samplr in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Argume.Samplr.pas';
 
 {$R *.res}
 

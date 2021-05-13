@@ -42,7 +42,9 @@ type
     _Contex :TCLContex;
     _Queuer :TCLQueuer;
     _Buffer :TCLDevBuf<TDoubleC>;
-    _Imager :TCLDevIma2DxBGRAxUInt8;
+    _Imager :TCLDevIma2DxBGRAxNormUInt8;
+    _Textur :TCLDevIma1DxBGRAxNormUInt8;
+    _Samplr :TCLSamplr;
     _Librar :TCLLibrar;
     _Execut :TCLExecut;
     _Buildr :TCLBuildr;
@@ -122,11 +124,28 @@ begin
      _Buffer.Storag.Unmap;                                                      // アンマップ
 
      ///// イメージ
-     _Imager := TCLDevIma2DxBGRAxUInt8.Create( _Contex, _Queuer );              // 生成
+     _Imager := TCLDevIma2DxBGRAxNormUInt8.Create( _Contex, _Queuer );          // 生成
      _Imager.CountX := 500;                                                     // ピクセル数の設定
      _Imager.CountY := 500;                                                     // ピクセル数の設定
 
      Assert( Assigned( _Imager.Handle ), '_Imager is Error!' );
+
+     ///// テクスチャ
+     _Textur := TCLDevIma1DxBGRAxNormUInt8.Create( _Contex, _Queuer );          // 生成
+     _Textur.CountX := 4;
+     _Textur.Storag.Map;
+     _Textur.Storag[ 0 ] := TAlphaColors.Black;
+     _Textur.Storag[ 1 ] := TAlphaColors.Red;
+     _Textur.Storag[ 2 ] := TAlphaColors.Yellow;
+     _Textur.Storag[ 3 ] := TAlphaColors.White;
+     _Textur.Storag.Unmap;
+
+     Assert( Assigned( _Textur.Handle ), '_Textur is Error!' );
+
+     ///// サンプラー
+     _Samplr := TCLSamplr.Create( _Contex );                                    // 生成
+
+     Assert( Assigned( _Samplr.Handle ), '_Samplr is Error!' );
 
      ////////// プログラム
 
@@ -159,6 +178,8 @@ begin
           _Kernel := _Execut.Kernels.Add( 'Main', _Queuer );                    // 生成
           _Kernel.Parames['Buffer'] := _Buffer;                                 // バッファの接続
           _Kernel.Parames['Imager'] := _Imager;                                 // イメージの接続
+          _Kernel.Parames['Textur'] := _Textur;                                 // テクスチャの接続
+          _Kernel.Parames['Samplr'] := _Samplr;                                 // サンプラーの接続
           _Kernel.GloSizX := _Imager.CountX;                                    // Ｘ方向ループ回数の設定
           _Kernel.GloSizY := _Imager.CountY;                                    // Ｙ方向ループ回数の設定
 
