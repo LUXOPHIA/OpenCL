@@ -11,7 +11,6 @@ uses System.Classes,
      LUX.GPU.OpenCL.Queuer,
      LUX.GPU.OpenCL.Memory,
      LUX.GPU.OpenCL.Memory.Buffer,
-     LUX.GPU.OpenCL.Memory.Imager,
      LUX.GPU.OpenCL.Progra,
      LUX.GPU.OpenCL.Kernel;
 
@@ -46,11 +45,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLContex,TCLPlatfo,TValue_> );
 
      TCLBufferIter<TValue_:record> = class( TCLBufferIter<TCLContex,TCLPlatfo,TValue_> );
-
-     TCLDevIma<TValue_:record> = class( TCLDevIma<TCLContex,TCLPlatfo,TValue_> );
-     TCLHosIma<TValue_:record> = class( TCLHosIma<TCLContex,TCLPlatfo,TValue_> );
-
-     TCLImagerIter<TValue_:record> = class( TCLImagerIter<TCLContex,TCLPlatfo,TValue_> );
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
