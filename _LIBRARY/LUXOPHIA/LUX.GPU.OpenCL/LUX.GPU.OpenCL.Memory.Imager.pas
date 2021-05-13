@@ -68,7 +68,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Data :P_void;
        ///// メソッド
        function CreateHandle :T_cl_int; override;
-       procedure DestroHandle; override;
+       function DestroHandle :T_cl_int; override;
      public
        constructor Create; override;
      end;
@@ -256,7 +256,7 @@ begin
      _Handle := clCreateImage( TCLContex( Contex ).Handle, Kind, @_Format, @_Descri, _Data, @Result );
 end;
 
-procedure TCLHosIma<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle;
+function TCLHosIma<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle :T_cl_int;
 begin
      FreeMemAligned( _Data );
 

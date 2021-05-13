@@ -55,7 +55,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function Compile :T_cl_int;
        function Link :T_cl_int;
        function CreateHandle :T_cl_int; virtual;
-       procedure DestroHandle; virtual;
+       function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; override;
        constructor Create( const Buildrs_:TCLBuildrs_; const Device_:TCLDevice_ ); overload; virtual;
@@ -153,7 +153,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        {$ENDIF}
        ///// メソッド
        function CreateHandle :T_cl_int; virtual;
-       procedure DestroHandle; virtual;
+       function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; override;
        destructor Destroy; override;
@@ -207,7 +207,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Buildrs :TCLBuildrs_;
        _Kernels :TCLKernels_;
        ///// メソッド
-       procedure DestroHandle; override;
+       function DestroHandle :T_cl_int; override;
      public
        constructor Create; override;
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
@@ -274,12 +274,12 @@ uses System.IOUtils,
 
 function TCLBuildr<TCLContex_,TCLPlatfo_>.GetInfo<_TYPE_>( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :_TYPE_;
 begin
-     AssertCL( clGetProgramBuildInfo( Handle_, Device.Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
+     AssertCL( clGetProgramBuildInfo( Handle_, Device.Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLBuildr.GetInfo is Error!' );
 end;
 
 function TCLBuildr<TCLContex_,TCLPlatfo_>.GetInfoSize( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :T_size_t;
 begin
-     AssertCL( clGetProgramBuildInfo( Handle_, Device.Handle, Name_, 0, nil, @Result ) );
+     AssertCL( clGetProgramBuildInfo( Handle_, Device.Handle, Name_, 0, nil, @Result ), 'TCLBuildr.GetInfoSize is Error!' );
 end;
 
 function TCLBuildr<TCLContex_,TCLPlatfo_>.GetInfos<_TYPE_>( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :TArray<_TYPE_>;
@@ -290,7 +290,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetProgramBuildInfo( Handle_, Device.Handle, Name_, S, @Result[ 0 ], nil ) );
+     AssertCL( clGetProgramBuildInfo( Handle_, Device.Handle, Name_, S, @Result[ 0 ], nil ), 'TCLBuildr.GetInfos is Error!' );
 end;
 
 function TCLBuildr<TCLContex_,TCLPlatfo_>.GetInfoString( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :String;
@@ -304,14 +304,14 @@ end;
 
 function TCLBuildr<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_program;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle );
+     if not Assigned( _Handle ) then AssertCL( CreateHandle, 'TCLBuildr.CreateHandle is Error!' );
 
      Result := _Handle;
 end;
 
 procedure TCLBuildr<TCLContex_,TCLPlatfo_>.SetHandle( const Handle_:T_cl_program );
 begin
-     if Assigned( _Handle ) then DestroHandle;
+     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLBuildr.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -383,9 +383,9 @@ begin
      end;
 end;
 
-procedure TCLBuildr<TCLContex_,TCLPlatfo_>.DestroHandle;
+function TCLBuildr<TCLContex_,TCLPlatfo_>.DestroHandle :T_cl_int;
 begin
-     AssertCL( clReleaseProgram( _Handle ) );
+     Result := clReleaseProgram( _Handle );
 
      _Handle := nil;
 end;
@@ -515,12 +515,12 @@ end;
 
 function TCLProgra<TCLContex_,TCLPlatfo_,TCLProgras_>.GetInfo<_TYPE_>( const Name_:T_cl_program_info ) :_TYPE_;
 begin
-     AssertCL( clGetProgramInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
+     AssertCL( clGetProgramInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLProgra.GetInfo is Error!' );
 end;
 
 function TCLProgra<TCLContex_,TCLPlatfo_,TCLProgras_>.GetInfoSize( const Name_:T_cl_program_info ) :T_size_t;
 begin
-     AssertCL( clGetProgramInfo( Handle, Name_, 0, nil, @Result ) );
+     AssertCL( clGetProgramInfo( Handle, Name_, 0, nil, @Result ), 'TCLProgra.GetInfoSize is Error!' );
 end;
 
 function TCLProgra<TCLContex_,TCLPlatfo_,TCLProgras_>.GetInfos<_TYPE_>( const Name_:T_cl_program_info ) :TArray<_TYPE_>;
@@ -531,7 +531,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetProgramInfo( Handle, Name_, S, @Result[ 0 ], nil ) );
+     AssertCL( clGetProgramInfo( Handle, Name_, S, @Result[ 0 ], nil ), 'TCLProgra.GetInfos is Error!' );
 end;
 
 function TCLProgra<TCLContex_,TCLPlatfo_,TCLProgras_>.GetInfoString( const Name_:T_cl_program_info ) :String;
@@ -545,14 +545,14 @@ end;
 
 function TCLProgra<TCLContex_,TCLPlatfo_,TCLProgras_>.GetHandle :T_cl_program;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle );
+     if not Assigned( _Handle ) then AssertCL( CreateHandle, 'TCLProgra.CreateHandle is Error!' );
 
      Result := _Handle;
 end;
 
 procedure TCLProgra<TCLContex_,TCLPlatfo_,TCLProgras_>.SetHandle( const Handle_:T_cl_program );
 begin
-     if Assigned( _Handle ) then DestroHandle;
+     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLProgra.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -589,9 +589,9 @@ begin
      _Handle := clCreateProgramWithSource( TCLContex( Contex ).Handle, 1, @C, nil, @Result );
 end;
 
-procedure TCLProgra<TCLContex_,TCLPlatfo_,TCLProgras_>.DestroHandle;
+function TCLProgra<TCLContex_,TCLPlatfo_,TCLProgras_>.DestroHandle :T_cl_int;
 begin
-     AssertCL( clReleaseProgram( _Handle ) );
+     Result := clReleaseProgram( _Handle );
 
      _Handle := nil;
 end;
@@ -639,7 +639,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLExecut<TCLContex_,TCLPlatfo_>.DestroHandle;
+function TCLExecut<TCLContex_,TCLPlatfo_>.DestroHandle :T_cl_int;
 begin
      _Buildrs.Clear;
 

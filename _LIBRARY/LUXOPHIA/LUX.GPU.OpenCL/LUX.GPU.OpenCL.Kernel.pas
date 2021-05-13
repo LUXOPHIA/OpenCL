@@ -164,7 +164,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetKERNEL_ARG_NAME( const I_:T_cl_uint ) :String;
        ///// メソッド
        function CreateHandle :T_cl_int; virtual;
-       procedure DestroHandle; virtual;
+       function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; override;
        constructor Create( const Execut_:TCLExecut_ ); overload; virtual;
@@ -313,7 +313,7 @@ var
 begin
      H := Memory.Handle;
 
-     AssertCL( clSetKernelArg( Kernel.Handle, T_cl_uint( ParameI ), SizeOf( T_cl_mem ), @H ) );
+     AssertCL( clSetKernelArg( Kernel.Handle, T_cl_uint( ParameI ), SizeOf( T_cl_mem ), @H ), 'TCLArgume.Bind is Error!' );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLExecut_,TCLContex_,TCLPlatfo_>
@@ -460,12 +460,12 @@ end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetInfo<_TYPE_>( const Name_:T_cl_kernel_info ) :_TYPE_;
 begin
-     AssertCL( clGetKernelInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
+     AssertCL( clGetKernelInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLKernel.GetInfo is Error!' );
 end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetInfoSize( const Name_:T_cl_kernel_info ) :T_size_t;
 begin
-     AssertCL( clGetKernelInfo( Handle, Name_, 0, nil, @Result ) );
+     AssertCL( clGetKernelInfo( Handle, Name_, 0, nil, @Result ), 'TCLKernel.GetInfoSize is Error!' );
 end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetInfos<_TYPE_>( const Name_:T_cl_kernel_info ) :TArray<_TYPE_>;
@@ -476,7 +476,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetKernelInfo( Handle, Name_, S, @Result[ 0 ], nil ) );
+     AssertCL( clGetKernelInfo( Handle, Name_, S, @Result[ 0 ], nil ), 'TCLKernel.GetInfos is Error!' );
 end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetInfoString( const Name_:T_cl_kernel_info ) :String;
@@ -488,12 +488,12 @@ end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetArgInfo<_TYPE_>( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :_TYPE_;
 begin
-     AssertCL( clGetKernelArgInfo( Handle, I_, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
+     AssertCL( clGetKernelArgInfo( Handle, I_, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLKernel.GetArgInfo is Error!' );
 end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetArgInfoSize( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :T_size_t;
 begin
-     AssertCL( clGetKernelArgInfo( Handle, I_, Name_, 0, nil, @Result ) );
+     AssertCL( clGetKernelArgInfo( Handle, I_, Name_, 0, nil, @Result ), 'TCLKernel.GetArgInfoSize is Error!' );
 end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetArgInfos<_TYPE_>( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :TArray<_TYPE_>;
@@ -504,7 +504,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetKernelArgInfo( Handle, I_, Name_, S, @Result[ 0 ], nil ) );
+     AssertCL( clGetKernelArgInfo( Handle, I_, Name_, S, @Result[ 0 ], nil ), 'TCLKernel.GetArgInfos is Error!' );
 end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetArgInfoString( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :String;
@@ -518,14 +518,14 @@ end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetHandle :T_cl_kernel;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle );
+     if not Assigned( _Handle ) then AssertCL( CreateHandle, 'TCLKernel.CreateHandle is Error!' );
 
      Result := _Handle;
 end;
 
 procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.SetHandle( const Handle_:T_cl_kernel );
 begin
-     if Assigned( _Handle ) then DestroHandle;
+     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLKernel.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -708,9 +708,9 @@ begin
      _Handle := clCreateKernel( B.Handle, P_char( AnsiString( _Name ) ), @Result );
 end;
 
-procedure TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.DestroHandle;
+function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.DestroHandle :T_cl_int;
 begin
-     clReleaseKernel( _Handle );
+     Result := clReleaseKernel( _Handle );
 
      _Handle := nil;
 end;
@@ -768,9 +768,9 @@ begin
 
      AssertCL( clEnqueueNDRangeKernel( _Queuer.Handle, Handle,
                                        2, @_GloMin, @_GloSiz, nil,
-                                       0, nil, nil ) );
+                                       0, nil, nil ), 'TCLKernel.Run is Error!' );
 
-     clFinish( _Queuer.Handle );
+     AssertCL( clFinish( _Queuer.Handle ), 'TCLKernel.Run is Error!' );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernels<TCLExecut_,TCLContex_,TCLPlatfo_>

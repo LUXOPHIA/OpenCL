@@ -61,7 +61,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Data :P_void;
        ///// メソッド
        function CreateHandle :T_cl_int; override;
-       procedure DestroHandle; override;
+       function DestroHandle :T_cl_int; override;
      public
        constructor Create; override;
      end;
@@ -195,7 +195,7 @@ begin
      _Handle := clCreateBuffer( TCLContex( Contex ).Handle, Kind, Size, _Data, @Result );
 end;
 
-procedure TCLHosBuf<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle;
+function TCLHosBuf<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle :T_cl_int;
 begin
      FreeMemAligned( _Data );
 
