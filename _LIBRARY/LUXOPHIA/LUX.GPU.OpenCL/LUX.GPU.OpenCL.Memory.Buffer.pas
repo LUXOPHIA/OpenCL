@@ -27,13 +27,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLStorag_ = TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>;
      protected
-       _Count  :Integer;
+       _Count :Integer;
        ///// アクセス
        function GetStorag :TCLStorag_; reintroduce; virtual;
        procedure SetStorag( const Storag_:TCLStorag_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
        function GetCount :Integer; virtual;
        procedure SetCount( const Count_:Integer ); virtual;
+       ///// メソッド
+       function NewStorag :TObject; override;
      public
        constructor Create; override;
        destructor Destroy; override;
@@ -139,14 +141,20 @@ begin
      _Count := Count_;
 end;
 
+/////////////////////////////////////////////////////////////////////// メソッド
+
+function TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>.NewStorag :TObject;
+begin
+     Result := TCLStorag_.Create( Self );
+end;
+
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 constructor TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>.Create;
 begin
      inherited;
 
-     _Count  := 1;
-     _Storag := TCLStorag_.Create( Self );
+     _Count := 1;
 end;
 
 destructor TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>.Destroy;
