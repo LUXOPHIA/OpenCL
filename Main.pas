@@ -157,14 +157,14 @@ begin
           ///// カーネル
         { _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer ); }
           _Kernel := _Execut.Kernels.Add( 'Main', _Queuer );                    // 生成
-          _Kernel.Argumes['Buffer'] := _Buffer;                                 // バッファの接続
-          _Kernel.Argumes['Imager'] := _Imager;                                 // イメージの接続
+          _Kernel.Parames['Buffer'] := _Buffer;                                 // バッファの接続
+          _Kernel.Parames['Imager'] := _Imager;                                 // イメージの接続
           _Kernel.GloSizX := _Imager.CountX;                                    // Ｘ方向ループ回数の設定
           _Kernel.GloSizY := _Imager.CountY;                                    // Ｙ方向ループ回数の設定
 
           Assert( Assigned( _Kernel.Handle ), '_Kernel is Error!' );
 
-          if _Kernel.Argumes.BindsOK then Timer1.Enabled := True                // 描画ループ開始
+          if _Kernel.Parames.BindsOK then Timer1.Enabled := True                // 描画ループ開始
                                      else TabControl1.ActiveTab := TabItemS;    // 引数のバインドエラー
      end
      else ShowBuildr; { _Buildr is Error! }                                     // ビルド情報の表示
