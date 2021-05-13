@@ -9,7 +9,7 @@ uses System.Generics.Collections,
      LUX.GPU.OpenCL.core,
      LUX.GPU.OpenCL.Device,
      LUX.GPU.OpenCL.Queuer,
-     LUX.GPU.OpenCL.Memory;
+     LUX.GPU.OpenCL.Argume;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -33,31 +33,31 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLParame<TCLExecut_,TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLKernel <TCLExecut_,TCLContex_,TCLPlatfo_>,
                                                                             TCLParames<TCLExecut_,TCLContex_,TCLPlatfo_>> )
      private
-       type TCLMemory_  = TCLMemory <TCLContex_,TCLPlatfo_>;
+       type TCLArgume_  = TCLArgume <TCLContex_,TCLPlatfo_>;
             TCLKernel_  = TCLKernel <TCLExecut_,TCLContex_,TCLPlatfo_>;
             TCLParames_ = TCLParames<TCLExecut_,TCLContex_,TCLPlatfo_>;
      protected
        _Name    :String;
        _ParameI :Integer;
-       _Memory  :TCLMemory_;
+       _Argume  :TCLArgume_;
        ///// アクセス
        function GetName :String; virtual;
        procedure SetName( const Name_:String ); virtual;
        function GetParameI :Integer; virtual;
-       function GetMemory :TCLMemory_; virtual;
-       procedure SetMemory( const Memory_:TCLMemory_ ); virtual;
+       function GetArgume :TCLArgume_; virtual;
+       procedure SetArgume( const Argume_:TCLArgume_ ); virtual;
      public
        constructor Create; override;
        constructor Create( const Parames_:TCLParames_; const Name_:String ); overload; virtual;
-       constructor Create( const Parames_:TCLParames_; const Name_:String; const Memory_:TCLMemory_ ); overload; virtual;
+       constructor Create( const Parames_:TCLParames_; const Name_:String; const Argume_:TCLArgume_ ); overload; virtual;
        ///// プロパティ
        property Kernel  :TCLKernel_  read GetOwnere                 ;
        property Parames :TCLParames_ read GetParent                 ;
        property Name    :String      read GetName    write SetName  ;
        property ParameI :Integer     read GetParameI                ;
-       property Memory  :TCLMemory_  read GetMemory  write SetMemory;
+       property Argume  :TCLArgume_  read GetArgume  write SetArgume;
        ///// メソッド
-       procedure Bind;
+       function Bind :T_cl_int;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLParames<TCLExecut_,TCLContex_,TCLPlatfo_>
@@ -65,7 +65,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLParames<TCLExecut_,TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>,
                                                                              TCLParame<TCLExecut_,TCLContex_,TCLPlatfo_>> )
      private
-       type TCLMemory_ = TCLMemory<TCLContex_,TCLPlatfo_>;
+       type TCLArgume_ = TCLArgume<TCLContex_,TCLPlatfo_>;
             TCLKernel_ = TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>;
             TCLParame_ = TCLParame<TCLExecut_,TCLContex_,TCLPlatfo_>;
             TCLVarArgs = TDictionary<String,TCLParame_>;
@@ -76,8 +76,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// アクセス
        function GetChildr( const Name_:String ) :TCLParame_; overload; virtual;
        procedure SetChildr( const Name_:String; const Childr_:TCLParame_ ); overload; virtual;
-       function GetMemorys( const Name_:String ) :TCLMemory_; virtual;
-       procedure SetMemorys( const Name_:String; const Memory_:TCLMemory_ ); virtual;
+       function GetArgumes( const Name_:String ) :TCLArgume_; virtual;
+       procedure SetArgumes( const Name_:String; const Argume_:TCLArgume_ ); virtual;
        function GetFindsOK :Boolean; virtual;
        procedure SetFindsOK( const FindsOK_:Boolean ); virtual;
        function GetBindsOK :Boolean; virtual;
@@ -92,11 +92,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Kernel                        :TCLKernel_ read GetOwnere                  ;
        property Childrs[ const Name_:String ] :TCLParame_ read GetChildr  write SetChildr ;
        property Items  [ const Name_:String ] :TCLParame_ read GetChildr  write SetChildr ;
-       property Memorys[ const Name_:String ] :TCLMemory_ read GetMemorys write SetMemorys; default;
+       property Argumes[ const Name_:String ] :TCLArgume_ read GetArgumes write SetArgumes; default;
        property FindsOK                       :Boolean    read GetFindsOK write SetFindsOK;
        property BindsOK                       :Boolean    read GetBindsOK write SetBindsOK;
        ///// メソッド
-       procedure Add( const Name_:String; const Memory_:TCLMemory_ ); overload;
+       function Add( const Name_:String; const Argume_:TCLArgume_ ) :TCLParame_; overload;
        function Contains( const Name_:String ) :Boolean;
      end;
 
@@ -268,14 +268,14 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLParame<TCLExecut_,TCLContex_,TCLPlatfo_>.GetMemory :TCLMemory_;
+function TCLParame<TCLExecut_,TCLContex_,TCLPlatfo_>.GetArgume :TCLArgume_;
 begin
-     Result := _Memory;
+     Result := _Argume;
 end;
 
-procedure TCLParame<TCLExecut_,TCLContex_,TCLPlatfo_>.SetMemory( const Memory_:TCLMemory_ );
+procedure TCLParame<TCLExecut_,TCLContex_,TCLPlatfo_>.SetArgume( const Argume_:TCLArgume_ );
 begin
-     _Memory := Memory_;
+     _Argume := Argume_;
 
      if Assigned( Parames ) then Parames.BindsOK := False;
 end;
@@ -288,7 +288,7 @@ begin
 
      _Name    := '';
      _ParameI := -1;
-     _Memory  := nil;
+     _Argume  := nil;
 end;
 
 constructor TCLParame<TCLExecut_,TCLContex_,TCLPlatfo_>.Create( const Parames_:TCLParames_; const Name_:String );
@@ -298,22 +298,25 @@ begin
      _Name := Name_;
 end;
 
-constructor TCLParame<TCLExecut_,TCLContex_,TCLPlatfo_>.Create( const Parames_:TCLParames_; const Name_:String; const Memory_:TCLMemory_ );
+constructor TCLParame<TCLExecut_,TCLContex_,TCLPlatfo_>.Create( const Parames_:TCLParames_; const Name_:String; const Argume_:TCLArgume_ );
 begin
      Create( Parames_, Name_ );
 
-     _Memory := Memory_;
+     _Argume := Argume_;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLParame<TCLExecut_,TCLContex_,TCLPlatfo_>.Bind;
+function TCLParame<TCLExecut_,TCLContex_,TCLPlatfo_>.Bind :T_cl_int;
 var
    H :T_cl_mem;
 begin
-     H := Memory.Handle;
+     H := Argume.HanPtr;
 
-     AssertCL( clSetKernelArg( Kernel.Handle, T_cl_uint( ParameI ), SizeOf( T_cl_mem ), @H ), 'TCLParame.Bind is Error!' );
+     Result := clSetKernelArg( Kernel.Handle,
+                               T_cl_uint( ParameI ),
+                               Argume.HanSiz,
+                               @H );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLParames<TCLExecut_,TCLContex_,TCLPlatfo_>
@@ -338,15 +341,15 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLParames<TCLExecut_,TCLContex_,TCLPlatfo_>.GetMemorys( const Name_:String ) :TCLMemory_;
+function TCLParames<TCLExecut_,TCLContex_,TCLPlatfo_>.GetArgumes( const Name_:String ) :TCLArgume_;
 begin
-     Result := _VarArgs[ Name_ ].Memory;
+     Result := _VarArgs[ Name_ ].Argume;
 end;
 
-procedure TCLParames<TCLExecut_,TCLContex_,TCLPlatfo_>.SetMemorys( const Name_:String; const Memory_:TCLMemory_ );
+procedure TCLParames<TCLExecut_,TCLContex_,TCLPlatfo_>.SetArgumes( const Name_:String; const Argume_:TCLArgume_ );
 begin
-     if _VarArgs.ContainsKey( Name_ ) then _VarArgs[ Name_ ].Memory := Memory_
-                                      else Add( Name_, Memory_ );
+     if _VarArgs.ContainsKey( Name_ ) then _VarArgs[ Name_ ].Argume := Argume_
+                                      else Add( Name_, Argume_ );
 end;
 
 //------------------------------------------------------------------------------
@@ -386,7 +389,7 @@ var
 begin
      if FindsOK and not _BindsOK then
      begin
-          for A in Self do A.Bind;
+          for A in Self do AssertCL( A.Bind, 'TCLParame.Bind is Error!' );
 
           _BindsOK := True;
      end;
@@ -440,9 +443,9 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLParames<TCLExecut_,TCLContex_,TCLPlatfo_>.Add( const Name_:String; const Memory_:TCLMemory_ );
+function TCLParames<TCLExecut_,TCLContex_,TCLPlatfo_>.Add( const Name_:String; const Argume_:TCLArgume_ ) :TCLParame_;
 begin
-     TCLParame_.Create( Self, Name_, Memory_ );
+     Result := TCLParame_.Create( Self, Name_, Argume_ );
 end;
 
 //------------------------------------------------------------------------------
