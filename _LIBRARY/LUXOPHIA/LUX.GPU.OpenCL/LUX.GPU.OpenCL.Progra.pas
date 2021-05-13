@@ -371,8 +371,6 @@ function TCLBuildr<TCLContex_,TCLPlatfo_>.CreateHandle :T_cl_int;
 begin
      if Compile = CL_SUCCESS then
      begin
-          _CompileStatus := GetInfo<T_cl_build_status>( Execut.Handle, CL_PROGRAM_BUILD_STATUS );
-          _CompileLog    := GetInfoString             ( Execut.Handle, CL_PROGRAM_BUILD_LOG    );
 
           if Link = CL_SUCCESS then
           begin
@@ -381,6 +379,9 @@ begin
           end
           else Handle := nil;
      end;
+
+     _CompileStatus := GetInfo<T_cl_build_status>( Execut.Handle, CL_PROGRAM_BUILD_STATUS );
+     _CompileLog    := GetInfoString             ( Execut.Handle, CL_PROGRAM_BUILD_LOG    );
 end;
 
 function TCLBuildr<TCLContex_,TCLPlatfo_>.DestroHandle :T_cl_int;
