@@ -7,11 +7,11 @@ uses LUX.GPU.OpenCL,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLDevImaBGRAxUInt8 = TCLDevImaBGRAxUInt8<TCLContex,TCLPlatfo>;
-     TCLHosImaBGRAxUInt8 = TCLHosImaBGRAxUInt8<TCLContex,TCLPlatfo>;
+     TCLDevIma2DxBGRAxUInt8 = TCLDevIma2DxBGRAxUInt8<TCLContex,TCLPlatfo>;
+     TCLHosIma2DxBGRAxUInt8 = TCLHosIma2DxBGRAxUInt8<TCLContex,TCLPlatfo>;
 
-     TCLDevImaRGBAxSFlo32 = TCLDevImaRGBAxSFlo32<TCLContex,TCLPlatfo>;
-     TCLHosImaRGBAxSFlo32 = TCLHosImaRGBAxSFlo32<TCLContex,TCLPlatfo>;
+     TCLDevIma2DxRGBAxSFlo32 = TCLDevIma2DxRGBAxSFlo32<TCLContex,TCLPlatfo>;
+     TCLHosIma2DxRGBAxSFlo32 = TCLHosIma2DxRGBAxSFlo32<TCLContex,TCLPlatfo>;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
