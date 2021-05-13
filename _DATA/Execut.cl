@@ -42,7 +42,9 @@ float4 GammaCorrect( const float4 Color_, const float Gamma_ )
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 kernel void Main( global     TDoubleC* Buffer,
-                  write_only image2d_t Imager )
+                  write_only image2d_t Imager,
+                   read_only image1d_t Textur,
+                   read_only sampler_t Samplr )
 {
   const int2 P = { get_global_id  ( 0 ), get_global_id  ( 1 ) };
   const int2 S = { get_global_size( 0 ), get_global_size( 1 ) };
@@ -53,13 +55,11 @@ kernel void Main( global     TDoubleC* Buffer,
 
   float L = ComplexToColor( C, 1000 );
 
-  float4 R = (float4)( L, L, L, 1 );
+  float4 R = read_imagef( Textur, Samplr, L );
 
   float4 G = GammaCorrect( R, 2.2 );
 
-  uint4 U = convert_uint4_sat_rte( 255 * G );
-
-  write_imageui( Imager, P, U );
+  write_imagef( Imager, P, G );
 }
 
 //##############################################################################
