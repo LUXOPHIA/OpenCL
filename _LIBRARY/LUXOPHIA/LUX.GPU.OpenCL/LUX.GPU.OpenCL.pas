@@ -10,8 +10,10 @@ uses System.Classes,
      LUX.GPU.OpenCL.Contex,
      LUX.GPU.OpenCL.Queuer,
      LUX.GPU.OpenCL.Argume,
+     LUX.GPU.OpenCL.Argume.Samplr,
      LUX.GPU.OpenCL.Memory,
      LUX.GPU.OpenCL.Memory.Buffer,
+     LUX.GPU.OpenCL.Memory.Imager,
      LUX.GPU.OpenCL.Progra,
      LUX.GPU.OpenCL.Kernel;
 
@@ -31,6 +33,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                  TCLQueuer         = TCLQueuer <TCLContex,TCLPlatfo>;
                TCLArgumes          = TCLArgumes<TCLContex,TCLPlatfo>;
                  TCLArgume         = TCLArgume <TCLContex,TCLPlatfo>;
+                 TCLSamplr         = TCLSamplr <TCLContex,TCLPlatfo>;
                  TCLMemory         = TCLMemory <TCLContex,TCLPlatfo>;
                TCLLibrars          = TCLLibrars<TCLContex,TCLPlatfo>;
                  TCLLibrar         = TCLLibrar <TCLContex,TCLPlatfo>;
