@@ -46,9 +46,9 @@ begin
                Add( ' ┃　│　┃　│　┃　│　┃　│　┣・Parame[' + A.Order.ToString + '] :TCLParame' );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Name    = ' + A.Name );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ ParameI = ' + A.ParameI.ToString );
-               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Memory  = Platfo[' + A.Memory.Contex.Platfo.Order.ToString + ']'
-                                                                   + '.Contex[' + A.Memory.Contex       .Order.ToString + ']'
-                                                                   + '.Memory[' + A.Memory              .Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Argume  = Platfo[' + A.Argume.Contex.Platfo.Order.ToString + ']'
+                                                                   + '.Contex[' + A.Argume.Contex       .Order.ToString + ']'
+                                                                   + '.Argume[' + A.Argume              .Order.ToString + ']' );
           end;
      end;
 end;
