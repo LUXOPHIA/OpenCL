@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'OpenCL'
-  ClientHeight = 566
+  ClientHeight = 586
   ClientWidth = 540
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -15,7 +15,7 @@ object Form1: TForm1
     Margins.Left = 10.000000000000000000
     Margins.Top = 10.000000000000000000
     Margins.Right = 10.000000000000000000
-    Margins.Bottom = 10.000000000000000000
+    Margins.Bottom = 5.000000000000000000
     Size.Width = 520.000000000000000000
     Size.Height = 546.000000000000000000
     Size.PlatformDefault = False
@@ -200,7 +200,7 @@ object Form1: TForm1
       Text = 'Result'
       ExplicitSize.cx = 52.000000000000000000
       ExplicitSize.cy = 26.000000000000000000
-      object Image1: TImage
+      object ImageR: TImage
         MultiResBitmap = <
           item
           end>
@@ -214,7 +214,7 @@ object Form1: TForm1
         Size.Height = 500.000000000000000000
         Size.PlatformDefault = False
         WrapMode = Stretch
-        OnMouseWheel = Image1MouseWheel
+        OnMouseWheel = ImageRMouseWheel
       end
     end
   end
@@ -224,5 +224,23 @@ object Form1: TForm1
     OnTimer = Timer1Timer
     Left = 45
     Top = 95
+  end
+  object ImageT: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Align = Bottom
+    DisableInterpolation = True
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 5.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Margins.Bottom = 10.000000000000000000
+    Position.X = 10.000000000000000000
+    Position.Y = 566.000000000000000000
+    Size.Width = 520.000000000000000000
+    Size.Height = 10.000000000000000000
+    Size.PlatformDefault = False
+    WrapMode = Stretch
+    OnMouseWheel = ImageRMouseWheel
   end
 end

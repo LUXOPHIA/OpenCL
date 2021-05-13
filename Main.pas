@@ -26,12 +26,13 @@ type
           TabItemPB: TTabItem;
             MemoPB: TMemo;
       TabItemR: TTabItem;
-        Image1: TImage;
+        ImageR: TImage;
+    ImageT: TImage;
     Timer1: TTimer;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
-    procedure Image1MouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
+    procedure ImageRMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
   private
     { private 宣言 }
     _AreaC :TDoubleAreaC;
@@ -93,24 +94,28 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-     ///// プラットフォーム
+     ////////// プラットフォーム
      _Platfo := TOpenCL.Platfos[ 0 ];                                           // 選択
 
-     ///// デバイス
+     ////////// デバイス
      _Device := _Platfo.Devices[ 0 ];                                           // 選択
 
-     ///// コンテキスト
+     ////////// コンテキスト
    { _Contex := TCLContex.Create( _Platfo ); }
      _Contex := _Platfo.Contexs.Add;                                            // 生成
 
-     ///// コマンドキュー
+     ////////// コマンドキュー
    { _Queuer := TCLQueuer.Create( _Contex, _Device ); }
      _Queuer := _Contex.Queuers.Add( _Device );                                 // 生成
 
      Assert( Assigned( _Contex.Handle ), '_Contex is Error!' );
      Assert( Assigned( _Queuer.Handle ), '_Queuer is Error!' );
 
-     ///// バッファー
+     ////////// 実引数
+
+     ///// メモリー
+
+     // バッファー
      _Buffer := TCLDevBuf<TDoubleC>.Create( _Contex, _Queuer );                 // 生成
      _Buffer.Count := 2;                                                        // 要素数の設定
 
@@ -123,22 +128,17 @@ begin
      _Buffer.Storag[ 1 ] := _AreaC.Max;                                         // 書き込み
      _Buffer.Storag.Unmap;                                                      // アンマップ
 
-     ///// イメージ
+     // イメージ
      _Imager := TCLDevIma2DxBGRAxNormUInt8.Create( _Contex, _Queuer );          // 生成
      _Imager.CountX := 500;                                                     // ピクセル数の設定
      _Imager.CountY := 500;                                                     // ピクセル数の設定
 
      Assert( Assigned( _Imager.Handle ), '_Imager is Error!' );
 
-     ///// テクスチャ
+     // テクスチャ
      _Textur := TCLDevIma1DxBGRAxNormUInt8.Create( _Contex, _Queuer );          // 生成
-     _Textur.CountX := 4;
-     _Textur.Storag.Map;
-     _Textur.Storag[ 0 ] := TAlphaColors.Black;
-     _Textur.Storag[ 1 ] := TAlphaColors.Red;
-     _Textur.Storag[ 2 ] := TAlphaColors.Yellow;
-     _Textur.Storag[ 3 ] := TAlphaColors.White;
-     _Textur.Storag.Unmap;
+     _Textur.LoadFromFile( '..\..\_DATA\Textur.png' );                          // 画像のロード
+     _Textur.CopyTo( ImageT.Bitmap );
 
      Assert( Assigned( _Textur.Handle ), '_Textur is Error!' );
 
@@ -167,13 +167,13 @@ begin
 
      Assert( Assigned( _Execut.Handle ), '_Execut is Error!' );
 
-     ///// ビルド
+     ////////// ビルド
    { _Buildr := _Execut.Buildrs.Add( _Device ); }
      _Buildr := _Execut.BuildTo( _Device );                                     // 生成
 
      if Assigned( _Buildr.Handle ) then
      begin
-          ///// カーネル
+          ////////// カーネル
         { _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer ); }
           _Kernel := _Execut.Kernels.Add( 'Main', _Queuer );                    // 生成
           _Kernel.Parames['Buffer'] := _Buffer;                                 // バッファの接続
@@ -197,7 +197,7 @@ procedure TForm1.FormDestroy(Sender: TObject);
 begin
      MemoS.Lines.SaveToFile( 'System.txt', TEncoding.UTF8 );
 
-     Image1.Bitmap.SaveToFile( 'Imager.png' )
+     ImageR.Bitmap.SaveToFile( 'Imager.png' )
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -208,19 +208,19 @@ begin
      _Kernel.Run;                                                               // 実行
 
      ///// イメージ
-     _Imager.CopyTo( Image1.Bitmap );                                           // 画像表示
+     _Imager.CopyTo( ImageR.Bitmap );                                           // 画像表示
 end;
 
-procedure TForm1.Image1MouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
+procedure TForm1.ImageRMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
 var
    P :TPointF;
    C :TDoubleC;
    S :Double;
 begin
-     P := Image1.AbsoluteToLocal( ScreenToClient( Screen.MousePos ) );
+     P := ImageR.AbsoluteToLocal( ScreenToClient( Screen.MousePos ) );
 
-     C.R := _AreaC.Min.R + _AreaC.SizeR * P.X / Image1.Width ;
-     C.I := _AreaC.Max.I - _AreaC.SizeI * P.Y / Image1.Height;
+     C.R := _AreaC.Min.R + _AreaC.SizeR * P.X / ImageR.Width ;
+     C.I := _AreaC.Max.I - _AreaC.SizeI * P.Y / ImageR.Height;
 
      S := Power( 1.1, WheelDelta / 120 );
 
