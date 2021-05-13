@@ -39,7 +39,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetSize :T_size_t; virtual; abstract;
        ///// メソッド
        function CreateHandle :T_cl_int; virtual; abstract;
-       procedure DestroHandle; virtual;
+       function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; override;
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
@@ -82,7 +82,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetHandle( const Handle_:P_void ); virtual;
        ///// メソッド
        function CreateHandle :T_cl_int; virtual; abstract;
-       procedure DestroHandle; virtual;
+       function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; overload; virtual;
        constructor Create( const Memory_:TCLMemory_; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE ); overload; virtual;
@@ -121,14 +121,14 @@ uses LUX.GPU.OpenCL;
 
 function TCLMemory<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_mem;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle );
+     if not Assigned( _Handle ) then AssertCL( CreateHandle, 'TCLMemory.CreateHandle is Error!' );
 
      Result := _Handle;
 end;
 
 procedure TCLMemory<TCLContex_,TCLPlatfo_>.SetHandle( const Handle_:T_cl_mem );
 begin
-     if Assigned( _Handle ) then DestroHandle;
+     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLMemory.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -149,9 +149,9 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLMemory<TCLContex_,TCLPlatfo_>.DestroHandle;
+function TCLMemory<TCLContex_,TCLPlatfo_>.DestroHandle :T_cl_int;
 begin
-     clReleaseMemObject( _Handle );
+     Result := clReleaseMemObject( _Handle );
 
      _Handle := nil;
 end;
@@ -213,23 +213,23 @@ end;
 
 function TCLMemoryIter<TCLContex_,TCLPlatfo_>.GetHandle :P_void;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle );
+     if not Assigned( _Handle ) then AssertCL( CreateHandle, 'TCLMemoryIter.CreateHandle is Error!' );
 
      Result := _Handle;
 end;
 
 procedure TCLMemoryIter<TCLContex_,TCLPlatfo_>.SetHandle( const Handle_:P_void );
 begin
-     if Assigned( _Handle ) then DestroHandle;
+     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLMemoryIter.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLMemoryIter<TCLContex_,TCLPlatfo_>.DestroHandle;
+function TCLMemoryIter<TCLContex_,TCLPlatfo_>.DestroHandle :T_cl_int;
 begin
-     AssertCL( clEnqueueUnmapMemObject( Queuer.Handle, Memory.Handle, _Handle, 0, nil, nil ) );
+     Result := clEnqueueUnmapMemObject( Queuer.Handle, Memory.Handle, _Handle, 0, nil, nil );
 
      _Handle := nil;
 end;
