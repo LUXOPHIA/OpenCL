@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Memory.Buffer;
+﻿unit LUX.GPU.OpenCL.Argume.Memory.Buffer;
 
 interface //#################################################################### ■
 
@@ -7,7 +7,7 @@ uses cl_version, cl_platform, cl,
      LUX.Code.C,
      LUX.GPU.OpenCL.core,
      LUX.GPU.OpenCL.Queuer,
-     LUX.GPU.OpenCL.Memory;
+     LUX.GPU.OpenCL.Argume.Memory;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
