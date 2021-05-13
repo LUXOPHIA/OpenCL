@@ -9,8 +9,8 @@ uses System.UITypes,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLDevImaRGBA<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
-     TCLHosImaRGBA<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLDevImaFMX<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLHosImaFMX<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
 
      TCLDevImaBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class;
      TCLHosImaBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class;
@@ -22,9 +22,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevImaRGBA<TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevImaFMX<TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLDevImaRGBA<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLDevIma<TCLContex_,TCLPlatfo_,TValue_> )
+     TCLDevImaFMX<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLDevIma<TCLContex_,TCLPlatfo_,TValue_> )
      private
      protected
      public
@@ -35,9 +35,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure LoadFromFile( const FileName_:String ); virtual;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosImaRGBA<TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosImaFMX<TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLHosImaRGBA<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLHosIma<TCLContex_,TCLPlatfo_,TValue_> )
+     TCLHosImaFMX<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLHosIma<TCLContex_,TCLPlatfo_,TValue_> )
      private
      protected
      public
@@ -50,7 +50,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevImaBGRAxUInt8<TCLContex_,TCLPlatfo_>
 
-     TCLDevImaBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLDevImaRGBA<TCLContex_,TCLPlatfo_,TAlphaColor> )
+     TCLDevImaBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLDevImaFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
      private
      protected
        ///// アクセス
@@ -64,7 +64,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosImaBGRAxUInt8<TCLContex_,TCLPlatfo_>
 
-     TCLHosImaBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLHosImaRGBA<TCLContex_,TCLPlatfo_,TAlphaColor> )
+     TCLHosImaBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLHosImaFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
      private
      protected
        ///// アクセス
@@ -78,7 +78,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevImaRGBAxSFlo32<TCLContex_,TCLPlatfo_>
 
-     TCLDevImaRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class( TCLDevImaRGBA<TCLContex_,TCLPlatfo_,TAlphaColorF> )
+     TCLDevImaRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class( TCLDevImaFMX<TCLContex_,TCLPlatfo_,TAlphaColorF> )
      private
      protected
        ///// アクセス
@@ -92,7 +92,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosImaRGBAxSFlo32<TCLContex_,TCLPlatfo_>
 
-     TCLHosImaRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class( TCLHosImaRGBA<TCLContex_,TCLPlatfo_,TAlphaColorF> )
+     TCLHosImaRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class( TCLHosImaFMX<TCLContex_,TCLPlatfo_,TAlphaColorF> )
      private
      protected
        ///// アクセス
@@ -118,7 +118,7 @@ uses LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevImaRGBA<TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevImaFMX<TCLContex_,TCLPlatfo_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -128,7 +128,7 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLDevImaRGBA<TCLContex_,TCLPlatfo_,TValue_>.SaveToFile( const FileName_:String );
+procedure TCLDevImaFMX<TCLContex_,TCLPlatfo_,TValue_>.SaveToFile( const FileName_:String );
 var
    B :TBitmap;
 begin
@@ -141,7 +141,7 @@ begin
      B.Free;
 end;
 
-procedure TCLDevImaRGBA<TCLContex_,TCLPlatfo_,TValue_>.LoadFromFile( const FileName_:String );
+procedure TCLDevImaFMX<TCLContex_,TCLPlatfo_,TValue_>.LoadFromFile( const FileName_:String );
 var
    B :TBitmap;
 begin
@@ -154,7 +154,7 @@ begin
      B.Free;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosImaRGBA<TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosImaFMX<TCLContex_,TCLPlatfo_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -164,7 +164,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLHosImaRGBA<TCLContex_,TCLPlatfo_,TValue_>.SaveToFile( const FileName_:String );
+procedure TCLHosImaFMX<TCLContex_,TCLPlatfo_,TValue_>.SaveToFile( const FileName_:String );
 var
    B :TBitmap;
 begin
@@ -177,7 +177,7 @@ begin
      B.Free;
 end;
 
-procedure TCLHosImaRGBA<TCLContex_,TCLPlatfo_,TValue_>.LoadFromFile( const FileName_:String );
+procedure TCLHosImaFMX<TCLContex_,TCLPlatfo_,TValue_>.LoadFromFile( const FileName_:String );
 var
    B :TBitmap;
 begin
@@ -223,7 +223,7 @@ begin
 
      for Y := 0 to CountY-1 do Move( Storag.ValueP[ 0, Y ]^,
                                      B.GetScanline( Y )^,
-                                     SizeOf( TAlphaColor ) * CountX );
+                                     B.BytesPerLine );
 
      Storag.Unmap;
 
@@ -241,7 +241,7 @@ begin
 
      for Y := 0 to CountY-1 do Move( B.GetScanline( Y )^,
                                      Storag.ValueP[ 0, Y ]^,
-                                     SizeOf( TAlphaColor ) * CountX );
+                                     B.BytesPerLine );
 
      Storag.Unmap;
 
@@ -281,7 +281,7 @@ begin
 
      for Y := 0 to CountY-1 do Move( Storag.ValueP[ 0, Y ]^,
                                      B.GetScanline( Y )^,
-                                     SizeOf( TAlphaColor ) * CountX );
+                                     B.BytesPerLine );
 
      Storag.Unmap;
 
@@ -299,7 +299,7 @@ begin
 
      for Y := 0 to CountY-1 do Move( B.GetScanline( Y )^,
                                      Storag.ValueP[ 0, Y ]^,
-                                     SizeOf( TAlphaColor ) * CountX );
+                                     B.BytesPerLine );
 
      Storag.Unmap;
 
