@@ -14,29 +14,34 @@ TDoubleC ScreenToComplex( const int2 P, const int2 S, const TDoubleAreaC A )
   return Result;
 }
 
-float ComplexToColor( const TDoubleC C, const int MaxN )
+float ComplexToLoop( const TDoubleC C, const int MaxN )
 {
   TDoubleC Z = { 0, 0 };
 
   for ( int N = 1; N < MaxN; N++ )
   {
     Z = Add( Pow2( Z ), C );
-    if ( Abs( Z ) > 2 ) return (float)N / MaxN;
+
+    if ( Abs( Z ) > 10 )
+    {
+      N++; Z = Add( Pow2( Z ), C );
+      N++; Z = Add( Pow2( Z ), C );
+      N++; Z = Add( Pow2( Z ), C );
+      N++; Z = Add( Pow2( Z ), C );
+      N++; Z = Add( Pow2( Z ), C );
+
+      return (float)N + 1 - log( log2( Abs( Z ) ) );
+    }
   }
 
-  return 1;
+  return MaxN;
 }
 
 //------------------------------------------------------------------------------
 
 float4 GammaCorrect( const float4 Color_, const float Gamma_ )
 {
-  float4 Result;
-
-  Result.rgb = pow( Color_.rgb, 1/Gamma_ );
-  Result.a   =      Color_.a              ;
-
-  return Result;
+  return (float4)( pow( Color_.rgb, 1/Gamma_ ), Color_.a );
 }
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -46,6 +51,7 @@ kernel void Main( global     TDoubleC* Buffer,
                    read_only image1d_t Textur,
                    read_only sampler_t Samplr )
 {
+  const int MaxN = 1000;
   const int2 P = { get_global_id  ( 0 ), get_global_id  ( 1 ) };
   const int2 S = { get_global_size( 0 ), get_global_size( 1 ) };
 
@@ -53,9 +59,9 @@ kernel void Main( global     TDoubleC* Buffer,
 
   TDoubleC C = ScreenToComplex( P, S, A );
 
-  float L = ComplexToColor( C, 1000 );
+  float L = ComplexToLoop( C, MaxN ) / MaxN;
 
-  float4 R = read_imagef( Textur, Samplr, L );
+  float4 R = read_imagef( Textur, Samplr, sqrt( L ) );
 
   float4 G = GammaCorrect( R, 2.2 );
 
