@@ -54,18 +54,15 @@ kernel void Main( global     TDoubleC* Buffer,
   const int MaxN = 1000;
   const int2 P = { get_global_id  ( 0 ), get_global_id  ( 1 ) };
   const int2 S = { get_global_size( 0 ), get_global_size( 1 ) };
-
   const TDoubleAreaC A = { Buffer[0], Buffer[1] };
 
   TDoubleC C = ScreenToComplex( P, S, A );
 
-  float L = ComplexToLoop( C, MaxN );
+  float N = ComplexToLoop( C, MaxN );
 
-  float4 R = read_imagef( Textur, Samplr, sqrt( L / MaxN ) );
+  float4 T = read_imagef( Textur, Samplr, sqrt( N / MaxN ) );
 
-  float4 G = GammaCorrect( R, 2.2 );
-
-  write_imagef( Imager, P, G );
+  write_imagef( Imager, P, GammaCorrect( T, 2.2 ) );
 }
 
 //##############################################################################
