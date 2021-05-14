@@ -3,7 +3,9 @@ How to compute on the GPU (or CPU) using [OpenCL](https://en.wikipedia.org/wiki/
 [OpenCL](https://ja.wikipedia.org/wiki/OpenCL) を用いて、ＧＰＵ（やＣＰＵ）で計算する方法。  
 
 ----
-## ■ 1. Class Parent-Child Relationship：クラスの親子関係
+## ■ 1. Structure of the library
+
+### ▼ 1.1. Parent-Child Relationship：親子関係
 > [`TOpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L76)  
 　┃  
 [`TCLSystem`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L61)：システム  
@@ -16,18 +18,22 @@ How to compute on the GPU (or CPU) using [OpenCL](https://en.wikipedia.org/wiki/
 　　　　　　　┗[`TCLContex`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Contex.pas#L25)：コンテキスト  
 　　　　　　　　　┣[`TCLQueuers`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Queuer.pas#L48)：コマンドキューリスト  
 　　　　　　　　　┃　┗[`TCLQueuer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Queuer.pas#L22)：コマンドキュー  
-　　　　　　　　　┣[`TCLMemorys`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L60)：メモリーリスト  
-　　　　　　　　　┃　┗[`TCLMemory`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L24)：メモリー  
+　　　　　　　　　┣[`TCLArgumes`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L60)：実引数リスト  
+　　　　　　　　　┃　┣[`TCLBuffer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L24)：バッファー  
+　　　　　　　　　┃　┣[`TCLImager`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L24)：イメージ  
+　　　　　　　　　┃　┗[`TCLSamplr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L24)：サンプラー  
 　　　　　　　　　┣[`TCLLibrars`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L227)：ライブラリリスト  
 　　　　　　　　　┃　┗[`TCLLibrar`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L183)：ライブラリ  
-　　　　　　　　　┗[`TCLExecuts`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L238)：実行プログラムリスト  
-　　　　　　　　　　　┗[`TCLExecut`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L192)：実行プログラム  
+　　　　　　　　　┗[`TCLExecuts`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L238)：プログラムリスト  
+　　　　　　　　　　　┗[`TCLExecut`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L192)：プログラム  
 　　　　　　　　　　　　　┣[`TCLBuildrs`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L69)：ビルドリスト  
 　　　　　　　　　　　　　┃　┗[`TCLBuildr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L33)：ビルド  
 　　　　　　　　　　　　　┗[`TCLKernels`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L212)：カーネルリスト  
 　　　　　　　　　　　　　　　┗[`TCLKernel`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L105)：カーネル  
-　　　　　　　　　　　　　　　　　┗[`TCLArgumes`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L65)：引数リスト  
-　　　　　　　　　　　　　　　　　　　┗[`TCLArgume`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L33)：引数
+　　　　　　　　　　　　　　　　　┗[`TCLParames`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L65)：仮引数リスト  
+　　　　　　　　　　　　　　　　　　　┗[`TCLParame`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L33)：引数
+
+### ▼ 1.2. Inheritance Relationships：継承関係
 
 ----
 ## ■ 2. How to use：利用方法
@@ -146,7 +152,9 @@ Q21 := TCLQueuer.Create( C2, D10 );  // Error
 Q22 := TCLQueuer.Create( C2, D20 );  // OK
 ```
 
-### ▼ 2.5. Memory：メモリー
+### ▼ 2.5. Argument：実引数
+
+#### ▼ 2.5.1. Memory：メモリー
 The "**Memory**" object (`TCLMemory`) stores various data and shares it with the **device**.
 The `TCLMemory` class is created from the `TCLContex` and the `TCLDevice` classes.
 The `TCLMemory` class is abstract and derives the `TCLBuffer` and `TCLImager` classes.  
@@ -154,7 +162,7 @@ The `TCLMemory` class is abstract and derives the `TCLBuffer` and `TCLImager` cl
 `TCLMemory`クラスは、`TCLContex`クラスと`TCLDevice`クラスから生成されます。
 `TCLMemory`クラスは抽象クラスであり、`TCLBuffer`クラスと`TCLImager`クラスを派生させます。  
 
-#### ▽ 2.5.1. Buffer：バッファー
+##### ▽ 2.5.1.1. Buffer：バッファー
 The `TCLBuffer` class stores an array of any "simple type" or "record type."  
 `TCLBuffer`クラスは、任意の“単純型”や“レコード型”の配列を格納します。
 `TCLBuffer`クラスは抽象クラスであり、`TCLDevBuf`クラスと`TCLHosBuf`クラスを派生させます。 
@@ -186,7 +194,7 @@ _Buffer.Storag[2] := TItem.Create( 9, 0.12 );  // 書き込み
 _Buffer.Storag.Unmap;                          // アンマップ
 ```
 
-#### ▽ 2.5.2. Image：イメージ
+##### ▽ 2.5.1.2. Image：イメージ
 The "**image**" object (`TCLImager`) stores the pixel grid in 1D to 3D.
 The `TCLImager` class is an abstract and derives the `TCLDevIma` and `TCLHosIma` classes.
 In addition, various classes are derived depending on the layout and bits of the color channel.  
@@ -209,10 +217,16 @@ Save the image data to the host side.
     ＲＧＢＡ × Single = `System.UITypes.TAlphaColorF`
 
 ```Delphi
-var _Imager :TCLDevImaBGRAxUInt8;
 _Imager := TCLDevImaBGRAxUInt8.Create( _Contex, _Queuer );
 _Imager.CountX := 500;  // 横ピクセル数の設定
 _Imager.CountY := 500;  // 縦ピクセル数の設定
+```
+
+#### ▼ 2.5.2. Sampler：サンプラー
+The sampler object (`TCLSamplr`) is needed to get the pixel color interpolated ​with real-number coordinates.  
+サンプラーオブジェクト (`TCLSamplr`) は、実数座標で補間されたピクセルカラーを得るために必要です。  
+```Delphi
+_Samplr := TCLSamplr.Create( _Contex );
 ```
 
 ### ▼ 2.6. Program：プログラム
@@ -277,12 +291,12 @@ _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );
 _Kernel := _Execut.Kernels.Add( 'Main', _Queuer );
 ```
 
-#### ▽ 2.8.1. Argument：引数
-The **memory** object connects to the arguments in the source code through the "Argumes" property of the `TCLKernel` class.  
-**メモリ**オブジェクトは、`TCLKernel`クラスの“Argumes”プロパティを介して、ソースコードの引数へ接続します。  
+#### ▽ 2.8.1. Parameter：仮引数
+The **memory** object connects to the parameter in the source code through the "Parames" property of the `TCLKernel` class.  
+**メモリ**オブジェクトは、`TCLKernel`クラスの“Parames”プロパティを介して、ソースコードの引数へ接続します。  
 ```Delphi
-_Kernel.Argumes['Buffer'] := _Buffer;  // バッファの接続
-_Kernel.Argumes['Imager'] := _Imager;  // イメージの接続
+_Kernel.Parames['Buffer'] := _Buffer;  // バッファの接続
+_Kernel.Parames['Imager'] := _Imager;  // イメージの接続
 ```
 
 #### ▽ 2.8.2. Loop Count：反復回数
