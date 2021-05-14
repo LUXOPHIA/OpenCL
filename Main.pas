@@ -156,7 +156,7 @@ begin
 
      MemoPL.Lines.Assign( _Librar.Source );                                     // ソースコードの表示
 
-     ////////// 実行形式
+     ////////// プログラム
 
    { _Execut := TCLExecut.Create( _Contex ); }                                  // 生成
      _Execut := _Contex.Executs.Add;                                            // 生成
@@ -181,7 +181,7 @@ begin
 
           Assert( Assigned( _Kernel.Handle ), '_Kernel is Error!' );
 
-          _Kernel.Parames['Buffer'] := _Buffer;                                 // バッファの接続
+          _Kernel.Parames['Buffer'] := _Buffer;                                 // バッファーの接続
           _Kernel.Parames['Imager'] := _Imager;                                 // イメージの接続
           _Kernel.Parames['Textur'] := _Textur;                                 // テクスチャの接続
           _Kernel.Parames['Samplr'] := _Samplr;                                 // サンプラーの接続
