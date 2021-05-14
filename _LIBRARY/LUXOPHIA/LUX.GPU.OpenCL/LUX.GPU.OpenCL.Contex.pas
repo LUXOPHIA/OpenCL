@@ -96,7 +96,7 @@ uses LUX.GPU.OpenCL;
 
 function TCLContex<TCLPlatfo_>.GetHandle :T_cl_context;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle, 'TCLContex.CreateHandle is Error!' );
+     if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;

@@ -81,7 +81,7 @@ uses LUX.GPU.OpenCL;
 
 function TCLQueuer<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_command_queue;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle, 'TCLQueuer.CreateHandle is Error!' );
+     if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;

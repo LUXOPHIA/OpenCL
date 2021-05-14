@@ -521,7 +521,7 @@ end;
 
 function TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>.GetHandle :T_cl_kernel;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle, 'TCLKernel.CreateHandle is Error!' );
+     if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;

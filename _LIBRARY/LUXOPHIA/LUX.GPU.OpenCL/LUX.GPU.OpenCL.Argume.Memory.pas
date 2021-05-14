@@ -120,7 +120,7 @@ end;
 
 function TCLMemory<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_mem;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle, 'TCLMemory.CreateHandle is Error!' );
+     if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
@@ -199,7 +199,7 @@ end;
 
 function TCLMemoryIter<TCLContex_,TCLPlatfo_>.GetHandle :P_void;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle, 'TCLMemoryIter.CreateHandle is Error!' );
+     if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
