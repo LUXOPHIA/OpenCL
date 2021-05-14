@@ -150,6 +150,12 @@ Q22 := TCLQueuer.Create( C2, D20 );  // OK
 
 ### ⬤ 2.5. Argument：実引数
 
+> `TCLArgume`  
+　┣`TCLMemory`  
+　┃　┣`TCLBuffer`  
+　┃　┗`TCLImager`  
+　┗`TCLSamplr`
+
 #### ▼ 2.5.1. Memory：メモリー
 The "**Memory**" object (`TCLMemory`) stores various data and shares it with the **device**.
 The `TCLMemory` class is created from the `TCLContex` and the `TCLQueuer` classes.
@@ -162,6 +168,7 @@ The `TCLMemory` class is abstract and derives the `TCLBuffer` and `TCLImager` cl
 The `TCLBuffer` class stores an array of any "simple type" or "record type."  
 `TCLBuffer`クラスは、任意の“単純型”や“レコード型”の配列を格納します。
 `TCLBuffer`クラスは抽象クラスであり、`TCLDevBuf`クラスと`TCLHosBuf`クラスを派生させます。 
+
 * `TCLDevBuf<TItem>`  
 Save the data to the device side.  
 配列データをデバイス側へ保存します。  
@@ -190,12 +197,42 @@ _Buffer.Storag.Unmap;                          // メモリ領域を同期
 ```
 
 ##### ▽ 2.5.1.2. Image：イメージ
-The "**image**" object (`TCLImager`) stores the pixel grid in 1D to 3D.
-The `TCLImager` class is an abstract and derives the `TCLDevIma` and `TCLHosIma` classes.
-In addition, various classes are derived depending on the layout and bits of the color channel.  
-“**イメージ**”オブジェクトは、１Ｄ～３Ｄにおけるピクセル格子を格納します。
-`TCLImager`クラスは抽象クラスであり、`TCLDevIma`クラスと`TCLHosIma`クラスを派生させます。
-さらに、カラーチャンネルのレイアウトやビットに応じて、様々なクラスが派生します。  
+The "**image**" object (`TCLImager`) stores the pixel array in 1D to 3D.
+3D voxel data is also considered a type of 3D **image**.
+The `TCLImager` class is abstract and derives various classes depending on the layout and bits of the color channel.   
+“**イメージ**”オブジェクトは、１Ｄ～３Ｄにおけるピクセル配列を格納します。
+３Ｄのボクセルデータも**イメージ**の一種と見なされます。
+`TCLImager`クラスは抽象クラスであり、カラーチャンネルのレイアウトやビット数に応じて、様々なクラスが派生します。  
+
+> `TCLImager`  
+　┣`TCLImager1D`  
+　┃　┣`TCLDevIma1DFMX`  
+　┃　┃　┣`TCLDevIma1DxBGRAxUInt8`  
+　┃　┃　┣`TCLDevIma1DxBGRAxNormUInt8`  
+　┃　┃　┗`TCLDevIma1DxRGBAxSFlo32`  
+　┃　┗`TCLHosIma1DFMX`  
+　┃　　　┣`TCLHosIma1DxBGRAxUInt8`  
+　┃　　　┣`TCLHosIma1DxBGRAxNormUInt8`  
+　┃　　　┗`TCLHosIma1DxRGBAxSFlo32`  
+　┣`TCLImager2D`  
+　┃　┣`TCLDevIma2DFMX`  
+　┃　┃　┣`TCLDevIma2DxBGRAxUInt8`  
+　┃　┃　┣`TCLDevIma2DxBGRAxNormUInt8`  
+　┃　┃　┗`TCLDevIma2DxRGBAxSFlo32`  
+　┃　┗`TCLHosIma2DFMX`  
+　┃　　　┣`TCLHosIma2DxBGRAxUInt8`  
+　┃　　　┣`TCLHosIma2DxBGRAxNormUInt8`  
+　┃　　　┗`TCLHosIma2DxRGBAxSFlo32`  
+　┗`TCLImager3D`  
+　　　┣`TCLDevIma3DFMX`  
+　　　┃　┣`TCLDevIma3DxBGRAxUInt8`  
+　　　┃　┣`TCLDevIma3DxBGRAxNormUInt8`  
+　　　┃　┗`TCLDevIma3DxRGBAxSFlo32`  
+　　　┗`TCLHosIma3DFMX`  
+　　　　　┣`TCLHosIma3DxBGRAxUInt8`  
+　　　　　┣`TCLHosIma3DxBGRAxNormUInt8`  
+　　　　　┗`TCLHosIma3DxRGBAxSFlo32`  
+
 * `TCLDevIma`  
 Save the image data to the device side.  
 画像データをデバイス側へ保存します。  
