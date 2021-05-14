@@ -558,7 +558,7 @@ end;
 
 function TCLProgra<TCLContex_,TCLPlatfo_,TCLProgras_>.GetHandle :T_cl_program;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle, 'TCLProgra.CreateHandle is Error!' );
+     if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
