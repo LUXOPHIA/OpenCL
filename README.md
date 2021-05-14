@@ -5,7 +5,7 @@ How to compute on the GPU (or CPU) using [OpenCL](https://en.wikipedia.org/wiki/
 ----
 ## ■ 1. Structure of the library
 
-### ▼ 1.1. Parent-Child Relationship：親子関係
+### ⬤ 1.1. Parent-Child Relationship：親子関係
 > [`TOpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L76)  
 　┃  
 [`TCLSystem`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L61)：システム  
@@ -33,7 +33,7 @@ How to compute on the GPU (or CPU) using [OpenCL](https://en.wikipedia.org/wiki/
 　　　　　　　　　　　　　　　　　┗[`TCLParames`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L65)：仮引数リスト  
 　　　　　　　　　　　　　　　　　　　┗[`TCLParame`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L33)：引数
 
-### ▼ 1.2. Inheritance Relationships：継承関係
+### ⬤ 1.2. Inheritance Relationships：継承関係
 
 ----
 ## ■ 2. How to use：利用方法
@@ -42,7 +42,7 @@ The `TCLSystem` class automatically detects all **computing devices** on the exe
 `TOpenCL`クラスは、`TCLSystem`クラスのシングルトンです。
 `TCLSystem`クラスは、実行マシンにおけるすべての**計算用デバイス**を自動的に検出します。
 
-### ▼ 2.1. Platform：プラットフォーム
+### ⬤ 2.1. Platform：プラットフォーム
 The "**platform**" object (`TCLPlatfo`) represents the environment defined by each device vendor. 
 The `TCLSystem` class automatically detects all **platform**s and enumerate them in the `Platfors` property.  
 “**プラットフォーム**”オブジェクト (`TCLPlatfo`) は、各デバイスベンダーが定義する環境を表します。
@@ -67,7 +67,7 @@ _Platfo.Extenss.Count :Integer           // 拡張機能の数
 _Platfo.Extenss[*]    :String            // 拡張機能の配列
 ```
 
-### ▼ 2.2. Device：デバイス
+### ⬤ 2.2. Device：デバイス
 The "**device**" object (`TCLDevice`) represents a physical GPU or CPU.
 The `TCLPlatfo` class automatically detects all **device** objects in a specific **platform** object and enumerate them in the `Devices` property.  
 **デバイス**オブジェクト (`TCLDevice`) は、物理的なＧＰＵやＣＰＵを表します。
@@ -93,7 +93,7 @@ _Device.DEVICE_PROFILE   :String            // プロファイル
 _Device.DEVICE_VERSION   :String            // バージョン
 ```
 
-### ▼ 2.3. Context：コンテキスト
+### ⬤ 2.3. Context：コンテキスト
 The "**context**" object (`TCLContex`) manages a bundle of related data and programs.
 The `TCLContex` class is created from the `TCLPlatfo` class.  
 “**コンテキスト**” (`TCLContex`) は、関連するデータやプログラムを束ねて管理します。
@@ -105,7 +105,7 @@ _Contex := TCLContex.Create( _Platfo );
 _Contex := _Platfo.Contexs.Add;
 ```
 
-### ▼ 2.4. Command Queue：コマンドキュー
+### ⬤ 2.4. Command Queue：コマンドキュー
 The "**command queue**" object (`TCLQueuer`) manages the commands sent to the device.
 The `TCLQueuer` class is created from the `TCLContex` and the `TCLDevice` classes.  
 “**コマンドキュー**”オブジェクト (`TCLQueuer`) は、デバイスに送られる命令を管理します。
@@ -152,7 +152,7 @@ Q21 := TCLQueuer.Create( C2, D10 );  // Error
 Q22 := TCLQueuer.Create( C2, D20 );  // OK
 ```
 
-### ▼ 2.5. Argument：実引数
+### ⬤ 2.5. Argument：実引数
 
 #### ▼ 2.5.1. Memory：メモリー
 The "**Memory**" object (`TCLMemory`) stores various data and shares it with the **device**.
@@ -223,19 +223,19 @@ _Imager.CountY := 500;  // 縦ピクセル数の設定
 ```
 
 #### ▼ 2.5.2. Sampler：サンプラー
-The sampler object (`TCLSamplr`) is needed to get the pixel color interpolated ​with real-number coordinates.  
-サンプラーオブジェクト (`TCLSamplr`) は、実数座標で補間されたピクセルカラーを得るために必要です。  
+The sampler object (`TCLSamplr`) defines the interpolation method to get the pixel color in real-number coordinates.  
+サンプラーオブジェクト（`TCLSamplr`）は、ピクセル色を実数座標で得るための補間方法を定義します。  
 ```Delphi
 _Samplr := TCLSamplr.Create( _Contex );
 ```
 
-### ▼ 2.6. Program：プログラム
+### ⬤ 2.6. Program：プログラム
 The "**program**" object (`TCLProgra`) reads the source code and builds it into an executable binary.
 The `TCLProgra` class is abstract and derives the `TCLLibrar` and `TCLExecut` classes, depending on the type of source code.  
 “**プログラム**”オブジェクト (`TCLProgra`) は、ソースコードを読み込んで、実行可能なバイナリへビルドします。
 `TCLProgra`クラスは抽象クラスであり、ソースコードの種類に応じて、`TCLLibrar`クラスと`TCLExecut`クラスへ派生します。  
 
-#### ▽ 2.6.1. TCLLibrar
+#### ▼ 2.6.1. TCLLibrar
 The `TCLLibrar` class is a program that does not include functions to execute directly is called a library type.  
 `TCLLibrar`クラスは、直接実行する関数を含まないプログラムです。  
 ```Delphi
@@ -247,7 +247,7 @@ _Librar := _Contex.Librars.Add;
 _Librar.Source.LoadFromFile( 'Librar.cl' );  // ソースコードのロード
 ```
 
-#### ▽ 2.6.2. TCLExecut
+#### ▼ 2.6.2. TCLExecut
 The `TCLExecut` class is a program that includes functions to execute directly.  
 `TCLExecut`クラスは、直接実行する関数を含んだプログラムです。  
 ```Delphi
@@ -259,7 +259,7 @@ _Execut := _Contex.Executs.Add;
 _Execut.Source.LoadFromFile( 'Execut.cl' );  // ソースコードのロード
 ```
 
-### ▼ 2.7. Build：ビルド
+### ⬤ 2.7. Build：ビルド
 A "**build**" (`TCLBuildr`) is an "action" performed by a **program**, but it is explicitly represented as a class in our library.  
 **ビルド** (`TCLBuildr`) は**プログラム**が行う“行為”ですが、我々のライブラリではクラスとして明示的に表現されます。  
 ```Delphi
@@ -279,7 +279,7 @@ _Buildr.LinkStatus    :T_cl_build_status  // リンクのスタータス
 _Buildr.LinkLog       :String             // リンクのログ
 ```
 
-### ▼ 2.8. Kernel：カーネル
+### ⬤ 2.8. Kernel：カーネル
 The "**kernel**" object (`TCLKernel`) represents an executable function in a program.
 The `TCLKernel` class is created from the `TCLExecut` and `TCLQueuer` classes.  
 “**カーネル**”オブジェクト (`TCLKernel`) は、プログラムの中の実行可能な関数を表します。
@@ -291,15 +291,16 @@ _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );
 _Kernel := _Execut.Kernels.Add( 'Main', _Queuer );
 ```
 
-#### ▽ 2.8.1. Parameter：仮引数
+#### ▼ 2.8.1. Parameter：仮引数
 The **memory** object connects to the parameter in the source code through the "Parames" property of the `TCLKernel` class.  
 **メモリ**オブジェクトは、`TCLKernel`クラスの“Parames”プロパティを介して、ソースコードの引数へ接続します。  
 ```Delphi
-_Kernel.Parames['Buffer'] := _Buffer;  // バッファの接続
+_Kernel.Parames['Buffer'] := _Buffer;  // バッファーの接続
 _Kernel.Parames['Imager'] := _Imager;  // イメージの接続
+_Kernel.Parames['Samplr'] := _Samplr;  // サンプラーの接続
 ```
 
-#### ▽ 2.8.2. Loop Count：反復回数
+#### ▼ 2.8.2. Loop Count：反復回数
 The OpenCL program repeatedly runs like a triple loop-statement.  
 OpenCL のプログラムは、３重のloop文のように繰り返し実行されます。  
 ```Delphi
@@ -310,16 +311,16 @@ _Kernel.GloSizY := 300;  // Ｚ方向のループ回数
 You can also specify the minimum and maximum loop indices.  
 ループのインデックスの最小値と最大値を指定することもできます。  
 ```Delphi
-_Kernel.GloMinX := 0;      // Ｘ方向の開始番号
-_Kernel.GloMinY := 0;      // Ｙ方向の開始番号
-_Kernel.GloMinZ := 0;      // Ｚ方向の開始番号
+_Kernel.GloMinX := 0;      // Ｘ方向の開始インデックス
+_Kernel.GloMinY := 0;      // Ｙ方向の開始インデックス
+_Kernel.GloMinZ := 0;      // Ｚ方向の開始インデックス
 
-_Kernel.GloMaxX := 100-1;  // Ｘ方向の終了番号
-_Kernel.GloMaxY := 200-1;  // Ｙ方向の終了番号
-_Kernel.GloMaxZ := 300-1;  // Ｚ方向の終了番号
+_Kernel.GloMaxX := 100-1;  // Ｘ方向の終了インデックス
+_Kernel.GloMaxY := 200-1;  // Ｙ方向の終了インデックス
+_Kernel.GloMaxZ := 300-1;  // Ｚ方向の終了インデックス
 ```
 
-#### ▽ 2.8.3. Run：実行
+#### ▼ 2.8.3. Run：実行
 ```Delphi
 _Kernel.Run;  // 実行
 ```
