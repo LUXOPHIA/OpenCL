@@ -182,11 +182,11 @@ Before reading or writing array data, the memory address must be "**map**ped" an
 配列データを読み書きする前に、メモリアドレスを“マップ”し、使用後に“アンマップ”する必要があります。
 ```Delphi
 _Buffer.Count := 3;                            // 要素数の設定
-_Buffer.Storag.Map;                            // マップ
+_Buffer.Storag.Map;                            // メモリ領域を展開
 _Buffer.Storag[0] := TItem.Create( 1, 2.34 );  // 書き込み
 _Buffer.Storag[1] := TItem.Create( 5, 6.78 );  // 書き込み
 _Buffer.Storag[2] := TItem.Create( 9, 0.12 );  // 書き込み
-_Buffer.Storag.Unmap;                          // アンマップ
+_Buffer.Storag.Unmap;                          // メモリ領域を同期
 ```
 
 ##### ▽ 2.5.1.2. Image：イメージ
