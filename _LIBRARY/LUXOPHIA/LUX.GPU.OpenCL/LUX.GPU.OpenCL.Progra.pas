@@ -304,7 +304,7 @@ end;
 
 function TCLBuildr<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_program;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle, 'TCLBuildr.CreateHandle is Error!' );
+     if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
@@ -347,6 +347,9 @@ begin
                                  P_char( AnsiString( Os ) ),
                                  Ls.Count, @LHs[0], @LNs[0],
                                  nil, nil );
+
+     _CompileStatus := GetInfo<T_cl_build_status>( Execut.Handle, CL_PROGRAM_BUILD_STATUS );
+     _CompileLog    := GetInfoString             ( Execut.Handle, CL_PROGRAM_BUILD_LOG    );
 end;
 
 function TCLBuildr<TCLContex_,TCLPlatfo_>.Link :T_cl_int;
@@ -369,19 +372,23 @@ end;
 
 function TCLBuildr<TCLContex_,TCLPlatfo_>.CreateHandle :T_cl_int;
 begin
-     if Compile = CL_SUCCESS then
-     begin
+     Result := Compile;
 
-          if Link = CL_SUCCESS then
+     if Result = CL_SUCCESS then
+     begin
+          Result := Link;
+
+          if Result = CL_SUCCESS then
           begin
                _LinkStatus := GetInfo<T_cl_build_status>( _Handle, CL_PROGRAM_BUILD_STATUS );
                _LinkLog    := GetInfoString             ( _Handle, CL_PROGRAM_BUILD_LOG    );
           end
-          else Handle := nil;
+          else
+          begin
+               _LinkStatus := CL_BUILD_NONE;
+               _LinkLog    := '';
+          end
      end;
-
-     _CompileStatus := GetInfo<T_cl_build_status>( Execut.Handle, CL_PROGRAM_BUILD_STATUS );
-     _CompileLog    := GetInfoString             ( Execut.Handle, CL_PROGRAM_BUILD_LOG    );
 end;
 
 function TCLBuildr<TCLContex_,TCLPlatfo_>.DestroHandle :T_cl_int;
@@ -398,6 +405,11 @@ begin
      inherited;
 
      _Handle := nil;
+
+     _CompileStatus := CL_BUILD_NONE;
+     _CompileLog    := '';
+     _LinkStatus    := CL_BUILD_NONE;
+     _LinkLog       := '';
 end;
 
 constructor TCLBuildr<TCLContex_,TCLPlatfo_>.Create( const Buildrs_:TCLBuildrs_; const Device_:TCLDevice_ );
