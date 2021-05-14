@@ -59,9 +59,9 @@ kernel void Main( global     TDoubleC* Buffer,
 
   TDoubleC C = ScreenToComplex( P, S, A );
 
-  float L = ComplexToLoop( C, MaxN ) / MaxN;
+  float L = ComplexToLoop( C, MaxN );
 
-  float4 R = read_imagef( Textur, Samplr, sqrt( L ) );
+  float4 R = read_imagef( Textur, Samplr, sqrt( L / MaxN ) );
 
   float4 G = GammaCorrect( R, 2.2 );
 
