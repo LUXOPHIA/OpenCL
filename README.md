@@ -152,10 +152,10 @@ Q22 := TCLQueuer.Create( C2, D20 );  // OK
 
 #### ▼ 2.5.1. Memory：メモリー
 The "**Memory**" object (`TCLMemory`) stores various data and shares it with the **device**.
-The `TCLMemory` class is created from the `TCLContex` and the `TCLDevice` classes.
+The `TCLMemory` class is created from the `TCLContex` and the `TCLQueuer` classes.
 The `TCLMemory` class is abstract and derives the `TCLBuffer` and `TCLImager` classes.  
 “**メモリー**”オブジェクト (`TCLMemory`) は、様々なデータを格納し**デバイス**と共有します。
-`TCLMemory`クラスは、`TCLContex`クラスと`TCLDevice`クラスから生成されます。
+`TCLMemory`クラスは、`TCLContex`クラスと`TCLQueuer`クラスから生成されます。
 `TCLMemory`クラスは抽象クラスであり、`TCLBuffer`クラスと`TCLImager`クラスを派生させます。  
 
 ##### ▽ 2.5.1.1. Buffer：バッファー
@@ -317,6 +317,15 @@ _Kernel.Run;  // 実行
 ```
 
 ----
-
+## ■ Reference：参考文献
+* [The Khronos Group Inc](https://www.khronos.org/)
+  * [Khronos OpenCL Registry - The Khronos Group Inc](https://www.khronos.org/registry/OpenCL/)
+    * [3.0](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/)
+      * [The OpenCL Specification](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html) [`.PDF`](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/pdf/OpenCL_API.pdf)
+      * [The OpenCL C Specification](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_C.html) [`.PDF`](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/pdf/OpenCL_C.pdf)
+* [GitHub](https://github.com)
+  * [The Khronos Group](https://github.com/KhronosGroup)
+    * [OpenCL-Headers](https://github.com/KhronosGroup/OpenCL-Headers)
+----
 * **Delphi IDE** @ Embarcadero  
 https://www.embarcadero.com/jp/products/delphi/starter
