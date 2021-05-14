@@ -8,7 +8,7 @@ How to compute on the GPU (or CPU) using [OpenCL](https://en.wikipedia.org/wiki/
 ### ⬤ 1.1. Parent-Child Relationship：親子関係
 > [`TOpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L76)  
 　┃  
-[`TCLSystem`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L61)：システム  
+[`TCLSystem`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L60)：システム  
 　┗[`TCLPlatfos`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L88)：プラットフォームリスト  
 　　　┗[`TCLPlatfo`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L33)：プラットフォーム  
 　　　　　┣[`TCLExtenss`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L25)：拡張機能リスト  
@@ -18,15 +18,15 @@ How to compute on the GPU (or CPU) using [OpenCL](https://en.wikipedia.org/wiki/
 　　　　　　　┗[`TCLContex`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Contex.pas#L25)：コンテキスト  
 　　　　　　　　　┣[`TCLQueuers`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Queuer.pas#L48)：コマンドキューリスト  
 　　　　　　　　　┃　┗[`TCLQueuer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Queuer.pas#L22)：コマンドキュー  
-　　　　　　　　　┣[`TCLArgumes`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L60)：実引数リスト  
-　　　　　　　　　┃　┣[`TCLBuffer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L24)：バッファー  
-　　　　　　　　　┃　┣[`TCLImager`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L24)：イメージ  
-　　　　　　　　　┃　┗[`TCLSamplr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Memory.pas#L24)：サンプラー  
-　　　　　　　　　┣[`TCLLibrars`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L227)：ライブラリリスト  
-　　　　　　　　　┃　┗[`TCLLibrar`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L183)：ライブラリ  
-　　　　　　　　　┗[`TCLExecuts`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L238)：プログラムリスト  
-　　　　　　　　　　　┗[`TCLExecut`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L192)：プログラム  
-　　　　　　　　　　　　　┣[`TCLBuildrs`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L69)：ビルドリスト  
+　　　　　　　　　┣[`TCLArgumes`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argumes.pas#L60)：実引数リスト  
+　　　　　　　　　┃　┣[`TCLBuffer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argumes.Memory.Buffer.pas#L24)：バッファー  
+　　　　　　　　　┃　┣[`TCLImager`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argumes.Memory.Imager.pas#L24)：イメージ  
+　　　　　　　　　┃　┗[`TCLSamplr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argumes.Samplr.pas#L24)：サンプラー  
+　　　　　　　　　┣[`TCLLibrars`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L234)：ライブラリリスト  
+　　　　　　　　　┃　┗[`TCLLibrar`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L190)：ライブラリ  
+　　　　　　　　　┗[`TCLExecuts`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L245)：プログラムリスト  
+　　　　　　　　　　　┗[`TCLExecut`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L199)：プログラム  
+　　　　　　　　　　　　　┣[`TCLBuildrs`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L76)：ビルドリスト  
 　　　　　　　　　　　　　┃　┗[`TCLBuildr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L33)：ビルド  
 　　　　　　　　　　　　　┗[`TCLKernels`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L212)：カーネルリスト  
 　　　　　　　　　　　　　　　┗[`TCLKernel`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L105)：カーネル  
@@ -55,7 +55,6 @@ TOpenCL.Platfors[*]    :TCLPlatfo  // 全プラットフォームの配列
 The `TCLPlatfo` class provides information about a specific **platform** as properties.  
 `TCLPlatfo`クラスは、特定の**プラットフォーム**に関する情報をプロパティとして提供します。  
 ```Delphi
-var _Platfo :TCLPlatfo;
 _Platfo := TOpenCL.Platfors[0];  // 特定プラットフォームの選択
 
 _Platfo.Handle        :T_cl_platform_id  // ポインタ
@@ -80,7 +79,6 @@ _Platfo.Devices[*]    :TCLDevice  // デバイスの配列
 The `TCLDevice` class provides information about a specific **device** as properties.  
 `TCLDevice`クラスは、特定の**デバイス**に関する情報をプロパティとして提供します。  
 ```Delphi
-var _Device :TCLDevice;
 _Device := _Platfo.Devices[0];  // 特定デバイスの選択
 
 _Device.Handle           :T_cl_device_id    // ポインタ
@@ -99,7 +97,6 @@ The `TCLContex` class is created from the `TCLPlatfo` class.
 “**コンテキスト**” (`TCLContex`) は、関連するデータやプログラムを束ねて管理します。
 `TCLContex`クラスは、`TCLPlatfo`クラスから生成されます。  
 ```Delphi
-var _Contex :TCLContex;
 _Contex := TCLContex.Create( _Platfo );
   {or}
 _Contex := _Platfo.Contexs.Add;
@@ -111,7 +108,6 @@ The `TCLQueuer` class is created from the `TCLContex` and the `TCLDevice` classe
 “**コマンドキュー**”オブジェクト (`TCLQueuer`) は、デバイスに送られる命令を管理します。
 `TCLQueuer`クラスは、`TCLContex`クラスと`TCLDevice`クラスから生成されます。  
 ```Delphi
-var _Queuer :TCLQueuer;
 _Queuer := TCLQueuer.Create( _Contex, _Device );
   {or}
 _Queuer := _Contex.Queuers.Add( _Device );
@@ -166,10 +162,10 @@ The `TCLMemory` class is abstract and derives the `TCLBuffer` and `TCLImager` cl
 The `TCLBuffer` class stores an array of any "simple type" or "record type."  
 `TCLBuffer`クラスは、任意の“単純型”や“レコード型”の配列を格納します。
 `TCLBuffer`クラスは抽象クラスであり、`TCLDevBuf`クラスと`TCLHosBuf`クラスを派生させます。 
-* `TCLDevBuf`  
+* `TCLDevBuf<TItem>`  
 Save the data to the device side.  
 配列データをデバイス側へ保存します。  
-* `TCLHosBuf`  
+* `TCLHosBuf<TItem>`  
 Save the data to the host side.  
 配列データをホスト側へ保存します。  
 ```Delphi
@@ -178,7 +174,6 @@ TItem = record
   B :Double;
 end;
 
-var _Buffer :TCLDevBuf<TItem>;
 _Buffer := TCLDevBuf<TItem>.Create( _Contex, _Queuer );
 ```
 Read and write array data through the `Storag` property.
@@ -239,7 +234,6 @@ The `TCLProgra` class is abstract and derives the `TCLLibrar` and `TCLExecut` cl
 The `TCLLibrar` class is a program that does not include functions to execute directly is called a library type.  
 `TCLLibrar`クラスは、直接実行する関数を含まないプログラムです。  
 ```Delphi
-var _Librar :TCLLibrar;
 _Librar := TCLLibrar.Create( _Contex );
   {or}
 _Librar := _Contex.Librars.Add;
@@ -251,7 +245,6 @@ _Librar.Source.LoadFromFile( 'Librar.cl' );  // ソースコードのロード
 The `TCLExecut` class is a program that includes functions to execute directly.  
 `TCLExecut`クラスは、直接実行する関数を含んだプログラムです。  
 ```Delphi
-var _Execut :TCLExecut;
 _Execut := TCLExecut.Create( _Contex );
   {or}
 _Execut := _Contex.Executs.Add;
@@ -263,7 +256,6 @@ _Execut.Source.LoadFromFile( 'Execut.cl' );  // ソースコードのロード
 A "**build**" (`TCLBuildr`) is an "action" performed by a **program**, but it is explicitly represented as a class in our library.  
 **ビルド** (`TCLBuildr`) は**プログラム**が行う“行為”ですが、我々のライブラリではクラスとして明示的に表現されます。  
 ```Delphi
-var _Buildr :TCLBuildr;
 _Buildr := _Execut.Buildrs.Add( _Device );
   {or}
 _Buildr := _Execut.BuildTo( _Device );
@@ -285,7 +277,6 @@ The `TCLKernel` class is created from the `TCLExecut` and `TCLQueuer` classes.
 “**カーネル**”オブジェクト (`TCLKernel`) は、プログラムの中の実行可能な関数を表します。
 `TCLKernel`クラスは、`TCLExecut`クラスと`TCLQueuer`クラスから生成されます。  
 ```Delphi
-var _Kernel :TCLKernel;
 _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );
   {or}
 _Kernel := _Execut.Kernels.Add( 'Main', _Queuer );
