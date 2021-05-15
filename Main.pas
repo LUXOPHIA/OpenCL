@@ -43,8 +43,8 @@ type
     _Contex :TCLContex;
     _Queuer :TCLQueuer;
     _Buffer :TCLDevBuf<TDoubleC>;
-    _Imager :TCLDevIma2DxBGRAxNormUInt8;
-    _Textur :TCLDevIma1DxBGRAxNormUInt8;
+    _Imager :TCLDevIma2DxBGRAxUFix8;
+    _Textur :TCLDevIma1DxBGRAxUFix8;
     _Samplr :TCLSamplr;
     _Librar :TCLLibrar;
     _Execut :TCLExecut;
@@ -102,41 +102,41 @@ procedure TForm1.MakeArgumes;
 begin
      ////////// バッファー
 
-     _Buffer := TCLDevBuf<TDoubleC>.Create( _Contex, _Queuer );         // 生成
+     _Buffer := TCLDevBuf<TDoubleC>.Create( _Contex, _Queuer );     // 生成
 
      Assert( Assigned( _Buffer.Handle ), '_Buffer is Error!' );
 
-     _Buffer.Count := 2;                                                // 要素数の設定
+     _Buffer.Count := 2;                                            // 要素数の設定
 
      _AreaC := TDoubleAreaC.Create( -2, -2, +2, +2 );
 
-     _Buffer.Storag.Map;                                                // 展開
-     _Buffer.Storag[ 0 ] := _AreaC.Min;                                 // 書き込み
-     _Buffer.Storag[ 1 ] := _AreaC.Max;                                 // 書き込み
-     _Buffer.Storag.Unmap;                                              // 同期
+     _Buffer.Storag.Map;                                            // 展開
+     _Buffer.Storag[ 0 ] := _AreaC.Min;                             // 書き込み
+     _Buffer.Storag[ 1 ] := _AreaC.Max;                             // 書き込み
+     _Buffer.Storag.Unmap;                                          // 同期
 
      ////////// イメージ
 
-     _Imager := TCLDevIma2DxBGRAxNormUInt8.Create( _Contex, _Queuer );  // 生成
+     _Imager := TCLDevIma2DxBGRAxUFix8.Create( _Contex, _Queuer );  // 生成
 
      Assert( Assigned( _Imager.Handle ), '_Imager is Error!' );
 
-     _Imager.CountX := 500;                                             // 横ピクセル数の設定
-     _Imager.CountY := 500;                                             // 縦ピクセル数の設定
+     _Imager.CountX := 500;                                         // 横ピクセル数の設定
+     _Imager.CountY := 500;                                         // 縦ピクセル数の設定
 
      ////////// テクスチャ
 
-     _Textur := TCLDevIma1DxBGRAxNormUInt8.Create( _Contex, _Queuer );  // 生成
+     _Textur := TCLDevIma1DxBGRAxUFix8.Create( _Contex, _Queuer );  // 生成
 
      Assert( Assigned( _Textur.Handle ), '_Textur is Error!' );
 
-     _Textur.LoadFromFile( '..\..\_DATA\Textur.png' );                  // 画像のロード
+     _Textur.LoadFromFile( '..\..\_DATA\Textur.png' );              // 画像のロード
 
-     _Textur.CopyTo( ImageT.Bitmap );                                   // 画像の表示
+     _Textur.CopyTo( ImageT.Bitmap );                               // 画像の表示
 
      ////////// サンプラー
 
-     _Samplr := TCLSamplr.Create( _Contex );                            // 生成
+     _Samplr := TCLSamplr.Create( _Contex );                        // 生成
 
      Assert( Assigned( _Samplr.Handle ), '_Samplr is Error!' );
 end;
