@@ -49,7 +49,7 @@ float4 GammaCorrect( const float4 Color_, const float Gamma_ )
 kernel void Main( global     TDoubleC* Buffer,
                   write_only image2d_t Imager,
                    read_only image1d_t Textur,
-                   read_only sampler_t Samplr )
+                  const      sampler_t Samplr )
 {
   const int MaxN = 1000;
   const int2 P = { get_global_id  ( 0 ), get_global_id  ( 1 ) };
