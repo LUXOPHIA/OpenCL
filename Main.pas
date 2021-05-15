@@ -43,8 +43,8 @@ type
     _Contex :TCLContex;
     _Queuer :TCLQueuer;
     _Buffer :TCLDevBuf<TDoubleC>;
-    _Imager :TCLDevIma2DxBGRAxNormUInt8;
-    _Textur :TCLDevIma1DxBGRAxNormUInt8;
+    _Imager :TCLDevIma2DxBGRAxUFix8;
+    _Textur :TCLDevIma1DxBGRAxUFix8;
     _Samplr :TCLSamplr;
     _Librar :TCLLibrar;
     _Execut :TCLExecut;
@@ -117,7 +117,7 @@ begin
 
      ////////// イメージ
 
-     _Imager := TCLDevIma2DxBGRAxNormUInt8.Create( _Contex, _Queuer );          // 生成
+     _Imager := TCLDevIma2DxBGRAxUFix8.Create( _Contex, _Queuer );              // 生成
 
      Assert( Assigned( _Imager.Handle ), '_Imager is Error!' );
 
@@ -126,7 +126,7 @@ begin
 
      ////////// テクスチャ
 
-     _Textur := TCLDevIma1DxBGRAxNormUInt8.Create( _Contex, _Queuer );          // 生成
+     _Textur := TCLDevIma1DxBGRAxUFix8.Create( _Contex, _Queuer );              // 生成
 
      Assert( Assigned( _Textur.Handle ), '_Textur is Error!' );
 
