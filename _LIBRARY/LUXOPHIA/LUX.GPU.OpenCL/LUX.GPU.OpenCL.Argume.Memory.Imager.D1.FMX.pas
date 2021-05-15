@@ -15,8 +15,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLDevIma1DxBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class;
      TCLHosIma1DxBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class;
 
-     TCLDevIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_:class> = class;
-     TCLHosIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_:class> = class;
+     TCLDevIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_:class> = class;
+     TCLHosIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_:class> = class;
 
      TCLDevIma1DxRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class;
      TCLHosIma1DxRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class;
@@ -79,9 +79,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_>
 
-     TCLDevIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLDevIma1DFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
+     TCLDevIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_:class> = class( TCLDevIma1DFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
      private
      protected
        ///// アクセス
@@ -93,9 +93,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_>
 
-     TCLHosIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma1DFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
+     TCLHosIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma1DFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
      private
      protected
        ///// アクセス
@@ -337,7 +337,7 @@ begin
      Bitmap_.Unmap( B );
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -345,12 +345,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLDevIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
+function TCLDevIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
 begin
      Result := CL_BGRA;
 end;
 
-function TCLDevIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
+function TCLDevIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
 begin
      Result := CL_UNORM_INT8;
 end;
@@ -359,7 +359,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLDevIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
+procedure TCLDevIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
    X, Y :Integer;
@@ -377,7 +377,7 @@ begin
      Bitmap_.Unmap( B );
 end;
 
-procedure TCLDevIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
+procedure TCLDevIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
    X :Integer;
@@ -395,7 +395,7 @@ begin
      Bitmap_.Unmap( B );
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -403,12 +403,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLHosIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
+function TCLHosIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
 begin
      Result := CL_BGRA;
 end;
 
-function TCLHosIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
+function TCLHosIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
 begin
      Result := CL_UNORM_INT8;
 end;
@@ -417,7 +417,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLHosIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
+procedure TCLHosIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
    X, Y :Integer;
@@ -435,7 +435,7 @@ begin
      Bitmap_.Unmap( B );
 end;
 
-procedure TCLHosIma1DxBGRAxNormUInt8<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
+procedure TCLHosIma1DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
    X, Y :Integer;
