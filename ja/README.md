@@ -5,11 +5,11 @@ permalink: /ja/
 -->
 [`［English］`](https://luxophia.github.io/OpenCL/)
 
-# [OpenCL](https://github.com/LUXOPHIA/OpenCL/blob/master/ja/README.md)
+# [OpenCL](https://github.com/LUXOPHIA/OpenCL/tree/master/ja)
 [OpenCL](https://ja.wikipedia.org/wiki/OpenCL) を用いたＧＰＵ（やＣＰＵ）での並列計算。  
 
 ----
-## ■ 1. [`LUX.GPU.OpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/ja/README.md) ライブラリ
+## ■ 1. [`LUX.GPU.OpenCL`](https://luxophia.github.io/LUX.GPU.OpenCL/ja/) ライブラリ
 
 > [`TOpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L60)  
 > 　┃  
