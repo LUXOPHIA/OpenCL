@@ -39,7 +39,7 @@ Parallel computing on the GPU (or CPU) with [OpenCL](https://en.wikipedia.org/wi
 > 　　　　　　　　　　　　　　　　　　　┗[`TCLParame`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L33) ：Parameter
 
 ----
-## ■ 2. How to use
+## ■ 2. Usage
 The `TOpenCL` class is a singleton of the `TCLSystem` class.
 The `TCLSystem` class automatically detects all **computing devices** on the execution machine.  
 
