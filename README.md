@@ -9,7 +9,7 @@ permalink: /
 Parallel computing on the GPU (or CPU) with [OpenCL](https://en.wikipedia.org/wiki/OpenCL).  
 
 ----
-## ■ 1. [LUX.GPU.OpenCL](https://github.com/LUXOPHIA/LUX.GPU.OpenCL) Library
+## ■ 1. [LUX.GPU.OpenCL](https://luxophia.github.io/LUX.GPU.OpenCL/) Library
 
 > [`TOpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L60) ：singleton of TCLSystem  
 > 　┃  
