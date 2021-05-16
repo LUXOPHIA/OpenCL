@@ -5,7 +5,7 @@ permalink: /ja/
 -->
 [`［English］`](https://luxophia.github.io/LUX.GPU.OpenCL/)
 
-# [LUX.GPU.OpenCL](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/master/ja/README.md)
+# [LUX.GPU.OpenCL](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/ja/README.md)
 ＧＰＵによる並列計算のための [OpenCL](https://en.wikipedia.org/wiki/OpenCL) ライブラリ。
 
 ----
