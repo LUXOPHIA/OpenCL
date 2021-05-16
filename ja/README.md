@@ -1,52 +1,49 @@
+<!---
 layout: page
 title: "README (Japanese)"
-permalink: /
+permalink: /ja/
+-->
+[`［English］`](https://luxophia.github.io/OpenCL/)
 
-# OpenCL
-Parallel computing on the GPU (or CPU) with [OpenCL](https://en.wikipedia.org/wiki/OpenCL).  
+# [OpenCL](https://github.com/LUXOPHIA/OpenCL/blob/master/ja/README.md)
 [OpenCL](https://ja.wikipedia.org/wiki/OpenCL) を用いたＧＰＵ（やＣＰＵ）での並列計算。  
 
 ----
-## ■ 1. Structure of the library
+## ■ 1. [`LUX.GPU.OpenCL`](https://luxophia.github.io/LUX.GPU.OpenCL/ja/) ライブラリ
 
-### ⬤ 1.1. Parent-Child Relationship：親子関係
 > [`TOpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L60)  
-　┃  
-[`TCLSystem`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L60) ：システム  
-　┗[`TCLPlatfos`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L88) ：プラットフォームリスト  
-　　　┗[`TCLPlatfo`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L33) ：プラットフォーム  
-　　　　　┣[`TCLExtenss`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L25) ：拡張機能リスト  
-　　　　　┣[`TCLDevices`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Device.pas#L291) ：デバイスリスト  
-　　　　　┃　┗[`TCLDevice`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Device.pas#L21) ：デバイス  
-　　　　　┗[`TCLContexs`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Contex.pas#L64) ：コンテキストリスト  
-　　　　　　　┗[`TCLContex`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Contex.pas#L25) ：コンテキスト  
-　　　　　　　　　┣[`TCLQueuers`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Queuer.pas#L48) ：コマンドキューリスト  
-　　　　　　　　　┃　┗[`TCLQueuer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Queuer.pas#L22) ：コマンドキュー  
-　　　　　　　　　┣[`TCLArgumes`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.pas#L44) ：実引数リスト  
-　　　　　　　　　┃　┣[`TCLBuffer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Buffer.pas#L26) ：バッファー  
-　　　　　　　　　┃　┣[`TCLImager`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.pas#L26) ：イメージ  
-　　　　　　　　　┃　┗[`TCLSamplr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Samplr.pas#L21) ：サンプラー  
-　　　　　　　　　┣[`TCLLibrars`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L234) ：ライブラリリスト  
-　　　　　　　　　┃　┗[`TCLLibrar`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L190) ：ライブラリ  
-　　　　　　　　　┗[`TCLExecuts`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L245) ：プログラムリスト  
-　　　　　　　　　　　┗[`TCLExecut`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L199) ：プログラム  
-　　　　　　　　　　　　　┣[`TCLBuildrs`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L76) ：ビルドリスト  
-　　　　　　　　　　　　　┃　┗[`TCLBuildr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L33) ：ビルド  
-　　　　　　　　　　　　　┗[`TCLKernels`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L212) ：カーネルリスト  
-　　　　　　　　　　　　　　　┗[`TCLKernel`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L105) ：カーネル  
-　　　　　　　　　　　　　　　　　┗[`TCLParames`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L65) ：仮引数リスト  
-　　　　　　　　　　　　　　　　　　　┗[`TCLParame`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L33) ：仮引数
+> 　┃  
+> [`TCLSystem`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L60) ：システム  
+> 　┗[`TCLPlatfos`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L88) ：プラットフォームリスト  
+> 　　　┗[`TCLPlatfo`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L33) ：プラットフォーム  
+> 　　　　　┣[`TCLExtenss`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Platfo.pas#L25) ：拡張機能リスト  
+> 　　　　　┣[`TCLDevices`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Device.pas#L291) ：デバイスリスト  
+> 　　　　　┃　┗[`TCLDevice`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Device.pas#L21) ：デバイス  
+> 　　　　　┗[`TCLContexs`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Contex.pas#L64) ：コンテキストリスト  
+> 　　　　　　　┗[`TCLContex`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Contex.pas#L25) ：コンテキスト  
+> 　　　　　　　　　┣[`TCLQueuers`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Queuer.pas#L48) ：コマンドキューリスト  
+> 　　　　　　　　　┃　┗[`TCLQueuer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Queuer.pas#L22) ：コマンドキュー  
+> 　　　　　　　　　┣[`TCLArgumes`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.pas#L44) ：実引数リスト  
+> 　　　　　　　　　┃　┣[`TCLBuffer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Buffer.pas#L26) ：バッファー  
+> 　　　　　　　　　┃　┣[`TCLImager`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.pas#L26) ：イメージ  
+> 　　　　　　　　　┃　┗[`TCLSamplr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Samplr.pas#L21) ：サンプラー  
+> 　　　　　　　　　┣[`TCLLibrars`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L234) ：ライブラリリスト  
+> 　　　　　　　　　┃　┗[`TCLLibrar`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L190) ：ライブラリ  
+> 　　　　　　　　　┗[`TCLExecuts`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L245) ：プログラムリスト  
+> 　　　　　　　　　　　┗[`TCLExecut`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L199) ：プログラム  
+> 　　　　　　　　　　　　　┣[`TCLBuildrs`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L76) ：ビルドリスト  
+> 　　　　　　　　　　　　　┃　┗[`TCLBuildr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Progra.pas#L33) ：ビルド  
+> 　　　　　　　　　　　　　┗[`TCLKernels`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L212) ：カーネルリスト  
+> 　　　　　　　　　　　　　　　┗[`TCLKernel`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L105) ：カーネル  
+> 　　　　　　　　　　　　　　　　　┗[`TCLParames`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L65) ：仮引数リスト  
+> 　　　　　　　　　　　　　　　　　　　┗[`TCLParame`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Kernel.pas#L33) ：仮引数
 
 ----
-## ■ 2. How to use：利用方法
-The `TOpenCL` class is a singleton of the `TCLSystem` class.
-The `TCLSystem` class automatically detects all **computing devices** on the execution machine.  
+## ■ 2. ライブラリの利用方法
 `TOpenCL`クラスは、`TCLSystem`クラスのシングルトンです。
 `TCLSystem`クラスは、実行マシンにおけるすべての**計算用デバイス**を自動的に検出します。
 
-### ⬤ 2.1. Platform：プラットフォーム
-The "**platform**" object (`TCLPlatfo`) represents the environment defined by each device vendor. 
-The `TCLSystem` class automatically detects all **platform**s and enumerate them in the `Platfors` property.  
+### ⬤ 2.1. プラットフォーム
 “**プラットフォーム**”オブジェクト (`TCLPlatfo`) は、各デバイスベンダーが定義する環境を表します。
 `TCLSystem`クラスは、すべての**プラットフォーム**を自動的に検出し、`Platfors`プロパティに列挙します。 
 
@@ -56,7 +53,6 @@ The `TCLSystem` class automatically detects all **platform**s and enumerate them
 > TOpenCL.Platfors[*]    :TCLPlatfo  // 全プラットフォームの配列
 > ```
 
-The `TCLPlatfo` class provides information about a specific **platform** as properties.  
 `TCLPlatfo`クラスは、特定の**プラットフォーム**に関する情報をプロパティとして提供します。  
 > Delphi
 > ```Delphi
@@ -71,9 +67,7 @@ The `TCLPlatfo` class provides information about a specific **platform** as prop
 > _Platfo.Extenss[*]    :String            // 拡張機能の配列
 > ```
 
-### ⬤ 2.2. Device：デバイス
-The "**device**" object (`TCLDevice`) represents a physical GPU or CPU.
-The `TCLPlatfo` class automatically detects all **device** objects in a specific **platform** object and enumerate them in the `Devices` property.  
+### ⬤ 2.2. デバイス
 **デバイス**オブジェクト (`TCLDevice`) は、物理的なＧＰＵやＣＰＵを表します。
 `TCLPlatfo`クラスは、特定の**プラットフォーム**内のすべての**デバイス**を自動的に検出し、`Devices`プロパティに列挙します。  
 > Delphi
@@ -81,8 +75,7 @@ The `TCLPlatfo` class automatically detects all **device** objects in a specific
 > _Platfo.Devices.Count :Integer    // デバイスの数
 > _Platfo.Devices[*]    :TCLDevice  // デバイスの配列
 > ```
-
-The `TCLDevice` class provides information about a specific **device** as properties.  
+ 
 `TCLDevice`クラスは、特定の**デバイス**に関する情報をプロパティとして提供します。  
 > Delphi
 > ```Delphi
@@ -98,9 +91,7 @@ The `TCLDevice` class provides information about a specific **device** as proper
 > _Device.DEVICE_VERSION   :String            // バージョン
 > ```
 
-### ⬤ 2.3. Context：コンテキスト
-The "**context**" object (`TCLContex`) manages a bundle of related data and programs.
-The `TCLContex` class is created from the `TCLPlatfo` class.  
+### ⬤ 2.3. コンテキスト
 “**コンテキスト**” (`TCLContex`) は、関連するデータやプログラムを束ねて管理します。
 `TCLContex`クラスは、`TCLPlatfo`クラスから生成されます。  
 > Delphi
@@ -110,9 +101,7 @@ The `TCLContex` class is created from the `TCLPlatfo` class.
 > _Contex := _Platfo.Contexs.Add;
 > ```
 
-### ⬤ 2.4. Command Queue：コマンドキュー
-The "**command queue**" object (`TCLQueuer`) manages the commands sent to the device.
-The `TCLQueuer` class is created from the `TCLContex` and the `TCLDevice` classes.  
+### ⬤ 2.4. コマンドキュー
 “**コマンドキュー**”オブジェクト (`TCLQueuer`) は、デバイスに送られる命令を管理します。
 `TCLQueuer`クラスは、`TCLContex`クラスと`TCLDevice`クラスから生成されます。  
 > Delphi
@@ -122,7 +111,6 @@ The `TCLQueuer` class is created from the `TCLContex` and the `TCLDevice` classe
 > _Queuer := _Contex.Queuers.Add( _Device );
 > ```
 
-The `TCLContex` class registers the `TCLQueuer` class in the `Queuers` property.  
 `TCLQueuer`クラスは、`TCLContex`クラスの`Queuers`プロパティへ登録されます。
 > Delphi  
 > ```Delphi
@@ -130,7 +118,6 @@ The `TCLContex` class registers the `TCLQueuer` class in the `Queuers` property.
 > _Contex.Queuers[*]    :TCLQueuer  // コマンドキューの配列
 > ```
 
-Note that **context** and **device** on the different **platforms** cannot generate a **command queue**.  
 なお、**プラットフォーム**の異なる**コンテキスト**と**デバイス**からでは、**コマンドキュー**を生成できません。
 > Delphi  
 > ```Delphi
@@ -159,7 +146,7 @@ Note that **context** and **device** on the different **platforms** cannot gener
 > Q22 := TCLQueuer.Create( C2, D20 );  // OK
 > ```
 
-### ⬤ 2.5. Argument：実引数
+### ⬤ 2.5. 実引数
 
 > [`TCLArgume`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.pas#L21)  
 　┣[`TCLMemory`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.pas#L24)  
@@ -167,27 +154,20 @@ Note that **context** and **device** on the different **platforms** cannot gener
 　┃　┗[`TCLImager`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.pas#L26)  
 　┗[`TCLSamplr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Samplr.pas#L21)  
 
-#### ▼ 2.5.1. Memory：メモリー
-The "**Memory**" object (`TCLMemory`) stores various data and shares it with the **device**.
-The `TCLMemory` class is created from the `TCLContex` and the `TCLQueuer` classes.
-The `TCLMemory` class is abstract and derives the `TCLBuffer` and `TCLImager` classes.  
+#### ▼ 2.5.1. メモリー
 “**メモリー**”オブジェクト (`TCLMemory`) は、様々なデータを格納し**デバイス**と共有します。
 `TCLMemory`クラスは、`TCLContex`クラスと`TCLQueuer`クラスから生成されます。
 `TCLMemory`クラスは抽象クラスであり、`TCLBuffer`クラスと`TCLImager`クラスを派生させます。  
 
-##### ▽ 2.5.1.1. Buffer：バッファー
-The `TCLBuffer` class stores an array of any "simple type" or "record type."  
+##### ▽ 2.5.1.1. バッファー 
 `TCLBuffer`クラスは、任意の“単純型”や“レコード型”の配列を格納します。
 `TCLBuffer`クラスは抽象クラスであり、`TCLDevBuf`クラスと`TCLHosBuf`クラスを派生させます。 
 
-* `TCLDevBuf<TItem>`  
-Save the array data to the device side.  
+* `TCLDevBuf<TItem>`   
 配列データをデバイス側へ保存します。  
 * `TCLHosBuf<TItem>`  
-Save the array data to the host side.  
 配列データをホスト側へ保存します。 
-
-If you want to send an array of the following structures to the device,  
+ 
 デバイスへ以下のような構造体の配列を送りたい場合、  
 > OpenCL C
 > ```C
@@ -201,7 +181,6 @@ If you want to send an array of the following structures to the device,
 > }
 > ```
 
-generate the `TCLBuffer` class as follows.  
 以下のように`TCLBuffer`クラスを生成します。
 > Delphi
 > ```Delphi
@@ -214,8 +193,6 @@ generate the `TCLBuffer` class as follows.
 >   {or}
 > _Buffer := TCLHosBuf<TItem>.Create( _Contex, _Queuer );
 > ```
-Read and write array data through the `Storag` property.
-The array data must be "**map**ped" to synchronize with the host before reading or writing, and "**unmap**ped" to synchronize with the device after use.  
 `Storag`プロパティを通して、配列データを読み書きします。
 配列データを読み書きする前にホストと同期するために“マップ”し、使用後にデバイスと同期するために“アンマップ”する必要があります。
 > Delphi
@@ -228,10 +205,7 @@ The array data must be "**map**ped" to synchronize with the host before reading 
 > _Buffer.Storag.Unmap;                          // メモリ領域を同期
 > ```
 
-##### ▽ 2.5.1.2. Image：イメージ
-The "**image**" object (`TCLImager`) stores the pixel array in 1D to 3D.
-3D voxel data is also considered a type of 3D **image**.
-The `TCLImager` class is abstract and derives various classes depending on the layout and bits of the color channel.   
+##### ▽ 2.5.1.2. イメージ
 “**イメージ**”オブジェクトは、１Ｄ～３Ｄにおけるピクセル配列を格納します。
 ３Ｄのボクセルデータも**イメージ**の一種と見なされます。
 `TCLImager`クラスは抽象クラスであり、カラーチャンネルのレイアウトやビット数に応じて、様々なクラスが派生します。  
@@ -264,8 +238,7 @@ The `TCLImager` class is abstract and derives various classes depending on the l
 　　　　　┣[`TCLHosIma3DxBGRAxUInt8`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas#L70)  
 　　　　　┣[`TCLHosIma3DxBGRAxUFix8`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas#L98)  
 　　　　　┗[`TCLHosIma3DxRGBAxSFlo32`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas#L126)  
-
-The first part of the class name represents where the `TCLImager` class will store the data.   
+  
 クラス名の最初の部分は、`TCLImager`クラスがデータを保存する場所を示しています。  
 > * `TCLDevIma*Dx*x*`  
 Save the image data to the device side.  
@@ -274,7 +247,6 @@ Save the image data to the device side.
 Save the image data to the host side.  
 画像データをホスト側へ保存します。 
 
-The second part of the class name represents the dimension of the `TCLImager` class.  
 クラス名の２番目の部分は、`TCLImager`クラスの次元を表しています。  
 > * `TCL***Ima1Dx*x*x*`  
 Dimension：`1D`
@@ -282,15 +254,13 @@ Dimension：`1D`
 Dimension：`2D`
 > * `TCL***Ima3Dx*x*x*`  
 Dimension：`3D`
-
-The third part of the class name represents the channel order of the `TCLImager` class.  
+ 
 クラス名の３番目の部分は、`TCLImager`クラスのチャンネルの順番を表しています。  
 > * `TCL***Ima*xBGRAx*x*`  
 Color channel order：`ＢＧＲＡ`
 > * `TCL***Ima*xRGBAx*x*`  
 Color channel order：`ＲＧＢＡ`
 
-The fourth part of the class name represents the color data type of the `TCLImager` class.  
 クラス名の４番目の部分は、`TCLImager`クラスの色のデータ型を表しています。  
 > * `TCL***Ima*Dx*xUInt8`  
 >   * Device-side data type：`uint8`　@ OpenCL C
@@ -305,27 +275,23 @@ The fourth part of the class name represents the color data type of the `TCLImag
 > Delphi
 > ```Delphi
 > _Imager := TCLDevIma3DxBGRAxUInt8.Create( _Contex, _Queuer );
-> _Imager.CountX := 500;  // Ｘ方向ピクセル数の設定
-> _Imager.CountY := 500;  // Ｙ方向ピクセル数の設定
-> _Imager.CountY := 500;  // Ｚ方向ピクセル数の設定
+> _Imager.CountX := 500;  // Ｘ方向ピクセル数
+> _Imager.CountY := 500;  // Ｙ方向ピクセル数
+> _Imager.CountZ := 500;  // Ｚ方向ピクセル数
 > ```
 
-#### ▼ 2.5.2. Sampler：サンプラー
-The sampler object (`TCLSamplr`) defines the interpolation method to get the pixel color in real-number coordinates.  
+#### ▼ 2.5.2. サンプラー
 サンプラーオブジェクト (`TCLSamplr`) は、ピクセル色を実数座標で得るための補間方法を定義します。  
 > Delphi
 > ```Delphi
 > _Samplr := TCLSamplr.Create( _Contex );
 > ```
 
-### ⬤ 2.6. Program：プログラム
-The "**program**" object (`TCLProgra`) reads the source code and builds it into an executable binary.
-The `TCLProgra` class is abstract and derives the `TCLLibrar` and `TCLExecut` classes, depending on the type of source code.  
+### ⬤ 2.6. プログラム 
 “**プログラム**”オブジェクト (`TCLProgra`) は、ソースコードを読み込んで、実行可能なバイナリへビルドします。
 `TCLProgra`クラスは抽象クラスであり、ソースコードの種類に応じて、`TCLLibrar`クラスと`TCLExecut`クラスへ派生します。  
 
-#### ▼ 2.6.1. Library：ライブラリ
-The `TCLLibrar` class is a program that does not include functions to execute directly is called a library type.  
+#### ▼ 2.6.1. ライブラリ
 `TCLLibrar`クラスは、直接実行する関数を含まないプログラムです。  
 > Delphi
 > ```Delphi
@@ -336,8 +302,7 @@ The `TCLLibrar` class is a program that does not include functions to execute di
 > _Librar.Source.LoadFromFile( 'Librar.cl' );  // load Sourcecode
 > ```
 
-#### ▼ 2.6.2. executable：
-The `TCLExecut` class is a program that includes functions (**Kernel**s) to execute directly.  
+#### ▼ 2.6.2. エグゼキュータブル 
 `TCLExecut`クラスは、直接実行する関数（**カーネル**）を含んだプログラムです。  
 > Delphi
 > ```Delphi
@@ -348,8 +313,7 @@ The `TCLExecut` class is a program that includes functions (**Kernel**s) to exec
 > _Execut.Source.LoadFromFile( 'Execut.cl' );  // load Sourcecode
 > ```
 
-### ⬤ 2.7. Build：ビルド
-A "**build**" (`TCLBuildr`) is an "action" performed by a **program**, but it is explicitly represented as a class in our library.  
+### ⬤ 2.7. ビルド
 **ビルド** (`TCLBuildr`) は**プログラム**が行う“行為”ですが、我々のライブラリではクラスとして明示的に表現されます。  
 > Delphi
 > ```Delphi
@@ -358,8 +322,6 @@ A "**build**" (`TCLBuildr`) is an "action" performed by a **program**, but it is
 > _Buildr := _Execut.BuildTo( _Device );
 > ```
 
-The **kernel** object (see chapter 2.8.) automatically creates the `TCLBuildr` class at runtime.
-However, you can check for compiling and linking errors by creating a `TCLBuildr` class before running the kernel.  
 **カーネル**オブジェクト（2.8.章参照）は、実行時に`TCLBuildr`クラスを自動生成します。
 しかし、カーネルの実行前に`TCLBuildr`クラスを作成することで、コンパイルとリンクのエラーを確認することができます。 
 > Delphi
@@ -370,8 +332,7 @@ However, you can check for compiling and linking errors by creating a `TCLBuildr
 > _Buildr.LinkLog       :String             // リンクのログ
 > ```
 
-### ⬤ 2.8. Kernel：カーネル
-The "**kernel**" object (`TCLKernel`) represents an executable function in a program.  
+### ⬤ 2.8. カーネル 
 **カーネル**”オブジェクト (`TCLKernel`) は、プログラムの中の実行可能な関数を表します。  
 > OpenCL C
 > ```C
@@ -379,7 +340,6 @@ The "**kernel**" object (`TCLKernel`) represents an executable function in a pro
 >   ･･･
 > }
 > ```
-The `TCLKernel` class is created from the `TCLExecut` and `TCLQueuer` classes.  
 `TCLKernel`クラスは、`TCLExecut`クラスと`TCLQueuer`クラスから生成されます。  
 > Delphi
 > ```Delphi
@@ -389,8 +349,7 @@ The `TCLKernel` class is created from the `TCLExecut` and `TCLQueuer` classes.
 > ```
 
 
-#### ▼ 2.8.1. Parameter：仮引数
-The **memory** object connects to the parameter in the source code through the "Parames" property of the `TCLKernel` class.  
+#### ▼ 2.8.1. 仮引数
 **メモリ**オブジェクトは、`TCLKernel`クラスの“Parames”プロパティを介して、ソースコードの引数へ接続します。  
 > Delphi
 > ```Delphi
@@ -399,16 +358,14 @@ The **memory** object connects to the parameter in the source code through the "
 > _Kernel.Parames['Samplr'] := _Samplr;  // サンプラーの接続
 > ```
 
-#### ▼ 2.8.2. Loop Count：反復回数
-The OpenCL program repeatedly runs like a triple loop-statement.  
-OpenCL のプログラムは、３重のloop文のように繰り返し実行されます。  
+#### ▼ 2.8.2. 反復回数 
+OpenCL のプログラムは、３重のループ構文のように繰り返し実行されます。  
 > Delphi
 > ```Delphi
 > _Kernel.GloSizX := 100;  // Ｘ方向のループ回数
 > _Kernel.GloSizY := 200;  // Ｙ方向のループ回数
 > _Kernel.GloSizY := 300;  // Ｚ方向のループ回数
-> ```
-You can also specify the minimum and maximum loop indices.  
+> ``` 
 ループのインデックスの最小値と最大値を指定することもできます。  
 > Delphi
 > ```Delphi
@@ -421,22 +378,27 @@ You can also specify the minimum and maximum loop indices.
 > _Kernel.GloMaxZ := 300-1;  // Ｚ方向の終了インデックス
 > ```
 
-#### ▼ 2.8.3. Run：実行
+#### ▼ 2.8.3. 実行
 > Delphi
 > ```Delphi
 > _Kernel.Run;  // 実行
 > ```
 
 ----
-## ■ Reference：参考文献
-* [The Khronos Group Inc](https://www.khronos.org/)
-  * [Khronos OpenCL Registry - The Khronos Group Inc](https://www.khronos.org/registry/OpenCL/)
-    * [3.0](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/)
-      * [The OpenCL Specification](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html) [`.PDF`](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/pdf/OpenCL_API.pdf)
-      * [The OpenCL C Specification](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_C.html) [`.PDF`](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/pdf/OpenCL_C.pdf)
-* [GitHub](https://github.com)
-  * [The Khronos Group](https://github.com/KhronosGroup)
-    * [OpenCL\-Headers](https://github.com/KhronosGroup/OpenCL-Headers)
+## ■ 3. 参考文献
+
+### ⬤ 3.1. [The Khronos Group Inc](https://www.khronos.org/)
+* [Khronos OpenCL Registry - The Khronos Group Inc](https://www.khronos.org/registry/OpenCL/)
+  * [3.0](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/)
+    * [The OpenCL Specification](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html)
+    * [The OpenCL Specification](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/pdf/OpenCL_API.pdf) .pdf
+    * [The OpenCL C Specification](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_C.html)
+    * [The OpenCL C Specification](https://www.khronos.org/registry/OpenCL/specs/3.0-unified/pdf/OpenCL_C.pdf) .pdf
+
+### ⬤ 3.2. [GitHub](https://github.com)
+* [The Khronos Group](https://github.com/KhronosGroup)
+  * [OpenCL-Headers](https://github.com/KhronosGroup/OpenCL-Headers)
+
 ----
 * **Delphi IDE** @ Embarcadero  
 https://www.embarcadero.com/jp/products/delphi/starter
