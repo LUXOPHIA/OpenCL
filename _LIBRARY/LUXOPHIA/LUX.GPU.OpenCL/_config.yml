@@ -1,4 +1,6 @@
 theme: jekyll-theme-cayman
 plugins:
   - jekyll-sitemap
+  - jekyll-seo-tag
 encoding: UTF-8
+google_site_verification: rCl2DPF3N3UdFuQ3SkV1RQEKABIQ9Q8D1FHqrdCwj7g
