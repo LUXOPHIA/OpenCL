@@ -128,7 +128,7 @@ end;
 
 function TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.GetCountY :Integer;
 begin
-     Result := _CountX;
+     Result := _CountY;
 end;
 
 procedure TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.SetCountY( const CountY_:Integer );
