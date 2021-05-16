@@ -2,7 +2,10 @@
 
 interface //#################################################################### ■
 
-uses System.Classes;
+uses System.Classes,
+     cl_version, cl_platform, cl,
+     LUX.Code.C,
+     LUX.GPU.OpenCL.core;
 
 //type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -21,9 +24,6 @@ procedure ShowSystem( const Strings_:TStrings );
 implementation //############################################################### ■
 
 uses System.SysUtils,
-     cl_version, cl_platform, cl,
-     LUX.Code.C,
-     LUX.GPU.OpenCL.core,
      LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
