@@ -1,13 +1,13 @@
-﻿unit LUX.GPU.OpenCL.Memory.Buffer;
+﻿unit LUX.GPU.OpenCL.Argume.Memory.Buffer;
 
 interface //#################################################################### ■
 
 uses cl_version, cl_platform, cl,
      LUX,
      LUX.Code.C,
-     LUX.GPU.OpenCL.root,
+     LUX.GPU.OpenCL.core,
      LUX.GPU.OpenCL.Queuer,
-     LUX.GPU.OpenCL.Memory;
+     LUX.GPU.OpenCL.Argume.Memory;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -27,13 +27,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLStorag_ = TCLBufferIter<TCLContex_,TCLPlatfo_,TValue_>;
      protected
-       _Count  :Integer;
+       _Count :Integer;
        ///// アクセス
        function GetStorag :TCLStorag_; reintroduce; virtual;
        procedure SetStorag( const Storag_:TCLStorag_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
        function GetCount :Integer; virtual;
        procedure SetCount( const Count_:Integer ); virtual;
+       ///// メソッド
+       function NewStorag :TObject; override;
      public
        constructor Create; override;
        destructor Destroy; override;
@@ -61,7 +63,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Data :P_void;
        ///// メソッド
        function CreateHandle :T_cl_int; override;
-       procedure DestroHandle; override;
+       function DestroHandle :T_cl_int; override;
      public
        constructor Create; override;
      end;
@@ -139,14 +141,20 @@ begin
      _Count := Count_;
 end;
 
+/////////////////////////////////////////////////////////////////////// メソッド
+
+function TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>.NewStorag :TObject;
+begin
+     Result := TCLStorag_.Create( Self );
+end;
+
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 constructor TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>.Create;
 begin
      inherited;
 
-     _Count  := 1;
-     _Storag := TCLStorag_.Create( Self );
+     _Count := 1;
 end;
 
 destructor TCLBuffer<TCLContex_,TCLPlatfo_,TValue_>.Destroy;
@@ -195,7 +203,7 @@ begin
      _Handle := clCreateBuffer( TCLContex( Contex ).Handle, Kind, Size, _Data, @Result );
 end;
 
-procedure TCLHosBuf<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle;
+function TCLHosBuf<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle :T_cl_int;
 begin
      FreeMemAligned( _Data );
 

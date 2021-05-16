@@ -6,7 +6,7 @@ uses System.Classes,
      cl_version, cl_platform, cl,
      LUX.Data.List,
      LUX.Code.C,
-     LUX.GPU.OpenCL.root,
+     LUX.GPU.OpenCL.core,
      LUX.GPU.OpenCL.Device,
      LUX.GPU.OpenCL.Contex;
 
@@ -121,12 +121,12 @@ uses System.SysUtils,
 
 function TCLPlatfo<TCLSystem_>.GetInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
 begin
-     AssertCL( clGetPlatformInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ) );
+     AssertCL( clGetPlatformInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLPlatfo.GetInfo is Error!' );
 end;
 
 function TCLPlatfo<TCLSystem_>.GetInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
 begin
-     AssertCL( clGetPlatformInfo( Handle, Name_, 0, nil, @Result ) );
+     AssertCL( clGetPlatformInfo( Handle, Name_, 0, nil, @Result ), 'TCLPlatfo.GetInfoSize is Error!' );
 end;
 
 function TCLPlatfo<TCLSystem_>.GetInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
@@ -137,7 +137,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetPlatformInfo( Handle, Name_, S, @Result[ 0 ], nil ) );
+     AssertCL( clGetPlatformInfo( Handle, Name_, S, @Result[ 0 ], nil ), 'TCLPlatfo.GetInfos is Error!' );
 end;
 
 function TCLPlatfo<TCLSystem_>.GetInfoString( const Name_:T_cl_platform_info ) :String;
@@ -233,11 +233,11 @@ var
    Ps :TArray<T_cl_platform_id>;
    P :T_cl_platform_id;
 begin
-     AssertCL( clGetPlatformIDs( 0, nil, @PsN ) );
+     AssertCL( clGetPlatformIDs( 0, nil, @PsN ), 'TCLPlatfos.FindPlatfos is Error!' );
 
      SetLength( Ps, PsN );
 
-     AssertCL( clGetPlatformIDs( PsN, @Ps[0], nil ) );
+     AssertCL( clGetPlatformIDs( PsN, @Ps[0], nil ), 'TCLPlatfos.FindPlatfos is Error!' );
 
      for P in Ps do TCLPlatfo_.Create( Self, P );
 end;

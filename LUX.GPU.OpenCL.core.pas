@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.root;
+﻿unit LUX.GPU.OpenCL.core;
 
 interface //#################################################################### ■
 
@@ -38,7 +38,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 function ErrorToMessage( const Error_:T_cl_int ) :String;
 
-procedure AssertCL( const Error_:T_cl_int );
+procedure AssertCL( const Error_:T_cl_int; const Comment_:String = '' );
 
 implementation //############################################################### ■
 
@@ -166,9 +166,9 @@ begin
      end;
 end;
 
-procedure AssertCL( const Error_:T_cl_int );
+procedure AssertCL( const Error_:T_cl_int; const Comment_:String = '' );
 begin
-     Assert( Error_ = CL_SUCCESS, ErrorToMessage( Error_ ) );
+     Assert( Error_ = CL_SUCCESS, '【' + ErrorToMessage( Error_ ) + '】' + Comment_ );
 end;
 
 end. //######################################################################### ■
