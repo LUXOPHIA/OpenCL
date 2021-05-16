@@ -9,7 +9,7 @@ permalink: /ja/
 [OpenCL](https://ja.wikipedia.org/wiki/OpenCL) を用いたＧＰＵ（やＣＰＵ）での並列計算。  
 
 ----
-## ■ 1. [`LUX.GPU.OpenCL`](https://luxophia.github.io/LUX.GPU.OpenCL/ja/) ライブラリ
+## ■ 1. [`LUX.GPU.OpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/ja/README.md) ライブラリ
 
 > [`TOpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L60)  
 > 　┃  
@@ -75,7 +75,7 @@ permalink: /ja/
 > _Platfo.Devices.Count :Integer    // デバイスの数
 > _Platfo.Devices[*]    :TCLDevice  // デバイスの配列
 > ```
- 
+
 `TCLDevice`クラスは、特定の**デバイス**に関する情報をプロパティとして提供します。  
 > Delphi
 > ```Delphi
@@ -193,6 +193,7 @@ permalink: /ja/
 >   {or}
 > _Buffer := TCLHosBuf<TItem>.Create( _Contex, _Queuer );
 > ```
+
 `Storag`プロパティを通して、配列データを読み書きします。
 配列データを読み書きする前にホストと同期するために“マップ”し、使用後にデバイスと同期するために“アンマップ”する必要があります。
 > Delphi
@@ -238,28 +239,26 @@ permalink: /ja/
 　　　　　┣[`TCLHosIma3DxBGRAxUInt8`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas#L70)  
 　　　　　┣[`TCLHosIma3DxBGRAxUFix8`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas#L98)  
 　　　　　┗[`TCLHosIma3DxRGBAxSFlo32`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas#L126)  
-  
+
 クラス名の最初の部分は、`TCLImager`クラスがデータを保存する場所を示しています。  
 > * `TCLDevIma*Dx*x*`  
-Save the image data to the device side.  
 画像データをデバイス側へ保存します。  
 > * `TCLHosIma*Dx*x*`  
-Save the image data to the host side.  
 画像データをホスト側へ保存します。 
 
 クラス名の２番目の部分は、`TCLImager`クラスの次元を表しています。  
 > * `TCL***Ima1Dx*x*x*`  
-Dimension：`1D`
+> `１Ｄ`
 > * `TCL***Ima2Dx*x*x*`  
-Dimension：`2D`
+> `２Ｄ`
 > * `TCL***Ima3Dx*x*x*`  
-Dimension：`3D`
- 
+> `３Ｄ`
+
 クラス名の３番目の部分は、`TCLImager`クラスのチャンネルの順番を表しています。  
 > * `TCL***Ima*xBGRAx*x*`  
-Color channel order：`ＢＧＲＡ`
+> `ＢＧＲＡ`
 > * `TCL***Ima*xRGBAx*x*`  
-Color channel order：`ＲＧＢＡ`
+> `ＲＧＢＡ`
 
 クラス名の４番目の部分は、`TCLImager`クラスの色のデータ型を表しています。  
 > * `TCL***Ima*Dx*xUInt8`  
@@ -275,9 +274,9 @@ Color channel order：`ＲＧＢＡ`
 > Delphi
 > ```Delphi
 > _Imager := TCLDevIma3DxBGRAxUInt8.Create( _Contex, _Queuer );
-> _Imager.CountX := 500;  // Ｘ方向ピクセル数
-> _Imager.CountY := 500;  // Ｙ方向ピクセル数
-> _Imager.CountZ := 500;  // Ｚ方向ピクセル数
+> _Imager.CountX := 100;  // Ｘ方向ピクセル数
+> _Imager.CountY := 200;  // Ｙ方向ピクセル数
+> _Imager.CountZ := 300;  // Ｚ方向ピクセル数
 > ```
 
 #### ▼ 2.5.2. サンプラー
@@ -340,6 +339,7 @@ Color channel order：`ＲＧＢＡ`
 >   ･･･
 > }
 > ```
+
 `TCLKernel`クラスは、`TCLExecut`クラスと`TCLQueuer`クラスから生成されます。  
 > Delphi
 > ```Delphi
@@ -365,7 +365,8 @@ OpenCL のプログラムは、３重のループ構文のように繰り返し�
 > _Kernel.GloSizX := 100;  // Ｘ方向のループ回数
 > _Kernel.GloSizY := 200;  // Ｙ方向のループ回数
 > _Kernel.GloSizY := 300;  // Ｚ方向のループ回数
-> ``` 
+> ```
+
 ループのインデックスの最小値と最大値を指定することもできます。  
 > Delphi
 > ```Delphi

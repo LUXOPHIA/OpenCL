@@ -11,7 +11,6 @@ Parallel computing on the GPU (or CPU) with [OpenCL](https://en.wikipedia.org/wi
 ----
 ## ■ 1. [LUX.GPU.OpenCL](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/README.md) Library
 
-### ⬤ 1.1. Parent-Child Relationship
 > [`TOpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L60) ：singleton of TCLSystem  
 > 　┃  
 > [`TCLSystem`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L60) ：System  
@@ -194,6 +193,7 @@ generate the `TCLBuffer` class as follows.
 >   {or}
 > _Buffer := TCLHosBuf<TItem>.Create( _Contex, _Queuer );
 > ```
+
 Read and write array data through the `Storag` property.
 The array data must be "**map**ped" to synchronize with the host before reading or writing, and "**unmap**ped" to synchronize with the device after use.  
 > Delphi
@@ -248,17 +248,17 @@ Save the image data to the host side.
 
 The second part of the class name represents the dimension of the `TCLImager` class. 
 > * `TCL***Ima1Dx*x*x*`  
-Dimension：`1D`
+> `1D`
 > * `TCL***Ima2Dx*x*x*`  
-Dimension：`2D`
+> `2D`
 > * `TCL***Ima3Dx*x*x*`  
-Dimension：`3D`
+> `3D`
 
 The third part of the class name represents the channel order of the `TCLImager` class.  
 > * `TCL***Ima*xBGRAx*x*`  
-Color channel order：`ＢＧＲＡ`
+> `ＢＧＲＡ`
 > * `TCL***Ima*xRGBAx*x*`  
-Color channel order：`ＲＧＢＡ`
+> `ＲＧＢＡ`
 
 The fourth part of the class name represents the color data type of the `TCLImager` class.  
 > * `TCL***Ima*Dx*xUInt8`  
@@ -274,9 +274,9 @@ The fourth part of the class name represents the color data type of the `TCLImag
 > Delphi
 > ```Delphi
 > _Imager := TCLDevIma3DxBGRAxUInt8.Create( _Contex, _Queuer );
-> _Imager.CountX := 500;  // Number of pixels in the X direction
-> _Imager.CountY := 500;  // Number of pixels in the Y direction
-> _Imager.CountZ := 500;  // Number of pixels in the Z direction
+> _Imager.CountX := 100;  // Number of pixels in the X direction
+> _Imager.CountY := 200;  // Number of pixels in the Y direction
+> _Imager.CountZ := 300;  // Number of pixels in the Z direction
 > ```
 
 #### ▼ 2.5.2. Sampler
@@ -339,6 +339,7 @@ The "**kernel**" object (`TCLKernel`) represents an executable function in a pro
 >   ･･･
 > }
 > ```
+
 The `TCLKernel` class is created from the `TCLExecut` and `TCLQueuer` classes. 
 > Delphi
 > ```Delphi
@@ -365,8 +366,8 @@ The OpenCL program repeatedly runs like a triple loop-statement.
 > _Kernel.GloSizY := 200;  // Number of loops in Y direction
 > _Kernel.GloSizZ := 300;  // Number of loops in Z direction
 > ```
+
 You can also specify the minimum and maximum loop indices.  
-ループのインデックスの最小値と最大値を指定することもできます。  
 > Delphi
 > ```Delphi
 > _Kernel.GloMinX := 0;      // Start index in X direction
