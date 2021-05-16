@@ -1,7 +1,8 @@
+<!---
 layout: page
 title: "README (Japanese)"
 permalink: /ja/
-
+-->
 # LUX.GPU.OpenCL
 ＧＰＵによる並列計算のための [OpenCL](https://en.wikipedia.org/wiki/OpenCL) ライブラリ。
 
