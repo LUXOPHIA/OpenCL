@@ -5,11 +5,11 @@ permalink: /
 -->
 [`［日本語］`](https://luxophia.github.io/OpenCL/ja/)
 
-# [OpenCL](https://github.com/LUXOPHIA/OpenCL/blob/master/README.md)
+# [OpenCL](https://github.com/LUXOPHIA/OpenCL/)
 Parallel computing on the GPU (or CPU) with [OpenCL](https://en.wikipedia.org/wiki/OpenCL).  
 
 ----
-## ■ 1. [LUX.GPU.OpenCL](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/README.md) Library
+## ■ 1. [LUX.GPU.OpenCL](https://github.com/LUXOPHIA/LUX.GPU.OpenCL) Library
 
 > [`TOpenCL`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.pas#L60) ：singleton of TCLSystem  
 > 　┃  
