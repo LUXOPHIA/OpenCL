@@ -3,7 +3,7 @@ layout: page
 title: "README (Japanese)"
 permalink: /ja/
 -->
-[`［English］`](https://luxophia.github.io/LUX.GPU.OpenCL/ja/)
+[`［English］`](https://luxophia.github.io/LUX.GPU.OpenCL/)
 
 # LUX.GPU.OpenCL
 ＧＰＵによる並列計算のための [OpenCL](https://en.wikipedia.org/wiki/OpenCL) ライブラリ。
