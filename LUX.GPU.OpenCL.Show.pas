@@ -2,7 +2,10 @@
 
 interface //#################################################################### ■
 
-uses System.Classes;
+uses System.Classes,
+     cl_version, cl_platform, cl,
+     LUX.Code.C,
+     LUX.GPU.OpenCL.core;
 
 //type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -21,9 +24,6 @@ procedure ShowSystem( const Strings_:TStrings );
 implementation //############################################################### ■
 
 uses System.SysUtils,
-     cl_version, cl_platform, cl,
-     LUX.Code.C,
-     LUX.GPU.OpenCL.root,
      LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
@@ -32,23 +32,23 @@ uses System.SysUtils,
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
 
-procedure ShowArgumes( const Strings_:TStrings; const Argumes_:TCLArgumes );
+procedure ShowParames( const Strings_:TStrings; const Parames_:TCLParames );
 var
-   A :TCLArgume;
+   A :TCLParame;
 begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│　┃　│　┃　│' );
-          Add( ' ┃　│　┃　│　┃　│　┃　┝ Argumes(' + Argumes_.Count.ToString + ') :TCLArgumes' );
-          for A in Argumes_ do
+          Add( ' ┃　│　┃　│　┃　│　┃　┝ Parames(' + Parames_.Count.ToString + ') :TCLParames' );
+          for A in Parames_ do
           begin
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┃　│　┃　│　┣・Argume[' + A.Order.ToString + '] :TCLArgume' );
-               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Name    = ' + A.Name  );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┣・Parame[' + A.Order.ToString + '] :TCLParame' );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Name    = ' + A.Name );
                Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ ParameI = ' + A.ParameI.ToString );
-               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Memory  = Platfo[' + A.Memory.Contex.Platfo.Order.ToString + ']'
-                                                                   + '.Contex[' + A.Memory.Contex       .Order.ToString + ']'
-                                                                   + '.Memory[' + A.Memory              .Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　│　┃　│　┃　├ Argume  = Platfo[' + A.Argume.Contex.Platfo.Order.ToString + ']'
+                                                                   + '.Contex[' + A.Argume.Contex       .Order.ToString + ']'
+                                                                   + '.Argume[' + A.Argume              .Order.ToString + ']' );
           end;
      end;
 end;
@@ -65,13 +65,13 @@ begin
           begin
                Add( ' ┃　│　┃　│　┃　│　┃' );
                Add( ' ┃　│　┃　│　┃　│　┣・Kernel[' + K.Order.ToString + '] :TCLKernel' );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ Name      = ' + K.Name );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ Dimension = ' + K.Dimension.ToString );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ Queuer    = Platfo[' + K.Queuer.Contex.Platfo.Order.ToString + ']'
-                                                             + '.Contex[' + K.Queuer.Contex       .Order.ToString + ']'
-                                                             + '.Queuer[' + K.Queuer              .Order.ToString + ']' );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Name    = ' + K.Name );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ GloDimN = ' + K.GloDimN.ToString );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ Queuer  = Platfo[' + K.Queuer.Contex.Platfo.Order.ToString + ']'
+                                                           + '.Contex[' + K.Queuer.Contex       .Order.ToString + ']'
+                                                           + '.Queuer[' + K.Queuer              .Order.ToString + ']' );
 
-               ShowArgumes( Strings_, K.Argumes );
+               ShowParames( Strings_, K.Parames );
           end;
      end;
 end;
@@ -134,19 +134,27 @@ begin
      end;
 end;
 
-procedure ShowMemorys( const Strings_:TStrings; const Memorys_:TCLMemorys );
+procedure ShowArgumes( const Strings_:TStrings; const Argumes_:TCLArgumes );
 var
+   A :TCLArgume;
    M :TCLMemory;
 begin
      with Strings_ do
      begin
           Add( ' ┃　│　┃　│' );
-          Add( ' ┃　│　┃　┝ Memorys(' + Memorys_.Count.ToString + ') :TCLMemorys' );
-          for M in Memorys_ do
+          Add( ' ┃　│　┃　┝ Argumes(' + Argumes_.Count.ToString + ') :TCLArgumes' );
+          for A in Argumes_ do
           begin
                Add( ' ┃　│　┃　│　┃' );
-               Add( ' ┃　│　┃　│　┣・Memory[' + M.Order.ToString + '] :TCLMemory' );
-               Add( ' ┃　│　┃　│　┃　├ Size = ' + M.Size.ToString );
+               Add( ' ┃　│　┃　│　┣・Argume[' + A.Order.ToString + '] :TCLArgume' );
+               Add( ' ┃　│　┃　│　┃　├ Class = ' + A.ClassName );
+
+               if A.ClassType = TCLMemory then
+               begin
+                    M := A as TCLMemory;
+
+                    Add( ' ┃　│　┃　│　┃　├ Size  = ' + M.Size.ToString );
+               end;
           end;
      end;
 end;
@@ -183,7 +191,7 @@ begin
                Add( ' ┃　│　┣・Contex[' + C.Order.ToString + '] :TCLContex' );
 
                ShowQueuers( Strings_, C.Queuers );
-               ShowMemorys( Strings_, C.Memorys );
+               ShowArgumes( Strings_, C.Argumes );
                ShowLibrars( Strings_, C.Librars );
                ShowExecuts( Strings_, C.Executs );
           end;
@@ -204,13 +212,13 @@ begin
           begin
                Add( ' ┃　│　┃' );
                Add( ' ┃　│　┣・Device[' + D.Order.ToString + '] :TCLDevice' );
-               Add( ' ┃　│　┃　├ DEVICE_TYPE             = '  + D.DEVICE_TYPE     .ToString );
+               Add( ' ┃　│　┃　├ DEVICE_TYPE             = '  + D.DEVICE_TYPE.ToString );
                Add( ' ┃　│　┃　├ DEVICE_VENDOR_ID        = '  + D.DEVICE_VENDOR_ID.ToString );
-               Add( ' ┃　│　┃　├ DEVICE_NAME             = '  + D.DEVICE_NAME               );
-               Add( ' ┃　│　┃　├ DEVICE_VENDOR           = '  + D.DEVICE_VENDOR             );
-               Add( ' ┃　│　┃　├ DRIVER_VERSION          = '  + D.DRIVER_VERSION            );
-               Add( ' ┃　│　┃　├ DEVICE_PROFILE          = '  + D.DEVICE_PROFILE            );
-               Add( ' ┃　│　┃　├ DEVICE_VERSION          = '  + D.DEVICE_VERSION            );
+               Add( ' ┃　│　┃　├ DEVICE_NAME             = '  + D.DEVICE_NAME );
+               Add( ' ┃　│　┃　├ DEVICE_VENDOR           = '  + D.DEVICE_VENDOR );
+               Add( ' ┃　│　┃　├ DRIVER_VERSION          = '  + D.DRIVER_VERSION );
+               Add( ' ┃　│　┃　├ DEVICE_PROFILE          = '  + D.DEVICE_PROFILE );
+               Add( ' ┃　│　┃　├ DEVICE_VERSION          = '  + D.DEVICE_VERSION );
 
                Cs := D.DEVICE_SVM_CAPABILITIES;
                if Cs and CL_DEVICE_SVM_COARSE_GRAIN_BUFFER <> 0 then S := 'OK' else S := 'NO';
@@ -256,8 +264,8 @@ begin
                Add( ' ┣・Platfo[' + F.Order.ToString + '] :TCLPlatfo' );
                Add( ' ┃　├ Profile = ' + F.Profile );
                Add( ' ┃　├ Version = ' + F.Version );
-               Add( ' ┃　├ Name    = ' + F.Name    );
-               Add( ' ┃　├ Vendor  = ' + F.Vendor  );
+               Add( ' ┃　├ Name    = ' + F.Name );
+               Add( ' ┃　├ Vendor  = ' + F.Vendor );
 
                ShowExtenss( Strings_, F.Extenss );
                ShowDevices( Strings_, F.Devices );

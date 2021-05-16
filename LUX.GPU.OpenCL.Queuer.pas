@@ -5,7 +5,7 @@ interface //####################################################################
 uses cl_version, cl_platform, cl,
      LUX.Data.List,
      LUX.Code.C,
-     LUX.GPU.OpenCL.root,
+     LUX.GPU.OpenCL.core,
      LUX.GPU.OpenCL.Device;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
@@ -31,7 +31,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetHandle( const Handle_:T_cl_command_queue );
        ///// メソッド
        function CreateHandle :T_cl_int; virtual;
-       procedure DestroHandle; virtual;
+       function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; override;
        constructor Create( const Contex_:TCLContex_; const Device_:TCLDevice_ ); overload; virtual;
@@ -81,14 +81,14 @@ uses LUX.GPU.OpenCL;
 
 function TCLQueuer<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_command_queue;
 begin
-     if not Assigned( _Handle ) then AssertCL( CreateHandle );
+     if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
 procedure TCLQueuer<TCLContex_,TCLPlatfo_>.SetHandle( const Handle_:T_cl_command_queue );
 begin
-     if Assigned( _Handle ) then DestroHandle;
+     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLQueuer.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -110,9 +110,9 @@ begin
      {$ENDIF}
 end;
 
-procedure TCLQueuer<TCLContex_,TCLPlatfo_>.DestroHandle;
+function TCLQueuer<TCLContex_,TCLPlatfo_>.DestroHandle :T_cl_int;
 begin
-     clReleaseCommandQueue( _Handle );
+     Result := clReleaseCommandQueue( _Handle );
 
      _Handle := nil;
 end;

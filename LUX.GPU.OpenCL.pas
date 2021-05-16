@@ -3,15 +3,17 @@
 interface //#################################################################### ■
 
 uses System.Classes,
-     LUX.GPU.OpenCL.root,
+     LUX.GPU.OpenCL.core,
      LUX.GPU.OpenCL.Show,
-     LUX.GPU.OpenCL.Device,
      LUX.GPU.OpenCL.Platfo,
+     LUX.GPU.OpenCL.Device,
      LUX.GPU.OpenCL.Contex,
      LUX.GPU.OpenCL.Queuer,
-     LUX.GPU.OpenCL.Memory,
-     LUX.GPU.OpenCL.Memory.Buffer,
-     LUX.GPU.OpenCL.Memory.Imager,
+     LUX.GPU.OpenCL.Argume,
+     LUX.GPU.OpenCL.Argume.Samplr,
+     LUX.GPU.OpenCL.Argume.Memory,
+     LUX.GPU.OpenCL.Argume.Memory.Buffer,
+     LUX.GPU.OpenCL.Argume.Memory.Imager,
      LUX.GPU.OpenCL.Progra,
      LUX.GPU.OpenCL.Kernel;
 
@@ -29,7 +31,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
              TCLContex             = TCLContex <TCLPlatfo>;
                TCLQueuers          = TCLQueuers<TCLContex,TCLPlatfo>;
                  TCLQueuer         = TCLQueuer <TCLContex,TCLPlatfo>;
-               TCLMemorys          = TCLMemorys<TCLContex,TCLPlatfo>;
+               TCLArgumes          = TCLArgumes<TCLContex,TCLPlatfo>;
+                 TCLArgume         = TCLArgume <TCLContex,TCLPlatfo>;
+                 TCLSamplr         = TCLSamplr <TCLContex,TCLPlatfo>;
                  TCLMemory         = TCLMemory <TCLContex,TCLPlatfo>;
                TCLLibrars          = TCLLibrars<TCLContex,TCLPlatfo>;
                  TCLLibrar         = TCLLibrar <TCLContex,TCLPlatfo>;
@@ -39,18 +43,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                      TCLBuildr     = TCLBuildr <TCLContex,TCLPlatfo>;
                    TCLKernels      = TCLKernels<TCLExecut,TCLContex,TCLPlatfo>;
                      TCLKernel     = TCLKernel <TCLExecut,TCLContex,TCLPlatfo>;
-                       TCLArgumes  = TCLArgumes<TCLExecut,TCLContex,TCLPlatfo>;
-                         TCLArgume = TCLArgume <TCLExecut,TCLContex,TCLPlatfo>;
+                       TCLParames  = TCLParames<TCLExecut,TCLContex,TCLPlatfo>;
+                         TCLParame = TCLParame <TCLExecut,TCLContex,TCLPlatfo>;
 
      TCLDevBuf<TValue_:record> = class( TCLDevBuf<TCLContex,TCLPlatfo,TValue_> );
      TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLContex,TCLPlatfo,TValue_> );
 
      TCLBufferIter<TValue_:record> = class( TCLBufferIter<TCLContex,TCLPlatfo,TValue_> );
-
-     TCLDevIma<TValue_:record> = class( TCLDevIma<TCLContex,TCLPlatfo,TValue_> );
-     TCLHosIma<TValue_:record> = class( TCLHosIma<TCLContex,TCLPlatfo,TValue_> );
-
-     TCLImagerIter<TValue_:record> = class( TCLImagerIter<TCLContex,TCLPlatfo,TValue_> );
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
