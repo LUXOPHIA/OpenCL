@@ -1,3 +1,7 @@
+layout: page
+title: "README (Japanese)"
+permalink: /
+
 # OpenCL
 Parallel computing on the GPU (or CPU) with [OpenCL](https://en.wikipedia.org/wiki/OpenCL).  
 [OpenCL](https://ja.wikipedia.org/wiki/OpenCL) を用いたＧＰＵ（やＣＰＵ）での並列計算。  
