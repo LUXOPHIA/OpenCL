@@ -8,8 +8,8 @@ uses cl_version, cl_platform, cl,
      LUX.GPU.OpenCL.core,
      LUX.GPU.OpenCL.Device,
      LUX.GPU.OpenCL.Queuer,
-     LUX.GPU.OpenCL.Progra,
-     LUX.GPU.OpenCL.Argume;
+     LUX.GPU.OpenCL.Argume,
+     LUX.GPU.OpenCL.Progra;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
