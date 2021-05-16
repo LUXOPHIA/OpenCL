@@ -3,6 +3,8 @@ layout: page
 title: "README (English)"
 permalink: /
 -->
+[`［日本語］`](https://luxophia.github.io/LUX.GPU.OpenCL/ja/)
+
 # LUX.GPU.OpenCL
 [OpenCL](https://en.wikipedia.org/wiki/OpenCL) Library for parallel computing on the GPU (or CPU).  
 
