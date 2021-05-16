@@ -1,7 +1,8 @@
+<!---
 layout: page
 title: "README (English)"
 permalink: /
-
+-->
 # LUX.GPU.OpenCL
 [OpenCL](https://en.wikipedia.org/wiki/OpenCL) Library for parallel computing on the GPU (or CPU).  
 
