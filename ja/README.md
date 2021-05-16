@@ -54,7 +54,7 @@ permalink: /ja/
 >　┃　┣ LUX.GPU.OpenCL.core  
 >　┃　┣[`LUX.GPU.OpenCL.Device`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Device.pas) ：デバイス  
 >　┃　┃　┗ LUX.GPU.OpenCL.core  
->　┃　┗[`LUX.GPU.OpenCL.Contex`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Contex.pas) ：コンテキスト 
+>　┃　┗[`LUX.GPU.OpenCL.Contex`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Contex.pas) ：コンテキスト  
 >　┃　　　┣[`LUX.GPU.OpenCL.Queuer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Queuer.pas) ：コマンドキュー  
 >　┃　　　┃　┣ LUX.GPU.OpenCL.core  
 >　┃　　　┃　┗ LUX.GPU.OpenCL.Device  
@@ -108,11 +108,11 @@ permalink: /ja/
 　　┗[`LUX.GPU.OpenCL.Argume.Memory`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.pas) ：メモリー  
 　　　　┣[`LUX.GPU.OpenCL.Argume.Memory.Buffer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Buffer.pas) ：バッファー  
 　　　　┗[`LUX.GPU.OpenCL.Argume.Memory.Imager`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.pas) ：画像  
-　　　　　　┗[`LUX.GPU.OpenCL.Argume.Memory.Imager.D1`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D1.pas) ：1D  
+　　　　　　┗[`LUX.GPU.OpenCL.Argume.Memory.Imager.D1`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D1.pas) ：１Ｄ  
 　　　　　　┃　┗[`LUX.GPU.OpenCL.Argume.Memory.Imager.D1.FMX`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D1.FMX.pas) ：ＦＭＸ用  
-　　　　　　┗[`LUX.GPU.OpenCL.Argume.Memory.Imager.D2`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D2.pas) ：2D  
+　　　　　　┗[`LUX.GPU.OpenCL.Argume.Memory.Imager.D2`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D2.pas) ：２Ｄ  
 　　　　　　┃　┗[`LUX.GPU.OpenCL.Argume.Memory.Imager.D2.FMX`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D2.FMX.pas) ：ＦＭＸ用  
-　　　　　　┗[`LUX.GPU.OpenCL.Argume.Memory.Imager.D3`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.pas) ：3D  
+　　　　　　┗[`LUX.GPU.OpenCL.Argume.Memory.Imager.D3`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.pas) ：３Ｄ  
 　　　　　　　　┗[`LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas) ：ＦＭＸ用  
 
 ----
