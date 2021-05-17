@@ -24,6 +24,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLDevIma2DxBGRAxUFix8 = TCLDevIma2DxBGRAxUFix8<TCLContex,TCLPlatfo>;
      TCLHosIma2DxBGRAxUFix8 = TCLHosIma2DxBGRAxUFix8<TCLContex,TCLPlatfo>;
 
+     TCLDevIma2DxRGBAxUInt32 = TCLDevIma2DxRGBAxUInt32<TCLContex,TCLPlatfo>;
+     TCLHosIma2DxRGBAxUInt32 = TCLHosIma2DxRGBAxUInt32<TCLContex,TCLPlatfo>;
+
      TCLDevIma2DxRGBAxSFlo32 = TCLDevIma2DxRGBAxSFlo32<TCLContex,TCLPlatfo>;
      TCLHosIma2DxRGBAxSFlo32 = TCLHosIma2DxRGBAxSFlo32<TCLContex,TCLPlatfo>;
 

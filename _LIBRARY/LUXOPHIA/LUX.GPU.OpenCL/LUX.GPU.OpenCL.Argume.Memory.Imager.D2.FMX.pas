@@ -19,6 +19,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLDevIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_:class> = class;
      TCLHosIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_:class> = class;
 
+     TCLDevIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_:class> = class;
+     TCLHosIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_:class> = class;
+
      TCLDevIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class;
      TCLHosIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class;
 
@@ -97,6 +100,34 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_>
 
      TCLHosIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma2DFMX<TCLContex_,TCLPlatfo_,TByteRGBA> )
+     private
+     protected
+       ///// アクセス
+       function GetPixChan :T_cl_channel_order; override;
+       function GetPixType :T_cl_channel_type; override;
+     public
+       ///// メソッド
+       procedure CopyTo( const Bitmap_:TBitmap ); override;
+       procedure CopyFrom( const Bitmap_:TBitmap ); override;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_>
+
+     TCLDevIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_:class> = class( TCLDevIma2DFMX<TCLContex_,TCLPlatfo_,TUInt32xRGBA> )
+     private
+     protected
+       ///// アクセス
+       function GetPixChan :T_cl_channel_order; override;
+       function GetPixType :T_cl_channel_type; override;
+     public
+       ///// メソッド
+       procedure CopyTo( const Bitmap_:TBitmap ); override;
+       procedure CopyFrom( const Bitmap_:TBitmap ); override;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_>
+
+     TCLHosIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma2DFMX<TCLContex_,TCLPlatfo_,TUInt32xRGBA> )
      private
      protected
        ///// アクセス
@@ -489,6 +520,152 @@ begin
           Move( B.GetScanline( Y )^,
                 Storag.ValueP[ 0, Y ]^,
                 B.BytesPerLine );
+     end );
+
+     Storag.Unmap;
+
+     Bitmap_.Unmap( B );
+end;
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLDevIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
+begin
+     Result := CL_RGBA;
+end;
+
+function TCLDevIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
+begin
+     Result := CL_UNSIGNED_INT32;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TCLDevIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
+var
+   B :TBitmapData;
+begin
+     Bitmap_.SetSize( CountX, CountY );
+
+     Storag.Map;
+
+     Bitmap_.Map( TMapAccess.Write, B );
+
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     var
+        X :Integer;
+     begin
+          for X := 0 to CountX-1 do
+          begin
+               B.SetPixel( X, Y, TByteRGBA( Storag[ X, Y ] ) );
+          end;
+     end );
+
+     Bitmap_.Unmap( B );
+
+     Storag.Unmap;
+end;
+
+procedure TCLDevIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
+var
+   B :TBitmapData;
+begin
+     CountX := Bitmap_.Width ;
+     CountY := Bitmap_.Height;
+
+     Bitmap_.Map( TMapAccess.Read, B );
+
+     Storag.Map;
+
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     var
+        X :Integer;
+     begin
+          for X := 0 to CountX-1 do
+          begin
+               Storag[ X, Y ] := B.GetPixel( X, Y );
+          end;
+     end );
+
+     Storag.Unmap;
+
+     Bitmap_.Unmap( B );
+end;
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLHosIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
+begin
+     Result := CL_RGBA;
+end;
+
+function TCLHosIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
+begin
+     Result := CL_UNSIGNED_INT32;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TCLHosIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
+var
+   B :TBitmapData;
+begin
+     Bitmap_.SetSize( CountX, CountY );
+
+     Storag.Map;
+
+     Bitmap_.Map( TMapAccess.Write, B );
+
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     var
+        X :Integer;
+     begin
+          for X := 0 to CountX-1 do
+          begin
+               B.SetPixel( X, Y, TByteRGBA( Storag[ X, Y ] ) );
+          end;
+     end );
+
+     Bitmap_.Unmap( B );
+
+     Storag.Unmap;
+end;
+
+procedure TCLHosIma2DxRGBAxUInt32<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
+var
+   B :TBitmapData;
+begin
+     CountX := Bitmap_.Width ;
+     CountY := Bitmap_.Height;
+
+     Bitmap_.Map( TMapAccess.Read, B );
+
+     Storag.Map;
+
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     var
+        X :Integer;
+     begin
+          for X := 0 to CountX-1 do
+          begin
+               Storag[ X, Y ] := B.GetPixel( X, Y );
+          end;
      end );
 
      Storag.Unmap;
