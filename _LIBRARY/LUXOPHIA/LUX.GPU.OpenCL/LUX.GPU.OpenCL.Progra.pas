@@ -387,7 +387,7 @@ begin
           begin
                _LinkStatus := CL_BUILD_NONE;
                _LinkLog    := '';
-          end
+          end;
      end;
 end;
 
