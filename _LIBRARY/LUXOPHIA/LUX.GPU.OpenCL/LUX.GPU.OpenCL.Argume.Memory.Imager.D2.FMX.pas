@@ -4,6 +4,7 @@ interface //####################################################################
 
 uses System.UITypes,
      FMX.Graphics,
+     LUX.Color, LUX.Color.Grid.D2.Preset,
      cl_version, cl_platform, cl,
      LUX.GPU.OpenCL.Argume.Memory.Imager.D2;
 
@@ -32,8 +33,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
      public
        ///// メソッド
-       procedure CopyTo( const Bitmap_:TBitmap ); virtual; abstract;
-       procedure CopyFrom( const Bitmap_:TBitmap ); virtual; abstract;
+       procedure CopyTo( const Bitmap_:TBitmap ); overload; virtual; abstract;
+       procedure CopyFrom( const Bitmap_:TBitmap ); overload; virtual; abstract;
        procedure SaveToFile( const FileName_:String ); virtual;
        procedure LoadFromFile( const FileName_:String ); virtual;
      end;
@@ -45,15 +46,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
      public
        ///// メソッド
-       procedure CopyTo( const Bitmap_:TBitmap ); virtual; abstract;
-       procedure CopyFrom( const Bitmap_:TBitmap ); virtual; abstract;
+       procedure CopyTo( const Bitmap_:TBitmap ); overload; virtual; abstract;
+       procedure CopyFrom( const Bitmap_:TBitmap ); overload; virtual; abstract;
        procedure SaveToFile( const FileName_:String ); virtual;
        procedure LoadFromFile( const FileName_:String ); virtual;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma2DxBGRAxUInt8<TCLContex_,TCLPlatfo_>
 
-     TCLDevIma2DxBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLDevIma2DFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
+     TCLDevIma2DxBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLDevIma2DFMX<TCLContex_,TCLPlatfo_,TByteRGBA> )
      private
      protected
        ///// アクセス
@@ -67,7 +68,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma2DxBGRAxUInt8<TCLContex_,TCLPlatfo_>
 
-     TCLHosIma2DxBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma2DFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
+     TCLHosIma2DxBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma2DFMX<TCLContex_,TCLPlatfo_,TByteRGBA> )
      private
      protected
        ///// アクセス
@@ -81,7 +82,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_>
 
-     TCLDevIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_:class> = class( TCLDevIma2DFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
+     TCLDevIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_:class> = class( TCLDevIma2DFMX<TCLContex_,TCLPlatfo_,TByteRGBA> )
      private
      protected
        ///// アクセス
@@ -95,7 +96,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_>
 
-     TCLHosIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma2DFMX<TCLContex_,TCLPlatfo_,TAlphaColor> )
+     TCLHosIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma2DFMX<TCLContex_,TCLPlatfo_,TByteRGBA> )
      private
      protected
        ///// アクセス
@@ -109,7 +110,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>
 
-     TCLDevIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class( TCLDevIma2DFMX<TCLContex_,TCLPlatfo_,TAlphaColorF> )
+     TCLDevIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class( TCLDevIma2DFMX<TCLContex_,TCLPlatfo_,TSingleRGBA> )
      private
      protected
        ///// アクセス
@@ -119,11 +120,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// メソッド
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
+       procedure CopyFrom( const Grid_:TCellColorGrid2D_TByteRGBE ); overload; virtual;
+       procedure LoadFromFileHDR( const FileName_:String );
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>
 
-     TCLHosIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma2DFMX<TCLContex_,TCLPlatfo_,TAlphaColorF> )
+     TCLHosIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class( TCLHosIma2DFMX<TCLContex_,TCLPlatfo_,TSingleRGBA> )
      private
      protected
        ///// アクセス
@@ -133,6 +136,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// メソッド
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
+       procedure CopyFrom( const Grid_:TCellColorGrid2D_TByteRGBE ); overload; virtual;
+       procedure LoadFromFileHDR( const FileName_:String );
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -143,7 +148,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
+uses System.Threading,
+     LUX.Color.Format.HDR,
+     LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -246,34 +253,42 @@ end;
 procedure TCLDevIma2DxBGRAxUInt8<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
-   X, Y :Integer;
 begin
      Bitmap_.SetSize( CountX, CountY );
 
+     Storag.Map;
+
      Bitmap_.Map( TMapAccess.Write, B );
 
-     for Y := 0 to CountY-1 do Move( Storag.ValueP[ 0, Y ]^,
-                                     B.GetScanline( Y )^,
-                                     B.BytesPerLine );
-
-     Storag.Unmap;
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     begin
+          Move( Storag.ValueP[ 0, Y ]^,
+                B.GetScanline( Y )^,
+                B.BytesPerLine );
+     end );
 
      Bitmap_.Unmap( B );
+
+     Storag.Unmap;
 end;
 
 procedure TCLDevIma2DxBGRAxUInt8<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
-   X, Y :Integer;
 begin
      CountX := Bitmap_.Width ;
      CountY := Bitmap_.Height;
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     for Y := 0 to CountY-1 do Move( B.GetScanline( Y )^,
-                                     Storag.ValueP[ 0, Y ]^,
-                                     B.BytesPerLine );
+     Storag.Map;
+
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     begin
+          Move( B.GetScanline( Y )^,
+                Storag.ValueP[ 0, Y ]^,
+                B.BytesPerLine );
+     end );
 
      Storag.Unmap;
 
@@ -305,34 +320,42 @@ end;
 procedure TCLHosIma2DxBGRAxUInt8<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
-   X, Y :Integer;
 begin
      Bitmap_.SetSize( CountX, CountY );
 
+     Storag.Map;
+
      Bitmap_.Map( TMapAccess.Write, B );
 
-     for Y := 0 to CountY-1 do Move( Storag.ValueP[ 0, Y ]^,
-                                     B.GetScanline( Y )^,
-                                     B.BytesPerLine );
-
-     Storag.Unmap;
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     begin
+          Move( Storag.ValueP[ 0, Y ]^,
+                B.GetScanline( Y )^,
+                B.BytesPerLine );
+     end );
 
      Bitmap_.Unmap( B );
+
+     Storag.Unmap;
 end;
 
 procedure TCLHosIma2DxBGRAxUInt8<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
-   X, Y :Integer;
 begin
      CountX := Bitmap_.Width ;
      CountY := Bitmap_.Height;
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     for Y := 0 to CountY-1 do Move( B.GetScanline( Y )^,
-                                     Storag.ValueP[ 0, Y ]^,
-                                     B.BytesPerLine );
+     Storag.Map;
+
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     begin
+          Move( B.GetScanline( Y )^,
+                Storag.ValueP[ 0, Y ]^,
+                B.BytesPerLine );
+     end );
 
      Storag.Unmap;
 
@@ -364,34 +387,42 @@ end;
 procedure TCLDevIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
-   X, Y :Integer;
 begin
      Bitmap_.SetSize( CountX, CountY );
 
+     Storag.Map;
+
      Bitmap_.Map( TMapAccess.Write, B );
 
-     for Y := 0 to CountY-1 do Move( Storag.ValueP[ 0, Y ]^,
-                                     B.GetScanline( Y )^,
-                                     B.BytesPerLine );
-
-     Storag.Unmap;
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     begin
+          Move( Storag.ValueP[ 0, Y ]^,
+                B.GetScanline( Y )^,
+                B.BytesPerLine );
+     end );
 
      Bitmap_.Unmap( B );
+
+     Storag.Unmap;
 end;
 
 procedure TCLDevIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
-   X, Y :Integer;
 begin
      CountX := Bitmap_.Width ;
      CountY := Bitmap_.Height;
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     for Y := 0 to CountY-1 do Move( B.GetScanline( Y )^,
-                                     Storag.ValueP[ 0, Y ]^,
-                                     B.BytesPerLine );
+     Storag.Map;
+
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     begin
+          Move( B.GetScanline( Y )^,
+                Storag.ValueP[ 0, Y ]^,
+                B.BytesPerLine );
+     end );
 
      Storag.Unmap;
 
@@ -423,34 +454,42 @@ end;
 procedure TCLHosIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
-   X, Y :Integer;
 begin
      Bitmap_.SetSize( CountX, CountY );
 
+     Storag.Map;
+
      Bitmap_.Map( TMapAccess.Write, B );
 
-     for Y := 0 to CountY-1 do Move( Storag.ValueP[ 0, Y ]^,
-                                     B.GetScanline( Y )^,
-                                     B.BytesPerLine );
-
-     Storag.Unmap;
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     begin
+          Move( Storag.ValueP[ 0, Y ]^,
+                B.GetScanline( Y )^,
+                B.BytesPerLine );
+     end );
 
      Bitmap_.Unmap( B );
+
+     Storag.Unmap;
 end;
 
 procedure TCLHosIma2DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
-   X, Y :Integer;
 begin
      CountX := Bitmap_.Width ;
      CountY := Bitmap_.Height;
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     for Y := 0 to CountY-1 do Move( B.GetScanline( Y )^,
-                                     Storag.ValueP[ 0, Y ]^,
-                                     B.BytesPerLine );
+     Storag.Map;
+
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     begin
+          Move( B.GetScanline( Y )^,
+                Storag.ValueP[ 0, Y ]^,
+                B.BytesPerLine );
+     end );
 
      Storag.Unmap;
 
@@ -482,46 +521,86 @@ end;
 procedure TCLDevIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
-   X, Y :Integer;
 begin
      Bitmap_.SetSize( CountX, CountY );
 
+     Storag.Map;
+
      Bitmap_.Map( TMapAccess.Write, B );
 
-     for Y := 0 to CountY-1 do
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     var
+        X :Integer;
      begin
           for X := 0 to CountX-1 do
           begin
-               B.SetPixel( X, Y, Storag[ X, Y ].ToAlphaColor );
+               B.SetPixel( X, Y, TByteRGBA( Storag[ X, Y ] ) );
           end;
-     end;
-
-     Storag.Unmap;
+     end );
 
      Bitmap_.Unmap( B );
+
+     Storag.Unmap;
 end;
 
 procedure TCLDevIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
-   X, Y :Integer;
 begin
      CountX := Bitmap_.Width ;
      CountY := Bitmap_.Height;
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     for Y := 0 to CountY-1 do
+     Storag.Map;
+
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     var
+        X :Integer;
      begin
           for X := 0 to CountX-1 do
           begin
-               Storag[ X, Y ] := TAlphaColorF.Create( B.GetPixel( X, Y ) );
+               Storag[ X, Y ] := B.GetPixel( X, Y );
           end;
-     end;
+     end );
 
      Storag.Unmap;
 
      Bitmap_.Unmap( B );
+end;
+
+//------------------------------------------------------------------------------
+
+procedure TCLDevIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>.CopyFrom( const Grid_:TCellColorGrid2D_TByteRGBE );
+begin
+     CountX := Grid_.CellsX;
+     CountY := Grid_.CellsY;
+
+     Storag.Map;
+
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     var
+        X :Integer;
+     begin
+          for X := 0 to CountX-1 do
+          begin
+               Storag[ X, Y ] := TSingleRGBA( TSingleRGB( Grid_[ X, Y ] ) );
+          end;
+     end );
+
+     Storag.Unmap;
+end;
+
+procedure TCLDevIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>.LoadFromFileHDR( const FileName_:String );
+var
+   F :TFileHDR;
+begin
+     F := TFileHDR.Create;
+     F.LoadFromFile( FileName_ );
+
+     CopyFrom( F.Grid );
+
+     F.Free;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>
@@ -549,46 +628,86 @@ end;
 procedure TCLHosIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>.CopyTo( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
-   X, Y :Integer;
 begin
      Bitmap_.SetSize( CountX, CountY );
 
+     Storag.Map;
+
      Bitmap_.Map( TMapAccess.Write, B );
 
-     for Y := 0 to CountY-1 do
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     var
+        X :Integer;
      begin
           for X := 0 to CountX-1 do
           begin
-               B.SetPixel( X, Y, Storag[ X, Y ].ToAlphaColor );
+               B.SetPixel( X, Y, TByteRGBA( Storag[ X, Y ] ) );
           end;
-     end;
-
-     Storag.Unmap;
+     end );
 
      Bitmap_.Unmap( B );
+
+     Storag.Unmap;
 end;
 
 procedure TCLHosIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>.CopyFrom( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
-   X, Y :Integer;
 begin
      CountX := Bitmap_.Width ;
      CountY := Bitmap_.Height;
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     for Y := 0 to CountY-1 do
+     Storag.Map;
+
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     var
+        X :Integer;
      begin
           for X := 0 to CountX-1 do
           begin
-               Storag[ X, Y ] := TAlphaColorF.Create( B.GetPixel( X, Y ) );
+               Storag[ X, Y ] := B.GetPixel( X, Y );
           end;
-     end;
+     end );
 
      Storag.Unmap;
 
      Bitmap_.Unmap( B );
+end;
+
+//------------------------------------------------------------------------------
+
+procedure TCLHosIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>.CopyFrom( const Grid_:TCellColorGrid2D_TByteRGBE );
+begin
+     CountX := Grid_.CellsX;
+     CountY := Grid_.CellsY;
+
+     Storag.Map;
+
+     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     var
+        X :Integer;
+     begin
+          for X := 0 to CountX-1 do
+          begin
+               Storag[ X, Y ] := TSingleRGBA( TSingleRGB( Grid_[ X, Y ] ) );
+          end;
+     end );
+
+     Storag.Unmap;
+end;
+
+procedure TCLHosIma2DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>.LoadFromFileHDR( const FileName_:String );
+var
+   F :TFileHDR;
+begin
+     F := TFileHDR.Create;
+     F.LoadFromFile( FileName_ );
+
+     CopyFrom( F.Grid );
+
+     F.Free;
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
