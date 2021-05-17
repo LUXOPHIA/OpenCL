@@ -34,7 +34,31 @@ uses
   LUX.GPU.OpenCL.Progra in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Progra.pas',
   LUX.GPU.OpenCL.Queuer in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Queuer.pas',
   LUX.GPU.OpenCL.Show in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Show.pas',
-  LUX.GPU.OpenCL in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.pas';
+  LUX.GPU.OpenCL in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.pas',
+  LUX.Color in '_LIBRARY\LUXOPHIA\LUX\Color\LUX.Color.pas',
+  LUX.Color.Format.HDR in '_LIBRARY\LUXOPHIA\LUX\Color\LUX.Color.Format.HDR.pas',
+  LUX.Color.Grid.D2 in '_LIBRARY\LUXOPHIA\LUX\Color\_FMX\LUX.Color.Grid.D2.pas',
+  LUX.Color.Grid.D2.Preset in '_LIBRARY\LUXOPHIA\LUX\Color\_FMX\LUX.Color.Grid.D2.Preset.pas',
+  LUX.Color.Grid.D3 in '_LIBRARY\LUXOPHIA\LUX\Color\_FMX\LUX.Color.Grid.D3.pas',
+  LUX.Color.Grid.D1 in '_LIBRARY\LUXOPHIA\LUX\Color\_FMX\LUX.Color.Grid.D1.pas',
+  LUX.Color.Grid.D1.Preset in '_LIBRARY\LUXOPHIA\LUX\Color\_FMX\LUX.Color.Grid.D1.Preset.pas',
+  LUX.Data.Grid.T2.D1 in '_LIBRARY\LUXOPHIA\LUX\Data\Grid\LUX.Data.Grid.T2.D1.pas',
+  LUX.Data.Grid.T2 in '_LIBRARY\LUXOPHIA\LUX\Data\Grid\LUX.Data.Grid.T2.pas',
+  LUX.Data.Grid.T3.D3 in '_LIBRARY\LUXOPHIA\LUX\Data\Grid\LUX.Data.Grid.T3.D3.pas',
+  LUX.Data.Grid.T3 in '_LIBRARY\LUXOPHIA\LUX\Data\Grid\LUX.Data.Grid.T3.pas',
+  LUX.Data.Grid in '_LIBRARY\LUXOPHIA\LUX\Data\Grid\LUX.Data.Grid.pas',
+  LUX.Data.Grid.T1.D1 in '_LIBRARY\LUXOPHIA\LUX\Data\Grid\LUX.Data.Grid.T1.D1.pas',
+  LUX.Data.Grid.T1 in '_LIBRARY\LUXOPHIA\LUX\Data\Grid\LUX.Data.Grid.T1.pas',
+  LUX.D2 in '_LIBRARY\LUXOPHIA\LUX\LUX.D2.pas',
+  LUX.D3 in '_LIBRARY\LUXOPHIA\LUX\LUX.D3.pas',
+  LUX.D4x4 in '_LIBRARY\LUXOPHIA\LUX\LUX.D4x4.pas',
+  LUX.D4 in '_LIBRARY\LUXOPHIA\LUX\LUX.D4.pas',
+  LUX.D3x3 in '_LIBRARY\LUXOPHIA\LUX\LUX.D3x3.pas',
+  LUX.D2x2 in '_LIBRARY\LUXOPHIA\LUX\LUX.D2x2.pas',
+  LUX.Curve.BSpline in '_LIBRARY\LUXOPHIA\LUX\Curve\LUX.Curve.BSpline.pas',
+  LUX.Curve.BSpline.D2 in '_LIBRARY\LUXOPHIA\LUX\Curve\LUX.Curve.BSpline.D2.pas',
+  LUX.Curve in '_LIBRARY\LUXOPHIA\LUX\Curve\LUX.Curve.pas',
+  LUX.Curve.CatRom in '_LIBRARY\LUXOPHIA\LUX\Curve\LUX.Curve.CatRom.pas';
 
 {$R *.res}
 
