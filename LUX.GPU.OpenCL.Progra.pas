@@ -259,7 +259,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses System.IOUtils,
+uses System.IOUtils, System.AnsiStrings,
      LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
@@ -339,7 +339,7 @@ begin
      for L in Ls do
      begin
           LHs := LHs + [ L.Handle ];
-          LNs := LNs + [ P_char( AnsiString( L.Name ) ) ];
+          LNs := LNs + [ System.AnsiStrings.StrNew( P_char( AnsiString( L.Name ) ) ) ];
      end;
 
      Result := clCompileProgram( Execut.Handle,
