@@ -125,10 +125,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetInfos<_TYPE_>( const Name_:T_cl_program_info ) :TArray<_TYPE_>;
        function GetInfoString( const Name_:T_cl_program_info ) :String;
      protected
-       _Handle  :T_cl_program;
-       _Name    :String;
-       _Source  :TCLSource_;
-       _LangVer :TCLVersion;
+       _Handle :T_cl_program;
+       _Name   :String;
+       _Source :TCLSource_;
        ///// アクセス
        function GetHandle :T_cl_program;
        procedure SetHandle( const Handle_:T_cl_program );
@@ -158,12 +157,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
        destructor Destroy; override;
        ///// プロパティ
-       property Contex  :TCLContex_   read GetOwnere                 ;
-       property Progras :TCLProgras_  read GetParent                 ;
-       property Handle  :T_cl_program read GetHandle  write SetHandle;
-       property Name    :String       read   _Name    write   _Name  ;
-       property Source  :TCLSource_   read   _Source                 ;
-       property LangVer :TCLVersion   read   _LangVer                ;
+       property Contex  :TCLContex_   read GetOwnere                ;
+       property Progras :TCLProgras_  read GetParent                ;
+       property Handle  :T_cl_program read GetHandle write SetHandle;
+       property Name    :String       read   _Name   write   _Name  ;
+       property Source  :TCLSource_   read   _Source                ;
        (* cl_program_info *)
        property PROGRAM_REFERENCE_COUNT            :T_cl_uint               read GetPROGRAM_REFERENCE_COUNT;
        property PROGRAM_CONTEXT                    :T_cl_context            read GetPROGRAM_CONTEXT;
@@ -332,7 +330,7 @@ begin
      DH := Device.Handle;
 
      Os := '-cl-kernel-arg-info';
-     if Ord( Execut.LangVer ) > 100 then Os := Os + ' -cl-std=CL' + Execut.LangVer.ToString;
+     if Ord( Device.LanVer ) > 100 then Os := Os + ' -cl-std=CL' + Device.LanVer.ToString;
 
      Ls := TCLExecut( Execut ).Contex.Librars;
 
@@ -618,8 +616,6 @@ begin
      _Source := TCLSource_ .Create( Self );
 
      _Handle := nil;
-
-     _LangVer := TCLVersion.From( '3.0' );
 end;
 
 destructor TCLProgra<TCLContex_,TCLPlatfo_,TCLProgras_>.Destroy;

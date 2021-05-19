@@ -29,6 +29,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _Handle :T_cl_device_id;
        ///// アクセス
+       function GetLanVer :TCLVersion;
        (* cl_device_info *)
        function GetDEVICE_TYPE :T_cl_device_type;
        function GetDEVICE_VENDOR_ID :T_cl_uint;
@@ -160,6 +161,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Platfo                                         :TCLPlatfo_                              read GetOwnere;
        property Devices                                        :TCLDevices_                             read GetParent;
        property Handle                                         :T_cl_device_id                          read   _Handle;
+       property LanVer                                         :TCLVersion                              read GetLanVer;
        (* cl_device_info *)
        property DEVICE_TYPE                                    :T_cl_device_type                        read GetDEVICE_TYPE;
        property DEVICE_VENDOR_ID                               :T_cl_uint                               read GetDEVICE_VENDOR_ID;
@@ -309,7 +311,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses System.SysUtils,
+uses System.SysUtils, System.RegularExpressions,
      LUX.GPU.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
@@ -351,6 +353,20 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 /////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLDevice<TCLPlatfo_>.GetLanVer :TCLVersion;
+var
+   M :TMatch;
+begin
+     M := TRegEx.Match( DEVICE_OPENCL_C_VERSION,
+                        'OpenCL +C +([^ ]+)',
+                        [ TRegExOption.roIgnoreCase ] );
+
+     if M.Groups.Count = 2 then Result := TCLVersion.From( M.Groups[ 1 ].Value )
+                           else Result := TCLVersion.None;
+end;
+
+//----------------------------------------------------------(* cl_device_info *)
 
 function TCLDevice<TCLPlatfo_>.GetDEVICE_TYPE :T_cl_device_type; begin Result := GetInfo<T_cl_device_type>( CL_DEVICE_TYPE ); end;
 function TCLDevice<TCLPlatfo_>.GetDEVICE_VENDOR_ID :T_cl_uint; begin Result := GetInfo<T_cl_uint>( CL_DEVICE_VENDOR_ID ); end;
