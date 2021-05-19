@@ -108,8 +108,7 @@ begin
           begin
                Add( ' ┃　│　┃　│　┃' );
                Add( ' ┃　│　┃　│　┣・Execut[' + E.Order.ToString + '] :TCLExecut' );
-               Add( ' ┃　│　┃　│　┃　├ Name    = ' + E.Name );
-               Add( ' ┃　│　┃　│　┃　├ LangVer = ' + E.LangVer.ToString );
+               Add( ' ┃　│　┃　│　┃　├ Name   = ' + E.Name );
 
                ShowBuildrs( Strings_, E.Buildrs );
                ShowKernels( Strings_, E.Kernels );
@@ -212,6 +211,7 @@ begin
           begin
                Add( ' ┃　│　┃' );
                Add( ' ┃　│　┣・Device[' + D.Order.ToString + '] :TCLDevice' );
+               Add( ' ┃　│　┃　├ LanVer                  = '  + D.LanVer.ToString );
                Add( ' ┃　│　┃　├ DEVICE_TYPE             = '  + D.DEVICE_TYPE.ToString );
                Add( ' ┃　│　┃　├ DEVICE_VENDOR_ID        = '  + D.DEVICE_VENDOR_ID.ToString );
                Add( ' ┃　│　┃　├ DEVICE_NAME             = '  + D.DEVICE_NAME );
