@@ -284,6 +284,9 @@
         <DCCReference Include="_LIBRARY\LUXOPHIA\LUX\Curve\LUX.Curve.BSpline.D2.pas"/>
         <DCCReference Include="_LIBRARY\LUXOPHIA\LUX\Curve\LUX.Curve.pas"/>
         <DCCReference Include="_LIBRARY\LUXOPHIA\LUX\Curve\LUX.Curve.CatRom.pas"/>
+        <DCCReference Include="_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Argume.Memory.Imager.D1.Seeder.pas"/>
+        <DCCReference Include="_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Argume.Memory.Imager.D2.Seeder.pas"/>
+        <DCCReference Include="_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Argume.Memory.Imager.D3.Seeder.pas"/>
         <None Include="_DATA\Execut.cl"/>
         <None Include="_DATA\Librar.cl"/>
         <BuildConfiguration Include="Release">
