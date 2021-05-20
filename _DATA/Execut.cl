@@ -1,4 +1,8 @@
-﻿#include<Librar.cl>
+﻿#ifndef EXECUT
+#define EXECUT
+//############################################################################## ■
+
+#include<Librar.cl>
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
@@ -14,7 +18,7 @@ TDoubleC ScreenToComplex( const int2 P, const int2 S, const TDoubleAreaC A )
   return Result;
 }
 
-float ComplexToLoop( const TDoubleC C, const int MaxN )
+float ComplexToCount( const TDoubleC C, const int MaxN )
 {
   TDoubleC Z = { 0, 0 };
 
@@ -37,32 +41,26 @@ float ComplexToLoop( const TDoubleC C, const int MaxN )
   return MaxN;
 }
 
-//------------------------------------------------------------------------------
-
-float4 GammaCorrect( const float4 Color_, const float Gamma_ )
-{
-  return (float4)( pow( Color_.xyz, 1 / Gamma_ ), Color_.w );
-}
-
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+//############################################################################## ■
 
 kernel void Main( global     TDoubleC* Buffer,
                   write_only image2d_t Imager,
                   read_only  image1d_t Textur,
                   const      sampler_t Samplr )
 {
-  const int MaxN = 1000;
-  const int2 P = { get_global_id  ( 0 ), get_global_id  ( 1 ) };
-  const int2 S = { get_global_size( 0 ), get_global_size( 1 ) };
-  const TDoubleAreaC A = { Buffer[0], Buffer[1] };
+  const int2         P    = { get_global_id  ( 0 ), get_global_id  ( 1 ) };
+  const int2         S    = { get_global_size( 0 ), get_global_size( 1 ) };
+  const TDoubleAreaC A    = { Buffer[0], Buffer[1] };
+  const int          MaxN = 1000;
 
   TDoubleC C = ScreenToComplex( P, S, A );
 
-  float N = ComplexToLoop( C, MaxN );
+  float N = ComplexToCount( C, MaxN );
 
   float4 T = read_imagef( Textur, Samplr, sqrt( N / MaxN ) );
 
-  write_imagef( Imager, P, GammaCorrect( T, 2.2 ) );
+  write_imagef( Imager, P, T );
 }
 
-//##############################################################################
+//############################################################################## ■
+#endif
