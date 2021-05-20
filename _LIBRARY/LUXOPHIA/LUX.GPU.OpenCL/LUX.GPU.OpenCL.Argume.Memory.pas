@@ -36,6 +36,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetHanSiz :T_size_t; override;
        function GetHandle :T_cl_mem; virtual;
        procedure SetHandle( const Handle_:T_cl_mem ); virtual;
+       function GetKind :T_cl_mem_flags; virtual;
+       procedure SetKind( const Kind_:T_cl_mem_flags ); virtual;
        function GetStorag :TCLStorag_; virtual;
        procedure SetStorag( const Storag_:TCLStorag_ ); virtual;
        function GetSize :T_size_t; virtual; abstract;
@@ -48,7 +50,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        destructor Destroy; override;
        ///// プロパティ
        property Handle  :T_cl_mem       read GetHandle write SetHandle;
-       property Kind    :T_cl_mem_flags read   _Kind                  ;
+       property Kind    :T_cl_mem_flags read GetKind   write SetKind  ;
        property Storag  :TCLStorag_     read GetStorag write SetStorag;
        property Size    :T_size_t       read GetSize                  ;
        property Queuer  :TCLQueuer_     read   _Queuer write   _Queuer;
@@ -118,6 +120,8 @@ begin
      Result := SizeOf( T_cl_mem );
 end;
 
+//------------------------------------------------------------------------------
+
 function TCLMemory<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_mem;
 begin
      if not Assigned( _Handle ) then CreateHandle;
@@ -130,6 +134,18 @@ begin
      if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLMemory.DestroHandle is Error!' );
 
      _Handle := Handle_;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLMemory<TCLContex_,TCLPlatfo_>.GetKind :T_cl_mem_flags;
+begin
+     Result := _Kind;
+end;
+
+procedure TCLMemory<TCLContex_,TCLPlatfo_>.SetKind( const Kind_:T_cl_mem_flags );
+begin
+     _Kind := Kind_;
 end;
 
 //------------------------------------------------------------------------------
