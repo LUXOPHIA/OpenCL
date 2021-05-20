@@ -41,7 +41,7 @@ float ComplexToLoop( const TDoubleC C, const int MaxN )
 
 float4 GammaCorrect( const float4 Color_, const float Gamma_ )
 {
-  return (float4)( pow( Color_.rgb, 1/Gamma_ ), Color_.a );
+  return (float4)( pow( Color_.xyz, 1/Gamma_ ), Color_.a );
 }
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
