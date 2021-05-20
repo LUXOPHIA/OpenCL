@@ -11,9 +11,7 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLImager  <TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
-       TCLDevIma<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
-       TCLHosIma<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLImager<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
 
      TCLImagerIter<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
 
@@ -28,6 +26,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLStorag_ = TCLImagerIter<TCLContex_,TCLPlatfo_,TValue_>;
      protected
        ///// アクセス
+       function GetKind :T_cl_mem_flags; override;
        function GetStorag :TCLStorag_; reintroduce; virtual;
        procedure SetStorag( const Storag_:TCLStorag_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
@@ -42,6 +41,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetCountZ :Integer; virtual;
        procedure SetCountZ( const CountZ_:Integer ); virtual;
        function GetDescri :T_cl_image_desc; virtual;
+       ///// メソッド
+       function CreateHandle :T_cl_int; override;
      public
        ///// プロパティ
        property Storag  :TCLStorag_           read GetStorag write SetStorag;
@@ -55,30 +56,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Descri  :T_cl_image_desc      read GetDescri                ;
        ///// メソッド
        procedure Fill( const Value_:TValue_ );
-     end;
-
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma<TCLContex_,TCLPlatfo_,TValue_>
-
-     TCLDevIma<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager<TCLContex_,TCLPlatfo_,TValue_> )
-     private
-     protected
-       ///// メソッド
-       function CreateHandle :T_cl_int; override;
-     public
-       constructor Create; override;
-     end;
-
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma<TCLContex_,TCLPlatfo_,TValue_>
-
-     TCLHosIma<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager<TCLContex_,TCLPlatfo_,TValue_> )
-     private
-     protected
-       _Data :P_void;
-       ///// メソッド
-       function CreateHandle :T_cl_int; override;
-       function DestroHandle :T_cl_int; override;
-     public
-       constructor Create; override;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter<TCLContex_,TCLPlatfo_,TValue_>
@@ -122,6 +99,13 @@ uses LUX.GPU.OpenCL;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 /////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLImager<TCLContex_,TCLPlatfo_,TValue_>.GetKind :T_cl_mem_flags;
+begin
+     Result := _Kind or CL_MEM_ALLOC_HOST_PTR;
+end;
+
+//------------------------------------------------------------------------------
 
 function TCLImager<TCLContex_,TCLPlatfo_,TValue_>.GetStorag :TCLStorag_;
 begin
@@ -202,32 +186,9 @@ begin
      end;
 end;
 
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-procedure TCLImager<TCLContex_,TCLPlatfo_,TValue_>.Fill( const Value_:TValue_ );
-var
-   O, R :record
-           X, Y, Z :T_size_t;
-         end;
-begin
-     O.X := 0;  R.X := CountX;
-     O.Y := 0;  R.Y := CountY;
-     O.Z := 0;  R.Z := CountZ;
-
-     AssertCL( clEnqueueFillImage( Queuer.Handle, Handle,
-                                   @Value_, @O, @R,
-                                   0, nil, nil ), 'TCLImager.Fill is Error!' );
-end;
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma<TCLContex_,TCLPlatfo_,TValue_>
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLDevIma<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
+function TCLImager<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
 var
    F :T_cl_image_format;
    D :T_cl_image_desc;
@@ -242,50 +203,21 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLDevIma<TCLContex_,TCLPlatfo_,TValue_>.Create;
-begin
-     inherited;
-
-     _Kind := CL_MEM_READ_WRITE or CL_MEM_ALLOC_HOST_PTR;
-end;
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma<TCLContex_,TCLPlatfo_,TValue_>
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLHosIma<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
+procedure TCLImager<TCLContex_,TCLPlatfo_,TValue_>.Fill( const Value_:TValue_ );
 var
-   F :T_cl_image_format;
-   D :T_cl_image_desc;
+   O, R :record
+           X, Y, Z :T_size_t;
+         end;
 begin
-     inherited;
+     O.X := 0;  R.X := CountX;
+     O.Y := 0;  R.Y := CountY;
+     O.Z := 0;  R.Z := CountZ;
 
-     F := Format;
-     D := Descri;
-
-     GetMemAligned( _Data, Ceil2N( Size, 64{Byte} ), 4096{Byte} );
-
-     _Handle := clCreateImage( TCLContex( Contex ).Handle, Kind, @F, @D, _Data, @Result );
-end;
-
-function TCLHosIma<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle :T_cl_int;
-begin
-     FreeMemAligned( _Data );
-
-     inherited;
-end;
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-constructor TCLHosIma<TCLContex_,TCLPlatfo_,TValue_>.Create;
-begin
-     inherited;
-
-     _Kind := CL_MEM_READ_WRITE or CL_MEM_USE_HOST_PTR;
+     AssertCL( clEnqueueFillImage( Queuer.Handle, Handle,
+                                   @Value_, @O, @R,
+                                   0, nil, nil ), 'TCLImager.Fill is Error!' );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter<TCLContex_,TCLPlatfo_,TValue_>
