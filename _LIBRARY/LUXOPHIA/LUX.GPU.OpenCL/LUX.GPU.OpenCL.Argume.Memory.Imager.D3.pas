@@ -10,9 +10,7 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLImager3D  <TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
-       TCLDevIma3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
-       TCLHosIma3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLImager3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
 
      TCLImagerIter3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
 
@@ -40,30 +38,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// プロパティ
        property Storag :TCLStorag_ read GetStorag write SetStorag;
        property CountZ :Integer    read GetCountZ write SetCountZ;
-     end;
-
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma3D<TCLContex_,TCLPlatfo_,TValue_>
-
-     TCLDevIma3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager3D<TCLContex_,TCLPlatfo_,TValue_> )
-     private
-     protected
-       ///// メソッド
-       function CreateHandle :T_cl_int; override;
-     public
-       constructor Create; override;
-     end;
-
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma3D<TCLContex_,TCLPlatfo_,TValue_>
-
-     TCLHosIma3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager3D<TCLContex_,TCLPlatfo_,TValue_> )
-     private
-     protected
-       _Data :P_void;
-       ///// メソッド
-       function CreateHandle :T_cl_int; override;
-       function DestroHandle :T_cl_int; override;
-     public
-       constructor Create; override;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>
@@ -152,75 +126,6 @@ begin
      inherited;
 
      _CountZ := 1;
-end;
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma3D<TCLContex_,TCLPlatfo_,TValue_>
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-function TCLDevIma3D<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
-var
-   F :T_cl_image_format;
-   D :T_cl_image_desc;
-begin
-     inherited;
-
-     F := Format;
-     D := Descri;
-
-     _Handle := clCreateImage( TCLContex( Contex ).Handle, Kind, @F, @D, nil, @Result );
-end;
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-constructor TCLDevIma3D<TCLContex_,TCLPlatfo_,TValue_>.Create;
-begin
-     inherited;
-
-     _Kind := CL_MEM_READ_WRITE or CL_MEM_ALLOC_HOST_PTR;
-end;
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosIma3D<TCLContex_,TCLPlatfo_,TValue_>
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-function TCLHosIma3D<TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
-var
-   F :T_cl_image_format;
-   D :T_cl_image_desc;
-begin
-     inherited;
-
-     F := Format;
-     D := Descri;
-
-     GetMemAligned( _Data, Ceil2N( Size, 64{Byte} ), 4096{Byte} );
-
-     _Handle := clCreateImage( TCLContex( Contex ).Handle, Kind, @F, @D, _Data, @Result );
-end;
-
-function TCLHosIma3D<TCLContex_,TCLPlatfo_,TValue_>.DestroHandle :T_cl_int;
-begin
-     FreeMemAligned( _Data );
-
-     inherited;
-end;
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-constructor TCLHosIma3D<TCLContex_,TCLPlatfo_,TValue_>.Create;
-begin
-     inherited;
-
-     _Kind := CL_MEM_READ_WRITE or CL_MEM_USE_HOST_PTR;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>
