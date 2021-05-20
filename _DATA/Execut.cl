@@ -41,14 +41,14 @@ float ComplexToLoop( const TDoubleC C, const int MaxN )
 
 float4 GammaCorrect( const float4 Color_, const float Gamma_ )
 {
-  return (float4)( pow( Color_.xyz, 1/Gamma_ ), Color_.a );
+  return (float4)( pow( Color_.xyz, 1 / Gamma_ ), Color_.w );
 }
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 kernel void Main( global     TDoubleC* Buffer,
                   write_only image2d_t Imager,
-                   read_only image1d_t Textur,
+                  read_only  image1d_t Textur,
                   const      sampler_t Samplr )
 {
   const int MaxN = 1000;
