@@ -53,6 +53,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property CountY  :Integer              read GetCountY write SetCountY;
        property CountZ  :Integer              read GetCountZ write SetCountZ;
        property Descri  :T_cl_image_desc      read GetDescri                ;
+       ///// メソッド
+       procedure Fill( const Value_:TValue_ );
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma<TCLContex_,TCLPlatfo_,TValue_>
@@ -201,6 +203,21 @@ begin
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+procedure TCLImager<TCLContex_,TCLPlatfo_,TValue_>.Fill( const Value_:TValue_ );
+var
+   O, R :record
+           X, Y, Z :T_size_t;
+         end;
+begin
+     O.X := 0;  R.X := CountX;
+     O.Y := 0;  R.Y := CountY;
+     O.Z := 0;  R.Z := CountZ;
+
+     AssertCL( clEnqueueFillImage( Queuer.Handle, Handle,
+                                   @Value_, @O, @R,
+                                   0, nil, nil ), 'TCLImager.Fill is Error!' );
+end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevIma<TCLContex_,TCLPlatfo_,TValue_>
 
