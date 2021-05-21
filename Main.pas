@@ -235,7 +235,7 @@ procedure TForm1.FormDestroy(Sender: TObject);
 begin
      MemoS.Lines.SaveToFile( 'System.txt', TEncoding.UTF8 );
 
-     ImageR.Bitmap.SaveToFile( 'Imager.png' )
+     ImageR.Bitmap.SaveToFile( 'Imager.png' );
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
