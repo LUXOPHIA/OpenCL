@@ -57,7 +57,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
+uses LUX.GPU.OpenCL.Contex;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -79,7 +79,7 @@ end;
 
 constructor TCLArgume<TCLSystem_,TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_ );
 begin
-     inherited Create( TCLContex( Contex_ ).Argumes );
+     inherited Create( TCLContex<TCLSystem_,TCLPlatfo_>( Contex_ ).Argumes );
 end;
 
 destructor TCLArgume<TCLSystem_,TCLContex_,TCLPlatfo_>.Destroy;

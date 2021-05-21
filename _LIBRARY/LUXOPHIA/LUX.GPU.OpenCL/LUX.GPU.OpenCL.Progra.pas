@@ -34,6 +34,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                                                                             TCLBuildrs<TCLSystem_,TCLContex_,TCLPlatfo_>> )
      private
        type TCLDevice_  = TCLDevice <TCLSystem_,TCLPlatfo_>;
+            TCLLibrars_ = TCLLibrars<TCLSystem_,TCLContex_,TCLPlatfo_>;
+            TCLLibrar_  = TCLLibrar <TCLSystem_,TCLContex_,TCLPlatfo_>;
             TCLExecut_  = TCLExecut <TCLSystem_,TCLContex_,TCLPlatfo_>;
             TCLBuildrs_ = TCLBuildrs<TCLSystem_,TCLContex_,TCLPlatfo_>;
        ///// メソッド
@@ -258,7 +260,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 implementation //############################################################### ■
 
 uses System.IOUtils, System.AnsiStrings,
-     LUX.GPU.OpenCL;
+     LUX.GPU.OpenCL.Contex;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -322,8 +324,8 @@ var
    Os :String;
    LHs :TArray<T_cl_program>;
    LNs :TArray<P_char>;
-   Ls :TCLLibrars;
-   L :TCLLibrar;
+   Ls :TCLLibrars_;
+   L :TCLLibrar_;
 begin
      inherited;
 
@@ -332,7 +334,7 @@ begin
      Os := '-cl-kernel-arg-info';
      if Ord( Device.LanVer ) > 100 then Os := Os + ' -cl-std=CL' + Device.LanVer.ToString;
 
-     Ls := TCLExecut( Execut ).Contex.Librars;
+     Ls := TCLLibrars_( TCLContex<TCLSystem_,TCLPlatfo_>( Execut.Contex ).Librars );
 
      for L in Ls do
      begin
@@ -358,7 +360,7 @@ begin
      DH := Device.Handle;
      EH := Execut.Handle;
 
-     _Handle := clLinkProgram( TCLExecut( Execut ).Contex.Handle,
+     _Handle := clLinkProgram( TCLContex<TCLSystem_,TCLPlatfo_>( Execut.Contex ).Handle,
                                1, @DH,
                                nil,
                                1, @EH,
@@ -597,7 +599,7 @@ var
 begin
      C := P_char( AnsiString( _Source.Text ) );
 
-     _Handle := clCreateProgramWithSource( TCLContex( Contex ).Handle, 1, @C, nil, @Result );
+     _Handle := clCreateProgramWithSource( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle, 1, @C, nil, @Result );
 end;
 
 function TCLProgra<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_>.DestroHandle :T_cl_int;
@@ -637,7 +639,7 @@ end;
 
 constructor TCLLibrar<TCLSystem_,TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_ );
 begin
-     inherited Create( TCLContex( Contex_ ).Librars );
+     inherited Create( TCLContex<TCLSystem_,TCLPlatfo_>( Contex_ ).Librars );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>
@@ -667,7 +669,7 @@ end;
 
 constructor TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_ );
 begin
-     inherited Create( TCLContex( Contex_ ).Executs );
+     inherited Create( TCLContex<TCLSystem_,TCLPlatfo_>( Contex_ ).Executs );
 end;
 
 destructor TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>.Destroy;
