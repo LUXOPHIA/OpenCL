@@ -14,7 +14,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLProgras   <TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgra_ :class> = class;
        TCLProgra  <TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_:class> = class;
-         TCLSource<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_:class> = class;
+         TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_:class> = class;
 
      TCLLibrars <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
        TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
@@ -97,9 +97,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Buildrs[ const Device_:TCLDevice_ ] :TCLBuildr_ read GetBuildrs; default;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSource<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>
 
-     TCLSource<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_:class> = class( TStringList )
+     TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_:class> = class( TStringList )
      private
        type TCLProgra_ = TCLProgra<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_>;
      protected
@@ -120,7 +120,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLProgra<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_:class> = class( TListChildr<TCLContex_,TCLProgras_> )
      private
-       type TCLSource_ = TCLSource <TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_>;
+       type TCLSource_ = TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>;
        ///// メソッド
        function GetInfo<_TYPE_>( const Name_:T_cl_program_info ) :_TYPE_;
        function GetInfoSize( const Name_:T_cl_program_info ) :T_size_t;
@@ -474,7 +474,7 @@ begin
      inherited;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSource<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -482,7 +482,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLSource<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_>.Changed;
+procedure TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.Changed;
 begin
      inherited;
 
@@ -491,13 +491,13 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLSource<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_>.Create;
+constructor TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.Create;
 begin
      inherited;
 
 end;
 
-constructor TCLSource<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_>.Create( const Progra_:TCLProgra_ );
+constructor TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.Create( const Progra_:TCLProgra_ );
 begin
      Create;
 
@@ -506,14 +506,14 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLSource<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_>.LoadFromFile( const FileName_:String );
+procedure TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.LoadFromFile( const FileName_:String );
 begin
      inherited;
 
      Progra.Name := TPath.GetFileName( FileName_ );
 end;
 
-procedure TCLSource<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_>.LoadFromFile( const FileName_:String; Encoding_:TEncoding );
+procedure TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.LoadFromFile( const FileName_:String; Encoding_:TEncoding );
 begin
      inherited;
 
