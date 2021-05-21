@@ -24,7 +24,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLSeeder3D<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLImager3D<TCLSystem_,TCLContex_,TCLPlatfo_,TUInt32xRGBA> )
      private
        type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
-            TCLExecut_ = TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>;
+            TCLExecut_ = TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLKernel_ = TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
      protected
        _Execut  :TCLExecut_;

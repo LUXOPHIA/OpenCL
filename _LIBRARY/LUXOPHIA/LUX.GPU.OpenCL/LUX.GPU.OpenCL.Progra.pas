@@ -19,8 +19,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLLibrars <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
        TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
-     TCLExecuts     <TCLSystem_,TCLContex_,TCLPlatfo_:class> = class;
-       TCLExecut    <TCLSystem_,TCLContex_,TCLPlatfo_:class> = class;
+     TCLExecuts     <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+       TCLExecut    <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
          TCLBuildrs <TCLSystem_,TCLContex_,TCLPlatfo_:class> = class;
            TCLBuildr<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class;
 
@@ -30,13 +30,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuildr<TCLSystem_,TCLContex_,TCLPlatfo_>
 
-     TCLBuildr<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLExecut <TCLSystem_,TCLContex_,TCLPlatfo_>,
+     TCLBuildr<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLExecut <TCLSystem_,TCLPlatfo_,TCLContex_>,
                                                                             TCLBuildrs<TCLSystem_,TCLContex_,TCLPlatfo_>> )
      private
        type TCLDevice_  = TCLDevice <TCLSystem_,TCLPlatfo_>;
             TCLLibrars_ = TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLLibrar_  = TCLLibrar <TCLSystem_,TCLPlatfo_,TCLContex_>;
-            TCLExecut_  = TCLExecut <TCLSystem_,TCLContex_,TCLPlatfo_>;
+            TCLExecut_  = TCLExecut <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuildrs_ = TCLBuildrs<TCLSystem_,TCLContex_,TCLPlatfo_>;
        ///// メソッド
        function GetInfo<_TYPE_>( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :_TYPE_;
@@ -75,11 +75,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuildrs<TCLSystem_,TCLContex_,TCLPlatfo_>
 
-     TCLBuildrs<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>,
+     TCLBuildrs<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>,
                                                                              TCLBuildr<TCLSystem_,TCLContex_,TCLPlatfo_>> )
      private
        type TCLDevice_ = TCLDevice<TCLSystem_,TCLPlatfo_>;
-            TCLExecut_ = TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>;
+            TCLExecut_ = TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuildr_ = TCLBuildr<TCLSystem_,TCLContex_,TCLPlatfo_>;
             TCLDevDeps = TDictionary<TCLDevice_,TCLBuildr_>;
      protected
@@ -194,12 +194,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLProgra<TCLSystem_,TCLContex_,TCLPlatfo_,TCLExecuts<TCLSystem_,TCLContex_,TCLPlatfo_>> )
+     TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLProgra<TCLSystem_,TCLContex_,TCLPlatfo_,TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
        type TCLDevice_  = TCLDevice <TCLSystem_,TCLPlatfo_>;
-            TCLExecut_  = TCLExecut <TCLSystem_,TCLContex_,TCLPlatfo_>;
+            TCLExecut_  = TCLExecut <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuildrs_ = TCLBuildrs<TCLSystem_,TCLContex_,TCLPlatfo_>;
             TCLBuildr_  = TCLBuildr <TCLSystem_,TCLContex_,TCLPlatfo_>;
             TCLKernels_ = TCLKernels<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
@@ -240,11 +240,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function Add :TCLLibrar_; overload;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExecuts<TCLSystem_,TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLExecuts<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLProgras<TCLSystem_,TCLContex_,TCLPlatfo_,TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>> )
+     TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLProgras<TCLSystem_,TCLContex_,TCLPlatfo_,TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
-       type TCLExecut_ = TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>;
+       type TCLExecut_ = TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
      public
        ///// メソッド
@@ -642,7 +642,7 @@ begin
      inherited Create( TCLContex<TCLSystem_,TCLPlatfo_>( Contex_ ).Librars );
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -650,7 +650,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>.DestroHandle :T_cl_int;
+function TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
      _Buildrs.Clear;
 
@@ -659,7 +659,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>.Create;
+constructor TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.Create;
 begin
      inherited;
 
@@ -667,12 +667,12 @@ begin
      _Kernels := TCLKernels_.Create( Self );
 end;
 
-constructor TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_ );
+constructor TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Contex_:TCLContex_ );
 begin
      inherited Create( TCLContex<TCLSystem_,TCLPlatfo_>( Contex_ ).Executs );
 end;
 
-destructor TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>.Destroy;
+destructor TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
      _Kernels.Free;
      _Buildrs.Free;
@@ -682,7 +682,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>.BuildTo( const Device_:TCLDevice_ ) :TCLBuildr_;
+function TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.BuildTo( const Device_:TCLDevice_ ) :TCLBuildr_;
 begin
      Result := Buildrs[ Device_ ];
 end;
@@ -710,7 +710,7 @@ begin
      Result := TCLLibrar_.Create( Contex );
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExecuts<TCLSystem_,TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -720,7 +720,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLExecuts<TCLSystem_,TCLContex_,TCLPlatfo_>.Add :TCLExecut_;
+function TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>.Add :TCLExecut_;
 begin
      Result := TCLExecut_.Create( Contex );
 end;

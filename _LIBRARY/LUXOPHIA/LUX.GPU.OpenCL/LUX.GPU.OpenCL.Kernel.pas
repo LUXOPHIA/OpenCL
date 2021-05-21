@@ -706,7 +706,7 @@ function TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>.CreateHandle :T_
 var
    B :TCLBuildr<TCLSystem_,TCLContex_,TCLPlatfo_>;
 begin
-     B := TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>( Execut ).Buildrs[ Queuer.Device ];
+     B := TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>( Execut ).Buildrs[ Queuer.Device ];
 
      _Handle := clCreateKernel( B.Handle, P_char( AnsiString( _Name ) ), @Result );
 end;
@@ -737,7 +737,7 @@ end;
 
 constructor TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>.Create( const Execut_:TCLExecut_ );
 begin
-     inherited Create( TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>( Execut_ ).Kernels );
+     inherited Create( TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>( Execut_ ).Kernels );
 end;
 
 constructor TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>.Create( const Execut_:TCLExecut_; const Name_:String );
