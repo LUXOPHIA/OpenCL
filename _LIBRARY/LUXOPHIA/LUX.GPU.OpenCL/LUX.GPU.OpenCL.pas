@@ -30,7 +30,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLSystem                     = class;
        TCLPlatfos                  = TCLPlatfos<TCLSystem>;
          TCLPlatfo                 = TCLPlatfo <TCLSystem>;
-           TCLExtenss              = TCLExtenss<TCLPlatfo>;
+           TCLExtenss              = TCLExtenss<TCLSystem,TCLPlatfo>;
            TCLDevices              = TCLDevices<TCLSystem,TCLPlatfo>;
              TCLDevice             = TCLDevice <TCLSystem,TCLPlatfo>;
            TCLContexs              = TCLContexs<TCLSystem,TCLPlatfo>;
