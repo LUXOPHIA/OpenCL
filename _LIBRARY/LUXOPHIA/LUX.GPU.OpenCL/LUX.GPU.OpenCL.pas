@@ -57,9 +57,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLBufferIter<TValue_:record> = class( TCLBufferIter<TCLSystem,TCLContex,TCLPlatfo,TValue_> );
 
-     TCLSeeder1D = TCLSeeder1D<TCLSystem,TCLContex,TCLPlatfo>;
-     TCLSeeder2D = TCLSeeder2D<TCLSystem,TCLContex,TCLPlatfo>;
-     TCLSeeder3D = TCLSeeder3D<TCLSystem,TCLContex,TCLPlatfo>;
+     TCLSeeder1D = TCLSeeder1D<TCLSystem,TCLPlatfo,TCLContex>;
+     TCLSeeder2D = TCLSeeder2D<TCLSystem,TCLPlatfo,TCLContex>;
+     TCLSeeder3D = TCLSeeder3D<TCLSystem,TCLPlatfo,TCLContex>;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
