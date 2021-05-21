@@ -49,8 +49,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                      TCLBuildr     = TCLBuildr <TCLSystem,TCLPlatfo,TCLContex>;
                    TCLKernels      = TCLKernels<TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
                      TCLKernel     = TCLKernel <TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
-                       TCLParames  = TCLParames<TCLSystem,TCLExecut,TCLContex,TCLPlatfo>;
-                         TCLParame = TCLParame <TCLSystem,TCLExecut,TCLContex,TCLPlatfo>;
+                       TCLParames  = TCLParames<TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
+                         TCLParame = TCLParame <TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
 
      TCLDevBuf<TValue_:record> = class( TCLDevBuf<TCLSystem,TCLContex,TCLPlatfo,TValue_> );
      TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLSystem,TCLContex,TCLPlatfo,TValue_> );
