@@ -704,7 +704,7 @@ end;
 
 function TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>.CreateHandle :T_cl_int;
 var
-   B :TCLBuildr<TCLSystem_,TCLContex_,TCLPlatfo_>;
+   B :TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>;
 begin
      B := TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>( Execut ).Buildrs[ Queuer.Device ];
 
