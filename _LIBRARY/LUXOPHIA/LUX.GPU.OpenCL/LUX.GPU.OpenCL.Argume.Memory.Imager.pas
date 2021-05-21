@@ -21,7 +21,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLImager<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemory<TCLSystem_,TCLContex_,TCLPlatfo_> )
+     TCLImager<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
        type TCLStorag_ = TCLImagerIter<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>;
      protected
@@ -60,7 +60,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLImagerIter<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemoryIter<TCLSystem_,TCLContex_,TCLPlatfo_> )
+     TCLImagerIter<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
        type TCLImager_ = TCLImager<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>;
             PValue_    = ^TValue_;

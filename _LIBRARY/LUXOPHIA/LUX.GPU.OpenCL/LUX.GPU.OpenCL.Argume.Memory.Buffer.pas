@@ -23,7 +23,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemory<TCLSystem_,TCLContex_,TCLPlatfo_> )
+     TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
        type TCLStorag_ = TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>;
      protected
@@ -70,7 +70,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemoryIter<TCLSystem_,TCLContex_,TCLPlatfo_> )
+     TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
        type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuffer_ = TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>;

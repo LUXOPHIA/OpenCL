@@ -40,7 +40,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                TCLArgumes          = TCLArgumes<TCLSystem,TCLPlatfo,TCLContex>;
                  TCLArgume         = TCLArgume <TCLSystem,TCLPlatfo,TCLContex>;
                  TCLSamplr         = TCLSamplr <TCLSystem,TCLPlatfo,TCLContex>;
-                 TCLMemory         = TCLMemory <TCLSystem,TCLContex,TCLPlatfo>;
+                 TCLMemory         = TCLMemory <TCLSystem,TCLPlatfo,TCLContex>;
                TCLLibrars          = TCLLibrars<TCLSystem,TCLContex,TCLPlatfo>;
                  TCLLibrar         = TCLLibrar <TCLSystem,TCLContex,TCLPlatfo>;
                TCLExecuts          = TCLExecuts<TCLSystem,TCLContex,TCLPlatfo>;
