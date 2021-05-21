@@ -48,7 +48,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
+uses LUX.GPU.OpenCL.Contex;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -101,11 +101,11 @@ begin
      Ps[ 5 ] := CL_FILTER_LINEAR;
      Ps[ 6 ] := 0;
 
-     _Handle := clCreateSamplerWithProperties( TCLContex( Contex ).Handle,
+     _Handle := clCreateSamplerWithProperties( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle,
                                                @Ps[ 0 ],
                                                @Result );
      {$ELSE}
-     _Handle := clCreateSampler              ( TCLContex( Contex ).Handle,
+     _Handle := clCreateSampler              ( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle,
                                                CL_TRUE,
                                                CL_ADDRESS_CLAMP,
                                                CL_FILTER_LINEAR,

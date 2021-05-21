@@ -86,7 +86,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
+uses LUX.GPU.OpenCL.Contex;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -198,7 +198,7 @@ begin
      F := Format;
      D := Descri;
 
-     _Handle := clCreateImage( TCLContex( Contex ).Handle, Kind, @F, @D, nil, @Result );
+     _Handle := clCreateImage( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle, Kind, @F, @D, nil, @Result );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public

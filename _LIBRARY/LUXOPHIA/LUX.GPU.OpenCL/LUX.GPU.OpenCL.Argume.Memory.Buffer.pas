@@ -96,7 +96,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
+uses LUX.GPU.OpenCL.Contex;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -174,7 +174,7 @@ end;
 
 function TCLDevBuf<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
 begin
-     _Handle := clCreateBuffer( TCLContex( Contex ).Handle, Kind, Size, nil, @Result );
+     _Handle := clCreateBuffer( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle, Kind, Size, nil, @Result );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -200,7 +200,7 @@ begin
 
      GetMemAligned( _Data, Ceil2N( Size, 64{Byte} ), 4096{Byte} );
 
-     _Handle := clCreateBuffer( TCLContex( Contex ).Handle, Kind, Size, _Data, @Result );
+     _Handle := clCreateBuffer( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle, Kind, Size, _Data, @Result );
 end;
 
 function TCLHosBuf<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.DestroHandle :T_cl_int;
