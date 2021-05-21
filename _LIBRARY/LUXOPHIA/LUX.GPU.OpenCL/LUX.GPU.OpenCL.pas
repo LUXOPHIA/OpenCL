@@ -41,8 +41,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                  TCLArgume         = TCLArgume <TCLSystem,TCLPlatfo,TCLContex>;
                  TCLSamplr         = TCLSamplr <TCLSystem,TCLPlatfo,TCLContex>;
                  TCLMemory         = TCLMemory <TCLSystem,TCLPlatfo,TCLContex>;
-               TCLLibrars          = TCLLibrars<TCLSystem,TCLContex,TCLPlatfo>;
-                 TCLLibrar         = TCLLibrar <TCLSystem,TCLContex,TCLPlatfo>;
+               TCLLibrars          = TCLLibrars<TCLSystem,TCLPlatfo,TCLContex>;
+                 TCLLibrar         = TCLLibrar <TCLSystem,TCLPlatfo,TCLContex>;
                TCLExecuts          = TCLExecuts<TCLSystem,TCLContex,TCLPlatfo>;
                  TCLExecut         = TCLExecut <TCLSystem,TCLContex,TCLPlatfo>;
                    TCLBuildrs      = TCLBuildrs<TCLSystem,TCLContex,TCLPlatfo>;

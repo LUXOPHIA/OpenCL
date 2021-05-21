@@ -16,8 +16,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        TCLProgra  <TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_:class> = class;
          TCLSource<TCLSystem_,TCLContex_,TCLPlatfo_,TCLProgras_:class> = class;
 
-     TCLLibrars <TCLSystem_,TCLContex_,TCLPlatfo_:class> = class;
-       TCLLibrar<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class;
+     TCLLibrars <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+       TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
      TCLExecuts     <TCLSystem_,TCLContex_,TCLPlatfo_:class> = class;
        TCLExecut    <TCLSystem_,TCLContex_,TCLPlatfo_:class> = class;
@@ -34,8 +34,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                                                                             TCLBuildrs<TCLSystem_,TCLContex_,TCLPlatfo_>> )
      private
        type TCLDevice_  = TCLDevice <TCLSystem_,TCLPlatfo_>;
-            TCLLibrars_ = TCLLibrars<TCLSystem_,TCLContex_,TCLPlatfo_>;
-            TCLLibrar_  = TCLLibrar <TCLSystem_,TCLContex_,TCLPlatfo_>;
+            TCLLibrars_ = TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLLibrar_  = TCLLibrar <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLExecut_  = TCLExecut <TCLSystem_,TCLContex_,TCLPlatfo_>;
             TCLBuildrs_ = TCLBuildrs<TCLSystem_,TCLContex_,TCLPlatfo_>;
        ///// メソッド
@@ -185,9 +185,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        {$ENDIF}
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLLibrar<TCLSystem_,TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLLibrar<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLProgra<TCLSystem_,TCLContex_,TCLPlatfo_,TCLLibrars<TCLSystem_,TCLContex_,TCLPlatfo_>> )
+     TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLProgra<TCLSystem_,TCLContex_,TCLPlatfo_,TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
      protected
      public
@@ -229,11 +229,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Contex :TCLContex_ read GetOwnere;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLLibrars<TCLSystem_,TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLLibrars<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLProgras<TCLSystem_,TCLContex_,TCLPlatfo_,TCLLibrar<TCLSystem_,TCLContex_,TCLPlatfo_>> )
+     TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLProgras<TCLSystem_,TCLContex_,TCLPlatfo_,TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
-       type TCLLibrar_ = TCLLibrar<TCLSystem_,TCLContex_,TCLPlatfo_>;
+       type TCLLibrar_ = TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
      public
        ///// メソッド
@@ -629,7 +629,7 @@ begin
      inherited;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLLibrar<TCLSystem_,TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -637,7 +637,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLLibrar<TCLSystem_,TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_ );
+constructor TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Contex_:TCLContex_ );
 begin
      inherited Create( TCLContex<TCLSystem_,TCLPlatfo_>( Contex_ ).Librars );
 end;
@@ -695,7 +695,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLLibrars<TCLSystem_,TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -705,7 +705,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLLibrars<TCLSystem_,TCLContex_,TCLPlatfo_>.Add :TCLLibrar_;
+function TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>.Add :TCLLibrar_;
 begin
      Result := TCLLibrar_.Create( Contex );
 end;
