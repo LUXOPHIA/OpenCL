@@ -37,7 +37,7 @@ type
     { private 宣言 }
     _AreaC :TDoubleAreaC;
     ///// メソッド
-    procedure ShowBuildr;
+    procedure ShowBuild;
   public
     { public 宣言 }
     _Platfo :TCLPlatfo;
@@ -53,9 +53,9 @@ type
     _Buildr :TCLBuildr;
     _Kernel :TCLKernel;
     ///// メソッド
-    procedure MakeContex;
-    procedure MakeArgumes;
-    procedure MakeProgras;
+    procedure MakeContext;
+    procedure MakeArguments;
+    procedure MakePrograms;
   end;
 
 var
@@ -71,7 +71,7 @@ uses System.Math;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TForm1.ShowBuildr;
+procedure TForm1.ShowBuild;
 begin
      with MemoPB.Lines do
      begin
@@ -98,7 +98,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TForm1.MakeContex;
+procedure TForm1.MakeContext;
 begin
      ////////// プラットフォーム
 
@@ -122,7 +122,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure TForm1.MakeArgumes;
+procedure TForm1.MakeArguments;
 begin
      ////////// バッファー
 
@@ -167,7 +167,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure TForm1.MakeProgras;
+procedure TForm1.MakePrograms;
 begin
      ////////// ライブラリ
 
@@ -212,18 +212,18 @@ begin
           if _Kernel.Parames.BindsOK then Timer1.Enabled := True                // 描画開始
                                      else TabControl1.ActiveTab := TabItemS;    // 引数のバインドエラー
      end
-     else ShowBuildr; { _Buildr is Error! }                                     // ビルド情報の表示
+     else ShowBuild; { _Buildr is Error! }                                      // ビルド情報の表示
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-     MakeContex;                                                                // コンテキストの生成
+     MakeContext;                                                               // コンテキストの生成
 
-     MakeArgumes;                                                               // 実引数の生成
+     MakeArguments;                                                             // 実引数の生成
 
-     MakeProgras;                                                               // プログラムの生成
+     MakePrograms;                                                              // プログラムの生成
 
      TOpenCL.Show( MemoS.Lines );                                               // システム情報の表示
 end;
