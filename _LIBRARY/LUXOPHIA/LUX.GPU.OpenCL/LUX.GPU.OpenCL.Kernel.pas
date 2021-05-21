@@ -231,7 +231,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 implementation //############################################################### ■
 
 uses System.SysUtils,
-     LUX.GPU.OpenCL;
+     LUX.GPU.OpenCL.Progra;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -704,9 +704,9 @@ end;
 
 function TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>.CreateHandle :T_cl_int;
 var
-   B :TCLBuildr;
+   B :TCLBuildr<TCLSystem_,TCLContex_,TCLPlatfo_>;
 begin
-     B := TCLExecut( Execut ).Buildrs[ TCLQueuer( Queuer ).Device ];
+     B := TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>( Execut ).Buildrs[ Queuer.Device ];
 
      _Handle := clCreateKernel( B.Handle, P_char( AnsiString( _Name ) ), @Result );
 end;
@@ -737,7 +737,7 @@ end;
 
 constructor TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>.Create( const Execut_:TCLExecut_ );
 begin
-     inherited Create( TCLExecut( Execut_ ).Kernels );
+     inherited Create( TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>( Execut_ ).Kernels );
 end;
 
 constructor TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>.Create( const Execut_:TCLExecut_; const Name_:String );
