@@ -13,24 +13,24 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLContexs <TCLPlatfo_:class> = class;
-       TCLContex<TCLPlatfo_:class> = class;
+     TCLContexs <TCLSystem_,TCLPlatfo_:class> = class;
+       TCLContex<TCLSystem_,TCLPlatfo_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContex<TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContex<TCLSystem_,TCLPlatfo_>
 
-     TCLContex<TCLPlatfo_:class> = class( TListChildr<TCLPlatfo_,TCLContexs<TCLPlatfo_>> )
+     TCLContex<TCLSystem_,TCLPlatfo_:class> = class( TListChildr<TCLPlatfo_,TCLContexs<TCLSystem_,TCLPlatfo_>> )
      private
-       type TCLDevice_  = TCLDevice <TCLPlatfo_>;
-            TCLContexs_ = TCLContexs<TCLPlatfo_>;
-            TCLContex_  = TCLContex <TCLPlatfo_>;
-            TCLQueuers_ = TCLQueuers<TCLContex_,TCLPlatfo_>;
-            TCLArgumes_ = TCLArgumes<TCLContex_,TCLPlatfo_>;
-            TCLLibrars_ = TCLLibrars<TCLContex_,TCLPlatfo_>;
-            TCLExecuts_ = TCLExecuts<TCLContex_,TCLPlatfo_>;
+       type TCLDevice_  = TCLDevice <TCLSystem_,TCLPlatfo_>;
+            TCLContexs_ = TCLContexs<TCLSystem_,TCLPlatfo_>;
+            TCLContex_  = TCLContex <TCLSystem_,TCLPlatfo_>;
+            TCLQueuers_ = TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLArgumes_ = TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLLibrars_ = TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLExecuts_ = TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
        _Queuers :TCLQueuers_;
        _Handle  :T_cl_context;
@@ -57,11 +57,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Executs :TCLExecuts_  read   _Executs                ;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLSystem_,TCLPlatfo_>
 
-     TCLContexs<TCLPlatfo_:class> = class( TListParent<TCLPlatfo_,TCLContex<TCLPlatfo_>> )
+     TCLContexs<TCLSystem_,TCLPlatfo_:class> = class( TListParent<TCLPlatfo_,TCLContex<TCLSystem_,TCLPlatfo_>> )
      private
-       type TCLContex_ = TCLContex<TCLPlatfo_>;
+       type TCLContex_ = TCLContex<TCLSystem_,TCLPlatfo_>;
      protected
      public
        ///// プロパティ
@@ -78,13 +78,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
+uses LUX.GPU.OpenCL.Platfo;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContex<TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContex<TCLSystem_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -92,14 +92,14 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLContex<TCLPlatfo_>.GetHandle :T_cl_context;
+function TCLContex<TCLSystem_,TCLPlatfo_>.GetHandle :T_cl_context;
 begin
      if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-procedure TCLContex<TCLPlatfo_>.SetHandle( const Handle_:T_cl_context );
+procedure TCLContex<TCLSystem_,TCLPlatfo_>.SetHandle( const Handle_:T_cl_context );
 begin
      if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLContex.DestroHandle is Error!' );
 
@@ -108,13 +108,13 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLContex<TCLPlatfo_>.CreateHandle :T_cl_int;
+function TCLContex<TCLSystem_,TCLPlatfo_>.CreateHandle :T_cl_int;
 var
    Ps :array [ 0..2 ] of T_cl_context_properties;
    Ds :TArray<T_cl_device_id>;
 begin
      Ps[ 0 ] := CL_CONTEXT_PLATFORM;
-     Ps[ 1 ] := T_cl_context_properties( TCLPlatfo( Platfo ).Handle );
+     Ps[ 1 ] := T_cl_context_properties( TCLPlatfo<TCLSystem_>( Platfo ).Handle );
      Ps[ 2 ] := 0;
 
      Ds := Queuers.GetDeviceIDs;
@@ -125,7 +125,7 @@ begin
                                  @Result );
 end;
 
-function TCLContex<TCLPlatfo_>.DestroHandle :T_cl_int;
+function TCLContex<TCLSystem_,TCLPlatfo_>.DestroHandle :T_cl_int;
 begin
      Result := clReleaseContext( _Handle );
 
@@ -134,7 +134,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLContex<TCLPlatfo_>.Create;
+constructor TCLContex<TCLSystem_,TCLPlatfo_>.Create;
 begin
      inherited;
 
@@ -146,12 +146,12 @@ begin
      _Executs := TCLExecuts_.Create( Self );
 end;
 
-constructor TCLContex<TCLPlatfo_>.Create( const Platfo_:TCLPlatfo_ );
+constructor TCLContex<TCLSystem_,TCLPlatfo_>.Create( const Platfo_:TCLPlatfo_ );
 begin
-     inherited Create( TCLPlatfo( Platfo_ ).Contexs );
+     inherited Create( TCLPlatfo<TCLSystem_>( Platfo_ ).Contexs );
 end;
 
-destructor TCLContex<TCLPlatfo_>.Destroy;
+destructor TCLContex<TCLSystem_,TCLPlatfo_>.Destroy;
 begin
      _Executs.Free;
      _Librars.Free;
@@ -163,7 +163,7 @@ begin
      inherited;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLSystem_,TCLPlatfo_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -173,7 +173,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLContexs<TCLPlatfo_>.Add :TCLContex_;
+function TCLContexs<TCLSystem_,TCLPlatfo_>.Add :TCLContex_;
 begin
      Result := TCLContex_.Create( Platfo );
 end;

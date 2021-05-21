@@ -10,19 +10,19 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLImager3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
 
-     TCLImagerIter3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLImagerIter3D<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
-     TCLImager3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager2D<TCLContex_,TCLPlatfo_,TValue_> )
+     TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_> )
      private
-       type TCLStorag_ = TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>;
+       type TCLStorag_ = TCLImagerIter3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
      protected
        _CountZ :Integer;
        ///// アクセス
@@ -40,11 +40,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property CountZ :Integer    read GetCountZ write SetCountZ;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
-     TCLImagerIter3D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_> )
+     TCLImagerIter3D<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLImagerIter2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_> )
      private
-       type TCLImager_ = TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>;
+       type TCLImager_ = TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
             PValue_    = ^TValue_;
      protected
        ///// アクセス
@@ -67,13 +67,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
-
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -81,31 +79,31 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.GetStorag :TCLStorag_;
+function TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetStorag :TCLStorag_;
 begin
      Result := TCLStorag_( inherited Storag );
 end;
 
-procedure TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
+procedure TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
 begin
      inherited Storag := Storag_;
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.GetMemTyp :T_cl_mem_object_type;
+function TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetMemTyp :T_cl_mem_object_type;
 begin
      Result := CL_MEM_OBJECT_IMAGE3D;
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.GetCountZ :Integer;
+function TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetCountZ :Integer;
 begin
      Result := _CountZ;
 end;
 
-procedure TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.SetCountZ( const CountZ_:Integer );
+procedure TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetCountZ( const CountZ_:Integer );
 begin
      inherited;
 
@@ -114,21 +112,21 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.NewStorag :TObject;
+function TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewStorag :TObject;
 begin
      Result := TCLStorag_.Create( Self );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLImager3D<TCLContex_,TCLPlatfo_,TValue_>.Create;
+constructor TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.Create;
 begin
      inherited;
 
      _CountZ := 1;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -136,26 +134,26 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>.GetImager :TCLImager_;
+function TCLImagerIter3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetImager :TCLImager_;
 begin
      Result := TCLImager_( Imager );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>.GetValueP( const X_,Y_,Z_:Integer ) :PByte;
+function TCLImagerIter3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValueP( const X_,Y_,Z_:Integer ) :PByte;
 begin
      Result := inherited GetValueP( X_, Y_ );
 
      Inc( Result, _PitchZ * Z_ );
 end;
 
-function TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>.GetValues( const X_,Y_,Z_:Integer ) :TValue_;
+function TCLImagerIter3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValues( const X_,Y_,Z_:Integer ) :TValue_;
 begin
      Result := PValue_( ValueP[ X_, Y_, Z_ ] )^;
 end;
 
-procedure TCLImagerIter3D<TCLContex_,TCLPlatfo_,TValue_>.SetValues( const X_,Y_,Z_:Integer; const Values_:TValue_ );
+procedure TCLImagerIter3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetValues( const X_,Y_,Z_:Integer; const Values_:TValue_ );
 begin
      PValue_( ValueP[ X_, Y_, Z_ ] )^ := Values_;
 end;

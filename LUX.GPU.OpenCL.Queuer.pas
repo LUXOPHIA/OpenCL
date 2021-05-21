@@ -10,19 +10,19 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLQueuers <TCLContex_,TCLPlatfo_:class> = class;
-       TCLQueuer<TCLContex_,TCLPlatfo_:class> = class;
+     TCLQueuers <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+       TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuer<TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLQueuer<TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLContex_,TCLQueuers<TCLContex_,TCLPlatfo_>> )
+     TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TListChildr<TCLContex_,TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
-       type TCLDevice_  = TCLDevice <TCLPlatfo_>;
-            TCLQueuers_ = TCLQueuers<TCLContex_,TCLPlatfo_>;
+       type TCLDevice_  = TCLDevice <TCLSystem_,TCLPlatfo_>;
+            TCLQueuers_ = TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
        _Device :TCLDevice_;
        _Handle :T_cl_command_queue;
@@ -43,12 +43,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Handle  :T_cl_command_queue read GetHandle write SetHandle;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuers<TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLQueuers<TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLContex_,TCLQueuer<TCLContex_,TCLPlatfo_>> )
+     TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TListParent<TCLContex_,TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
-       type TCLDevice_ = TCLDevice<TCLPlatfo_>;
-            TCLQueuer_ = TCLQueuer<TCLContex_,TCLPlatfo_>;
+       type TCLDevice_ = TCLDevice<TCLSystem_,TCLPlatfo_>;
+            TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
      public
        ///// プロパティ
@@ -66,13 +66,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
+uses LUX.GPU.OpenCL.Contex;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuer<TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -80,14 +80,14 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLQueuer<TCLContex_,TCLPlatfo_>.GetHandle :T_cl_command_queue;
+function TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :T_cl_command_queue;
 begin
      if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-procedure TCLQueuer<TCLContex_,TCLPlatfo_>.SetHandle( const Handle_:T_cl_command_queue );
+procedure TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T_cl_command_queue );
 begin
      if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLQueuer.DestroHandle is Error!' );
 
@@ -96,22 +96,22 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLQueuer<TCLContex_,TCLPlatfo_>.CreateHandle :T_cl_int;
+function TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.CreateHandle :T_cl_int;
 begin
      {$IF CL_VERSION_2_0 <> 0 }
-     _Handle := clCreateCommandQueueWithProperties( TCLContex( Contex ).Handle,
-                                                    TCLDevice( Device ).Handle,
+     _Handle := clCreateCommandQueueWithProperties( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle,
+                                                    Device.Handle,
                                                     nil,
                                                     @Result );
      {$ELSE}
-     _Handle := clCreateCommandQueue              ( TCLContex( Contex ).Handle,
-                                                    TCLDevice( Device ).Handle,
+     _Handle := clCreateCommandQueue              ( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle,
+                                                    Device.Handle,
                                                     nil,
                                                     @Result );
      {$ENDIF}
 end;
 
-function TCLQueuer<TCLContex_,TCLPlatfo_>.DestroHandle :T_cl_int;
+function TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
      Result := clReleaseCommandQueue( _Handle );
 
@@ -120,30 +120,30 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLQueuer<TCLContex_,TCLPlatfo_>.Create;
+constructor TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.Create;
 begin
      inherited;
 
      _Handle := nil;
 end;
 
-constructor TCLQueuer<TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_; const Device_:TCLDevice_ );
+constructor TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Contex_:TCLContex_; const Device_:TCLDevice_ );
 begin
-     inherited Create( TCLContex( Contex_ ).Queuers );
+     inherited Create( TCLContex<TCLSystem_,TCLPlatfo_>( Contex_ ).Queuers );
 
      _Device := Device_;
 end;
 
-destructor TCLQueuer<TCLContex_,TCLPlatfo_>.Destroy;
+destructor TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
       Handle := nil;
 
-     TCLContex( Contex ).Handle := nil;
+     TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle := nil;
 
      inherited;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuers<TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -153,14 +153,14 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLQueuers<TCLContex_,TCLPlatfo_>.Add( const Device_:TCLDevice_ ) :TCLQueuer_;
+function TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.Add( const Device_:TCLDevice_ ) :TCLQueuer_;
 begin
      Result := TCLQueuer_.Create( Contex, Device_ );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLQueuers<TCLContex_,TCLPlatfo_>.GetDeviceIDs :TArray<T_cl_device_id>;
+function TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.GetDeviceIDs :TArray<T_cl_device_id>;
 var
    I :Integer;
 begin

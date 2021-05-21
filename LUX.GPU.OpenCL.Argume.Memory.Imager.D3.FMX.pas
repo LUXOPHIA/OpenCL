@@ -10,19 +10,19 @@ uses System.UITypes,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLImager3DFMX<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLImager3DFMX<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
 
-     TCLImager3DxBGRAxUInt8 <TCLContex_,TCLPlatfo_:class> = class;
-     TCLImager3DxBGRAxUFix8 <TCLContex_,TCLPlatfo_:class> = class;
-     TCLImager3DxRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class;
+     TCLImager3DxBGRAxUInt8 <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+     TCLImager3DxBGRAxUFix8 <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+     TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DFMX<TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
-     TCLImager3DFMX<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager3D<TCLContex_,TCLPlatfo_,TValue_> )
+     TCLImager3DFMX<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_> )
      private
      protected
      public
@@ -33,9 +33,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure LoadFromFile( const Z_:Integer; const FileName_:String ); virtual;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DxBGRAxUInt8<TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLImager3DxBGRAxUInt8<TCLContex_,TCLPlatfo_:class> = class( TCLImager3DFMX<TCLContex_,TCLPlatfo_,TByteRGBA> )
+     TCLImager3DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager3DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TByteRGBA> )
      private
      protected
        ///// アクセス
@@ -47,9 +47,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DxBGRAxUFix8<TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLImager3DxBGRAxUFix8<TCLContex_,TCLPlatfo_:class> = class( TCLImager3DFMX<TCLContex_,TCLPlatfo_,TByteRGBA> )
+     TCLImager3DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager3DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TByteRGBA> )
      private
      protected
        ///// アクセス
@@ -61,9 +61,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLImager3DxRGBAxSFlo32<TCLContex_,TCLPlatfo_:class> = class( TCLImager3DFMX<TCLContex_,TCLPlatfo_,TSingleRGBA> )
+     TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager3DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TSingleRGBA> )
      private
      protected
        ///// アクセス
@@ -83,14 +83,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses System.Threading,
-     LUX.GPU.OpenCL;
+uses System.Threading;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DFMX<TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -100,7 +99,7 @@ uses System.Threading,
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLImager3DFMX<TCLContex_,TCLPlatfo_,TValue_>.SaveToFile( const Z_:Integer; const FileName_:String );
+procedure TCLImager3DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SaveToFile( const Z_:Integer; const FileName_:String );
 var
    B :TBitmap;
 begin
@@ -113,7 +112,7 @@ begin
      B.Free;
 end;
 
-procedure TCLImager3DFMX<TCLContex_,TCLPlatfo_,TValue_>.LoadFromFile( const Z_:Integer; const FileName_:String );
+procedure TCLImager3DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.LoadFromFile( const Z_:Integer; const FileName_:String );
 var
    B :TBitmap;
 begin
@@ -126,7 +125,7 @@ begin
      B.Free;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DxBGRAxUInt8<TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -134,12 +133,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager3DxBGRAxUInt8<TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
+function TCLImager3DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
 begin
      Result := CL_BGRA;
 end;
 
-function TCLImager3DxBGRAxUInt8<TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
+function TCLImager3DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
 begin
      Result := CL_UNSIGNED_INT8;
 end;
@@ -148,7 +147,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLImager3DxBGRAxUInt8<TCLContex_,TCLPlatfo_>.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
+procedure TCLImager3DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -170,7 +169,7 @@ begin
      Storag.Unmap;
 end;
 
-procedure TCLImager3DxBGRAxUInt8<TCLContex_,TCLPlatfo_>.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
+procedure TCLImager3DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -193,7 +192,7 @@ begin
      Bitmap_.Unmap( B );
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DxBGRAxUFix8<TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -201,12 +200,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager3DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
+function TCLImager3DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
 begin
      Result := CL_BGRA;
 end;
 
-function TCLImager3DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
+function TCLImager3DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
 begin
      Result := CL_UNORM_INT8;
 end;
@@ -215,7 +214,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLImager3DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
+procedure TCLImager3DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -237,7 +236,7 @@ begin
      Storag.Unmap;
 end;
 
-procedure TCLImager3DxBGRAxUFix8<TCLContex_,TCLPlatfo_>.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
+procedure TCLImager3DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -260,7 +259,7 @@ begin
      Bitmap_.Unmap( B );
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -268,12 +267,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager3DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
+function TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
 begin
      Result := CL_RGBA;
 end;
 
-function TCLImager3DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
+function TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
 begin
      Result := CL_FLOAT;
 end;
@@ -282,7 +281,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLImager3DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
+procedure TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -307,7 +306,7 @@ begin
      Storag.Unmap;
 end;
 
-procedure TCLImager3DxRGBAxSFlo32<TCLContex_,TCLPlatfo_>.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
+procedure TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin

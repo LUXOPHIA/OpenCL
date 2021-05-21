@@ -31,35 +31,32 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        TCLPlatfos                  = TCLPlatfos<TCLSystem>;
          TCLPlatfo                 = TCLPlatfo <TCLSystem>;
            TCLExtenss              = TCLExtenss<TCLPlatfo>;
-           TCLDevices              = TCLDevices<TCLPlatfo>;
-             TCLDevice             = TCLDevice <TCLPlatfo>;
-           TCLContexs              = TCLContexs<TCLPlatfo>;
-             TCLContex             = TCLContex <TCLPlatfo>;
-               TCLQueuers          = TCLQueuers<TCLContex,TCLPlatfo>;
-                 TCLQueuer         = TCLQueuer <TCLContex,TCLPlatfo>;
-               TCLArgumes          = TCLArgumes<TCLContex,TCLPlatfo>;
-                 TCLArgume         = TCLArgume <TCLContex,TCLPlatfo>;
-                 TCLSamplr         = TCLSamplr <TCLContex,TCLPlatfo>;
-                 TCLMemory         = TCLMemory <TCLContex,TCLPlatfo>;
-               TCLLibrars          = TCLLibrars<TCLContex,TCLPlatfo>;
-                 TCLLibrar         = TCLLibrar <TCLContex,TCLPlatfo>;
-               TCLExecuts          = TCLExecuts<TCLContex,TCLPlatfo>;
-                 TCLExecut         = TCLExecut <TCLContex,TCLPlatfo>;
-                   TCLBuildrs      = TCLBuildrs<TCLContex,TCLPlatfo>;
-                     TCLBuildr     = TCLBuildr <TCLContex,TCLPlatfo>;
-                   TCLKernels      = TCLKernels<TCLExecut,TCLContex,TCLPlatfo>;
-                     TCLKernel     = TCLKernel <TCLExecut,TCLContex,TCLPlatfo>;
-                       TCLParames  = TCLParames<TCLExecut,TCLContex,TCLPlatfo>;
-                         TCLParame = TCLParame <TCLExecut,TCLContex,TCLPlatfo>;
+           TCLDevices              = TCLDevices<TCLSystem,TCLPlatfo>;
+             TCLDevice             = TCLDevice <TCLSystem,TCLPlatfo>;
+           TCLContexs              = TCLContexs<TCLSystem,TCLPlatfo>;
+             TCLContex             = TCLContex <TCLSystem,TCLPlatfo>;
+               TCLQueuers          = TCLQueuers<TCLSystem,TCLPlatfo,TCLContex>;
+                 TCLQueuer         = TCLQueuer <TCLSystem,TCLPlatfo,TCLContex>;
+               TCLArgumes          = TCLArgumes<TCLSystem,TCLPlatfo,TCLContex>;
+                 TCLArgume         = TCLArgume <TCLSystem,TCLPlatfo,TCLContex>;
+                 TCLSamplr         = TCLSamplr <TCLSystem,TCLPlatfo,TCLContex>;
+                 TCLMemory         = TCLMemory <TCLSystem,TCLPlatfo,TCLContex>;
+               TCLLibrars          = TCLLibrars<TCLSystem,TCLPlatfo,TCLContex>;
+                 TCLLibrar         = TCLLibrar <TCLSystem,TCLPlatfo,TCLContex>;
+               TCLExecuts          = TCLExecuts<TCLSystem,TCLPlatfo,TCLContex>;
+                 TCLExecut         = TCLExecut <TCLSystem,TCLPlatfo,TCLContex>;
+                   TCLBuildrs      = TCLBuildrs<TCLSystem,TCLPlatfo,TCLContex>;
+                     TCLBuildr     = TCLBuildr <TCLSystem,TCLPlatfo,TCLContex>;
+                   TCLKernels      = TCLKernels<TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
+                     TCLKernel     = TCLKernel <TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
+                       TCLParames  = TCLParames<TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
+                         TCLParame = TCLParame <TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
 
-     TCLDevBuf<TValue_:record> = class( TCLDevBuf<TCLContex,TCLPlatfo,TValue_> );
-     TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLContex,TCLPlatfo,TValue_> );
+     TCLBuffer<TValue_:record> = class( TCLBuffer<TCLSystem,TCLPlatfo,TCLContex,TValue_> );
 
-     TCLBufferIter<TValue_:record> = class( TCLBufferIter<TCLContex,TCLPlatfo,TValue_> );
-
-     TCLSeeder1D = TCLSeeder1D<TCLContex,TCLPlatfo>;
-     TCLSeeder2D = TCLSeeder2D<TCLContex,TCLPlatfo>;
-     TCLSeeder3D = TCLSeeder3D<TCLContex,TCLPlatfo>;
+     TCLSeeder1D = TCLSeeder1D<TCLSystem,TCLPlatfo,TCLContex>;
+     TCLSeeder2D = TCLSeeder2D<TCLSystem,TCLPlatfo,TCLContex>;
+     TCLSeeder3D = TCLSeeder3D<TCLSystem,TCLPlatfo,TCLContex>;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
