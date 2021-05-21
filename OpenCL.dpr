@@ -13,7 +13,6 @@ uses
   LUX.Data.List in '_LIBRARY\LUXOPHIA\LUX\Data\List\LUX.Data.List.pas',
   LUX.Complex in '_LIBRARY\LUXOPHIA\LUX\Complex\LUX.Complex.pas',
   LUX.D1 in '_LIBRARY\LUXOPHIA\LUX\LUX.D1.pas',
-  LUX.Data.Tree in '_LIBRARY\LUXOPHIA\LUX\Data\List\LUX.Data.Tree.pas',
   LUX.GPU.OpenCL.core in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.core.pas',
   LUX.GPU.OpenCL.Argume.Memory.Buffer in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Argume.Memory.Buffer.pas',
   LUX.GPU.OpenCL.Argume.Memory.Imager.D1.FMX in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Argume.Memory.Imager.D1.FMX.pas',
