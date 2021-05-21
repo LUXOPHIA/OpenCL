@@ -13,15 +13,15 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLSeeder3D<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class;
+     TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSeeder3D<TCLSystem_,TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLSeeder3D<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLImager3D<TCLSystem_,TCLContex_,TCLPlatfo_,TUInt32xRGBA> )
+     TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager3D<TCLSystem_,TCLContex_,TCLPlatfo_,TUInt32xRGBA> )
      private
        type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLExecut_ = TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>;
@@ -58,7 +58,7 @@ uses System.SysUtils;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSeeder3D<TCLSystem_,TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -66,19 +66,19 @@ uses System.SysUtils;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLSeeder3D<TCLSystem_,TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
+function TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
 begin
      Result := CL_RGBA;
 end;
 
-function TCLSeeder3D<TCLSystem_,TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
+function TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
 begin
      Result := CL_UNSIGNED_INT32;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLSeeder3D<TCLSystem_,TCLContex_,TCLPlatfo_>.CreateHandle :T_cl_int;
+function TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>.CreateHandle :T_cl_int;
 begin
      inherited;
 
@@ -100,7 +100,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLSeeder3D<TCLSystem_,TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ );
+constructor TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ );
 begin
      inherited;
 
@@ -192,7 +192,7 @@ begin
      _MakerYX.Parames['Seeder'] := Self;
 end;
 
-destructor TCLSeeder3D<TCLSystem_,TCLContex_,TCLPlatfo_>.Destroy;
+destructor TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
      _Execut.Free;
 
