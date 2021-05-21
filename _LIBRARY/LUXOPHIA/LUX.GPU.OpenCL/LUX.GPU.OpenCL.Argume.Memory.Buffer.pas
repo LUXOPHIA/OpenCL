@@ -11,21 +11,21 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
      TCLDevBuf<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
      TCLHosBuf<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
      
-     TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
-     TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_> )
+     TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
-       type TCLStorag_ = TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>;
+       type TCLStorag_ = TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
      protected
        _Count :Integer;
        ///// アクセス
@@ -46,7 +46,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevBuf<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLDevBuf<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_> )
+     TCLDevBuf<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_> )
      private
      protected
        ///// メソッド
@@ -57,7 +57,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosBuf<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>
 
-     TCLHosBuf<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_> )
+     TCLHosBuf<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_> )
      private
      protected
        _Data :P_void;
@@ -68,12 +68,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
-     TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_> )
+     TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
        type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
-            TCLBuffer_ = TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>;
+            TCLBuffer_ = TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
             PValue_    = ^TValue_;
      protected
        ///// アクセス
@@ -102,7 +102,7 @@ uses LUX.GPU.OpenCL.Contex;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -110,31 +110,31 @@ uses LUX.GPU.OpenCL.Contex;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.GetStorag :TCLStorag_;
+function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetStorag :TCLStorag_;
 begin
      Result := TCLStorag_( inherited Storag );
 end;
 
-procedure TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
+procedure TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
 begin
      inherited Storag := Storag_;
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.GetSize :T_size_t;
+function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetSize :T_size_t;
 begin
      Result := SizeOf( TValue_ ) * _Count;
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.GetCount :Integer;
+function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetCount :Integer;
 begin
      Result := _Count;
 end;
 
-procedure TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.SetCount( const Count_:Integer );
+procedure TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetCount( const Count_:Integer );
 begin
      Handle := nil;
 
@@ -143,21 +143,21 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.NewStorag :TObject;
+function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewStorag :TObject;
 begin
      Result := TCLStorag_.Create( Self );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.Create;
+constructor TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.Create;
 begin
      inherited;
 
      _Count := 1;
 end;
 
-destructor TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.Destroy;
+destructor TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.Destroy;
 begin
       Handle := nil;
 
@@ -219,25 +219,25 @@ begin
      _Kind := CL_MEM_READ_WRITE or CL_MEM_USE_HOST_PTR;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.GetBuffer :TCLBuffer_;
+function TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetBuffer :TCLBuffer_;
 begin
      Result := TCLBuffer_( Memory );
 end;
 
-function TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.GetValues( const I_:Integer ) :TValue_;
+function TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValues( const I_:Integer ) :TValue_;
 var
    P :PValue_;
 begin
      P := Handle;  Inc( P, I_ );  Result := P^;
 end;
 
-procedure TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.SetValues( const I_:Integer; const Values_:TValue_ );
+procedure TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetValues( const I_:Integer; const Values_:TValue_ );
 var
    P :PValue_;
 begin
@@ -246,7 +246,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>.CreateHandle :T_cl_int;
+function TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
 begin
      inherited;
 
