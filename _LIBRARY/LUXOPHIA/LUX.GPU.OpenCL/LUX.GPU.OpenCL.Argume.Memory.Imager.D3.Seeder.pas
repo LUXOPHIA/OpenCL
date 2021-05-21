@@ -194,7 +194,6 @@ end;
 
 destructor TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
-     _Execut.Free;
 
      inherited;
 end;
