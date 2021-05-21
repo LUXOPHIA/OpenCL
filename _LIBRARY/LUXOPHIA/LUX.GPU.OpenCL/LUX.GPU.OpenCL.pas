@@ -47,8 +47,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                  TCLExecut         = TCLExecut <TCLSystem,TCLPlatfo,TCLContex>;
                    TCLBuildrs      = TCLBuildrs<TCLSystem,TCLPlatfo,TCLContex>;
                      TCLBuildr     = TCLBuildr <TCLSystem,TCLPlatfo,TCLContex>;
-                   TCLKernels      = TCLKernels<TCLSystem,TCLExecut,TCLContex,TCLPlatfo>;
-                     TCLKernel     = TCLKernel <TCLSystem,TCLExecut,TCLContex,TCLPlatfo>;
+                   TCLKernels      = TCLKernels<TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
+                     TCLKernel     = TCLKernel <TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
                        TCLParames  = TCLParames<TCLSystem,TCLExecut,TCLContex,TCLPlatfo>;
                          TCLParame = TCLParame <TCLSystem,TCLExecut,TCLContex,TCLPlatfo>;
 

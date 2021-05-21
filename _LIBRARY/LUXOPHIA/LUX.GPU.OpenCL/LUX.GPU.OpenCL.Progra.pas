@@ -202,7 +202,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLExecut_  = TCLExecut <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuildrs_ = TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuildr_  = TCLBuildr <TCLSystem_,TCLPlatfo_,TCLContex_>;
-            TCLKernels_ = TCLKernels<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
+            TCLKernels_ = TCLKernels<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
      protected
        _Buildrs :TCLBuildrs_;
        _Kernels :TCLKernels_;

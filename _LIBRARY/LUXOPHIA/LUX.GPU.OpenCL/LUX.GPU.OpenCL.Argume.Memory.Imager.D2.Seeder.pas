@@ -25,7 +25,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLExecut_ = TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>;
-            TCLKernel_ = TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
+            TCLKernel_ = TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
      protected
        _Execut :TCLExecut_;
        _MakerY :TCLKernel_;
