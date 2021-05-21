@@ -18,9 +18,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_>
 
-     TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLArgume<TCLSystem_,TCLContex_,TCLPlatfo_> )
+     TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
-       type TCLArgumes_ = TCLArgumes<TCLSystem_,TCLContex_,TCLPlatfo_>;
+       type TCLArgumes_ = TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
        _Handle :T_cl_sampler;
        ///// アクセス
