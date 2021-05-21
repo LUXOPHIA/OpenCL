@@ -31,35 +31,35 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        TCLPlatfos                  = TCLPlatfos<TCLSystem>;
          TCLPlatfo                 = TCLPlatfo <TCLSystem>;
            TCLExtenss              = TCLExtenss<TCLPlatfo>;
-           TCLDevices              = TCLDevices<TCLPlatfo>;
-             TCLDevice             = TCLDevice <TCLPlatfo>;
-           TCLContexs              = TCLContexs<TCLPlatfo>;
-             TCLContex             = TCLContex <TCLPlatfo>;
-               TCLQueuers          = TCLQueuers<TCLContex,TCLPlatfo>;
-                 TCLQueuer         = TCLQueuer <TCLContex,TCLPlatfo>;
-               TCLArgumes          = TCLArgumes<TCLContex,TCLPlatfo>;
-                 TCLArgume         = TCLArgume <TCLContex,TCLPlatfo>;
-                 TCLSamplr         = TCLSamplr <TCLContex,TCLPlatfo>;
-                 TCLMemory         = TCLMemory <TCLContex,TCLPlatfo>;
-               TCLLibrars          = TCLLibrars<TCLContex,TCLPlatfo>;
-                 TCLLibrar         = TCLLibrar <TCLContex,TCLPlatfo>;
-               TCLExecuts          = TCLExecuts<TCLContex,TCLPlatfo>;
-                 TCLExecut         = TCLExecut <TCLContex,TCLPlatfo>;
-                   TCLBuildrs      = TCLBuildrs<TCLContex,TCLPlatfo>;
-                     TCLBuildr     = TCLBuildr <TCLContex,TCLPlatfo>;
-                   TCLKernels      = TCLKernels<TCLExecut,TCLContex,TCLPlatfo>;
-                     TCLKernel     = TCLKernel <TCLExecut,TCLContex,TCLPlatfo>;
-                       TCLParames  = TCLParames<TCLExecut,TCLContex,TCLPlatfo>;
-                         TCLParame = TCLParame <TCLExecut,TCLContex,TCLPlatfo>;
+           TCLDevices              = TCLDevices<TCLSystem,TCLPlatfo>;
+             TCLDevice             = TCLDevice <TCLSystem,TCLPlatfo>;
+           TCLContexs              = TCLContexs<TCLSystem,TCLPlatfo>;
+             TCLContex             = TCLContex <TCLSystem,TCLPlatfo>;
+               TCLQueuers          = TCLQueuers<TCLSystem,TCLContex,TCLPlatfo>;
+                 TCLQueuer         = TCLQueuer <TCLSystem,TCLContex,TCLPlatfo>;
+               TCLArgumes          = TCLArgumes<TCLSystem,TCLContex,TCLPlatfo>;
+                 TCLArgume         = TCLArgume <TCLSystem,TCLContex,TCLPlatfo>;
+                 TCLSamplr         = TCLSamplr <TCLSystem,TCLContex,TCLPlatfo>;
+                 TCLMemory         = TCLMemory <TCLSystem,TCLContex,TCLPlatfo>;
+               TCLLibrars          = TCLLibrars<TCLSystem,TCLContex,TCLPlatfo>;
+                 TCLLibrar         = TCLLibrar <TCLSystem,TCLContex,TCLPlatfo>;
+               TCLExecuts          = TCLExecuts<TCLSystem,TCLContex,TCLPlatfo>;
+                 TCLExecut         = TCLExecut <TCLSystem,TCLContex,TCLPlatfo>;
+                   TCLBuildrs      = TCLBuildrs<TCLSystem,TCLContex,TCLPlatfo>;
+                     TCLBuildr     = TCLBuildr <TCLSystem,TCLContex,TCLPlatfo>;
+                   TCLKernels      = TCLKernels<TCLSystem,TCLExecut,TCLContex,TCLPlatfo>;
+                     TCLKernel     = TCLKernel <TCLSystem,TCLExecut,TCLContex,TCLPlatfo>;
+                       TCLParames  = TCLParames<TCLSystem,TCLExecut,TCLContex,TCLPlatfo>;
+                         TCLParame = TCLParame <TCLSystem,TCLExecut,TCLContex,TCLPlatfo>;
 
-     TCLDevBuf<TValue_:record> = class( TCLDevBuf<TCLContex,TCLPlatfo,TValue_> );
-     TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLContex,TCLPlatfo,TValue_> );
+     TCLDevBuf<TValue_:record> = class( TCLDevBuf<TCLSystem,TCLContex,TCLPlatfo,TValue_> );
+     TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLSystem,TCLContex,TCLPlatfo,TValue_> );
 
-     TCLBufferIter<TValue_:record> = class( TCLBufferIter<TCLContex,TCLPlatfo,TValue_> );
+     TCLBufferIter<TValue_:record> = class( TCLBufferIter<TCLSystem,TCLContex,TCLPlatfo,TValue_> );
 
-     TCLSeeder1D = TCLSeeder1D<TCLContex,TCLPlatfo>;
-     TCLSeeder2D = TCLSeeder2D<TCLContex,TCLPlatfo>;
-     TCLSeeder3D = TCLSeeder3D<TCLContex,TCLPlatfo>;
+     TCLSeeder1D = TCLSeeder1D<TCLSystem,TCLContex,TCLPlatfo>;
+     TCLSeeder2D = TCLSeeder2D<TCLSystem,TCLContex,TCLPlatfo>;
+     TCLSeeder3D = TCLSeeder3D<TCLSystem,TCLContex,TCLPlatfo>;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
