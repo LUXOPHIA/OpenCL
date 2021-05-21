@@ -42,7 +42,7 @@ type
     _Device :TCLDevice;
     _Contex :TCLContex;
     _Queuer :TCLQueuer;
-    _Buffer :TCLDevBuf<TDoubleC>;
+    _Buffer :TCLBuffer<TDoubleC>;
     _Imager :TCLImager2DxBGRAxUFix8;
     _Textur :TCLImager1DxBGRAxUFix8;
     _Samplr :TCLSamplr;
@@ -102,7 +102,7 @@ procedure TForm1.MakeArgumes;
 begin
      ////////// バッファー
 
-     _Buffer := TCLDevBuf<TDoubleC>.Create( _Contex, _Queuer );                 // 生成
+     _Buffer := TCLBuffer<TDoubleC>.Create( _Contex, _Queuer );                 // 生成
 
      Assert( Assigned( _Buffer.Handle ), '_Buffer is Error!' );
 
