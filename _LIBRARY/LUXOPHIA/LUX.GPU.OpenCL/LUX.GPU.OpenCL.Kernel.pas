@@ -33,7 +33,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLParame<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLKernel <TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>,
                                                                                        TCLParames<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>> )
      private
-       type TCLArgume_  = TCLArgume <TCLSystem_,TCLContex_,TCLPlatfo_>;
+       type TCLArgume_  = TCLArgume <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLKernel_  = TCLKernel <TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
             TCLParames_ = TCLParames<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
      protected
@@ -65,7 +65,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLParames<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>,
                                                                                         TCLParame<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>> )
      private
-       type TCLArgume_ = TCLArgume<TCLSystem_,TCLContex_,TCLPlatfo_>;
+       type TCLArgume_ = TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLKernel_ = TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
             TCLParame_ = TCLParame<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
             TCLVarArgs = TDictionary<String,TCLParame_>;

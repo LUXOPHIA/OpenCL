@@ -21,10 +21,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<TCLSystem_,TCLContex_,TCLPlatfo_>
 
-     TCLMemory<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLArgume<TCLSystem_,TCLContex_,TCLPlatfo_> )
+     TCLMemory<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
        type TCLQueuer_  = TCLQueuer <TCLSystem_,TCLPlatfo_,TCLContex_>;
-            TCLArgumes_ = TCLArgumes<TCLSystem_,TCLContex_,TCLPlatfo_>;
+            TCLArgumes_ = TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLStorag_  = TCLMemoryIter<TCLSystem_,TCLContex_,TCLPlatfo_>;
      protected
        _Handle :T_cl_mem;
