@@ -36,6 +36,8 @@ type
   private
     { private 宣言 }
     _AreaC :TDoubleAreaC;
+    ///// メソッド
+    procedure ShowBuildr;
   public
     { public 宣言 }
     _Platfo :TCLPlatfo;
@@ -54,7 +56,6 @@ type
     procedure MakeContex;
     procedure MakeArgumes;
     procedure MakeProgras;
-    procedure ShowBuildr;
   end;
 
 var
@@ -67,6 +68,31 @@ implementation //###############################################################
 uses System.Math;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+procedure TForm1.ShowBuildr;
+begin
+     with MemoPB.Lines do
+     begin
+          if _Buildr.CompileStatus = CL_BUILD_ERROR then
+          begin
+               Add( '▼ Compile' );
+               Add( _Buildr.CompileLog );
+               Add( '' );
+          end;
+
+          if _Buildr.LinkStatus = CL_BUILD_ERROR then
+          begin
+               Add( '▼ Link' );
+               Add( _Buildr.LinkLog );
+               Add( '' );
+          end;
+     end;
+
+     TabControl1.ActiveTab := TabItemP;
+     TabControlP.ActiveTab := TabItemPB;
+end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
@@ -193,29 +219,6 @@ begin
                                      else TabControl1.ActiveTab := TabItemS;    // 引数のバインドエラー
      end
      else ShowBuildr; { _Buildr is Error! }                                     // ビルド情報の表示
-end;
-
-procedure TForm1.ShowBuildr;
-begin
-     with MemoPB.Lines do
-     begin
-          if _Buildr.CompileStatus = CL_BUILD_ERROR then
-          begin
-               Add( '▼ Compile' );
-               Add( _Buildr.CompileLog );
-               Add( '' );
-          end;
-
-          if _Buildr.LinkStatus = CL_BUILD_ERROR then
-          begin
-               Add( '▼ Link' );
-               Add( _Buildr.LinkLog );
-               Add( '' );
-          end;
-     end;
-
-     TabControl1.ActiveTab := TabItemP;
-     TabControlP.ActiveTab := TabItemPB;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
