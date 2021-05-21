@@ -9,18 +9,18 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLArgumes <TCLContex_,TCLPlatfo_:class> = class;
-       TCLArgume<TCLContex_,TCLPlatfo_:class> = class;
+     TCLArgumes <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+       TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgume<TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLArgume<TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLContex_,TCLArgumes<TCLContex_,TCLPlatfo_>> )
+     TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TListChildr<TCLContex_,TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
-       type TCLArgumes_ = TCLArgumes<TCLContex_,TCLPlatfo_>;
+       type TCLArgumes_ = TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
        ///// アクセス
        function GetHanPtr :P_void; virtual; abstract;
@@ -39,9 +39,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property HanSiz  :T_size_t    read GetHanSiz;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLArgumes<TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLContex_,TCLArgume<TCLContex_,TCLPlatfo_>> )
+     TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TListParent<TCLContex_,TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
      protected
      public
@@ -57,13 +57,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
+uses LUX.GPU.OpenCL.Contex;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgume<TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -71,24 +71,24 @@ uses LUX.GPU.OpenCL;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLArgume<TCLContex_,TCLPlatfo_>.Create;
+constructor TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_>.Create;
 begin
      inherited;
 
 end;
 
-constructor TCLArgume<TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_ );
+constructor TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Contex_:TCLContex_ );
 begin
-     inherited Create( TCLContex( Contex_ ).Argumes );
+     inherited Create( TCLContex<TCLSystem_,TCLPlatfo_>( Contex_ ).Argumes );
 end;
 
-destructor TCLArgume<TCLContex_,TCLPlatfo_>.Destroy;
+destructor TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
 
      inherited;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 

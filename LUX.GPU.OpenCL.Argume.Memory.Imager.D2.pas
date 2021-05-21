@@ -10,19 +10,19 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLImager2D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
 
-     TCLImagerIter2D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class;
+     TCLImagerIter2D<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
-     TCLImager2D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImager1D<TCLContex_,TCLPlatfo_,TValue_> )
+     TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLImager1D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_> )
      private
-       type TCLStorag_ = TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>;
+       type TCLStorag_ = TCLImagerIter2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
      protected
        _CountY :Integer;
        ///// アクセス
@@ -40,11 +40,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property CountY :Integer    read GetCountY write SetCountY;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
-     TCLImagerIter2D<TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLImagerIter1D<TCLContex_,TCLPlatfo_,TValue_> )
+     TCLImagerIter2D<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLImagerIter1D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_> )
      private
-       type TCLImager_ = TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>;
+       type TCLImager_ = TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
             PValue_    = ^TValue_;
      protected
        ///// アクセス
@@ -67,13 +67,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL;
-
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -81,31 +79,31 @@ uses LUX.GPU.OpenCL;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.GetStorag :TCLStorag_;
+function TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetStorag :TCLStorag_;
 begin
      Result := TCLStorag_( inherited Storag );
 end;
 
-procedure TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
+procedure TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
 begin
      inherited Storag := Storag_;
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.GetMemTyp :T_cl_mem_object_type;
+function TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetMemTyp :T_cl_mem_object_type;
 begin
      Result := CL_MEM_OBJECT_IMAGE2D;
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.GetCountY :Integer;
+function TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetCountY :Integer;
 begin
      Result := _CountY;
 end;
 
-procedure TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.SetCountY( const CountY_:Integer );
+procedure TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetCountY( const CountY_:Integer );
 begin
      inherited;
 
@@ -114,21 +112,21 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.NewStorag :TObject;
+function TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewStorag :TObject;
 begin
      Result := TCLStorag_.Create( Self );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLImager2D<TCLContex_,TCLPlatfo_,TValue_>.Create;
+constructor TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.Create;
 begin
      inherited;
 
      _CountY := 1;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -136,26 +134,26 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>.GetImager :TCLImager_;
+function TCLImagerIter2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetImager :TCLImager_;
 begin
      Result := TCLImager_( Imager );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>.GetValueP( const X_,Y_:Integer ) :PByte;
+function TCLImagerIter2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValueP( const X_,Y_:Integer ) :PByte;
 begin
      Result := inherited GetValueP( X_ );
 
      Inc( Result, _PitchY * Y_ );
 end;
 
-function TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>.GetValues( const X_,Y_:Integer ) :TValue_;
+function TCLImagerIter2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValues( const X_,Y_:Integer ) :TValue_;
 begin
      Result := PValue_( ValueP[ X_, Y_ ] )^;
 end;
 
-procedure TCLImagerIter2D<TCLContex_,TCLPlatfo_,TValue_>.SetValues( const X_,Y_:Integer; const Values_:TValue_ );
+procedure TCLImagerIter2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetValues( const X_,Y_:Integer; const Values_:TValue_ );
 begin
      PValue_( ValueP[ X_, Y_ ] )^ := Values_;
 end;

@@ -13,19 +13,19 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLSeeder2D<TCLContex_,TCLPlatfo_:class> = class;
+     TCLSeeder2D<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSeeder2D<TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSeeder2D<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLSeeder2D<TCLContex_,TCLPlatfo_:class> = class( TCLImager2D<TCLContex_,TCLPlatfo_,TUInt32xRGBA> )
+     TCLSeeder2D<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TUInt32xRGBA> )
      private
-       type TCLQueuer_ = TCLQueuer<TCLContex_,TCLPlatfo_>;
-            TCLExecut_ = TCLExecut<TCLContex_,TCLPlatfo_>;
-            TCLKernel_ = TCLKernel<TCLExecut_,TCLContex_,TCLPlatfo_>;
+       type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLExecut_ = TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLKernel_ = TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
      protected
        _Execut :TCLExecut_;
        _MakerY :TCLKernel_;
@@ -52,14 +52,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses System.SysUtils,
-     LUX.GPU.OpenCL;
+uses System.SysUtils;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSeeder2D<TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSeeder2D<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -67,19 +66,19 @@ uses System.SysUtils,
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLSeeder2D<TCLContex_,TCLPlatfo_>.GetPixChan :T_cl_channel_order;
+function TCLSeeder2D<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
 begin
      Result := CL_RGBA;
 end;
 
-function TCLSeeder2D<TCLContex_,TCLPlatfo_>.GetPixType :T_cl_channel_type;
+function TCLSeeder2D<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
 begin
      Result := CL_UNSIGNED_INT32;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLSeeder2D<TCLContex_,TCLPlatfo_>.CreateHandle :T_cl_int;
+function TCLSeeder2D<TCLSystem_,TCLPlatfo_,TCLContex_>.CreateHandle :T_cl_int;
 begin
      inherited;
 
@@ -99,7 +98,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLSeeder2D<TCLContex_,TCLPlatfo_>.Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ );
+constructor TCLSeeder2D<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ );
 begin
      inherited;
 
@@ -188,7 +187,7 @@ begin
      _MakerX.Parames['Seeder'] := Self;
 end;
 
-destructor TCLSeeder2D<TCLContex_,TCLPlatfo_>.Destroy;
+destructor TCLSeeder2D<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
      _Execut.Free;
 
