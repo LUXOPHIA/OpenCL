@@ -55,6 +55,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Contex :TCLContex_ read GetOwnere;
        ///// メソッド
        function Add( const Device_:TCLDevice_ ) :TCLQueuer_; overload;
+       function GetDeviceIDs :TArray<T_cl_device_id>;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -155,6 +156,17 @@ end;
 function TCLQueuers<TCLContex_,TCLPlatfo_>.Add( const Device_:TCLDevice_ ) :TCLQueuer_;
 begin
      Result := TCLQueuer_.Create( Contex, Device_ );
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLQueuers<TCLContex_,TCLPlatfo_>.GetDeviceIDs :TArray<T_cl_device_id>;
+var
+   I :Integer;
+begin
+     SetLength( Result, Count );
+
+     for I := 0 to Count-1 do Result[ I ] := Items[ I ].Device.Handle;
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】

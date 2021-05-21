@@ -55,8 +55,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Argumes :TCLArgumes_  read   _Argumes                ;
        property Librars :TCLLibrars_  read   _Librars                ;
        property Executs :TCLExecuts_  read   _Executs                ;
-       ///// メソッド
-       function GetDeviceIDs :TArray<T_cl_device_id>;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLPlatfo_>
@@ -119,7 +117,7 @@ begin
      Ps[ 1 ] := T_cl_context_properties( TCLPlatfo( Platfo ).Handle );
      Ps[ 2 ] := 0;
 
-     Ds := GetDeviceIDs;
+     Ds := Queuers.GetDeviceIDs;
 
      _Handle := clCreateContext( @Ps[0],
                                  Length( Ds ), @Ds[0],
@@ -163,20 +161,6 @@ begin
       Handle := nil;
 
      inherited;
-end;
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-function TCLContex<TCLPlatfo_>.GetDeviceIDs :TArray<T_cl_device_id>;
-var
-   I :Integer;
-begin
-     with _Queuers do
-     begin
-          SetLength( Result, Count );
-
-          for I := 0 to Count-1 do Result[ I ] := TCLQueuer( Items[ I ] ).Device.Handle;
-     end;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLPlatfo_>
