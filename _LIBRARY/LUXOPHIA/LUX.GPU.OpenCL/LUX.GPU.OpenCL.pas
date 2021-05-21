@@ -35,8 +35,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
              TCLDevice             = TCLDevice <TCLSystem,TCLPlatfo>;
            TCLContexs              = TCLContexs<TCLSystem,TCLPlatfo>;
              TCLContex             = TCLContex <TCLSystem,TCLPlatfo>;
-               TCLQueuers          = TCLQueuers<TCLSystem,TCLContex,TCLPlatfo>;
-                 TCLQueuer         = TCLQueuer <TCLSystem,TCLContex,TCLPlatfo>;
+               TCLQueuers          = TCLQueuers<TCLSystem,TCLPlatfo,TCLContex>;
+                 TCLQueuer         = TCLQueuer <TCLSystem,TCLPlatfo,TCLContex>;
                TCLArgumes          = TCLArgumes<TCLSystem,TCLContex,TCLPlatfo>;
                  TCLArgume         = TCLArgume <TCLSystem,TCLContex,TCLPlatfo>;
                  TCLSamplr         = TCLSamplr <TCLSystem,TCLContex,TCLPlatfo>;

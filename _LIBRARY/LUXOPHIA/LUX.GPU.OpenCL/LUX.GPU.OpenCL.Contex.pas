@@ -27,7 +27,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLDevice_  = TCLDevice <TCLSystem_,TCLPlatfo_>;
             TCLContexs_ = TCLContexs<TCLSystem_,TCLPlatfo_>;
             TCLContex_  = TCLContex <TCLSystem_,TCLPlatfo_>;
-            TCLQueuers_ = TCLQueuers<TCLSystem_,TCLContex_,TCLPlatfo_>;
+            TCLQueuers_ = TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLArgumes_ = TCLArgumes<TCLSystem_,TCLContex_,TCLPlatfo_>;
             TCLLibrars_ = TCLLibrars<TCLSystem_,TCLContex_,TCLPlatfo_>;
             TCLExecuts_ = TCLExecuts<TCLSystem_,TCLContex_,TCLPlatfo_>;

@@ -72,7 +72,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLBufferIter<TCLSystem_,TCLContex_,TCLPlatfo_:class;TValue_:record> = class( TCLMemoryIter<TCLSystem_,TCLContex_,TCLPlatfo_> )
      private
-       type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLContex_,TCLPlatfo_>;
+       type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuffer_ = TCLBuffer<TCLSystem_,TCLContex_,TCLPlatfo_,TValue_>;
             PValue_    = ^TValue_;
      protected
