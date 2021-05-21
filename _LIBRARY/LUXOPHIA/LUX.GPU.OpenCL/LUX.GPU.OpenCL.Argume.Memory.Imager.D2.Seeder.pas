@@ -23,7 +23,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLSeeder2D<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLImager2D<TCLSystem_,TCLContex_,TCLPlatfo_,TUInt32xRGBA> )
      private
-       type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLContex_,TCLPlatfo_>;
+       type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLExecut_ = TCLExecut<TCLSystem_,TCLContex_,TCLPlatfo_>;
             TCLKernel_ = TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
      protected

@@ -104,7 +104,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_:class> = class( TListChildr<TCLExecut_,TCLKernels<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>> )
      private
-       type TCLQueuer_  = TCLQueuer <TCLSystem_,TCLContex_,TCLPlatfo_>;
+       type TCLQueuer_  = TCLQueuer <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLKernels_ = TCLKernels<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
             TCLKernel_  = TCLKernel <TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
             TCLParames_ = TCLParames<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
@@ -211,7 +211,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLKernels<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_:class> = class( TListParent<TCLExecut_,TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>> )
      private
-       type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLContex_,TCLPlatfo_>;
+       type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLKernel_ = TCLKernel<TCLSystem_,TCLExecut_,TCLContex_,TCLPlatfo_>;
      protected
      public

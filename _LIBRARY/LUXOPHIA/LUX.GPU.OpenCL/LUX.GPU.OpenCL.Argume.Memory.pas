@@ -23,7 +23,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLMemory<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLArgume<TCLSystem_,TCLContex_,TCLPlatfo_> )
      private
-       type TCLQueuer_  = TCLQueuer <TCLSystem_,TCLContex_,TCLPlatfo_>;
+       type TCLQueuer_  = TCLQueuer <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLArgumes_ = TCLArgumes<TCLSystem_,TCLContex_,TCLPlatfo_>;
             TCLStorag_  = TCLMemoryIter<TCLSystem_,TCLContex_,TCLPlatfo_>;
      protected
@@ -60,7 +60,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLMemoryIter<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class
      private
-       type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLContex_,TCLPlatfo_>;
+       type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLMemory_ = TCLMemory<TCLSystem_,TCLContex_,TCLPlatfo_>;
      protected
        _Queuer :TCLQueuer_;
