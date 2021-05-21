@@ -12,8 +12,6 @@ uses cl_version, cl_platform, cl,
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
      TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
-     TCLDevBuf<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
-     TCLHosBuf<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
      
      TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
 
@@ -29,12 +27,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _Count :Integer;
        ///// アクセス
+       function GetKind :T_cl_mem_flags; override;
        function GetStorag :TCLStorag_; reintroduce; virtual;
        procedure SetStorag( const Storag_:TCLStorag_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
        function GetCount :Integer; virtual;
        procedure SetCount( const Count_:Integer ); virtual;
        ///// メソッド
+       function CreateHandle :T_cl_int; override;
        function NewStorag :TObject; override;
      public
        constructor Create; override;
@@ -42,30 +42,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// プロパティ
        property Storag :TCLStorag_ read GetStorag write SetStorag;
        property Count  :Integer    read GetCount  write SetCount ;
-     end;
-
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevBuf<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
-
-     TCLDevBuf<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_> )
-     private
-     protected
-       ///// メソッド
-       function CreateHandle :T_cl_int; override;
-     public
-       constructor Create; override;
-     end;
-
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosBuf<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
-
-     TCLHosBuf<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_> )
-     private
-     protected
-       _Data :P_void;
-       ///// メソッド
-       function CreateHandle :T_cl_int; override;
-       function DestroHandle :T_cl_int; override;
-     public
-       constructor Create; override;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
@@ -110,6 +86,13 @@ uses LUX.GPU.OpenCL.Contex;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
+function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetKind :T_cl_mem_flags;
+begin
+     Result := _Kind or CL_MEM_ALLOC_HOST_PTR;
+end;
+
+//------------------------------------------------------------------------------
+
 function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetStorag :TCLStorag_;
 begin
      Result := TCLStorag_( inherited Storag );
@@ -143,6 +126,13 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
+function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
+begin
+     _Handle := clCreateBuffer( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle, Kind, Size, nil, @Result );
+end;
+
+//------------------------------------------------------------------------------
+
 function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewStorag :TObject;
 begin
      Result := TCLStorag_.Create( Self );
@@ -162,61 +152,6 @@ begin
       Handle := nil;
 
      inherited;
-end;
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLDevBuf<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-function TCLDevBuf<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
-begin
-     _Handle := clCreateBuffer( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle, Kind, Size, nil, @Result );
-end;
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-constructor TCLDevBuf<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.Create;
-begin
-     inherited;
-
-     _Kind := CL_MEM_READ_WRITE or CL_MEM_ALLOC_HOST_PTR;
-end;
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLHosBuf<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-function TCLHosBuf<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
-begin
-     inherited;
-
-     GetMemAligned( _Data, Ceil2N( Size, 64{Byte} ), 4096{Byte} );
-
-     _Handle := clCreateBuffer( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle, Kind, Size, _Data, @Result );
-end;
-
-function TCLHosBuf<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.DestroHandle :T_cl_int;
-begin
-     FreeMemAligned( _Data );
-
-     inherited;
-end;
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-constructor TCLHosBuf<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.Create;
-begin
-     inherited;
-
-     _Kind := CL_MEM_READ_WRITE or CL_MEM_USE_HOST_PTR;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
