@@ -55,8 +55,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLDevBuf<TValue_:record> = class( TCLDevBuf<TCLSystem,TCLContex,TCLPlatfo,TValue_> );
      TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLSystem,TCLContex,TCLPlatfo,TValue_> );
 
-     TCLBufferIter<TValue_:record> = class( TCLBufferIter<TCLSystem,TCLContex,TCLPlatfo,TValue_> );
-
      TCLSeeder1D = TCLSeeder1D<TCLSystem,TCLPlatfo,TCLContex>;
      TCLSeeder2D = TCLSeeder2D<TCLSystem,TCLPlatfo,TCLContex>;
      TCLSeeder3D = TCLSeeder3D<TCLSystem,TCLPlatfo,TCLContex>;
