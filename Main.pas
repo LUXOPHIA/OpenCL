@@ -110,13 +110,11 @@ begin
 
      ////////// コンテキスト
 
-   { _Contex := TCLContex.Create( _Platfo ); }                                  // 生成
-     _Contex := _Platfo.Contexs.Add;                                            // 生成
+     _Contex := TCLContex.Create( _Platfo );                                    // 生成
 
      ////////// コマンドキュー
 
-   { _Queuer := TCLQueuer.Create( _Contex, _Device ); }                         // 生成
-     _Queuer := _Contex.Queuers.Add( _Device );                                 // 生成
+     _Queuer := TCLQueuer.Create( _Contex, _Device );                           // 生成
 
      Assert( Assigned( _Contex.Handle ), '_Contex is Error!' );
      Assert( Assigned( _Queuer.Handle ), '_Queuer is Error!' );
@@ -173,8 +171,7 @@ procedure TForm1.MakeProgras;
 begin
      ////////// ライブラリ
 
-   { _Librar := TCLLibrar.Create( _Contex ); }                                  // 生成
-     _Librar := _Contex.Librars.Add;                                            // 生成
+     _Librar := TCLLibrar.Create( _Contex );                                    // 生成
 
      Assert( Assigned( _Librar.Handle ), '_Librar is Error!' );
 
@@ -184,8 +181,7 @@ begin
 
      ////////// プログラム
 
-   { _Execut := TCLExecut.Create( _Contex ); }                                  // 生成
-     _Execut := _Contex.Executs.Add;                                            // 生成
+     _Execut := TCLExecut.Create( _Contex );                                    // 生成
 
      Assert( Assigned( _Execut.Handle ), '_Execut is Error!' );
 
@@ -195,15 +191,13 @@ begin
 
      ////////// ビルド
 
-   { _Buildr := _Execut.Buildrs.Add( _Device ); }                               // 生成
-     _Buildr := _Execut.BuildTo( _Device );                                     // 生成
+     _Buildr := _Execut.Buildrs[ _Device ];                                     // 生成
 
      if Assigned( _Buildr.Handle ) then
      begin
           ////////// カーネル
 
-        { _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer ); }            // 生成
-          _Kernel := _Execut.Kernels.Add( 'Main', _Queuer );                    // 生成
+          _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );              // 生成
 
           Assert( Assigned( _Kernel.Handle ), '_Kernel is Error!' );
 
