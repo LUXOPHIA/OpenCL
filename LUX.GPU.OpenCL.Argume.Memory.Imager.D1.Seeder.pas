@@ -150,7 +150,6 @@ end;
 
 destructor TCLSeeder1D<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
-     _Execut.Free;
 
      inherited;
 end;
