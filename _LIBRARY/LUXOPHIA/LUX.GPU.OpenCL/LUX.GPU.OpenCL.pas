@@ -52,8 +52,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                        TCLParames  = TCLParames<TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
                          TCLParame = TCLParame <TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
 
-     TCLDevBuf<TValue_:record> = class( TCLDevBuf<TCLSystem,TCLPlatfo,TCLContex,TValue_> );
-     TCLHosBuf<TValue_:record> = class( TCLHosBuf<TCLSystem,TCLPlatfo,TCLContex,TValue_> );
+     TCLBuffer<TValue_:record> = class( TCLBuffer<TCLSystem,TCLPlatfo,TCLContex,TValue_> );
 
      TCLSeeder1D = TCLSeeder1D<TCLSystem,TCLPlatfo,TCLContex>;
      TCLSeeder2D = TCLSeeder2D<TCLSystem,TCLPlatfo,TCLContex>;
