@@ -10,15 +10,15 @@ uses cl_version, cl_platform, cl,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class;
+     TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_:class> = class( TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_> )
+     TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
        type TCLArgumes_ = TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
@@ -54,7 +54,7 @@ uses LUX.GPU.OpenCL.Contex;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -62,24 +62,24 @@ uses LUX.GPU.OpenCL.Contex;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_>.GetHanPtr :P_void;
+function TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHanPtr :P_void;
 begin
      Result := Handle;
 end;
 
-function TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_>.GetHanSiz :T_size_t;
+function TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHanSiz :T_size_t;
 begin
      Result := SizeOf( T_cl_sampler );
 end;
 
-function TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_>.GetHandle :T_cl_sampler;
+function TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :T_cl_sampler;
 begin
      if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-procedure TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_>.SetHandle( const Handle_:T_cl_sampler );
+procedure TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T_cl_sampler );
 begin
      if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLSamplr.DestroHandle is Error!' );
 
@@ -88,7 +88,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_>.CreateHandle :T_cl_int;
+function TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.CreateHandle :T_cl_int;
 var
    Ps :array [ 0..6 ] of T_cl_sampler_properties;
 begin
@@ -113,7 +113,7 @@ begin
      {$ENDIF}
 end;
 
-function TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_>.DestroHandle :T_cl_int;
+function TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
      Result := clReleaseSampler( _Handle );
 
@@ -122,14 +122,14 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_>.Create;
+constructor TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.Create;
 begin
      inherited;
 
      _Handle := nil;
 end;
 
-destructor TCLSamplr<TCLSystem_,TCLContex_,TCLPlatfo_>.Destroy;
+destructor TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
       Handle := nil;
 
