@@ -12,17 +12,17 @@ uses System.Classes,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLPlatfos    <TCLSystem_:class> = class;
-       TCLPlatfo   <TCLSystem_:class> = class;
-         TCLExtenss<TCLPlatfo_:class> = class;
+     TCLPlatfos    <TCLSystem_           :class> = class;
+       TCLPlatfo   <TCLSystem_           :class> = class;
+         TCLExtenss<TCLSystem_,TCLPlatfo_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExtenss<TCLPlatfo_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExtenss<TCLSystem_,TCLPlatfo_>
 
-     TCLExtenss<TCLPlatfo_:class> = class( TStringList )
+     TCLExtenss<TCLSystem_,TCLPlatfo_:class> = class( TStringList )
      private
      protected
      public
@@ -34,7 +34,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLPlatfos_ = TCLPlatfos<TCLSystem_>;
             TCLPlatfo_  = TCLPlatfo <TCLSystem_>;
-            TCLExtenss_ = TCLExtenss<TCLPlatfo_>;
+            TCLExtenss_ = TCLExtenss<TCLSystem_,TCLPlatfo_>;
             TCLDevices_ = TCLDevices<TCLSystem_,TCLPlatfo_>;
             TCLContexs_ = TCLContexs<TCLSystem_,TCLPlatfo_>;
        ///// メソッド
@@ -111,6 +111,14 @@ uses System.SysUtils;
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExtenss<TCLSystem_,TCLPlatfo_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLPlatfo<TCLSystem_>
 
