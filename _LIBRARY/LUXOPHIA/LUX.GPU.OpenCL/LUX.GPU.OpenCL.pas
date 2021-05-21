@@ -43,8 +43,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                  TCLMemory         = TCLMemory <TCLSystem,TCLPlatfo,TCLContex>;
                TCLLibrars          = TCLLibrars<TCLSystem,TCLPlatfo,TCLContex>;
                  TCLLibrar         = TCLLibrar <TCLSystem,TCLPlatfo,TCLContex>;
-               TCLExecuts          = TCLExecuts<TCLSystem,TCLContex,TCLPlatfo>;
-                 TCLExecut         = TCLExecut <TCLSystem,TCLContex,TCLPlatfo>;
+               TCLExecuts          = TCLExecuts<TCLSystem,TCLPlatfo,TCLContex>;
+                 TCLExecut         = TCLExecut <TCLSystem,TCLPlatfo,TCLContex>;
                    TCLBuildrs      = TCLBuildrs<TCLSystem,TCLContex,TCLPlatfo>;
                      TCLBuildr     = TCLBuildr <TCLSystem,TCLContex,TCLPlatfo>;
                    TCLKernels      = TCLKernels<TCLSystem,TCLExecut,TCLContex,TCLPlatfo>;
