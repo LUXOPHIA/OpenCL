@@ -770,7 +770,7 @@ begin
      Parames.BindsOK;
 
      AssertCL( clEnqueueNDRangeKernel( Queuer.Handle, Handle,
-                                       2, @_GloMin, @_GloSiz, nil,
+                                       GloDimN, @_GloMin, @_GloSiz, nil,
                                        0, nil, nil ), 'TCLKernel.Run is Error!' );
 
      AssertCL( clFinish( Queuer.Handle ), 'TCLKernel.Run is Error!' );
