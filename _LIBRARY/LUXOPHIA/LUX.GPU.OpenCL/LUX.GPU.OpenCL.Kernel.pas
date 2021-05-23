@@ -169,6 +169,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
        constructor Create( const Execut_:TCLExecut_ ); overload; virtual;
        constructor Create( const Execut_:TCLExecut_; const Name_:String ); overload; virtual;
+       constructor Create( const Execut_:TCLExecut_; const Queuer_:TCLQueuer_ ); overload; virtual;
        constructor Create( const Execut_:TCLExecut_; const Name_:String; const Queuer_:TCLQueuer_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
@@ -759,6 +760,13 @@ begin
      Create( Execut_ );
 
      _Name := Name_;
+end;
+
+constructor TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Create( const Execut_:TCLExecut_; const Queuer_:TCLQueuer_ );
+begin
+     Create( Execut_ );
+
+     _Queuer := Queuer_;
 end;
 
 constructor TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Create( const Execut_:TCLExecut_; const Name_:String; const Queuer_:TCLQueuer_ );
