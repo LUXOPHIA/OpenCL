@@ -28,13 +28,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _CountZ :Integer;
        ///// アクセス
+       function NewData :TCLMemDat_; override;
        function GetData :TCLImaDat_; reintroduce; virtual;
        procedure SetData( const Data_:TCLImaDat_ ); reintroduce; virtual;
        function GetMemTyp :T_cl_mem_object_type; override;
        function GetCountZ :Integer; override;
        procedure SetCountZ( const CountZ_:Integer ); override;
-       ///// メソッド
-       function NewData :TCLMemDat_; override;
      public
        constructor Create; override;
        ///// プロパティ
@@ -81,6 +80,11 @@ implementation //###############################################################
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
+function TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewData :TCLMemDat_;
+begin
+     Result := TCLImaDat_.Create( Self );
+end;
+
 function TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLImaDat_;
 begin
      Result := TCLImaDat_( inherited Data );
@@ -110,13 +114,6 @@ begin
      inherited;
 
      _CountZ := CountZ_;
-end;
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-function TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewData :TCLMemDat_;
-begin
-     Result := TCLImaDat_.Create( Self );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
