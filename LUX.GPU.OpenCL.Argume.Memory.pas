@@ -13,7 +13,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
-     TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+     TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -23,13 +23,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
-       type TCLQueuer_  = TCLQueuer <TCLSystem_,TCLPlatfo_,TCLContex_>;
-            TCLArgumes_ = TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>;
-            TCLStorag_  = TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>;
+       type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLMemDat_ = TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
        _Handle :T_cl_mem;
        _Kind   :T_cl_mem_flags;
-       _Storag :TCLStorag_;
+       _Data   :TCLMemDat_;
        _Queuer :TCLQueuer_;
        ///// アクセス
        function GetHanPtr :P_void; override;
@@ -38,37 +37,41 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetHandle( const Handle_:T_cl_mem ); virtual;
        function GetKind :T_cl_mem_flags; virtual;
        procedure SetKind( const Kind_:T_cl_mem_flags ); virtual;
-       function GetStorag :TCLStorag_; virtual;
-       procedure SetStorag( const Storag_:TCLStorag_ ); virtual;
+       function NewData :TCLMemDat_; virtual; abstract;
+       function GetData :TCLMemDat_; virtual;
+       procedure SetData( const Data_:TCLMemDat_ ); virtual;
        function GetSize :T_size_t; virtual; abstract;
+       function GetQueuer :TCLQueuer_; virtual;
+       procedure SetQueuer( const Queuer_:TCLQueuer_ ); virtual;
        ///// メソッド
        function DestroHandle :T_cl_int; override;
-       function NewStorag :TObject; virtual; abstract;
      public
        constructor Create; override;
        constructor Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Handle  :T_cl_mem       read GetHandle write SetHandle;
-       property Kind    :T_cl_mem_flags read GetKind   write SetKind  ;
-       property Storag  :TCLStorag_     read GetStorag write SetStorag;
-       property Size    :T_size_t       read GetSize                  ;
-       property Queuer  :TCLQueuer_     read   _Queuer write   _Queuer;
+       property Handle :T_cl_mem       read GetHandle write SetHandle;
+       property Kind   :T_cl_mem_flags read GetKind   write SetKind  ;
+       property Data   :TCLMemDat_     read GetData   write SetData  ;
+       property Size   :T_size_t       read GetSize                  ;
+       property Queuer :TCLQueuer_     read GetQueuer write SetQueuer;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>
 
-     TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class
+     TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class
      private
        type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLMemory_ = TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
-       _Queuer :TCLQueuer_;
        _Memory :TCLMemory_;
        _Mode   :T_cl_map_flags;
        _Handle :P_void;
        ///// アクセス
        function GetQueuer :TCLQueuer_; virtual;
+       function GetMemory :TCLMemory_; virtual;
+       function GetMode :T_cl_map_flags; virtual;
+       procedure SetMode( const Mode_:T_cl_map_flags ); virtual;
        function GetHandle :P_void; virtual;
        procedure SetHandle( const Handle_:P_void ); virtual;
        ///// メソッド
@@ -76,12 +79,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; overload; virtual;
-       constructor Create( const Memory_:TCLMemory_; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE ); overload; virtual;
+       constructor Create( const Memory_:TCLMemory_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
        property Queuer :TCLQueuer_     read GetQueuer                ;
-       property Memory :TCLMemory_     read   _Memory                ;
-       property Mode   :T_cl_map_flags read   _Mode                  ;
+       property Memory :TCLMemory_     read GetMemory                ;
+       property Mode   :T_cl_map_flags read GetMode   write SetMode  ;
        property Handle :P_void         read GetHandle write SetHandle;
        ///// メソッド
        procedure Map; virtual;
@@ -148,16 +151,30 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.GetStorag :TCLStorag_;
+function TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.GetData :TCLMemDat_;
 begin
-     Result := _Storag;
+     Result := _Data;
 end;
 
-procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.SetStorag( const Storag_:TCLStorag_ );
+procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.SetData( const Data_:TCLMemDat_ );
 begin
-     _Storag := Storag_;
+     _Data := Data_;
 
      Handle := nil;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.GetQueuer :TCLQueuer_;
+begin
+     Result := _Queuer;
+end;
+
+procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.SetQueuer( const Queuer_:TCLQueuer_ );
+begin
+     _Queuer := Queuer_;
+
+     Data.Handle := nil;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
@@ -178,7 +195,7 @@ begin
      _Handle := nil;
 
      _Kind   := CL_MEM_READ_WRITE;
-     _Storag := TCLStorag_( NewStorag );
+     _Data   := NewData;
      _Queuer := nil;
 end;
 
@@ -191,34 +208,55 @@ end;
 
 destructor TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
-     _Storag.Free;
+     _Data.Free;
 
       Handle := nil;
 
      inherited;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>.GetQueuer :TCLQueuer_;
+function TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.GetQueuer :TCLQueuer_;
 begin
      Result := Memory.Queuer;
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :P_void;
+function TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.GetMemory :TCLMemory_;
+begin
+     Result := _Memory;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.GetMode :T_cl_map_flags;
+begin
+     Result := _Mode;
+end;
+
+procedure TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.SetMode( const Mode_:T_cl_map_flags );
+begin
+     _Mode := Mode_;
+
+     Handle := nil;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :P_void;
 begin
      if not Assigned( _Handle ) then CreateHandle;
 
      Result := _Handle;
 end;
 
-procedure TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:P_void );
+procedure TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:P_void );
 begin
      if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLMemoryIter.DestroHandle is Error!' );
 
@@ -227,7 +265,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
+function TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
      Result := clEnqueueUnmapMemObject( Queuer.Handle, Memory.Handle, _Handle, 0, nil, nil );
 
@@ -236,26 +274,24 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>.Create;
+constructor TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.Create;
 begin
      inherited;
 
      _Handle := nil;
 
-     _Queuer := nil;
      _Memory := nil;
      _Mode   := CL_MAP_READ or CL_MAP_WRITE;
 end;
 
-constructor TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Memory_:TCLMemory_; const Mode_:T_cl_map_flags = CL_MAP_READ or CL_MAP_WRITE );
+constructor TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Memory_:TCLMemory_ );
 begin
      Create;
 
      _Memory := Memory_;
-     _Mode   := Mode_;
 end;
 
-destructor TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
+destructor TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
       Handle := nil;
 
@@ -264,12 +300,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>.Map;
+procedure TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.Map;
 begin
      Handle;
 end;
 
-procedure TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>.Unmap;
+procedure TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.Unmap;
 begin
      Handle := nil;
 end;

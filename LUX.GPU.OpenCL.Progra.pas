@@ -78,12 +78,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TListParent<TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>,
                                                                              TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
-       type TCLDevice_ = TCLDevice<TCLSystem_,TCLPlatfo_>;
-            TCLExecut_ = TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>;
-            TCLBuildr_ = TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>;
-            TCLDevDeps = TDictionary<TCLDevice_,TCLBuildr_>;
+       type TCLDevice_  = TCLDevice<TCLSystem_,TCLPlatfo_>;
+            TCLExecut_  = TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLBuildr_  = TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLDevBuis_ = TDictionary<TCLDevice_,TCLBuildr_>;
      protected
-       _DevDeps :TCLDevDeps;
+       _DevBuis :TCLDevBuis_;
        ///// アクセス
        function GetBuildrs( const Device_:TCLDevice_ ) :TCLBuildr_; virtual;
        ///// イベント
@@ -189,9 +189,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
+       type TCLLibrars_ = TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
      public
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
+       ///// プロパティ
+       property Librars :TCLLibrars_ read GetParent;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>
@@ -199,6 +202,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
        type TCLDevice_  = TCLDevice <TCLSystem_,TCLPlatfo_>;
+            TCLExecuts_ = TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLExecut_  = TCLExecut <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuildrs_ = TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuildr_  = TCLBuildr <TCLSystem_,TCLPlatfo_,TCLContex_>;
@@ -213,8 +217,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Buildrs :TCLBuildrs_ read _Buildrs;
-       property Kernels :TCLKernels_ read _Kernels;
+       property Executs :TCLExecuts_ read GetParent ;
+       property Buildrs :TCLBuildrs_ read   _Buildrs;
+       property Kernels :TCLKernels_ read   _Kernels;
        ///// メソッド
        function BuildTo( const Device_:TCLDevice_ ) :TCLBuildr_;
      end;
@@ -436,7 +441,7 @@ end;
 
 function TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.GetBuildrs( const Device_:TCLDevice_ ) :TCLBuildr_;
 begin
-     if _DevDeps.ContainsKey( Device_ ) then Result := _DevDeps[ Device_ ]
+     if _DevBuis.ContainsKey( Device_ ) then Result := _DevBuis[ Device_ ]
                                         else Result := TCLBuildr_.Create( Self, Device_ );
 end;
 
@@ -446,14 +451,14 @@ procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChild( const Chil
 begin
      inherited;
 
-     _DevDeps.Add( Childr_.Device, Childr_ );
+     _DevBuis.Add( Childr_.Device, Childr_ );
 end;
 
 procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChild( const Childr_:TCLBuildr_ );
 begin
      inherited;
 
-     _DevDeps.Remove( Childr_.Device );
+     _DevBuis.Remove( Childr_.Device );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -462,14 +467,14 @@ constructor TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.Create;
 begin
      inherited;
 
-     _DevDeps := TCLDevDeps.Create;
+     _DevBuis := TCLDevBuis_.Create;
 end;
 
 destructor TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
      Clear;
 
-     _DevDeps.Free;
+     _DevBuis.Free;
 
      inherited;
 end;
@@ -615,7 +620,7 @@ constructor TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.Create;
 begin
      inherited;
 
-     _Source := TCLSource_ .Create( Self );
+     _Source := TCLSource_.Create( Self );
 
      _Handle := nil;
 end;
