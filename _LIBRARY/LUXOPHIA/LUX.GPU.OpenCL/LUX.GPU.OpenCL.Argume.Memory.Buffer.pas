@@ -29,6 +29,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Count :Integer;
        ///// アクセス
        function GetKind :T_cl_mem_flags; override;
+       function NewData :TCLMemDat_; override;
        function GetData :TCLBufDat_; reintroduce; virtual;
        procedure SetData( const Data_:TCLBufDat_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
@@ -36,7 +37,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetCount( const Count_:Integer ); virtual;
        ///// メソッド
        function CreateHandle :T_cl_int; override;
-       function NewData :TCLMemDat_; override;
      public
        constructor Create; override;
        destructor Destroy; override;
@@ -96,6 +96,11 @@ end;
 
 //------------------------------------------------------------------------------
 
+function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewData :TCLMemDat_;
+begin
+     Result := TCLBufDat_.Create( Self );
+end;
+
 function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLBufDat_;
 begin
      Result := TCLBufDat_( inherited Data );
@@ -132,13 +137,6 @@ end;
 function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
 begin
      _Handle := clCreateBuffer( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle, Kind, Size, nil, @Result );
-end;
-
-//------------------------------------------------------------------------------
-
-function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewData :TCLMemDat_;
-begin
-     Result := TCLBufDat_.Create( Self );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public

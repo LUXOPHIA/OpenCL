@@ -28,13 +28,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _CountY :Integer;
        ///// アクセス
+       function NewData :TCLMemDat_; override;
        function GetData :TCLImaDat_; reintroduce; virtual;
        procedure SetData( const Data_:TCLImaDat_ ); reintroduce; virtual;
        function GetMemTyp :T_cl_mem_object_type; override;
        function GetCountY :Integer; override;
        procedure SetCountY( const CountY_:Integer ); override;
-       ///// メソッド
-       function NewData :TCLMemDat_; override;
      public
        constructor Create; override;
        ///// プロパティ
@@ -81,6 +80,11 @@ implementation //###############################################################
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
+function TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewData :TCLMemDat_;
+begin
+     Result := TCLImaDat_.Create( Self );
+end;
+
 function TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLImaDat_;
 begin
      Result := TCLImaDat_( inherited Data );
@@ -110,13 +114,6 @@ begin
      inherited;
 
      _CountY := CountY_;
-end;
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-function TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewData :TCLMemDat_;
-begin
-     Result := TCLImaDat_.Create( Self );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
