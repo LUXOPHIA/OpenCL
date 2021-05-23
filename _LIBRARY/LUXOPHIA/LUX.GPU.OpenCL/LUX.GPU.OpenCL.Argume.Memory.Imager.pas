@@ -13,7 +13,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
 
-     TCLImagerIter<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
+     TCLImaDat<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -23,12 +23,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
-       type TCLData_ = TCLImagerIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
+       type TCLImaDat_ = TCLImaDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
      protected
        ///// アクセス
        function GetKind :T_cl_mem_flags; override;
-       function GetData :TCLData_; reintroduce; virtual;
-       procedure SetData( const Data_:TCLData_ ); reintroduce; virtual;
+       function GetData :TCLImaDat_; reintroduce; virtual;
+       procedure SetData( const Data_:TCLImaDat_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
        function GetPixChan :T_cl_channel_order; virtual; abstract;
        function GetPixType :T_cl_channel_type; virtual; abstract;
@@ -45,7 +45,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function CreateHandle :T_cl_int; override;
      public
        ///// プロパティ
-       property Data    :TCLData_             read GetData   write SetData  ;
+       property Data    :TCLImaDat_           read GetData   write SetData  ;
        property PixChan :T_cl_channel_order   read GetPixChan               ;
        property PixType :T_cl_channel_type    read GetPixType               ;
        property Format  :T_cl_image_format    read GetFormat                ;
@@ -58,9 +58,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure Fill( const Value_:TValue_ );
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImaDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
-     TCLImagerIter<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_> )
+     TCLImaDat<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
        type TCLImager_ = TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
             PValue_    = ^TValue_;
@@ -107,12 +107,12 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLData_;
+function TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLImaDat_;
 begin
-     Result := TCLData_( inherited Data );
+     Result := TCLImaDat_( inherited Data );
 end;
 
-procedure TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetData( const Data_:TCLData_ );
+procedure TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetData( const Data_:TCLImaDat_ );
 begin
      inherited Data := Data_;
 end;
@@ -220,7 +220,7 @@ begin
                                    0, nil, nil ), 'TCLImager.Fill is Error!' );
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImaDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -228,19 +228,19 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImagerIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetImager :TCLImager_;
+function TCLImaDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetImager :TCLImager_;
 begin
      Result := TCLImager_( Memory );
 end;
 
-function TCLImagerIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValueP :PByte;
+function TCLImaDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValueP :PByte;
 begin
      Result := Handle;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLImagerIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
+function TCLImaDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
 var
    O, R :record
            X, Y, Z :T_size_t;

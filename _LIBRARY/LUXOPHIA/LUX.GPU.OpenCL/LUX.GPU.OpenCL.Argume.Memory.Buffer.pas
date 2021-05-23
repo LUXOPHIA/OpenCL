@@ -13,7 +13,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
      
-     TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
+     TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -23,13 +23,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
-       type TCLData_ = TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
+       type TCLBufDat_ = TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
      protected
        _Count :Integer;
        ///// アクセス
        function GetKind :T_cl_mem_flags; override;
-       function GetData :TCLData_; reintroduce; virtual;
-       procedure SetData( const Data_:TCLData_ ); reintroduce; virtual;
+       function GetData :TCLBufDat_; reintroduce; virtual;
+       procedure SetData( const Data_:TCLBufDat_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
        function GetCount :Integer; virtual;
        procedure SetCount( const Count_:Integer ); virtual;
@@ -40,13 +40,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
        destructor Destroy; override;
        ///// プロパティ
-       property Data  :TCLData_ read GetData  write SetData ;
-       property Count :Integer  read GetCount write SetCount;
+       property Data  :TCLBufDat_ read GetData  write SetData ;
+       property Count :Integer    read GetCount write SetCount;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
-     TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_> )
+     TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
        type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuffer_ = TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
@@ -93,12 +93,12 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLData_;
+function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLBufDat_;
 begin
-     Result := TCLData_( inherited Data );
+     Result := TCLBufDat_( inherited Data );
 end;
 
-procedure TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetData( const Data_:TCLData_ );
+procedure TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetData( const Data_:TCLBufDat_ );
 begin
      inherited Data := Data_;
 end;
@@ -135,7 +135,7 @@ end;
 
 function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewData :TObject;
 begin
-     Result := TCLData_.Create( Self );
+     Result := TCLBufDat_.Create( Self );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -154,25 +154,25 @@ begin
      inherited;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetBuffer :TCLBuffer_;
+function TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetBuffer :TCLBuffer_;
 begin
      Result := TCLBuffer_( Memory );
 end;
 
-function TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValues( const I_:Integer ) :TValue_;
+function TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValues( const I_:Integer ) :TValue_;
 var
    P :PValue_;
 begin
      P := Handle;  Inc( P, I_ );  Result := P^;
 end;
 
-procedure TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetValues( const I_:Integer; const Values_:TValue_ );
+procedure TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetValues( const I_:Integer; const Values_:TValue_ );
 var
    P :PValue_;
 begin
@@ -181,7 +181,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
+function TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
 begin
      inherited;
 
