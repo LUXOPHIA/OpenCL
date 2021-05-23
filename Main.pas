@@ -75,19 +75,12 @@ procedure TForm1.ShowBuild;
 begin
      with MemoPB.Lines do
      begin
-          if _Buildr.CompileStatus = CL_BUILD_ERROR then
-          begin
-               Add( '▼ Compile' );
-               Add( _Buildr.CompileLog );
-               Add( '' );
-          end;
-
-          if _Buildr.LinkStatus = CL_BUILD_ERROR then
-          begin
-               Add( '▼ Link' );
-               Add( _Buildr.LinkLog );
-               Add( '' );
-          end;
+          Add( '▼ Compile' );
+          Add( _Buildr.CompileLog );
+          Add( '' );
+          Add( '▼ Link' );
+          Add( _Buildr.LinkLog );
+          Add( '' );
      end;
 
      TabControl1.ActiveTab := TabItemP;
@@ -114,7 +107,7 @@ begin
 
      ////////// コマンドキュー
 
-     _Queuer := TCLQueuer.Create( _Contex, _Device );                           // 生成
+     _Queuer := _Contex.Queuers[ _Device ];                                     // 生成
 
      Assert( Assigned( _Contex.Handle ), '_Contex is Error!' );
      Assert( Assigned( _Queuer.Handle ), '_Queuer is Error!' );
