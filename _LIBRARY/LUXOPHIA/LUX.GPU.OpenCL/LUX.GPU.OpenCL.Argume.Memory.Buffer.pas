@@ -23,25 +23,25 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
-       type TCLStorag_ = TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
+       type TCLData_ = TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
      protected
        _Count :Integer;
        ///// アクセス
        function GetKind :T_cl_mem_flags; override;
-       function GetStorag :TCLStorag_; reintroduce; virtual;
-       procedure SetStorag( const Storag_:TCLStorag_ ); reintroduce; virtual;
+       function GetData :TCLData_; reintroduce; virtual;
+       procedure SetData( const Data_:TCLData_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
        function GetCount :Integer; virtual;
        procedure SetCount( const Count_:Integer ); virtual;
        ///// メソッド
        function CreateHandle :T_cl_int; override;
-       function NewStorag :TObject; override;
+       function NewData :TObject; override;
      public
        constructor Create; override;
        destructor Destroy; override;
        ///// プロパティ
-       property Storag :TCLStorag_ read GetStorag write SetStorag;
-       property Count  :Integer    read GetCount  write SetCount ;
+       property Data  :TCLData_ read GetData  write SetData ;
+       property Count :Integer  read GetCount write SetCount;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufferIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
@@ -93,14 +93,14 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetStorag :TCLStorag_;
+function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLData_;
 begin
-     Result := TCLStorag_( inherited Storag );
+     Result := TCLData_( inherited Data );
 end;
 
-procedure TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
+procedure TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetData( const Data_:TCLData_ );
 begin
-     inherited Storag := Storag_;
+     inherited Data := Data_;
 end;
 
 //------------------------------------------------------------------------------
@@ -133,9 +133,9 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewStorag :TObject;
+function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewData :TObject;
 begin
-     Result := TCLStorag_.Create( Self );
+     Result := TCLData_.Create( Self );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public

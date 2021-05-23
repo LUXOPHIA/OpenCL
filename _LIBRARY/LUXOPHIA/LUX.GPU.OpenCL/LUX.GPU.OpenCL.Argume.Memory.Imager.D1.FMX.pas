@@ -153,17 +153,17 @@ var
 begin
      Bitmap_.SetSize( CountX, CountY );
 
-     Storag.Map;
+     Data.Map;
 
      Bitmap_.Map( TMapAccess.Write, B );
 
-     Move( Storag.ValueP[ 0 ]^,
+     Move( Data.ValueP[ 0 ]^,
            B.GetScanline( 0 )^,
            B.BytesPerLine );
 
      Bitmap_.Unmap( B );
 
-     Storag.Unmap;
+     Data.Unmap;
 end;
 
 procedure TCLImager1DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Bitmap_:TBitmap );
@@ -174,13 +174,13 @@ begin
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     Storag.Map;
+     Data.Map;
 
      Move( B.GetScanline( 0 )^,
-           Storag.ValueP[ 0 ]^,
+           Data.ValueP[ 0 ]^,
            B.BytesPerLine );
 
-     Storag.Unmap;
+     Data.Unmap;
 
      Bitmap_.Unmap( B );
 end;
@@ -213,17 +213,17 @@ var
 begin
      Bitmap_.SetSize( CountX, CountY );
 
-     Storag.Map;
+     Data.Map;
 
      Bitmap_.Map( TMapAccess.Write, B );
 
-     Move( Storag.ValueP[ 0 ]^,
+     Move( Data.ValueP[ 0 ]^,
            B.GetScanline( 0 )^,
            B.BytesPerLine );
 
      Bitmap_.Unmap( B );
 
-     Storag.Unmap;
+     Data.Unmap;
 end;
 
 procedure TCLImager1DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Bitmap_:TBitmap );
@@ -234,13 +234,13 @@ begin
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     Storag.Map;
+     Data.Map;
 
      Move( B.GetScanline( 0 )^,
-           Storag.ValueP[ 0 ]^,
+           Data.ValueP[ 0 ]^,
            B.BytesPerLine );
 
-     Storag.Unmap;
+     Data.Unmap;
 
      Bitmap_.Unmap( B );
 end;
@@ -274,18 +274,18 @@ var
 begin
      Bitmap_.SetSize( CountX, CountY );
 
-     Storag.Map;
+     Data.Map;
 
      Bitmap_.Map( TMapAccess.Write, B );
 
      for X := 0 to CountX-1 do
      begin
-          B.SetPixel( X, 0, TAlphaColor( TByteRGBA( Storag[ X ] ) ) );
+          B.SetPixel( X, 0, TAlphaColor( TByteRGBA( Data[ X ] ) ) );
      end;
 
      Bitmap_.Unmap( B );
 
-     Storag.Unmap;
+     Data.Unmap;
 end;
 
 procedure TCLImager1DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Bitmap_:TBitmap );
@@ -297,14 +297,14 @@ begin
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     Storag.Map;
+     Data.Map;
 
      for X := 0 to CountX-1 do
      begin
-          Storag[ X ] := B.GetPixel( X, 0 );
+          Data[ X ] := B.GetPixel( X, 0 );
      end;
 
-     Storag.Unmap;
+     Data.Unmap;
 
      Bitmap_.Unmap( B );
 end;

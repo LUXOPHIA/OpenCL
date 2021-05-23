@@ -25,11 +25,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLQueuer_  = TCLQueuer <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLArgumes_ = TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>;
-            TCLStorag_  = TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLData_    = TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
        _Handle :T_cl_mem;
        _Kind   :T_cl_mem_flags;
-       _Storag :TCLStorag_;
+       _Data   :TCLData_;
        _Queuer :TCLQueuer_;
        ///// アクセス
        function GetHanPtr :P_void; override;
@@ -38,22 +38,22 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetHandle( const Handle_:T_cl_mem ); virtual;
        function GetKind :T_cl_mem_flags; virtual;
        procedure SetKind( const Kind_:T_cl_mem_flags ); virtual;
-       function GetStorag :TCLStorag_; virtual;
-       procedure SetStorag( const Storag_:TCLStorag_ ); virtual;
+       function GetData :TCLData_; virtual;
+       procedure SetData( const Data_:TCLData_ ); virtual;
        function GetSize :T_size_t; virtual; abstract;
        ///// メソッド
        function DestroHandle :T_cl_int; override;
-       function NewStorag :TObject; virtual; abstract;
+       function NewData :TObject; virtual; abstract;
      public
        constructor Create; override;
        constructor Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Handle  :T_cl_mem       read GetHandle write SetHandle;
-       property Kind    :T_cl_mem_flags read GetKind   write SetKind  ;
-       property Storag  :TCLStorag_     read GetStorag write SetStorag;
-       property Size    :T_size_t       read GetSize                  ;
-       property Queuer  :TCLQueuer_     read   _Queuer write   _Queuer;
+       property Handle :T_cl_mem       read GetHandle write SetHandle;
+       property Kind   :T_cl_mem_flags read GetKind   write SetKind  ;
+       property Data   :TCLData_       read GetData   write SetData  ;
+       property Size   :T_size_t       read GetSize                  ;
+       property Queuer :TCLQueuer_     read   _Queuer write   _Queuer;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemoryIter<TCLSystem_,TCLPlatfo_,TCLContex_>
@@ -148,14 +148,14 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.GetStorag :TCLStorag_;
+function TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.GetData :TCLData_;
 begin
-     Result := _Storag;
+     Result := _Data;
 end;
 
-procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.SetStorag( const Storag_:TCLStorag_ );
+procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.SetData( const Data_:TCLData_ );
 begin
-     _Storag := Storag_;
+     _Data := Data_;
 
      Handle := nil;
 end;
@@ -178,7 +178,7 @@ begin
      _Handle := nil;
 
      _Kind   := CL_MEM_READ_WRITE;
-     _Storag := TCLStorag_( NewStorag );
+     _Data   := TCLData_( NewData );
      _Queuer := nil;
 end;
 
@@ -191,7 +191,7 @@ end;
 
 destructor TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
-     _Storag.Free;
+     _Data.Free;
 
       Handle := nil;
 

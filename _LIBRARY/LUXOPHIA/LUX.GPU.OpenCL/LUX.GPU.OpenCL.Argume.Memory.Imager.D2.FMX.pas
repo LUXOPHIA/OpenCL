@@ -171,20 +171,20 @@ var
 begin
      Bitmap_.SetSize( CountX, CountY );
 
-     Storag.Map;
+     Data.Map;
 
      Bitmap_.Map( TMapAccess.Write, B );
 
      TParallel.For( 0, CountY-1, procedure( Y:Integer )
      begin
-          Move( Storag.ValueP[ 0, Y ]^,
+          Move( Data.ValueP[ 0, Y ]^,
                 B.GetScanline( Y )^,
                 B.BytesPerLine );
      end );
 
      Bitmap_.Unmap( B );
 
-     Storag.Unmap;
+     Data.Unmap;
 end;
 
 procedure TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Bitmap_:TBitmap );
@@ -196,16 +196,16 @@ begin
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     Storag.Map;
+     Data.Map;
 
      TParallel.For( 0, CountY-1, procedure( Y:Integer )
      begin
           Move( B.GetScanline( Y )^,
-                Storag.ValueP[ 0, Y ]^,
+                Data.ValueP[ 0, Y ]^,
                 B.BytesPerLine );
      end );
 
-     Storag.Unmap;
+     Data.Unmap;
 
      Bitmap_.Unmap( B );
 end;
@@ -238,20 +238,20 @@ var
 begin
      Bitmap_.SetSize( CountX, CountY );
 
-     Storag.Map;
+     Data.Map;
 
      Bitmap_.Map( TMapAccess.Write, B );
 
      TParallel.For( 0, CountY-1, procedure( Y:Integer )
      begin
-          Move( Storag.ValueP[ 0, Y ]^,
+          Move( Data.ValueP[ 0, Y ]^,
                 B.GetScanline( Y )^,
                 B.BytesPerLine );
      end );
 
      Bitmap_.Unmap( B );
 
-     Storag.Unmap;
+     Data.Unmap;
 end;
 
 procedure TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Bitmap_:TBitmap );
@@ -263,16 +263,16 @@ begin
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     Storag.Map;
+     Data.Map;
 
      TParallel.For( 0, CountY-1, procedure( Y:Integer )
      begin
           Move( B.GetScanline( Y )^,
-                Storag.ValueP[ 0, Y ]^,
+                Data.ValueP[ 0, Y ]^,
                 B.BytesPerLine );
      end );
 
-     Storag.Unmap;
+     Data.Unmap;
 
      Bitmap_.Unmap( B );
 end;
@@ -305,7 +305,7 @@ var
 begin
      Bitmap_.SetSize( CountX, CountY );
 
-     Storag.Map;
+     Data.Map;
 
      Bitmap_.Map( TMapAccess.Write, B );
 
@@ -315,13 +315,13 @@ begin
      begin
           for X := 0 to CountX-1 do
           begin
-               B.SetPixel( X, Y, TByteRGBA( Storag[ X, Y ] ) );
+               B.SetPixel( X, Y, TByteRGBA( Data[ X, Y ] ) );
           end;
      end );
 
      Bitmap_.Unmap( B );
 
-     Storag.Unmap;
+     Data.Unmap;
 end;
 
 procedure TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Bitmap_:TBitmap );
@@ -333,7 +333,7 @@ begin
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     Storag.Map;
+     Data.Map;
 
      TParallel.For( 0, CountY-1, procedure( Y:Integer )
      var
@@ -341,11 +341,11 @@ begin
      begin
           for X := 0 to CountX-1 do
           begin
-               Storag[ X, Y ] := B.GetPixel( X, Y );
+               Data[ X, Y ] := B.GetPixel( X, Y );
           end;
      end );
 
-     Storag.Unmap;
+     Data.Unmap;
 
      Bitmap_.Unmap( B );
 end;
@@ -378,7 +378,7 @@ var
 begin
      Bitmap_.SetSize( CountX, CountY );
 
-     Storag.Map;
+     Data.Map;
 
      Bitmap_.Map( TMapAccess.Write, B );
 
@@ -388,13 +388,13 @@ begin
      begin
           for X := 0 to CountX-1 do
           begin
-               B.SetPixel( X, Y, TByteRGBA( Storag[ X, Y ] ) );
+               B.SetPixel( X, Y, TByteRGBA( Data[ X, Y ] ) );
           end;
      end );
 
      Bitmap_.Unmap( B );
 
-     Storag.Unmap;
+     Data.Unmap;
 end;
 
 procedure TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Bitmap_:TBitmap );
@@ -406,7 +406,7 @@ begin
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     Storag.Map;
+     Data.Map;
 
      TParallel.For( 0, CountY-1, procedure( Y:Integer )
      var
@@ -414,11 +414,11 @@ begin
      begin
           for X := 0 to CountX-1 do
           begin
-               Storag[ X, Y ] := B.GetPixel( X, Y );
+               Data[ X, Y ] := B.GetPixel( X, Y );
           end;
      end );
 
-     Storag.Unmap;
+     Data.Unmap;
 
      Bitmap_.Unmap( B );
 end;
@@ -430,7 +430,7 @@ begin
      CountX := Grid_.CellsX;
      CountY := Grid_.CellsY;
 
-     Storag.Map;
+     Data.Map;
 
      TParallel.For( 0, CountY-1, procedure( Y:Integer )
      var
@@ -438,11 +438,11 @@ begin
      begin
           for X := 0 to CountX-1 do
           begin
-               Storag[ X, Y ] := TSingleRGBA( TSingleRGB( Grid_[ X, Y ] ) );
+               Data[ X, Y ] := TSingleRGBA( TSingleRGB( Grid_[ X, Y ] ) );
           end;
      end );
 
-     Storag.Unmap;
+     Data.Unmap;
 end;
 
 procedure TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.LoadFromFileHDR( const FileName_:String );

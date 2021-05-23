@@ -22,22 +22,22 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_> )
      private
-       type TCLStorag_ = TCLImagerIter3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
+       type TCLData_ = TCLImagerIter3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
      protected
        _CountZ :Integer;
        ///// アクセス
-       function GetStorag :TCLStorag_; reintroduce; virtual;
-       procedure SetStorag( const Storag_:TCLStorag_ ); reintroduce; virtual;
+       function GetData :TCLData_; reintroduce; virtual;
+       procedure SetData( const Data_:TCLData_ ); reintroduce; virtual;
        function GetMemTyp :T_cl_mem_object_type; override;
        function GetCountZ :Integer; override;
        procedure SetCountZ( const CountZ_:Integer ); override;
        ///// メソッド
-       function NewStorag :TObject; override;
+       function NewData :TObject; override;
      public
        constructor Create; override;
        ///// プロパティ
-       property Storag :TCLStorag_ read GetStorag write SetStorag;
-       property CountZ :Integer    read GetCountZ write SetCountZ;
+       property Data   :TCLData_ read GetData   write SetData  ;
+       property CountZ :Integer  read GetCountZ write SetCountZ;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImagerIter3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
@@ -79,14 +79,14 @@ implementation //###############################################################
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetStorag :TCLStorag_;
+function TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLData_;
 begin
-     Result := TCLStorag_( inherited Storag );
+     Result := TCLData_( inherited Data );
 end;
 
-procedure TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
+procedure TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetData( const Data_:TCLData_ );
 begin
-     inherited Storag := Storag_;
+     inherited Data := Data_;
 end;
 
 //------------------------------------------------------------------------------
@@ -112,9 +112,9 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewStorag :TObject;
+function TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewData :TObject;
 begin
-     Result := TCLStorag_.Create( Self );
+     Result := TCLData_.Create( Self );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public

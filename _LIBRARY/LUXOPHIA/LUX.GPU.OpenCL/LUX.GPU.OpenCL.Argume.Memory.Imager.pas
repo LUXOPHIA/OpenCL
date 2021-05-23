@@ -23,12 +23,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
-       type TCLStorag_ = TCLImagerIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
+       type TCLData_ = TCLImagerIter<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
      protected
        ///// アクセス
        function GetKind :T_cl_mem_flags; override;
-       function GetStorag :TCLStorag_; reintroduce; virtual;
-       procedure SetStorag( const Storag_:TCLStorag_ ); reintroduce; virtual;
+       function GetData :TCLData_; reintroduce; virtual;
+       procedure SetData( const Data_:TCLData_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
        function GetPixChan :T_cl_channel_order; virtual; abstract;
        function GetPixType :T_cl_channel_type; virtual; abstract;
@@ -45,7 +45,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function CreateHandle :T_cl_int; override;
      public
        ///// プロパティ
-       property Storag  :TCLStorag_           read GetStorag write SetStorag;
+       property Data    :TCLData_             read GetData   write SetData  ;
        property PixChan :T_cl_channel_order   read GetPixChan               ;
        property PixType :T_cl_channel_type    read GetPixType               ;
        property Format  :T_cl_image_format    read GetFormat                ;
@@ -107,14 +107,14 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetStorag :TCLStorag_;
+function TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLData_;
 begin
-     Result := TCLStorag_( inherited Storag );
+     Result := TCLData_( inherited Data );
 end;
 
-procedure TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetStorag( const Storag_:TCLStorag_ );
+procedure TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetData( const Data_:TCLData_ );
 begin
-     inherited Storag := Storag_;
+     inherited Data := Data_;
 end;
 
 //------------------------------------------------------------------------------
