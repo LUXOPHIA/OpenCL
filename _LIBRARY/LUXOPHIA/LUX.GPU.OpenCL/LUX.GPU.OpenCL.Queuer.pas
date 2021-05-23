@@ -30,6 +30,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// アクセス
        function GetHandle :T_cl_command_queue;
        procedure SetHandle( const Handle_:T_cl_command_queue );
+       function GetDevice :TCLDevice_;
+       procedure SetDevice( const Device_:TCLDevice_ );
        ///// メソッド
        function CreateHandle :T_cl_int; virtual;
        function DestroHandle :T_cl_int; virtual;
@@ -40,8 +42,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// プロパティ
        property Contex  :TCLContex_         read GetOwnere                ;
        property Queuers :TCLQueuers_        read GetParent                ;
-       property Device  :TCLDevice_         read   _Device                ;
        property Handle  :T_cl_command_queue read GetHandle write SetHandle;
+       property Device  :TCLDevice_         read GetDevice write SetDevice;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>
@@ -66,6 +68,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Contex                              :TCLContex_ read GetOwnere                  ;
        property Queuers[ const Device_:TCLDevice_ ] :TCLQueuer_ read GetQueuers write SetQueuers; default;
        ///// メソッド
+       function Contains( const Device_:TCLDevice_ ) :Boolean;
        function Add( const Device_:TCLDevice_ ) :TCLQueuer_; overload;
        function GetDeviceIDs :TArray<T_cl_device_id>;
      end;
@@ -104,6 +107,20 @@ begin
      if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLQueuer.DestroHandle is Error!' );
 
      _Handle := Handle_;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.GetDevice :TCLDevice_;
+begin
+     Result := _Device;
+end;
+
+procedure TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.SetDevice( const Device_:TCLDevice_ );
+begin
+     _Device := Device_;
+
+     Handle := nil;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
@@ -165,15 +182,14 @@ end;
 
 function TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.GetQueuers( const Device_:TCLDevice_ ) :TCLQueuer_;
 begin
-     if _DevQues.ContainsKey( Device_ ) then Result := _DevQues[ Device_ ]
-                                        else Result := Add( Device_ );
+     if Contains( Device_ ) then Result := _DevQues[ Device_ ]
+                            else Result := Add( Device_ );
 end;
 
 procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.SetQueuers( const Device_:TCLDevice_; const Queuer_:TCLQueuer_ );
 begin
-     if _DevQues.ContainsKey( Device_ ) then _DevQues[ Device_ ].Free;
-
-     _DevQues[ Device_ ] := Queuer_;
+     Queuer_.Device := Device_;
+     Queuer_.Parent := Self;
 end;
 
 /////////////////////////////////////////////////////////////////////// イベント
@@ -182,7 +198,7 @@ procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChild( const Chil
 begin
      inherited;
 
-     if _DevQues.ContainsKey( Childr_.Device ) then _DevQues[ Childr_.Device ].Free;
+     if Contains( Childr_.Device ) then _DevQues[ Childr_.Device ].Free;
 
      _DevQues.Add( Childr_.Device, Childr_ );
 end;
@@ -211,6 +227,13 @@ begin
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
+
+function TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.Contains( const Device_:TCLDevice_ ) :Boolean;
+begin
+     Result := _DevQues.ContainsKey( Device_ );
+end;
+
+//------------------------------------------------------------------------------
 
 function TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.Add( const Device_:TCLDevice_ ) :TCLQueuer_;
 begin
