@@ -191,7 +191,7 @@ begin
 
      ////////// ビルド
 
-     _Buildr := _Execut.Buildrs[ _Device ];                                     // 生成
+     _Buildr := _Execut.BuildTo( _Device );                                     // 生成
 
      if Assigned( _Buildr.Handle ) then
      begin
