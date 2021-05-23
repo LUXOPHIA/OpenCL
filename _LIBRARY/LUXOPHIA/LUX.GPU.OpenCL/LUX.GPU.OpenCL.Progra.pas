@@ -615,7 +615,7 @@ constructor TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.Create;
 begin
      inherited;
 
-     _Source := TCLSource_ .Create( Self );
+     _Source := TCLSource_.Create( Self );
 
      _Handle := nil;
 end;
