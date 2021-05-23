@@ -189,9 +189,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
+       type TCLLibrars_ = TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
      public
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
+       ///// プロパティ
+       property Librars :TCLLibrars_ read GetParent;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>
@@ -199,6 +202,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
        type TCLDevice_  = TCLDevice <TCLSystem_,TCLPlatfo_>;
+            TCLExecuts_ = TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLExecut_  = TCLExecut <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuildrs_ = TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuildr_  = TCLBuildr <TCLSystem_,TCLPlatfo_,TCLContex_>;
@@ -213,8 +217,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Buildrs :TCLBuildrs_ read _Buildrs;
-       property Kernels :TCLKernels_ read _Kernels;
+       property Executs :TCLExecuts_ read GetParent ;
+       property Buildrs :TCLBuildrs_ read   _Buildrs;
+       property Kernels :TCLKernels_ read   _Kernels;
        ///// メソッド
        function BuildTo( const Device_:TCLDevice_ ) :TCLBuildr_;
      end;
