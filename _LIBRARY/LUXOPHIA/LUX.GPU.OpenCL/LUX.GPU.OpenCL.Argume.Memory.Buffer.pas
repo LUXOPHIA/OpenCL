@@ -54,6 +54,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        ///// アクセス
        function GetBuffer :TCLBuffer_; virtual;
+       function GetValueP( const I_:Integer ) :PValue_; virtual;
        function GetValues( const I_:Integer ) :TValue_; virtual;
        procedure SetValues( const I_:Integer; const Values_:TValue_ ); virtual;
        ///// メソッド
@@ -61,6 +62,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
        ///// プロパティ
        property Buffer                     :TCLBuffer_ read GetBuffer                ;
+       property ValueP[ const I_:Integer ] :PValue_    read GetValueP                ;
        property Values[ const I_:Integer ] :TValue_    read GetValues write SetValues; default;
      end;
 
@@ -165,18 +167,19 @@ begin
      Result := TCLBuffer_( Memory );
 end;
 
-function TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValues( const I_:Integer ) :TValue_;
-var
-   P :PValue_;
+function TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValueP( const I_:Integer ) :PValue_;
 begin
-     P := Handle;  Inc( P, I_ );  Result := P^;
+     Result := Handle;  Inc( Result, I_ );
+end;
+
+function TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValues( const I_:Integer ) :TValue_;
+begin
+     Result := ValueP[ I_ ]^;
 end;
 
 procedure TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetValues( const I_:Integer; const Values_:TValue_ );
-var
-   P :PValue_;
 begin
-     P := Handle;  Inc( P, I_ );  P^ := Values_;
+     ValueP[ I_ ]^ := Values_;
 end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
