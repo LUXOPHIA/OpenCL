@@ -30,8 +30,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetData :TCLImaDat_; reintroduce; virtual;
        procedure SetData( const Data_:TCLImaDat_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
-       function GetPixChan :T_cl_channel_order; virtual; abstract;
-       function GetPixType :T_cl_channel_type; virtual; abstract;
+       function GetPixCha :T_cl_channel_order; virtual; abstract;
+       function GetPixTyp :T_cl_channel_type; virtual; abstract;
        function GetFormat :T_cl_image_format; virtual;
        function GetMemTyp :T_cl_mem_object_type; virtual; abstract;
        function GetCountX :Integer; virtual;
@@ -45,15 +45,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function CreateHandle :T_cl_int; override;
      public
        ///// プロパティ
-       property Data    :TCLImaDat_           read GetData   write SetData  ;
-       property PixChan :T_cl_channel_order   read GetPixChan               ;
-       property PixType :T_cl_channel_type    read GetPixType               ;
-       property Format  :T_cl_image_format    read GetFormat                ;
-       property MemTyp  :T_cl_mem_object_type read GetMemTyp                ;
-       property CountX  :Integer              read GetCountX write SetCountX;
-       property CountY  :Integer              read GetCountY write SetCountY;
-       property CountZ  :Integer              read GetCountZ write SetCountZ;
-       property Descri  :T_cl_image_desc      read GetDescri                ;
+       property Data   :TCLImaDat_           read GetData   write SetData  ;
+       property PixCha :T_cl_channel_order   read GetPixCha                ;
+       property PixTyp :T_cl_channel_type    read GetPixTyp                ;
+       property Format :T_cl_image_format    read GetFormat                ;
+       property MemTyp :T_cl_mem_object_type read GetMemTyp                ;
+       property CountX :Integer              read GetCountX write SetCountX;
+       property CountY :Integer              read GetCountY write SetCountY;
+       property CountZ :Integer              read GetCountZ write SetCountZ;
+       property Descri :T_cl_image_desc      read GetDescri                ;
        ///// メソッド
        procedure Fill( const Value_:TValue_ );
      end;
@@ -130,8 +130,8 @@ function TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetFormat :T_cl_ima
 begin
      with Result do
      begin
-          image_channel_order     := GetPixChan;
-          image_channel_data_type := GetPixType;
+          image_channel_order     := GetPixCha;
+          image_channel_data_type := GetPixTyp;
      end;
 end;
 
