@@ -134,10 +134,10 @@ begin
 
      _AreaC := TDoubleAreaC.Create( -2, -2, +2, +2 );
 
-     _Buffer.Storag.Map;                                                        // 展開
-     _Buffer.Storag[ 0 ] := _AreaC.Min;                                         // 書き込み
-     _Buffer.Storag[ 1 ] := _AreaC.Max;                                         // 書き込み
-     _Buffer.Storag.Unmap;                                                      // 同期
+     _Buffer.Data.Map;                                                          // 展開
+     _Buffer.Data[ 0 ] := _AreaC.Min;                                           // 書き込み
+     _Buffer.Data[ 1 ] := _AreaC.Max;                                           // 書き込み
+     _Buffer.Data.Unmap;                                                        // 同期
 
      ////////// イメージ
 
@@ -266,10 +266,10 @@ begin
 
      ////////// バッファー
 
-     _Buffer.Storag.Map;                                                        // 展開
-     _Buffer.Storag[ 0 ] := _AreaC.Min;                                         // 書き込み
-     _Buffer.Storag[ 1 ] := _AreaC.Max;                                         // 書き込み
-     _Buffer.Storag.Unmap;                                                      // 同期
+     _Buffer.Data.Map;                                                          // 展開
+     _Buffer.Data[ 0 ] := _AreaC.Min;                                           // 書き込み
+     _Buffer.Data[ 1 ] := _AreaC.Max;                                           // 書き込み
+     _Buffer.Data.Unmap;                                                        // 同期
 end;
 
 end. //######################################################################### ■
