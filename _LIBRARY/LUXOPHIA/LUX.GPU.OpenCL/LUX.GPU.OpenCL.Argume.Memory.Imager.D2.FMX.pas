@@ -40,8 +40,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        ///// アクセス
-       function GetPixChan :T_cl_channel_order; override;
-       function GetPixType :T_cl_channel_type; override;
+       function GetPixCha :T_cl_channel_order; override;
+       function GetPixTyp :T_cl_channel_type; override;
      public
        ///// メソッド
        procedure CopyTo( const Bitmap_:TBitmap ); override;
@@ -54,8 +54,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        ///// アクセス
-       function GetPixChan :T_cl_channel_order; override;
-       function GetPixType :T_cl_channel_type; override;
+       function GetPixCha :T_cl_channel_order; override;
+       function GetPixTyp :T_cl_channel_type; override;
      public
        ///// メソッド
        procedure CopyTo( const Bitmap_:TBitmap ); override;
@@ -68,8 +68,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        ///// アクセス
-       function GetPixChan :T_cl_channel_order; override;
-       function GetPixType :T_cl_channel_type; override;
+       function GetPixCha :T_cl_channel_order; override;
+       function GetPixTyp :T_cl_channel_type; override;
      public
        ///// メソッド
        procedure CopyTo( const Bitmap_:TBitmap ); override;
@@ -82,8 +82,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        ///// アクセス
-       function GetPixChan :T_cl_channel_order; override;
-       function GetPixType :T_cl_channel_type; override;
+       function GetPixCha :T_cl_channel_order; override;
+       function GetPixTyp :T_cl_channel_type; override;
      public
        ///// メソッド
        procedure CopyTo( const Bitmap_:TBitmap ); override;
@@ -151,12 +151,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
+function TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
 begin
      Result := CL_BGRA;
 end;
 
-function TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
+function TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
 begin
      Result := CL_UNSIGNED_INT8;
 end;
@@ -218,12 +218,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
+function TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
 begin
      Result := CL_BGRA;
 end;
 
-function TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
+function TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
 begin
      Result := CL_UNORM_INT8;
 end;
@@ -285,12 +285,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
+function TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
 begin
      Result := CL_RGBA;
 end;
 
-function TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
+function TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
 begin
      Result := CL_UNSIGNED_INT32;
 end;
@@ -358,12 +358,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
+function TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
 begin
      Result := CL_RGBA;
 end;
 
-function TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
+function TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
 begin
      Result := CL_FLOAT;
 end;
