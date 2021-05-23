@@ -96,8 +96,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property FindsOK                       :Boolean    read GetFindsOK write SetFindsOK;
        property BindsOK                       :Boolean    read GetBindsOK write SetBindsOK;
        ///// メソッド
-       function Add( const Name_:String; const Argume_:TCLArgume_ ) :TCLParame_; overload;
        function Contains( const Name_:String ) :Boolean;
+       function Add( const Name_:String ) :TCLParame_; overload;
+       function Add( const Name_:String; const Argume_:TCLArgume_ ) :TCLParame_; overload;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>
@@ -330,7 +331,8 @@ end;
 
 function TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetChildr( const Name_:String ) :TCLParame_;
 begin
-     Result := _NamPars[ Name_ ];
+     if Contains( Name_ ) then Result := _NamPars[ Name_ ]
+                          else Result := Add( Name_ );
 end;
 
 procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.SetChildr( const Name_:String; const Childr_:TCLParame_ );
@@ -349,8 +351,7 @@ end;
 
 procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.SetArgumes( const Name_:String; const Argume_:TCLArgume_ );
 begin
-     if _NamPars.ContainsKey( Name_ ) then _NamPars[ Name_ ].Argume := Argume_
-                                      else Add( Name_, Argume_ );
+     Childrs[ Name_ ].Argume := Argume_;
 end;
 
 //------------------------------------------------------------------------------
@@ -444,16 +445,21 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-function TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Add( const Name_:String; const Argume_:TCLArgume_ ) :TCLParame_;
+function TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Contains( const Name_:String ) :Boolean;
 begin
-     Result := TCLParame_.Create( Self, Name_, Argume_ );
+     Result := _NamPars.ContainsKey( Name_ );
 end;
 
 //------------------------------------------------------------------------------
 
-function TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Contains( const Name_:String ) :Boolean;
+function TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Add( const Name_:String ) :TCLParame_;
 begin
-     Result := _NamPars.ContainsKey( Name_ );
+     Result := TCLParame_.Create( Self, Name_ );
+end;
+
+function TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Add( const Name_:String; const Argume_:TCLArgume_ ) :TCLParame_;
+begin
+     Result := TCLParame_.Create( Self, Name_, Argume_ );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>
