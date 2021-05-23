@@ -43,7 +43,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetSize :T_size_t; virtual; abstract;
        ///// メソッド
        function DestroHandle :T_cl_int; override;
-       function NewData :TObject; virtual; abstract;
+       function NewData :TCLMemDat_; virtual; abstract;
      public
        constructor Create; override;
        constructor Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ ); overload; virtual;
@@ -177,7 +177,7 @@ begin
      _Handle := nil;
 
      _Kind   := CL_MEM_READ_WRITE;
-     _Data   := TCLMemDat_( NewData );
+     _Data   := NewData;
      _Queuer := nil;
 end;
 

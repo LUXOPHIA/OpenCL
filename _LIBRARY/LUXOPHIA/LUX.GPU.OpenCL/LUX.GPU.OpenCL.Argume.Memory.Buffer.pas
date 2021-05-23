@@ -23,7 +23,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_> )
      private
-       type TCLBufDat_ = TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
+       type TCLMemDat_ = TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLBufDat_ = TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
      protected
        _Count :Integer;
        ///// アクセス
@@ -35,7 +36,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetCount( const Count_:Integer ); virtual;
        ///// メソッド
        function CreateHandle :T_cl_int; override;
-       function NewData :TObject; override;
+       function NewData :TCLMemDat_; override;
      public
        constructor Create; override;
        destructor Destroy; override;
@@ -135,7 +136,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewData :TObject;
+function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.NewData :TCLMemDat_;
 begin
      Result := TCLBufDat_.Create( Self );
 end;
