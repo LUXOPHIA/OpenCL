@@ -337,9 +337,8 @@ end;
 
 procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.SetChildr( const Name_:String; const Childr_:TCLParame_ );
 begin
-     if _NamPars.ContainsKey( Name_ ) then _NamPars[ Name_ ].Free;
-
-     _NamPars[ Name_ ] := Childr_;
+     Childr_.Name   := Name_;
+     Childr_.Parent := Self;
 end;
 
 //------------------------------------------------------------------------------

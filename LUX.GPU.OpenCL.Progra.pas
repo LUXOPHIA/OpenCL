@@ -51,8 +51,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _LinkStatus    :T_cl_build_status;
        _LinkLog       :String;
        ///// アクセス
-       function GetHandle :T_cl_program;
-       procedure SetHandle( const Handle_:T_cl_program );
+       function GetHandle :T_cl_program; virtual;
+       procedure SetHandle( const Handle_:T_cl_program ); virtual;
+       function GetDevice :TCLDevice_; virtual;
+       procedure SetDevice( const Device_:TCLDevice_ ); virtual;
        ///// メソッド
        function Compile :T_cl_int;
        function Link :T_cl_int;
@@ -66,7 +68,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Execut        :TCLExecut_        read GetOwnere                       ;
        property Buildrs       :TCLBuildrs_       read GetParent                       ;
        property Handle        :T_cl_program      read GetHandle        write SetHandle;
-       property Device        :TCLDevice_        read   _Device                       ;
+       property Device        :TCLDevice_        read GetDevice        write SetDevice;
        property CompileStatus :T_cl_build_status read   _CompileStatus                ;
        property CompileLog    :String            read   _CompileLog                   ;
        property LinkStatus    :T_cl_build_status read   _LinkStatus                   ;
@@ -86,6 +88,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _DevBuis :TCLDevBuis_;
        ///// アクセス
        function GetBuildrs( const Device_:TCLDevice_ ) :TCLBuildr_; virtual;
+       procedure SetBuildrs( const Device_:TCLDevice_; const Buildr_:TCLBuildr_ ); virtual;
        ///// イベント
        procedure OnInsertChild( const Childr_:TCLBuildr_ ); override;
        procedure OnRemoveChild( const Childr_:TCLBuildr_ ); override;
@@ -93,8 +96,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
        destructor Destroy; override;
        ///// プロパティ
-       property Execut                              :TCLExecut_ read GetOwnere ;
-       property Buildrs[ const Device_:TCLDevice_ ] :TCLBuildr_ read GetBuildrs; default;
+       property Execut                              :TCLExecut_ read GetOwnere                  ;
+       property Buildrs[ const Device_:TCLDevice_ ] :TCLBuildr_ read GetBuildrs write SetBuildrs; default;
+       ///// メソッド
+       function Contains( const Device_:TCLDevice_ ) :Boolean;
+       function Add( const Device_:TCLDevice_ ) :TCLBuildr_; overload;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>
@@ -321,6 +327,20 @@ begin
      _Handle := Handle_;
 end;
 
+//------------------------------------------------------------------------------
+
+function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetDevice :TCLDevice_;
+begin
+     Result := _Device;
+end;
+
+procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetDevice( const Device_:TCLDevice_ );
+begin
+     _Device := Device_;
+
+     Handle := nil;
+end;
+
 /////////////////////////////////////////////////////////////////////// メソッド
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.Compile :T_cl_int;
@@ -441,8 +461,14 @@ end;
 
 function TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.GetBuildrs( const Device_:TCLDevice_ ) :TCLBuildr_;
 begin
-     if _DevBuis.ContainsKey( Device_ ) then Result := _DevBuis[ Device_ ]
-                                        else Result := TCLBuildr_.Create( Self, Device_ );
+     if Contains( Device_ ) then Result := _DevBuis[ Device_ ]
+                            else Result := Add( Device_ );
+end;
+
+procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.SetBuildrs( const Device_:TCLDevice_; const Buildr_:TCLBuildr_ );
+begin
+     Buildr_.Device := Device_;
+     Buildr_.Parent := Self;
 end;
 
 /////////////////////////////////////////////////////////////////////// イベント
@@ -450,6 +476,8 @@ end;
 procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChild( const Childr_:TCLBuildr_ );
 begin
      inherited;
+
+     if Contains( Childr_.Device ) then _DevBuis[ Childr_.Device ].Free;
 
      _DevBuis.Add( Childr_.Device, Childr_ );
 end;
@@ -477,6 +505,20 @@ begin
      _DevBuis.Free;
 
      inherited;
+end;
+
+/////////////////////////////////////////////////////////////////////// メソッド
+
+function TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.Contains( const Device_:TCLDevice_ ) :Boolean;
+begin
+     Result := _DevBuis.ContainsKey( Device_ );
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.Add( const Device_:TCLDevice_ ) :TCLBuildr_;
+begin
+     Result := TCLBuildr_.Create( Self, Device_ );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>
