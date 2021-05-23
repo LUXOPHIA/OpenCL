@@ -82,9 +82,6 @@ begin
           Add( _Buildr.LinkLog );
           Add( '' );
      end;
-
-     TabControl1.ActiveTab := TabItemP;
-     TabControlP.ActiveTab := TabItemPB;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -109,8 +106,8 @@ begin
 
      _Queuer := _Contex.Queuers[ _Device ];                                     // 生成
 
-     Assert( Assigned( _Contex.Handle ), '_Contex is Error!' );
-     Assert( Assigned( _Queuer.Handle ), '_Queuer is Error!' );
+     Assert( Assigned( _Contex.Handle ), '_Contex is Error!' );                 // 検証
+     Assert( Assigned( _Queuer.Handle ), '_Queuer is Error!' );                 // 検証
 end;
 
 //------------------------------------------------------------------------------
@@ -121,7 +118,7 @@ begin
 
      _Buffer := TCLBuffer<TDoubleC>.Create( _Contex, _Queuer );                 // 生成
 
-     Assert( Assigned( _Buffer.Handle ), '_Buffer is Error!' );
+     Assert( Assigned( _Buffer.Handle ), '_Buffer is Error!' );                 // 検証
 
      _Buffer.Count := 2;                                                        // 要素数の設定
 
@@ -136,7 +133,7 @@ begin
 
      _Imager := TCLImager2DxBGRAxUFix8.Create( _Contex, _Queuer );              // 生成
 
-     Assert( Assigned( _Imager.Handle ), '_Imager is Error!' );
+     Assert( Assigned( _Imager.Handle ), '_Imager is Error!' );                 // 検証
 
      _Imager.CountX := 500;                                                     // 横ピクセル数の設定
      _Imager.CountY := 500;                                                     // 縦ピクセル数の設定
@@ -145,7 +142,7 @@ begin
 
      _Textur := TCLImager1DxBGRAxUFix8.Create( _Contex, _Queuer );              // 生成
 
-     Assert( Assigned( _Textur.Handle ), '_Textur is Error!' );
+     Assert( Assigned( _Textur.Handle ), '_Textur is Error!' );                 // 検証
 
      _Textur.LoadFromFile( '..\..\_DATA\Textur.png' );                          // 画像のロード
 
@@ -155,7 +152,7 @@ begin
 
      _Samplr := TCLSamplr.Create( _Contex );                                    // 生成
 
-     Assert( Assigned( _Samplr.Handle ), '_Samplr is Error!' );
+     Assert( Assigned( _Samplr.Handle ), '_Samplr is Error!' );                 // 検証
 end;
 
 //------------------------------------------------------------------------------
@@ -166,7 +163,7 @@ begin
 
      _Librar := TCLLibrar.Create( _Contex );                                    // 生成
 
-     Assert( Assigned( _Librar.Handle ), '_Librar is Error!' );
+     Assert( Assigned( _Librar.Handle ), '_Librar is Error!' );                 // 検証
 
      _Librar.Source.LoadFromFile( '..\..\_DATA\Librar.cl' );                    // ソースコードのロード
 
@@ -176,7 +173,7 @@ begin
 
      _Execut := TCLExecut.Create( _Contex );                                    // 生成
 
-     Assert( Assigned( _Execut.Handle ), '_Execut is Error!' );
+     Assert( Assigned( _Execut.Handle ), '_Execut is Error!' );                 // 検証
 
      _Execut.Source.LoadFromFile( '..\..\_DATA\Execut.cl' );                    // ソースコードのロード
 
@@ -186,26 +183,47 @@ begin
 
      _Buildr := _Execut.BuildTo( _Device );                                     // 生成
 
-     if Assigned( _Buildr.Handle ) then
+     ShowBuild;                                                                 // ビルド情報の表示
+
+     if not Assigned( _Buildr.Handle ) then                                     // 検証
      begin
-          ////////// カーネル
+          { _Buildr is Error! }
+          TabControl1.ActiveTab := TabItemP;
+          TabControlP.ActiveTab := TabItemPB;
 
-          _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );              // 生成
+          Exit;
+     end;
 
-          Assert( Assigned( _Kernel.Handle ), '_Kernel is Error!' );
+     ////////// カーネル
 
-          _Kernel.Parames['Buffer'] := _Buffer;                                 // バッファーの接続
-          _Kernel.Parames['Imager'] := _Imager;                                 // イメージの接続
-          _Kernel.Parames['Textur'] := _Textur;                                 // テクスチャの接続
-          _Kernel.Parames['Samplr'] := _Samplr;                                 // サンプラーの接続
+     _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );                   // 生成
 
-          _Kernel.GloSizX := _Imager.CountX;                                    // 横ループ回数の設定
-          _Kernel.GloSizY := _Imager.CountY;                                    // 縦ループ回数の設定
+     Assert( Assigned( _Kernel.Handle ), '_Kernel is Error!' );                 // 検証
 
-          if _Kernel.Parames.BindsOK then Timer1.Enabled := True                // 描画開始
-                                     else TabControl1.ActiveTab := TabItemS;    // 引数のバインドエラー
-     end
-     else ShowBuild; { _Buildr is Error! }                                      // ビルド情報の表示
+     _Kernel.Parames['Buffer'] := _Buffer;                                      // バッファーの登録
+     _Kernel.Parames['Imager'] := _Imager;                                      // イメージ　の登録
+     _Kernel.Parames['Textur'] := _Textur;                                      // テクスチャの登録
+     _Kernel.Parames['Samplr'] := _Samplr;                                      // サンプラーの登録
+
+     _Kernel.GloSizX := _Imager.CountX;                                         // 横ループ回数の設定
+     _Kernel.GloSizY := _Imager.CountY;                                         // 縦ループ回数の設定
+
+     if not _Kernel.Parames.FindsOK then                                        // 仮引数の照合
+     begin
+          TabControl1.ActiveTab := TabItemP;
+          TabControlP.ActiveTab := TabItemPE;
+
+          Exit;
+     end;
+
+     if not _Kernel.Parames.BindsOK then                                        // 実引数の接続
+     begin
+          TabControl1.ActiveTab := TabItemS;
+
+          Exit;
+     end;
+
+     Timer1.Enabled := True;                                                    // 描画開始
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
