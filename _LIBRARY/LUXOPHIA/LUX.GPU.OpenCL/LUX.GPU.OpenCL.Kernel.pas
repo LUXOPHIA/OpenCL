@@ -65,12 +65,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_:class> = class( TListParent<TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>,
                                                                                         TCLParame<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>> )
      private
-       type TCLArgume_ = TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_>;
-            TCLKernel_ = TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
-            TCLParame_ = TCLParame<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
-            TCLVarArgs = TDictionary<String,TCLParame_>;
+       type TCLArgume_  = TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLKernel_  = TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
+            TCLParame_  = TCLParame<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
+            TCLNamPars_ = TDictionary<String,TCLParame_>;
      protected
-       _VarArgs :TCLVarArgs;
+       _NamPars :TCLNamPars_;
        _FindsOK :Boolean;
        _BindsOK :Boolean;
        ///// アクセス
@@ -106,9 +106,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLQueuer_  = TCLQueuer <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLKernels_ = TCLKernels<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
-            TCLKernel_  = TCLKernel <TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
             TCLParames_ = TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
-            TCLParame_  = TCLParame <TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
        ///// メソッド
        function GetInfo<_TYPE_>( const Name_:T_cl_kernel_info ) :_TYPE_;
        function GetInfoSize( const Name_:T_cl_kernel_info ) :T_size_t;
@@ -126,27 +124,29 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _GloMin  :TLoop3D;
        _GloSiz  :TLoop3D;
        ///// アクセス
-       function GetHandle :T_cl_kernel;
-       procedure SetHandle( const Handle_:T_cl_kernel );
-       function GetGloMinX :Integer;
-       procedure SetGloMinX( const GloMinX_:Integer );
-       function GetGloMinY :Integer;
-       procedure SetGloMinY( const GloMinY_:Integer );
-       function GetGloMinZ :Integer;
-       procedure SetGloMinZ( const GloMinZ_:Integer );
-       function GetGloSizX :Integer;
-       procedure SetGloSizX( const GloSizX_:Integer );
-       function GetGloSizY :Integer;
-       procedure SetGloSizY( const GloSizY_:Integer );
-       function GetGloSizZ :Integer;
-       procedure SetGloSizZ( const GloSizZ_:Integer );
-       function GetGloMaxX :Integer;
-       procedure SetGloMaxX( const GloMaxX_:Integer );
-       function GetGloMaxY :Integer;
-       procedure SetGloMaxY( const GloMaxY_:Integer );
-       function GetGloMaxZ :Integer;
-       procedure SetGloMaxZ( const GloMaxZ_:Integer );
-       function GetGloDimN :Integer;
+       function GetHandle :T_cl_kernel; virtual;
+       procedure SetHandle( const Handle_:T_cl_kernel ); virtual;
+       function GetName :String; virtual;
+       procedure SetName( const Name_:String ); virtual;
+       function GetGloMinX :Integer; virtual;
+       procedure SetGloMinX( const GloMinX_:Integer ); virtual;
+       function GetGloMinY :Integer; virtual;
+       procedure SetGloMinY( const GloMinY_:Integer ); virtual;
+       function GetGloMinZ :Integer; virtual;
+       procedure SetGloMinZ( const GloMinZ_:Integer ); virtual;
+       function GetGloSizX :Integer; virtual;
+       procedure SetGloSizX( const GloSizX_:Integer ); virtual;
+       function GetGloSizY :Integer; virtual;
+       procedure SetGloSizY( const GloSizY_:Integer ); virtual;
+       function GetGloSizZ :Integer; virtual;
+       procedure SetGloSizZ( const GloSizZ_:Integer ); virtual;
+       function GetGloMaxX :Integer; virtual;
+       procedure SetGloMaxX( const GloMaxX_:Integer ); virtual;
+       function GetGloMaxY :Integer; virtual;
+       procedure SetGloMaxY( const GloMaxY_:Integer ); virtual;
+       function GetGloMaxZ :Integer; virtual;
+       procedure SetGloMaxZ( const GloMaxZ_:Integer ); virtual;
+       function GetGloDimN :Integer; virtual;
        (* cl_kernel_info *)
        function GetKERNEL_FUNCTION_NAME :String;
        function GetKERNEL_NUM_ARGS :T_cl_uint;
@@ -175,7 +175,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Execut  :TCLExecut_  read GetOwnere                  ;
        property Kernels :TCLKernels_ read GetParent                  ;
        property Handle  :T_cl_kernel read GetHandle  write SetHandle ;
-       property Name    :String      read   _Name    write   _Name   ;
+       property Name    :String      read GetName    write SetName   ;
        property Queuer  :TCLQueuer_  read   _Queuer                  ;
        property Parames :TCLParames_ read   _Parames                 ;
        property GloMinX :Integer     read GetGloMinX write SetGloMinX;
@@ -329,26 +329,26 @@ end;
 
 function TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetChildr( const Name_:String ) :TCLParame_;
 begin
-     Result := _VarArgs[ Name_ ];
+     Result := _NamPars[ Name_ ];
 end;
 
 procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.SetChildr( const Name_:String; const Childr_:TCLParame_ );
 begin
-     if _VarArgs.ContainsKey( Name_ ) then _VarArgs[ Name_ ].Free;
+     if _NamPars.ContainsKey( Name_ ) then _NamPars[ Name_ ].Free;
 
-     _VarArgs[ Name_ ] := Childr_;
+     _NamPars[ Name_ ] := Childr_;
 end;
 
 //------------------------------------------------------------------------------
 
 function TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetArgumes( const Name_:String ) :TCLArgume_;
 begin
-     Result := _VarArgs[ Name_ ].Argume;
+     Result := _NamPars[ Name_ ].Argume;
 end;
 
 procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.SetArgumes( const Name_:String; const Argume_:TCLArgume_ );
 begin
-     if _VarArgs.ContainsKey( Name_ ) then _VarArgs[ Name_ ].Argume := Argume_
+     if _NamPars.ContainsKey( Name_ ) then _NamPars[ Name_ ].Argume := Argume_
                                       else Add( Name_, Argume_ );
 end;
 
@@ -408,16 +408,16 @@ procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.OnInsertChild(
 begin
      inherited;
 
-     if _VarArgs.ContainsKey( Childr_.Name ) then _VarArgs[ Childr_.Name ].Free;
+     if _NamPars.ContainsKey( Childr_.Name ) then _NamPars[ Childr_.Name ].Free;
 
-     _VarArgs.Add( Childr_.Name, Childr_ );
+     _NamPars.Add( Childr_.Name, Childr_ );
 end;
 
 procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.OnRemoveChild( const Childr_:TCLParame_ );
 begin
      inherited;
 
-     _VarArgs.Remove( Childr_.Name );
+     _NamPars.Remove( Childr_.Name );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -426,7 +426,7 @@ constructor TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Create;
 begin
      inherited;
 
-     _VarArgs := TCLVarArgs.Create;
+     _NamPars := TCLNamPars_.Create;
 
      _FindsOK := False;
      _BindsOK := False;
@@ -436,7 +436,7 @@ destructor TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Destroy;
 begin
      Clear;
 
-     _VarArgs.Free;
+     _NamPars.Free;
 
      inherited;
 end;
@@ -452,7 +452,7 @@ end;
 
 function TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Contains( const Name_:String ) :Boolean;
 begin
-     Result := _VarArgs.ContainsKey( Name_ );
+     Result := _NamPars.ContainsKey( Name_ );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>
@@ -531,6 +531,20 @@ begin
      if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLKernel.DestroHandle is Error!' );
 
      _Handle := Handle_;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetName :String;
+begin
+     Result := _Name;
+end;
+
+procedure TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.SetName( const Name_:String );
+begin
+     _Name := Name_;
+
+     Handle := nil;
 end;
 
 //------------------------------------------------------------------------------
