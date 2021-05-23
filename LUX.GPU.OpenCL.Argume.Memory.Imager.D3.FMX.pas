@@ -39,8 +39,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        ///// アクセス
-       function GetPixChan :T_cl_channel_order; override;
-       function GetPixType :T_cl_channel_type; override;
+       function GetPixCha :T_cl_channel_order; override;
+       function GetPixTyp :T_cl_channel_type; override;
      public
        ///// メソッド
        procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
@@ -53,8 +53,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        ///// アクセス
-       function GetPixChan :T_cl_channel_order; override;
-       function GetPixType :T_cl_channel_type; override;
+       function GetPixCha :T_cl_channel_order; override;
+       function GetPixTyp :T_cl_channel_type; override;
      public
        ///// メソッド
        procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
@@ -67,8 +67,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        ///// アクセス
-       function GetPixChan :T_cl_channel_order; override;
-       function GetPixType :T_cl_channel_type; override;
+       function GetPixCha :T_cl_channel_order; override;
+       function GetPixTyp :T_cl_channel_type; override;
      public
        ///// メソッド
        procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
@@ -133,12 +133,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager3DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
+function TCLImager3DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
 begin
      Result := CL_BGRA;
 end;
 
-function TCLImager3DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
+function TCLImager3DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
 begin
      Result := CL_UNSIGNED_INT8;
 end;
@@ -153,20 +153,20 @@ var
 begin
      Bitmap_.SetSize( CountX, CountY );
 
-     Storag.Map;
+     Data.Map;
 
      Bitmap_.Map( TMapAccess.Write, B );
 
      TParallel.For( 0, CountY-1, procedure( Y:Integer )
      begin
-          Move( Storag.ValueP[ 0, Y, Z_ ]^,
+          Move( Data.ValueP[ 0, Y, Z_ ]^,
                 B.GetScanline( Y )^,
                 B.BytesPerLine );
      end );
 
      Bitmap_.Unmap( B );
 
-     Storag.Unmap;
+     Data.Unmap;
 end;
 
 procedure TCLImager3DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
@@ -178,16 +178,16 @@ begin
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     Storag.Map;
+     Data.Map;
 
      TParallel.For( 0, CountY-1, procedure( Y:Integer )
      begin
           Move( B.GetScanline( Y )^,
-                Storag.ValueP[ 0, Y, Z_ ]^,
+                Data.ValueP[ 0, Y, Z_ ]^,
                 B.BytesPerLine );
      end );
 
-     Storag.Unmap;
+     Data.Unmap;
 
      Bitmap_.Unmap( B );
 end;
@@ -200,12 +200,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager3DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
+function TCLImager3DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
 begin
      Result := CL_BGRA;
 end;
 
-function TCLImager3DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
+function TCLImager3DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
 begin
      Result := CL_UNORM_INT8;
 end;
@@ -220,20 +220,20 @@ var
 begin
      Bitmap_.SetSize( CountX, CountY );
 
-     Storag.Map;
+     Data.Map;
 
      Bitmap_.Map( TMapAccess.Write, B );
 
      TParallel.For( 0, CountY-1, procedure( Y:Integer )
      begin
-          Move( Storag.ValueP[ 0, Y, Z_ ]^,
+          Move( Data.ValueP[ 0, Y, Z_ ]^,
                 B.GetScanline( Y )^,
                 B.BytesPerLine );
      end );
 
      Bitmap_.Unmap( B );
 
-     Storag.Unmap;
+     Data.Unmap;
 end;
 
 procedure TCLImager3DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
@@ -245,16 +245,16 @@ begin
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     Storag.Map;
+     Data.Map;
 
      TParallel.For( 0, CountY-1, procedure( Y:Integer )
      begin
           Move( B.GetScanline( Y )^,
-                Storag.ValueP[ 0, Y, Z_ ]^,
+                Data.ValueP[ 0, Y, Z_ ]^,
                 B.BytesPerLine );
      end );
 
-     Storag.Unmap;
+     Data.Unmap;
 
      Bitmap_.Unmap( B );
 end;
@@ -267,12 +267,12 @@ end;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
+function TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
 begin
      Result := CL_RGBA;
 end;
 
-function TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
+function TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
 begin
      Result := CL_FLOAT;
 end;
@@ -287,7 +287,7 @@ var
 begin
      Bitmap_.SetSize( CountX, CountY );
 
-     Storag.Map;
+     Data.Map;
 
      Bitmap_.Map( TMapAccess.Write, B );
 
@@ -297,13 +297,13 @@ begin
      begin
           for X := 0 to CountX-1 do
           begin
-               B.SetPixel( X, Y, TAlphaColor( TByteRGBA( Storag[ X, Y, Z_ ] ) ) );
+               B.SetPixel( X, Y, TAlphaColor( TByteRGBA( Data[ X, Y, Z_ ] ) ) );
           end;
      end );
 
      Bitmap_.Unmap( B );
 
-     Storag.Unmap;
+     Data.Unmap;
 end;
 
 procedure TCLImager3DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
@@ -315,7 +315,7 @@ begin
 
      Bitmap_.Map( TMapAccess.Read, B );
 
-     Storag.Map;
+     Data.Map;
 
      TParallel.For( 0, CountY-1, procedure( Y:Integer )
      var
@@ -323,11 +323,11 @@ begin
      begin
           for X := 0 to CountX-1 do
           begin
-               Storag[ X, Y, Z_ ] := B.GetPixel( X, Y );
+               Data[ X, Y, Z_ ] := B.GetPixel( X, Y );
           end;
      end );
 
-     Storag.Unmap;
+     Data.Unmap;
 
      Bitmap_.Unmap( B );
 end;

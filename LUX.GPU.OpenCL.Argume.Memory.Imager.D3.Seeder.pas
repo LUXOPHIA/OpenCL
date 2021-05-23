@@ -31,8 +31,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _MakerZ  :TCLKernel_;
        _MakerYX :TCLKernel_;
        ///// アクセス
-       function GetPixChan :T_cl_channel_order; override;
-       function GetPixType :T_cl_channel_type; override;
+       function GetPixCha :T_cl_channel_order; override;
+       function GetPixTyp :T_cl_channel_type; override;
        ///// メソッド
        function CreateHandle :T_cl_int; override;
      public
@@ -66,12 +66,12 @@ uses System.SysUtils;
 
 /////////////////////////////////////////////////////////////////////// アクセス
 
-function TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixChan :T_cl_channel_order;
+function TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
 begin
      Result := CL_RGBA;
 end;
 
-function TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixType :T_cl_channel_type;
+function TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
 begin
      Result := CL_UNSIGNED_INT32;
 end;
