@@ -370,7 +370,10 @@ begin
                K := Kernel.KERNEL_ARG_NAME[ I ];
 
                if Contains( K ) then Items[ K ]._ParameI := I
-                                else _FindsOK := False;
+               else
+               begin
+                    _FindsOK := False;  Break;
+               end;
           end;
      end;
 
@@ -391,9 +394,15 @@ var
 begin
      if FindsOK and not _BindsOK then
      begin
-          for A in Self do AssertCL( A.Bind, 'TCLParame.Bind is Error!' );
-
           _BindsOK := True;
+
+          for A in Self do
+          begin
+               if A.Bind <> CL_SUCCESS then
+               begin
+                    _BindsOK := False;  Break;
+               end;
+          end;
      end;
 
      Result := _BindsOK;
@@ -795,7 +804,7 @@ end;
 
 procedure TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Run;
 begin
-     Parames.BindsOK;
+     Assert( Parames.BindsOK, 'TCLKernel.Parames.BindsOK = False' );
 
      AssertCL( clEnqueueNDRangeKernel( Queuer.Handle, Handle,
                                        GloDimN, @_GloMin, @_GloSiz, nil,

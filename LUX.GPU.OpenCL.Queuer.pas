@@ -166,7 +166,7 @@ end;
 function TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.GetQueuers( const Device_:TCLDevice_ ) :TCLQueuer_;
 begin
      if _DevQues.ContainsKey( Device_ ) then Result := _DevQues[ Device_ ]
-                                        else Result := TCLQueuer_.Create( Contex, Device_ );
+                                        else Result := Add( Device_ );
 end;
 
 procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.SetQueuers( const Device_:TCLDevice_; const Queuer_:TCLQueuer_ );
