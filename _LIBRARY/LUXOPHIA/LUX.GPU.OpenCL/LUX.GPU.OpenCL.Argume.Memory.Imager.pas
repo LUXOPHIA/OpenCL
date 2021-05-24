@@ -249,13 +249,9 @@ var
 begin
      inherited;
 
-     O.X := 0;
-     O.Y := 0;
-     O.Z := 0;
-
-     R.X := Imager.CountX;
-     R.Y := Imager.CountY;
-     R.Z := Imager.CountZ;
+     O.X := 0;  R.X := Imager.CountX;
+     O.Y := 0;  R.Y := Imager.CountY;
+     O.Z := 0;  R.Z := Imager.CountZ;
 
      _PitchX := SizeOf( TValue_ );
 
