@@ -63,6 +63,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
        constructor Create; override;
        constructor Create( const Buildrs_:TCLBuildrs_; const Device_:TCLDevice_ ); overload; virtual;
+       constructor Create( const Execut_:TCLExecut_; const Device_:TCLDevice_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
        property Execut        :TCLExecut_        read GetOwnere                       ;
@@ -442,6 +443,11 @@ begin
      inherited Create( Buildrs_ );
 
      _Device := Device_;
+end;
+
+constructor TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Execut_:TCLExecut_; const Device_:TCLDevice_ );
+begin
+     Create( Execut_.Buildrs, Device_ );
 end;
 
 destructor TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
