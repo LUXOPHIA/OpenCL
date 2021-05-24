@@ -49,14 +49,14 @@ The `TCLSystem` class automatically detects all **computing devices** on the exe
 The "**platform**" object (`TCLPlatfo`) represents the environment defined by each device vendor. 
 The `TCLSystem` class automatically detects all **platform**s and enumerate them in the `Platfors` property. 
 
-> Delphi
+> `Delphi`
 > ```Delphi
 > TOpenCL.Platfors.Count :Integer    // Number of all platforms
 > TOpenCL.Platfors[*]    :TCLPlatfo  // Array of all platforms
 > ```
 
 The `TCLPlatfo` class provides information about a specific **platform** as properties.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Platfo := TOpenCL.Platfors[0];  // Selecting a specific platform
 > 
@@ -72,14 +72,14 @@ The `TCLPlatfo` class provides information about a specific **platform** as prop
 ### ⬤ 2.2. Device
 The "**device**" object (`TCLDevice`) represents a physical GPU or CPU.
 The `TCLPlatfo` class automatically detects all **device** objects in a specific **platform** object and enumerate them in the `Devices` property.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Platfo.Devices.Count :Integer    // Number of devices
 > _Platfo.Devices[*]    :TCLDevice  // Array of devices
 > ```
 
 The `TCLDevice` class provides information about a specific **device** as properties.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Device := _Platfo.Devices[0];  // Selecting a specific device
 > 
@@ -96,7 +96,7 @@ The `TCLDevice` class provides information about a specific **device** as proper
 ### ⬤ 2.3. Context
 The "**context**" object (`TCLContex`) manages a bundle of related data and programs.
 The `TCLContex` class is created from the `TCLPlatfo` class.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Contex := TCLContex.Create( _Platfo );
 > ```
@@ -104,7 +104,7 @@ The `TCLContex` class is created from the `TCLPlatfo` class.
 ### ⬤ 2.4. Command Queue
 The "**command queue**" object (`TCLQueuer`) manages the commands sent to the device.
 The `TCLQueuer` class is created from the `TCLContex` and the `TCLDevice` classes.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Queuer := TCLQueuer.Create( _Contex, _Device );
 >   {or}
@@ -112,14 +112,14 @@ The `TCLQueuer` class is created from the `TCLContex` and the `TCLDevice` classe
 > ```
 
 The `TCLContex` class registers the `TCLQueuer` class in the `Queuers` property.  
-> Delphi  
+> `Delphi`  
 > ```Delphi
 > _Contex.Queuers.Count :Integer    // コマンドキューの数
 > _Contex.Queuers[*]    :TCLQueuer  // コマンドキューの配列
 > ```
 
 Note that **context** and **device** on the different **platforms** cannot generate a **command queue**.  
-> Delphi  
+> `Delphi`  
 > ```Delphi
 > P0 := TOpenCL.Platfors[0];
 > P1 := TOpenCL.Platfors[1];
@@ -163,7 +163,7 @@ The `TCLMemory` class is abstract and derives the `TCLBuffer` and `TCLImager` cl
 The `TCLBuffer` class stores an array of any "simple type" or "record type."  
 
 If you want to send an array of the following structure type to the device,  
-> OpenCL C
+> `OpenCL C`
 > ```C
 > typedef struct {
 >   int    A;
@@ -176,7 +176,7 @@ If you want to send an array of the following structure type to the device,
 > ```
 
 generate the `TCLBuffer` class as follows.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > TItem = record
 >   A :Integer;
@@ -188,7 +188,7 @@ generate the `TCLBuffer` class as follows.
 
 Read and write array data through the `Data` property.
 The array data must be "**map**ped" to synchronize with the host before reading or writing, and "**unmap**ped" to synchronize with the device after use.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Buffer.Count := 3;                          // Setting the number of elements
 > _Buffer.Data.Map;                            // Synchronize data with host
@@ -249,7 +249,7 @@ The third part of the class name represents the color data type of the `TCLImage
 >   * Device-side data type：`float` @ OpenCL C
 >   * Host-side data type：`Single` @ Delphi
 
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Imager := TCLDevIma3DxBGRAxUInt8.Create( _Contex, _Queuer );
 > _Imager.CountX := 100;  // Number of pixels in the X direction
@@ -259,7 +259,7 @@ The third part of the class name represents the color data type of the `TCLImage
 
 #### ▼ 2.5.2. Sampler
 The sampler object (`TCLSamplr`) defines the interpolation method to get the pixel color in real-number coordinates.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Samplr := TCLSamplr.Create( _Contex );
 > ```
@@ -270,7 +270,7 @@ The `TCLProgra` class is abstract and derives the `TCLLibrar` and `TCLExecut` cl
 
 #### ▼ 2.6.1. Library
 The `TCLLibrar` class is a program that does not include functions to execute directly is called a library type.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Librar := TCLLibrar.Create( _Contex );
 > 
@@ -279,7 +279,7 @@ The `TCLLibrar` class is a program that does not include functions to execute di
 
 #### ▼ 2.6.2. Executable
 The `TCLExecut` class is a program that includes functions (**Kernel**s) to execute directly.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Execut := TCLExecut.Create( _Contex );
 > 
@@ -288,7 +288,7 @@ The `TCLExecut` class is a program that includes functions (**Kernel**s) to exec
 
 ### ⬤ 2.7. Build
 A "**build**" (`TCLBuildr`) is an "action" performed by a **program**, but it is explicitly represented as a class in our library.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Buildr := TCLBuildr.Create( _Execut, _Device );
 >   {or}
@@ -297,7 +297,7 @@ A "**build**" (`TCLBuildr`) is an "action" performed by a **program**, but it is
 
 The **kernel** object (see chapter 2.8.) automatically creates the `TCLBuildr` class at runtime.
 However, you can check for compiling and linking errors by creating a `TCLBuildr` class before running the kernel.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Buildr.CompileStatus :T_cl_build_status  // Compile status
 > _Buildr.CompileLog    :String             // Compile log
@@ -307,7 +307,7 @@ However, you can check for compiling and linking errors by creating a `TCLBuildr
 
 ### ⬤ 2.8. Kernel
 The "**kernel**" object (`TCLKernel`) represents an executable function in a program.  
-> OpenCL C
+> `OpenCL C`
 > ```C
 > kernel void Main( ･･･ ) {
 >   ･･･
@@ -315,7 +315,7 @@ The "**kernel**" object (`TCLKernel`) represents an executable function in a pro
 > ```
 
 The `TCLKernel` class is created from the `TCLExecut` and `TCLQueuer` classes. 
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );
 >   {or}
@@ -325,7 +325,7 @@ The `TCLKernel` class is created from the `TCLExecut` and `TCLQueuer` classes.
 
 #### ▼ 2.8.1. Parameter
 The **memory** object connects to the parameter in the source code through the "Parames" property of the `TCLKernel` class.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Kernel.Parames['Buffer'] := _Buffer;  // Connect to buffer
 > _Kernel.Parames['Imager'] := _Imager;  // Connect to image
@@ -334,7 +334,7 @@ The **memory** object connects to the parameter in the source code through the "
 
 #### ▼ 2.8.2. Loop Count
 The OpenCL program repeatedly runs like a triple loop-statement.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Kernel.GloSizX := 100;  // Number of loops in X direction
 > _Kernel.GloSizY := 200;  // Number of loops in Y direction
@@ -342,7 +342,7 @@ The OpenCL program repeatedly runs like a triple loop-statement.
 > ```
 
 You can also specify the minimum and maximum loop indices.  
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Kernel.GloMinX := 0;      // Start index in X direction
 > _Kernel.GloMinY := 0;      // Start index in Y direction
@@ -354,7 +354,7 @@ You can also specify the minimum and maximum loop indices.
 > ```
 
 #### ▼ 2.8.3. Run
-> Delphi
+> `Delphi`
 > ```Delphi
 > _Kernel.Run;  // Run
 > ```
