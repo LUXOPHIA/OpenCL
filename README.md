@@ -292,6 +292,8 @@ A "**build**" (`TCLBuildr`) is an "action" performed by a **program**, but it is
 > ```Delphi
 > _Buildr := TCLBuildr.Create( _Execut, _Device );
 >   {or}
+> _Buildr := _Execut.Buildrs[ _Device ];
+>   {or}
 > _Buildr := _Execut.BuildTo( _Device );
 > ```
 
@@ -299,6 +301,8 @@ The **kernel** object (see chapter 2.8.) automatically creates the `TCLBuildr` c
 However, you can check for compiling and linking errors by creating a `TCLBuildr` class before running the kernel.  
 > `Delphi`
 > ```Delphi
+> _Buildr.Handle;  // Run build
+> 
 > _Buildr.CompileStatus :T_cl_build_status  // Compile status
 > _Buildr.CompileLog    :String             // Compile log
 > _Buildr.LinkStatus    :T_cl_build_status  // Link status
