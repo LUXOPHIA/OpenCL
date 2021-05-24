@@ -82,6 +82,12 @@ begin
           Add( _Buildr.LinkLog );
           Add( '' );
      end;
+
+     if ( _Buildr.CompileLog = '' ) and
+        ( _Buildr.LinkLog    = '' ) then Exit;
+
+     TabControl1.ActiveTab := TabItemP;
+     TabControlP.ActiveTab := TabItemPB;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -104,7 +110,7 @@ begin
 
      ////////// コマンドキュー
 
-     _Queuer := _Contex.Queuers[ _Device ];                                     // 生成
+     _Queuer := TCLQueuer.Create( _Contex, _Device );                           // 生成
 
      Assert( Assigned( _Contex.Handle ), '_Contex is Error!' );                 // 検証
      Assert( Assigned( _Queuer.Handle ), '_Queuer is Error!' );                 // 検証
@@ -181,18 +187,9 @@ begin
 
      ////////// ビルド
 
-     _Buildr := _Execut.BuildTo( _Device );                                     // 生成
+     _Buildr := TCLBuildr.Create( _Execut, _Device );                           // 生成
 
-     ShowBuild;                                                                 // ビルド情報の表示
-
-     if not Assigned( _Buildr.Handle ) then                                     // 検証
-     begin
-          { _Buildr is Error! }
-          TabControl1.ActiveTab := TabItemP;
-          TabControlP.ActiveTab := TabItemPB;
-
-          Exit;
-     end;
+     if not Assigned( _Buildr.Handle ) then Exit; { _Buildr is Error! }         // 検証
 
      ////////// カーネル
 
@@ -200,8 +197,8 @@ begin
 
      Assert( Assigned( _Kernel.Handle ), '_Kernel is Error!' );                 // 検証
 
-     _Kernel.GloSizX := _Imager.CountX;                                         // 横ループ回数の設定
-     _Kernel.GloSizY := _Imager.CountY;                                         // 縦ループ回数の設定
+     _Kernel.GloSizX := _Imager.CountX;                                         // Ｘ方向ループ回数の設定
+     _Kernel.GloSizY := _Imager.CountY;                                         // Ｙ方向ループ回数の設定
 
      _Kernel.Parames['Buffer'] := _Buffer;                                      // バッファーの登録
      _Kernel.Parames['Imager'] := _Imager;                                      // イメージ　の登録
@@ -223,6 +220,8 @@ begin
      MakeArguments;                                                             // 実引数の生成
 
      MakePrograms;                                                              // プログラムの生成
+
+     ShowBuild;                                                                 // ビルド情報の表示
 
      TOpenCL.Show( MemoS.Lines );                                               // システム情報の表示
 end;
