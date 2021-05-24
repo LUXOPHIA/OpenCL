@@ -290,6 +290,8 @@ The `TCLExecut` class is a program that includes functions (**Kernel**s) to exec
 A "**build**" (`TCLBuildr`) is an "action" performed by a **program**, but it is explicitly represented as a class in our library.  
 > Delphi
 > ```Delphi
+> _Buildr := TCLBuildr.Create( _Execut, _Device );
+>   {or}
 > _Buildr := _Execut.BuildTo( _Device );
 > ```
 
