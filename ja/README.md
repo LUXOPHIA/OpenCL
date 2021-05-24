@@ -292,6 +292,8 @@ permalink: /ja/
 > ```Delphi
 > _Buildr := TCLBuildr.Create( _Execut, _Device );
 >   {or}
+> _Buildr := _Execut.Buildrs[ _Device ];
+>   {or}
 > _Buildr := _Execut.BuildTo( _Device );
 > ```
 
@@ -299,6 +301,8 @@ permalink: /ja/
 しかし、カーネルの実行前に`TCLBuildr`クラスを作成することで、コンパイルとリンクのエラーを確認することができます。 
 > `Delphi`
 > ```Delphi
+> _Buildr.Handle;  // ビルドの実行
+> 
 > _Buildr.CompileStatus :T_cl_build_status  // コンパイルのスタータス
 > _Buildr.CompileLog    :String             // コンパイルのログ
 > _Buildr.LinkStatus    :T_cl_build_status  // リンクのスタータス
