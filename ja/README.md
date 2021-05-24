@@ -133,17 +133,17 @@ permalink: /ja/
 > C1 := TCLContex.Create( P1 ); 
 > C2 := TCLContex.Create( P2 );
 > 
-> Q00 := TCLQueuer.Create( C0, D00 );  // OK
-> Q01 := TCLQueuer.Create( C0, D01 );  // OK
-> Q02 := TCLQueuer.Create( C0, D02 );  // OK
+> Q00 := TCLQueuer.Create( C0, D00 );  // ＯＫ
+> Q01 := TCLQueuer.Create( C0, D01 );  // ＯＫ
+> Q02 := TCLQueuer.Create( C0, D02 );  // ＯＫ
 > 
-> Q10 := TCLQueuer.Create( C1, D00 );  // Error
-> Q11 := TCLQueuer.Create( C1, D01 );  // Error
-> Q12 := TCLQueuer.Create( C1, D02 );  // Error
+> Q10 := TCLQueuer.Create( C1, D00 );  // エラー
+> Q11 := TCLQueuer.Create( C1, D01 );  // エラー
+> Q12 := TCLQueuer.Create( C1, D02 );  // エラー
 > 
-> Q20 := TCLQueuer.Create( C2, D00 );  // Error
-> Q21 := TCLQueuer.Create( C2, D10 );  // Error
-> Q22 := TCLQueuer.Create( C2, D20 );  // OK
+> Q20 := TCLQueuer.Create( C2, D00 );  // エラー
+> Q21 := TCLQueuer.Create( C2, D10 );  // エラー
+> Q22 := TCLQueuer.Create( C2, D20 );  // ＯＫ
 > ```
 
 ### ⬤ 2.5. 実引数
@@ -274,7 +274,7 @@ permalink: /ja/
 > ```Delphi
 > _Librar := TCLLibrar.Create( _Contex );
 > 
-> _Librar.Source.LoadFromFile( 'Librar.cl' );  // load Sourcecode
+> _Librar.Source.LoadFromFile( 'Librar.cl' );  // ソースコードのロード
 > ```
 
 #### ▼ 2.6.2. エグゼキュータブル 
@@ -283,13 +283,15 @@ permalink: /ja/
 > ```Delphi
 > _Execut := TCLExecut.Create( _Contex );
 > 
-> _Execut.Source.LoadFromFile( 'Execut.cl' );  // load Sourcecode
+> _Execut.Source.LoadFromFile( 'Execut.cl' );  // ソースコードのロード
 > ```
 
 ### ⬤ 2.7. ビルド
 **ビルド** (`TCLBuildr`) は**プログラム**が行う“行為”ですが、我々のライブラリではクラスとして明示的に表現されます。  
 > Delphi
 > ```Delphi
+> _Buildr := TCLBuildr.Create( _Execut, _Device );
+>   {or}
 > _Buildr := _Execut.BuildTo( _Device );
 > ```
 
