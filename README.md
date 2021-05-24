@@ -159,7 +159,7 @@ The "**Memory**" object (`TCLMemory`) stores various data and shares it with the
 The `TCLMemory` class is created from the `TCLContex` and the `TCLQueuer` classes.
 The `TCLMemory` class is abstract and derives the `TCLBuffer` and `TCLImager` classes.  
 
-##### ▽ 2.5.1.1. Buffer
+#### ▽ 2.5.1.1. Buffer
 The `TCLBuffer` class stores an array of any "simple type" or "record type."  
 
 If you want to send an array of the following structure type to the device,  
@@ -198,7 +198,7 @@ The array data must be "**map**ped" to synchronize with the host before reading 
 > _Buffer.Data.Unmap;                          // Synchronize data with Device
 > ```
 
-##### ▽ 2.5.1.2. Image
+#### ▽ 2.5.1.2. Image
 The "**image**" object (`TCLImager`) stores the pixel array in 1D to 3D.
 3D voxel data is also considered a type of 3D **image**.
 The `TCLImager` class is abstract and derives various classes depending on the layout and bits of the color channel.   
