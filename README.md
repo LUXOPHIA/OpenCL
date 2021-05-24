@@ -8,6 +8,8 @@ permalink: /
 # [OpenCL](https://github.com/LUXOPHIA/OpenCL/)
 Parallel computing on the GPU (or CPU) with [OpenCL](https://en.wikipedia.org/wiki/OpenCL).  
 
+![](https://github.com/LUXOPHIA/OpenCL/raw/master/--------/_SCREENSHOT/OpenCL.png)
+
 ----
 ## ■ 1. [`LUX.GPU.OpenCL`](https://luxophia.github.io/LUX.GPU.OpenCL/) Library
 
