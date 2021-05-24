@@ -8,6 +8,8 @@ permalink: /ja/
 # [OpenCL](https://github.com/LUXOPHIA/OpenCL/tree/master/ja)
 [OpenCL](https://ja.wikipedia.org/wiki/OpenCL) を用いたＧＰＵ（やＣＰＵ）での並列計算。  
 
+![](https://github.com/LUXOPHIA/OpenCL/raw/master/--------/_SCREENSHOT/OpenCL.png)
+
 ----
 ## ■ 1. [`LUX.GPU.OpenCL`](https://luxophia.github.io/LUX.GPU.OpenCL/ja/) ライブラリ
 
