@@ -222,32 +222,32 @@ permalink: /ja/
 　　　　　┗[`TCLImager3DxRGBAxSFlo32`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas#L66)  
 
 クラス名の１番目の部分は、`TCLImager`画像の次元を表しています。  
-> * `TCL***Ima1Dx*x*x*`  
+> * TCLImager`1D`x\*x\*  
 > `１Ｄ`
-> * `TCL***Ima2Dx*x*x*`  
+> * TCLImager`2D`x\*x\*  
 > `２Ｄ`
-> * `TCL***Ima3Dx*x*x*`  
+> * TCLImager`3D`x\*x\*  
 > `３Ｄ`
 
 クラス名の２番目の部分は、`TCLImager`カラーチャンネルの順番を表しています。  
-> * `TCL***Ima*xBGRAx*x*`  
+> * TCLImager\*Dx`BGRA`x\*  
 > `ＢＧＲＡ`
-> * `TCL***Ima*xRGBAx*x*`  
+> * TCLImager\*Dx`RGBA`x\*  
 > `ＲＧＢＡ`
 
 クラス名の３番目の部分は、`TCLImager`カラーチャンネルのデータ型を表しています。  
 > * TCLImager\*Dx\*x`UInt8`  
->   * Device-side data type：`uint8` @ OpenCL C
->   * Host-side data type：`UInt8 (Byte)` @ Delphi
+>   * デバイス側データ型：`uint8` @ OpenCL C
+>   * ホスト側データ型：`UInt8 (Byte)` @ Delphi
 > * TCLImager\*Dx\*x`UFix8`  
->   * Device-side data type：`float` @ OpenCL C
->   * Host-side data type：`UInt8 (Byte)` @ Delphi
+>   * デバイス側データ型：`float` @ OpenCL C
+>   * ホスト側データ型：`UInt8 (Byte)` @ Delphi
 > * TCLImager\*Dx\*x`UInt32`  
->   * Device-side data type：`uint` @ OpenCL C
->   * Host-side data type：`UInt32 (Cardinal)` @ Delphi
+>   * デバイス側データ型：`uint` @ OpenCL C
+>   * ホスト側データ型：`UInt32 (Cardinal)` @ Delphi
 > * TCLImager\*Dx\*x`SFlo32`  
->   * Device-side data type：`float` @ OpenCL C
->   * Host-side data type：`Single` @ Delphi
+>   * デバイス側データ型：`float` @ OpenCL C
+>   * ホスト側データ型：`Single` @ Delphi
 
 > Delphi
 > ```Delphi
@@ -326,7 +326,7 @@ permalink: /ja/
 > Delphi
 > ```Delphi
 > _Kernel.Parames['Buffer'] := _Buffer;  // バッファーの接続
-> _Kernel.Parames['Imager'] := _Imager;  // イメージの接続
+> _Kernel.Parames['Imager'] := _Imager;  // イメージ　の接続
 > _Kernel.Parames['Samplr'] := _Samplr;  // サンプラーの接続
 > ```
 
