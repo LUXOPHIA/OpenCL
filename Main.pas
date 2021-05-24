@@ -161,31 +161,31 @@ procedure TForm1.MakePrograms;
 begin
      ////////// ライブラリ
 
-     _Librar := TCLLibrar.Create( _Contex );                     // 生成
+     _Librar := TCLLibrar.Create( _Contex );                                  // 生成
 
-     Assert( Assigned( _Librar.Handle ), '_Librar is Error!' );  // 検証
+     Assert( Assigned( _Librar.Handle ), '_Librar is Error!' );               // 検証
 
-     _Librar.Source.LoadFromFile( '..\..\_DATA\Librar.cl' );     // ソースコードのロード
+     _Librar.Source.LoadFromFile( '..\..\_DATA\Librar.cl' );                  // ソースコードのロード
 
-     MemoPL.Lines.Assign( _Librar.Source );                      // ソースコードの表示
+     MemoPL.Lines.Assign( _Librar.Source );                                   // ソースコードの表示
 
      ////////// プログラム
 
-     _Execut := TCLExecut.Create( _Contex );                     // 生成
+     _Execut := TCLExecut.Create( _Contex );                                  // 生成
 
-     Assert( Assigned( _Execut.Handle ), '_Execut is Error!' );  // 検証
+     Assert( Assigned( _Execut.Handle ), '_Execut is Error!' );               // 検証
 
-     _Execut.Source.LoadFromFile( '..\..\_DATA\Execut.cl' );     // ソースコードのロード
+     _Execut.Source.LoadFromFile( '..\..\_DATA\Execut.cl' );                  // ソースコードのロード
 
-     MemoPE.Lines.Assign( _Execut.Source );                      // ソースコードの表示
+     MemoPE.Lines.Assign( _Execut.Source );                                   // ソースコードの表示
 
      ////////// ビルド
 
-     _Buildr := _Execut.BuildTo( _Device );                      // 生成
+     _Buildr := _Execut.BuildTo( _Device );                                   // 生成
 
-     ShowBuild;                                                  // ビルド情報の表示
+     ShowBuild;                                                               // ビルド情報の表示
 
-     if not Assigned( _Buildr.Handle ) then                      // 検証
+     if not Assigned( _Buildr.Handle ) then                                   // 検証
      begin
           { _Buildr is Error! }
           TabControl1.ActiveTab := TabItemP;
@@ -196,34 +196,22 @@ begin
 
      ////////// カーネル
 
-     _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );    // 生成
+     _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );                 // 生成
 
-     Assert( Assigned( _Kernel.Handle ), '_Kernel is Error!' );  // 検証
+     Assert( Assigned( _Kernel.Handle ), '_Kernel is Error!' );               // 検証
 
-     _Kernel.Parames['Buffer'] := _Buffer;                       // バッファーの登録
-     _Kernel.Parames['Imager'] := _Imager;                       // イメージ　の登録
-     _Kernel.Parames['Textur'] := _Textur;                       // テクスチャの登録
-     _Kernel.Parames['Samplr'] := _Samplr;                       // サンプラーの登録
+     _Kernel.GloSizX := _Imager.CountX;                                       // 横ループ回数の設定
+     _Kernel.GloSizY := _Imager.CountY;                                       // 縦ループ回数の設定
 
-     _Kernel.GloSizX := _Imager.CountX;                          // 横ループ回数の設定
-     _Kernel.GloSizY := _Imager.CountY;                          // 縦ループ回数の設定
+     _Kernel.Parames['Buffer'] := _Buffer;                                    // バッファーの登録
+     _Kernel.Parames['Imager'] := _Imager;                                    // イメージ　の登録
+     _Kernel.Parames['Textur'] := _Textur;                                    // テクスチャの登録
+     _Kernel.Parames['Samplr'] := _Samplr;                                    // サンプラーの登録
 
-     if not _Kernel.Parames.FindsOK then                         // 仮引数の照合
-     begin
-          TabControl1.ActiveTab := TabItemP;
-          TabControlP.ActiveTab := TabItemPE;
+     Assert( _Kernel.Parames.FindsOK, '_Kernel.Parames.FindsOK is Error!' );  // 仮引数の照合
+     Assert( _Kernel.Parames.BindsOK, '_Kernel.Parames.BindsOK is Error!' );  // 実引数の接続
 
-          Exit;
-     end;
-
-     if not _Kernel.Parames.BindsOK then                         // 実引数の接続
-     begin
-          TabControl1.ActiveTab := TabItemS;
-
-          Exit;
-     end;
-
-     Timer1.Enabled := True;                                     // 描画開始
+     Timer1.Enabled := True;                                                  // 描画開始
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
