@@ -222,30 +222,30 @@ The `TCLImager` class is abstract and derives various classes depending on the l
 　　　　　┗[`TCLImager3DxRGBAxSFlo32`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas#L66)  
 
 The first part of the class name represents the dimension of the `TCLImager` class. 
-> * TCLImager`1D`x\*x\*  
+> * TCLImager`1D`x`*`x`*`  
 > `1D`
-> * TCLImager`2D`x\*x\*  
+> * TCLImager`2D`x`*`x`*`  
 > `2D`
-> * TCLImager`3D`x\*x\*  
+> * TCLImager`3D`x`*`x`*`  
 > `3D`
 
 The second part of the class name represents the channel order of the `TCLImager` class.  
-> * TCLImager\*Dx`BGRA`x\*  
+> * TCLImager`*`x`BGRA`x`*`  
 > `ＢＧＲＡ`
-> * TCLImager\*Dx`RGBA`x\*  
+> * TCLImager`*`x`RGBA`x`*`  
 > `ＲＧＢＡ`
 
 The third part of the class name represents the color data type of the `TCLImager` class.  
-> * TCLImager\*Dx\*x`UInt8`  
+> * TCLImager`*`x`*`x`UInt8`  
 >   * Device-side data type：`uint8` @ OpenCL C
 >   * Host-side data type：`UInt8 (Byte)` @ Delphi
-> * TCLImager\*Dx\*x`UFix8`  
+> * TCLImager`*`x`*`x`UFix8`  
 >   * Device-side data type：`float` @ OpenCL C
 >   * Host-side data type：`UInt8 (Byte)` @ Delphi
-> * TCLImager\*Dx\*x`UInt32`  
+> * TCLImager`*`x`*`x`UInt32`  
 >   * Device-side data type：`uint` @ OpenCL C
 >   * Host-side data type：`UInt32 (Cardinal)` @ Delphi
-> * TCLImager\*Dx\*x`SFlo32`  
+> * TCLImager`*`x`*`x`SFlo32`  
 >   * Device-side data type：`float` @ OpenCL C
 >   * Host-side data type：`Single` @ Delphi
 
