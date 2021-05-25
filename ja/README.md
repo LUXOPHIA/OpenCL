@@ -47,7 +47,7 @@ permalink: /ja/
 
 ### ⬤ 2.1. プラットフォーム
 “**プラットフォーム**”オブジェクト (`TCLPlatfo`) は、各デバイスベンダーが定義する環境を表します。
-`TCLSystem`クラスは、すべての**プラットフォーム**を自動的に検出し、`Platfors`プロパティに列挙します。 
+`TCLSystem`クラスは、すべての**プラットフォーム**を自動的に検出し、`Platfors[]`プロパティに列挙します。 
 
 > `Object Pascal`
 > ```Delphi
@@ -55,7 +55,7 @@ permalink: /ja/
 > TOpenCL.Platfors[*]    :TCLPlatfo  // 全プラットフォームの配列
 > ```
 
-`TCLPlatfo`クラスは、特定の**プラットフォーム**に関する情報をプロパティとして提供します。  
+特定の**プラットフォーム**に関する情報は、`TCLPlatfo`クラスのプロパティから取得できます。  
 > `Object Pascal`
 > ```Delphi
 > _Platfo := TOpenCL.Platfors[0];  // 特定プラットフォームの選択
@@ -71,14 +71,14 @@ permalink: /ja/
 
 ### ⬤ 2.2. デバイス
 **デバイス**オブジェクト (`TCLDevice`) は、物理的なＧＰＵやＣＰＵを表します。
-`TCLPlatfo`クラスは、特定の**プラットフォーム**内のすべての**デバイス**を自動的に検出し、`Devices`プロパティに列挙します。  
+`TCLPlatfo`クラスは、特定の**プラットフォーム**内のすべての**デバイス**を自動的に検出し、`Devices[]`プロパティに列挙します。  
 > `Object Pascal`
 > ```Delphi
 > _Platfo.Devices.Count :Integer    // デバイスの数
 > _Platfo.Devices[*]    :TCLDevice  // デバイスの配列
 > ```
 
-`TCLDevice`クラスは、特定の**デバイス**に関する情報をプロパティとして提供します。  
+特定の**デバイス**に関する情報は、`TCLDevice`クラスのプロパティから取得できます。  
 > `Object Pascal`
 > ```Delphi
 > _Device := _Platfo.Devices[0];  // 特定デバイスの選択
@@ -95,15 +95,23 @@ permalink: /ja/
 
 ### ⬤ 2.3. コンテキスト
 “**コンテキスト**” (`TCLContex`) は、関連するデータやプログラムを束ねて管理します。
-`TCLContex`クラスは、`TCLPlatfo`クラスから生成されます。  
+`TCLContex`クラスは、`TCLPlatfo`クラスを引数として生成できます。  
 > `Object Pascal`
 > ```Delphi
 > _Contex := TCLContex.Create( _Platfo );
 > ```
 
+生成された`TCLContex`クラスは、`TCLPlatfo`クラスの`Contexs[]`プロパティへ登録されます。
+> `Object Pascal`  
+> ```Delphi
+> _Platfo.Contexs.Count :Integer    // コンテキストの数
+> _Platfo.Contexs[*]    :TCLQueuer  // コンテキストの配列
+> ``
+> 
 ### ⬤ 2.4. コマンドキュー
-“**コマンドキュー**”オブジェクト (`TCLQueuer`) は、デバイスに送られる命令を管理します。
-`TCLQueuer`クラスは、`TCLContex`クラスと`TCLDevice`クラスから生成されます。  
+“**コマンドキュー**”オブジェクト (`TCLQueuer`) は、**デバイス**に送られる命令を管理します。
+つまり、**コンテキスト**と**デバイス**を繋ぐオブジェクトです。
+`TCLQueuer`クラスは、`TCLContex`クラスと`TCLDevice`クラスを引数として生成できます。  
 > `Object Pascal`
 > ```Delphi
 > _Queuer := TCLQueuer.Create( _Contex, _Device );
@@ -111,14 +119,14 @@ permalink: /ja/
 > _Queuer := _Contex.Queuers[ _Device ];
 > ```
 
-`TCLQueuer`クラスは、`TCLContex`クラスの`Queuers`プロパティへ登録されます。
+生成された`TCLQueuer`クラスは、`TCLContex`クラスの`Queuers[]`プロパティへ登録されます。
 > `Object Pascal`  
 > ```Delphi
 > _Contex.Queuers.Count :Integer    // コマンドキューの数
 > _Contex.Queuers[*]    :TCLQueuer  // コマンドキューの配列
 > ```
 
-なお、**プラットフォーム**の異なる**コンテキスト**と**デバイス**からでは、**コマンドキュー**を生成できません。
+なお、**プラットフォーム**の異なる**コンテキスト**と**デバイス**を繋ぐ**コマンドキュー**は生成できません。
 > `Object Pascal`  
 > ```Delphi
 > P0 := TOpenCL.Platfors[0];
@@ -149,14 +157,14 @@ permalink: /ja/
 ### ⬤ 2.5. 実引数
 
 > [`TCLArgume`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.pas#L21)  
-　┣[`TCLMemory`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.pas#L24)  
-　┃　┣[`TCLBuffer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Buffer.pas#L24)  
-　┃　┗[`TCLImager`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.pas#L24)  
-　┗[`TCLSamplr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Samplr.pas#L21)  
+> 　┣[`TCLMemory`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.pas#L24)  
+> 　┃　┣[`TCLBuffer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Buffer.pas#L24)  
+> 　┃　┗[`TCLImager`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.pas#L24)  
+> 　┗[`TCLSamplr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Samplr.pas#L21)  
 
 #### ▼ 2.5.1. メモリー
 “**メモリー**”オブジェクト (`TCLMemory`) は、様々なデータを格納し**デバイス**と共有します。
-`TCLMemory`クラスは、`TCLContex`クラスと`TCLQueuer`クラスから生成されます。
+`TCLMemory`クラスは、`TCLContex`クラスと`TCLQueuer`クラスを引数として生成できます。
 `TCLMemory`クラスは抽象クラスであり、`TCLBuffer`クラスと`TCLImager`クラスを派生させます。  
 
 #### ▽ 2.5.1.1. バッファー 
@@ -186,8 +194,8 @@ permalink: /ja/
 > _Buffer := TCLBuffer<TItem>.Create( _Contex, _Queuer );
 > ```
 
-`Data`プロパティを通して、配列データを読み書きします。
-配列データを読み書きする前にホストと同期するために“マップ”し、使用後にデバイスと同期するために“アンマップ”する必要があります。
+配列データは、`Data[]`プロパティを通して読み書きします。
+ホストとデバイスを同期させるために、配列データを読み書きする前に“**マップ**”し、使用後に“**アンマップ**”する必要があります。
 > `Object Pascal`
 > ```Delphi
 > _Buffer.Count := 3;                          // 要素数の設定
@@ -199,7 +207,7 @@ permalink: /ja/
 > ```
 
 #### ▽ 2.5.1.2. イメージ
-“**イメージ**”オブジェクトは、１Ｄ～３Ｄにおけるピクセル配列を格納します。
+“**イメージ**”オブジェクト (`TCLImager`) は、１Ｄ～３Ｄにおけるピクセル配列を格納します。
 ３Ｄのボクセルデータも**イメージ**の一種と見なされます。
 `TCLImager`クラスは抽象クラスであり、カラーチャンネルのレイアウトやビット数に応じて、様々なクラスが派生します。  
 
@@ -223,17 +231,17 @@ permalink: /ja/
 
 クラス名の１番目の部分は、`TCLImager`画像の次元を表しています。  
 > * TCLImager`1D`x`*`x`*`  
-> `１Ｄ`
+>   * 次元：`１Ｄ`
 > * TCLImager`2D`x`*`x`*`  
-> `２Ｄ`
+>   * 次元：`２Ｄ`
 > * TCLImager`3D`x`*`x`*`  
-> `３Ｄ`
+>   * 次元：`３Ｄ`
 
 クラス名の２番目の部分は、`TCLImager`カラーチャンネルの順番を表しています。  
 > * TCLImager`*`x`BGRA`x`*`  
-> `ＢＧＲＡ`
+>   * カラーチャンネル：`ＢＧＲＡ`
 > * TCLImager`*`x`RGBA`x`*`  
-> `ＲＧＢＡ`
+>   * カラーチャンネル：`ＲＧＢＡ`
 
 クラス名の３番目の部分は、`TCLImager`カラーチャンネルのデータ型を表しています。  
 > * TCLImager`*`x`*`x`UInt8`  
@@ -249,6 +257,7 @@ permalink: /ja/
 >   * デバイス側データ型：`float` @ OpenCL C
 >   * ホスト側データ型：`Single` @ Delphi
 
+Ｘ/Ｙ/Ｚ方向のピクセル数は、'CountX'/'Y'/'Z' プロパティで設定できます。
 > `Object Pascal`
 > ```Delphi
 > _Imager := TCLDevIma3DxBGRAxUInt8.Create( _Contex, _Queuer );
@@ -259,6 +268,7 @@ permalink: /ja/
 
 #### ▼ 2.5.2. サンプラー
 サンプラーオブジェクト (`TCLSamplr`) は、ピクセル色を実数座標で得るための補間方法を定義します。  
+`TCLSamplr` クラスは、'TCLContex'クラスを引数として生成できます。
 > `Object Pascal`
 > ```Delphi
 > _Samplr := TCLSamplr.Create( _Contex );
@@ -266,6 +276,7 @@ permalink: /ja/
 
 ### ⬤ 2.6. プログラム 
 “**プログラム**”オブジェクト (`TCLProgra`) は、ソースコードを読み込んで、実行可能なバイナリへビルドします。
+`TCLProgra` クラスは、'TCLContex'クラスを引数として生成できます。
 `TCLProgra`クラスは抽象クラスであり、ソースコードの種類に応じて、`TCLLibrar`クラスと`TCLExecut`クラスへ派生します。  
 
 #### ▼ 2.6.1. ライブラリ
@@ -288,6 +299,7 @@ permalink: /ja/
 
 ### ⬤ 2.7. ビルド
 **ビルド** (`TCLBuildr`) は**プログラム**が行う“行為”ですが、我々のライブラリではクラスとして明示的に表現されます。  
+`TCLBuildr` クラスは、'TCLExecut'クラスと'TCLDevice'クラスを引数として生成できます。
 > `Object Pascal`
 > ```Delphi
 > _Buildr := TCLBuildr.Create( _Execut, _Device );
@@ -298,10 +310,10 @@ permalink: /ja/
 > ```
 
 **カーネル**オブジェクト（2.8.章参照）は、実行時に`TCLBuildr`クラスを自動生成します。
-しかし、カーネルの実行前に`TCLBuildr`クラスを作成することで、コンパイルとリンクのエラーを確認することができます。 
+しかし、カーネルの実行前に`TCLBuildr`クラスを作成することで、コンパイルとリンクのエラーを事前に確認することができます。 
 > `Object Pascal`
 > ```Delphi
-> _Buildr.Handle;  // ビルドの実行
+> _Buildr.Handle;  // ビルドの実行（ハンドルの生成）
 > 
 > _Buildr.CompileStatus :T_cl_build_status  // コンパイルのスタータス
 > _Buildr.CompileLog    :String             // コンパイルのログ
@@ -318,7 +330,7 @@ permalink: /ja/
 > }
 > ```
 
-`TCLKernel`クラスは、`TCLExecut`クラスと`TCLQueuer`クラスから生成されます。  
+`TCLKernel`クラスは、`TCLExecut`クラスと`TCLQueuer`クラスを引数として生成できます。  
 > `Object Pascal`
 > ```Delphi
 > _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );
@@ -326,9 +338,8 @@ permalink: /ja/
 > _Kernel := _Execut.Kernels.Add( 'Main', _Queuer );
 > ```
 
-
 #### ▼ 2.8.1. 仮引数
-**メモリ**オブジェクトは、`TCLKernel`クラスの“Parames”プロパティを介して、ソースコードの引数へ接続します。  
+**メモリ**オブジェクトは、`TCLKernel`クラスの`Parames[]`プロパティを介して、ソースコードの引数へ接続します。  
 > `Object Pascal`
 > ```Delphi
 > _Kernel.Parames['Buffer'] := _Buffer;  // バッファーの接続
