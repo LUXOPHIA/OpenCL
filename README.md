@@ -101,9 +101,17 @@ The `TCLContex` class is created from the `TCLPlatfo` class.
 > _Contex := TCLContex.Create( _Platfo );
 > ```
 
+The generated `TCLContex` class is registered into the `Contexs[]` property of the `TCLPlatfo` class.
+> `Object Pascal`  
+> ```Delphi
+> _Platfo.Contexs.Count :Integer    // Number of contexts
+> _Platfo.Contexs[*]    :TCLQueuer  // Array  of contexts
+> ``
+
 ### ⬤ 2.4. Command Queue
 The "**command queue**" object (`TCLQueuer`) manages the commands sent to the device.
-The `TCLQueuer` class is created from the `TCLContex` and the `TCLDevice` classes.  
+In other words, it is an object that connects **context** and **device**.
+The `TCLQueuer` class is created with the `TCLContex` and the `TCLDevice` classes as arguments.
 > `Object Pascal`
 > ```Delphi
 > _Queuer := TCLQueuer.Create( _Contex, _Device );
@@ -114,8 +122,8 @@ The `TCLQueuer` class is created from the `TCLContex` and the `TCLDevice` classe
 The `TCLContex` class registers the `TCLQueuer` class in the `Queuers` property.  
 > `Object Pascal`  
 > ```Delphi
-> _Contex.Queuers.Count :Integer    // コマンドキューの数
-> _Contex.Queuers[*]    :TCLQueuer  // コマンドキューの配列
+> _Contex.Queuers.Count :Integer    // Number of command queue
+> _Contex.Queuers[*]    :TCLQueuer  // Array  of command queue
 > ```
 
 Note that **context** and **device** on the different **platforms** cannot generate a **command queue**.  
@@ -149,10 +157,10 @@ Note that **context** and **device** on the different **platforms** cannot gener
 ### ⬤ 2.5. Argument
 
 > [`TCLArgume`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.pas#L21)  
-　┣[`TCLMemory`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.pas#L24)  
-　┃　┣[`TCLBuffer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Buffer.pas#L24)  
-　┃　┗[`TCLImager`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.pas#L24)  
-　┗[`TCLSamplr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Samplr.pas#L21)  
+> 　┣[`TCLMemory`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.pas#L24)  
+> 　┃　┣[`TCLBuffer`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Buffer.pas#L24)  
+> 　┃　┗[`TCLImager`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.pas#L24)  
+> 　┗[`TCLSamplr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Samplr.pas#L21)  
 
 #### ▼ 2.5.1. Memory
 The "**Memory**" object (`TCLMemory`) stores various data and shares it with the **device**.
@@ -221,21 +229,21 @@ The `TCLImager` class is abstract and derives various classes depending on the l
 　　　　　┣[`TCLImager3DxBGRAxUFix8`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas#L52)  
 　　　　　┗[`TCLImager3DxRGBAxSFlo32`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas#L66)  
 
-The first part of the class name represents the dimension of the `TCLImager` class. 
+The first part of the class name represents the dimension of a image. 
 > * TCLImager`1D`x`*`x`*`  
-> `1D`
+>   * Dimension：`1D`
 > * TCLImager`2D`x`*`x`*`  
-> `2D`
+>   * Dimension：`2D`
 > * TCLImager`3D`x`*`x`*`  
-> `3D`
+>   * Dimension：`3D`
 
-The second part of the class name represents the channel order of the `TCLImager` class.  
+The second part of the class name represents the color channel order of a image.  
 > * TCLImager`*`x`BGRA`x`*`  
-> `ＢＧＲＡ`
+>   * Color channel order：`ＢＧＲＡ`
 > * TCLImager`*`x`RGBA`x`*`  
-> `ＲＧＢＡ`
+>   * Color channel order：`ＲＧＢＡ`
 
-The third part of the class name represents the color data type of the `TCLImager` class.  
+The third part of the class name represents the color data type of a image.  
 > * TCLImager`*`x`*`x`UInt8`  
 >   * Device-side data type：`uint8` @ OpenCL C
 >   * Host-side data type：`UInt8 (Byte)` @ Delphi
@@ -249,6 +257,7 @@ The third part of the class name represents the color data type of the `TCLImage
 >   * Device-side data type：`float` @ OpenCL C
 >   * Host-side data type：`Single` @ Delphi
 
+The 'CountX'/'Y'/'Z' property sets the number of pixels in the X/Y/Z direction.
 > `Object Pascal`
 > ```Delphi
 > _Imager := TCLDevIma3DxBGRAxUInt8.Create( _Contex, _Queuer );
@@ -259,6 +268,7 @@ The third part of the class name represents the color data type of the `TCLImage
 
 #### ▼ 2.5.2. Sampler
 The sampler object (`TCLSamplr`) defines the interpolation method to get the pixel color in real-number coordinates.  
+The `TCLSamplr` class is generated with the 'TCLContex' class as an argument.
 > `Object Pascal`
 > ```Delphi
 > _Samplr := TCLSamplr.Create( _Contex );
@@ -266,6 +276,7 @@ The sampler object (`TCLSamplr`) defines the interpolation method to get the pix
 
 ### ⬤ 2.6. Program
 The "**program**" object (`TCLProgra`) reads the source code and builds it into an executable binary.
+The `TCLProgra` class is generated with the 'TCLContex' class as an argument.
 The `TCLProgra` class is abstract and derives the `TCLLibrar` and `TCLExecut` classes, depending on the type of source code. 
 
 #### ▼ 2.6.1. Library

@@ -107,7 +107,7 @@ permalink: /ja/
 > _Platfo.Contexs.Count :Integer    // コンテキストの数
 > _Platfo.Contexs[*]    :TCLQueuer  // コンテキストの配列
 > ``
-> 
+
 ### ⬤ 2.4. コマンドキュー
 “**コマンドキュー**”オブジェクト (`TCLQueuer`) は、**デバイス**に送られる命令を管理します。
 つまり、**コンテキスト**と**デバイス**を繋ぐオブジェクトです。
@@ -229,7 +229,7 @@ permalink: /ja/
 　　　　　┣[`TCLImager3DxBGRAxUFix8`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas#L52)  
 　　　　　┗[`TCLImager3DxRGBAxSFlo32`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Memory.Imager.D3.FMX.pas#L66)  
 
-クラス名の１番目の部分は、`TCLImager`画像の次元を表しています。  
+クラス名の１番目の部分は、画像の次元を表しています。  
 > * TCLImager`1D`x`*`x`*`  
 >   * 次元：`１Ｄ`
 > * TCLImager`2D`x`*`x`*`  
@@ -237,13 +237,13 @@ permalink: /ja/
 > * TCLImager`3D`x`*`x`*`  
 >   * 次元：`３Ｄ`
 
-クラス名の２番目の部分は、`TCLImager`カラーチャンネルの順番を表しています。  
+クラス名の２番目の部分は、カラーチャンネルの順番を表しています。  
 > * TCLImager`*`x`BGRA`x`*`  
->   * カラーチャンネル：`ＢＧＲＡ`
+>   * カラーチャンネル順：`ＢＧＲＡ`
 > * TCLImager`*`x`RGBA`x`*`  
->   * カラーチャンネル：`ＲＧＢＡ`
+>   * カラーチャンネル順：`ＲＧＢＡ`
 
-クラス名の３番目の部分は、`TCLImager`カラーチャンネルのデータ型を表しています。  
+クラス名の３番目の部分は、色のデータ型を表しています。  
 > * TCLImager`*`x`*`x`UInt8`  
 >   * デバイス側データ型：`uint8` @ OpenCL C
 >   * ホスト側データ型：`UInt8 (Byte)` @ Delphi
@@ -276,7 +276,7 @@ permalink: /ja/
 
 ### ⬤ 2.6. プログラム 
 “**プログラム**”オブジェクト (`TCLProgra`) は、ソースコードを読み込んで、実行可能なバイナリへビルドします。
-`TCLProgra` クラスは、'TCLContex'クラスを引数として生成できます。
+`TCLProgra`クラスは、'TCLContex'クラスを引数として生成できます。
 `TCLProgra`クラスは抽象クラスであり、ソースコードの種類に応じて、`TCLLibrar`クラスと`TCLExecut`クラスへ派生します。  
 
 #### ▼ 2.6.1. ライブラリ
