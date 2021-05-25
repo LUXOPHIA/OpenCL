@@ -6,7 +6,7 @@ permalink: /
 [`［日本語］`](https://luxophia.github.io/OpenCL/ja/)
 
 # [OpenCL](https://github.com/LUXOPHIA/OpenCL/)
-Parallel computing on the GPU (or CPU) with [OpenCL](https://en.wikipedia.org/wiki/OpenCL).  
+Parallel computing with [OpenCL](https://en.wikipedia.org/wiki/OpenCL) on the GPU (or CPU).  
 
 ![](https://github.com/LUXOPHIA/OpenCL/raw/master/--------/_SCREENSHOT/OpenCL.png)
 
