@@ -29,14 +29,14 @@ uses
   LUX.GPU.OpenCL.core in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Core\LUX.GPU.OpenCL.core.pas',
   LUX.GPU.OpenCL.Device in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Core\LUX.GPU.OpenCL.Device.pas',
   LUX.GPU.OpenCL.Kernel in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Core\LUX.GPU.OpenCL.Kernel.pas',
-  LUX.GPU.OpenCL in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Core\LUX.GPU.OpenCL.pas',
   LUX.GPU.OpenCL.Platfo in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Core\LUX.GPU.OpenCL.Platfo.pas',
   LUX.GPU.OpenCL.Progra in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Core\LUX.GPU.OpenCL.Progra.pas',
   LUX.GPU.OpenCL.Queuer in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Core\LUX.GPU.OpenCL.Queuer.pas',
   LUX.GPU.OpenCL.Show in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Core\LUX.GPU.OpenCL.Show.pas',
-  LUX.GPU.OpenCL.Stream.FMX.D1 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Stream.FMX.D1.pas',
-  LUX.GPU.OpenCL.Stream.FMX.D2 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Stream.FMX.D2.pas',
-  LUX.GPU.OpenCL.Stream.FMX.D3 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Stream.FMX.D3.pas';
+  LUX.GPU.OpenCL in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.pas',
+  LUX.GPU.OpenCL.Stream.FMX.D1 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Stream\LUX.GPU.OpenCL.Stream.FMX.D1.pas',
+  LUX.GPU.OpenCL.Stream.FMX.D2 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Stream\LUX.GPU.OpenCL.Stream.FMX.D2.pas',
+  LUX.GPU.OpenCL.Stream.FMX.D3 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Stream\LUX.GPU.OpenCL.Stream.FMX.D3.pas';
 
 {$R *.res}
 
