@@ -51,6 +51,21 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLBuffer<TValue_:record> = class( TCLBuffer<TCLSystem,TCLPlatfo,TCLContex,TValue_> );
 
+     TCLImager1DxBGRAxUInt8  = TCLImager1DxBGRAxUInt8 <TCLSystem,TCLPlatfo,TCLContex>;
+     TCLImager1DxBGRAxUFix8  = TCLImager1DxBGRAxUFix8 <TCLSystem,TCLPlatfo,TCLContex>;
+     TCLImager1DxRGBAxUInt32 = TCLImager1DxRGBAxUInt32<TCLSystem,TCLPlatfo,TCLContex>;
+     TCLImager1DxRGBAxSFlo32 = TCLImager1DxRGBAxSFlo32<TCLSystem,TCLPlatfo,TCLContex>;
+
+     TCLImager2DxBGRAxUInt8  = TCLImager2DxBGRAxUInt8 <TCLSystem,TCLPlatfo,TCLContex>;
+     TCLImager2DxBGRAxUFix8  = TCLImager2DxBGRAxUFix8 <TCLSystem,TCLPlatfo,TCLContex>;
+     TCLImager2DxRGBAxUInt32 = TCLImager2DxRGBAxUInt32<TCLSystem,TCLPlatfo,TCLContex>;
+     TCLImager2DxRGBAxSFlo32 = TCLImager2DxRGBAxSFlo32<TCLSystem,TCLPlatfo,TCLContex>;
+
+     TCLImager3DxBGRAxUInt8  = TCLImager3DxBGRAxUInt8 <TCLSystem,TCLPlatfo,TCLContex>;
+     TCLImager3DxBGRAxUFix8  = TCLImager3DxBGRAxUFix8 <TCLSystem,TCLPlatfo,TCLContex>;
+     TCLImager3DxRGBAxUInt32 = TCLImager3DxRGBAxUInt32<TCLSystem,TCLPlatfo,TCLContex>;
+     TCLImager3DxRGBAxSFlo32 = TCLImager3DxRGBAxSFlo32<TCLSystem,TCLPlatfo,TCLContex>;
+
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
