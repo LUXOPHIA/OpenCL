@@ -4,92 +4,86 @@ interface //####################################################################
 
 uses System.UITypes,
      FMX.Graphics,
-     LUX.Color, LUX.Color.Grid.D2.Preset,
-     cl_version, cl_platform, cl,
-     LUX.GPU.OpenCL.Argume.Memory.Imager.D2;
+     LUX.Color,
+     LUX.GPU.OpenCL,
+     LUX.GPU.OpenCL.Argume.Memory.Imager.D1.FMX;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLImager2DFMX<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
-
-     TCLImager2DxBGRAxUInt8 <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
-     TCLImager2DxBGRAxUFix8 <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
-     TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
-     TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+     TCLStream2D_FMX<TCLImager_:class> = class;
+       TCLStream2DxBGRAxUInt8_FMX      = class;
+       TCLStream2DxBGRAxUFix8_FMX      = class;
+       TCLStream2DxRGBAxUInt32_FMX     = class;
+       TCLStream2DxRGBAxSFlo32_FMX     = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2D_FMX<TCLImager_>
 
-     TCLImager2DFMX<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class( TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_> )
+     ICLStream2D_FMX<TCLImager_:class> = interface( ICLStream1D_FMX<TCLImager_> )
+     ['{49DD70F5-843E-4267-B948-8F80034B7567}']
+     {protected}
+     {public}
+     end;
+
+     TCLStream2D_FMX<TCLImager_:class> = class( TCLStream1D_FMX<TCLImager_>, ICLStream2D_FMX<TCLImager_> )
      private
      protected
      public
-       ///// メソッド
-       procedure CopyTo( const Bitmap_:TBitmap ); overload; virtual; abstract;
-       procedure CopyFrom( const Bitmap_:TBitmap ); overload; virtual; abstract;
-       procedure SaveToFile( const FileName_:String ); virtual;
-       procedure LoadFromFile( const FileName_:String ); virtual;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxBGRAxUInt8_FMX
 
-     TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager2DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TByteRGBA> )
+     ICLStream2DxBGRAxUInt8_FMX = ICLStream2D_FMX<TCLImager2DxBGRAxUInt8>;
+
+     TCLStream2DxBGRAxUInt8_FMX = class( TCLStream2D_FMX<TCLImager2DxBGRAxUInt8>, ICLStream2DxBGRAxUInt8_FMX )
      private
      protected
-       ///// アクセス
-       function GetPixCha :T_cl_channel_order; override;
-       function GetPixTyp :T_cl_channel_type; override;
      public
        ///// メソッド
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxBGRAxUFix8_FMX
 
-     TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager2DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TByteRGBA> )
+     ICLStream2DxBGRAxUFix8_FMX = ICLStream2D_FMX<TCLImager2DxBGRAxUFix8>;
+
+     TCLStream2DxBGRAxUFix8_FMX = class( TCLStream2D_FMX<TCLImager2DxBGRAxUFix8>, ICLStream2DxBGRAxUFix8_FMX )
      private
      protected
-       ///// アクセス
-       function GetPixCha :T_cl_channel_order; override;
-       function GetPixTyp :T_cl_channel_type; override;
      public
        ///// メソッド
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxRGBAxUInt32_FMX
 
-     TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager2DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TUInt32xRGBA> )
+     ICLStream2DxRGBAxUInt32_FMX = ICLStream2D_FMX<TCLImager2DxRGBAxUInt32>;
+
+     TCLStream2DxRGBAxUInt32_FMX = class( TCLStream2D_FMX<TCLImager2DxRGBAxUInt32>, ICLStream2DxRGBAxUInt32_FMX )
      private
      protected
-       ///// アクセス
-       function GetPixCha :T_cl_channel_order; override;
-       function GetPixTyp :T_cl_channel_type; override;
      public
        ///// メソッド
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxRGBAxSFlo32_FMX
 
-     TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager2DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TSingleRGBA> )
+     ICLStream2DxRGBAxSFlo32_FMX = ICLStream2D_FMX<TCLImager2DxRGBAxSFlo32>;
+
+     TCLStream2DxRGBAxSFlo32_FMX = class( TCLStream2D_FMX<TCLImager2DxRGBAxSFlo32>, ICLStream2DxRGBAxSFlo32_FMX )
      private
      protected
-       ///// アクセス
-       function GetPixCha :T_cl_channel_order; override;
-       function GetPixTyp :T_cl_channel_type; override;
      public
        ///// メソッド
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
-       procedure CopyFrom( const Grid_:TCellColorGrid2D_TByteRGBE ); overload; virtual;
-       procedure LoadFromFileHDR( const FileName_:String );
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -100,14 +94,21 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses System.Threading,
-     LUX.Color.Format.HDR;
+uses System.Threading;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2D_FMX<TCLImager_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxBGRAxUInt8_FMX
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -117,344 +118,250 @@ uses System.Threading,
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLImager2DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SaveToFile( const FileName_:String );
+procedure TCLStream2DxBGRAxUInt8_FMX.CopyTo( const Bitmap_:TBitmap );
 var
-   B :TBitmap;
+   B :TBitmapData;
 begin
-     B := TBitmap.Create;
+     with _Imager do
+     begin
+          Bitmap_.SetSize( CountX, CountY );
 
-     CopyTo( B );
+          Data.Map;
 
-     B.SaveToFile( FileName_ );
+          Bitmap_.Map( TMapAccess.Write, B );
 
-     B.Free;
+          TParallel.For( 0, CountY-1, procedure( Y:Integer )
+          begin
+               Move( Data.ValueP[ 0, Y ]^,
+                     B.GetScanline( Y )^,
+                     B.BytesPerLine );
+          end );
+
+          Bitmap_.Unmap( B );
+
+          Data.Unmap;
+     end;
 end;
 
-procedure TCLImager2DFMX<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.LoadFromFile( const FileName_:String );
+procedure TCLStream2DxBGRAxUInt8_FMX.CopyFrom( const Bitmap_:TBitmap );
 var
-   B :TBitmap;
+   B :TBitmapData;
 begin
-     B := TBitmap.Create;
+     with _Imager do
+     begin
+          CountX := Bitmap_.Width ;
+          CountY := Bitmap_.Height;
 
-     B.LoadFromFile( FileName_ );
+          Bitmap_.Map( TMapAccess.Read, B );
 
-     CopyFrom( B );
+          Data.Map;
 
-     B.Free;
+          TParallel.For( 0, CountY-1, procedure( Y:Integer )
+          begin
+               Move( B.GetScanline( Y )^,
+                     Data.ValueP[ 0, Y ]^,
+                     B.BytesPerLine );
+          end );
+
+          Data.Unmap;
+
+          Bitmap_.Unmap( B );
+     end;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxBGRAxUFix8_FMX
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
-
-function TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
-begin
-     Result := CL_BGRA;
-end;
-
-function TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
-begin
-     Result := CL_UNSIGNED_INT8;
-end;
-
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyTo( const Bitmap_:TBitmap );
+procedure TCLStream2DxBGRAxUFix8_FMX.CopyTo( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
-     Bitmap_.SetSize( CountX, CountY );
-
-     Data.Map;
-
-     Bitmap_.Map( TMapAccess.Write, B );
-
-     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     with _Imager do
      begin
-          Move( Data.ValueP[ 0, Y ]^,
-                B.GetScanline( Y )^,
-                B.BytesPerLine );
-     end );
+          Bitmap_.SetSize( CountX, CountY );
 
-     Bitmap_.Unmap( B );
+          Data.Map;
 
-     Data.Unmap;
+          Bitmap_.Map( TMapAccess.Write, B );
+
+          TParallel.For( 0, CountY-1, procedure( Y:Integer )
+          begin
+               Move( Data.ValueP[ 0, Y ]^,
+                     B.GetScanline( Y )^,
+                     B.BytesPerLine );
+          end );
+
+          Bitmap_.Unmap( B );
+
+          Data.Unmap;
+     end;
 end;
 
-procedure TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Bitmap_:TBitmap );
+procedure TCLStream2DxBGRAxUFix8_FMX.CopyFrom( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
-     CountX := Bitmap_.Width ;
-     CountY := Bitmap_.Height;
-
-     Bitmap_.Map( TMapAccess.Read, B );
-
-     Data.Map;
-
-     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     with _Imager do
      begin
-          Move( B.GetScanline( Y )^,
-                Data.ValueP[ 0, Y ]^,
-                B.BytesPerLine );
-     end );
+          CountX := Bitmap_.Width ;
+          CountY := Bitmap_.Height;
 
-     Data.Unmap;
+          Bitmap_.Map( TMapAccess.Read, B );
 
-     Bitmap_.Unmap( B );
+          Data.Map;
+
+          TParallel.For( 0, CountY-1, procedure( Y:Integer )
+          begin
+               Move( B.GetScanline( Y )^,
+                     Data.ValueP[ 0, Y ]^,
+                     B.BytesPerLine );
+          end );
+
+          Data.Unmap;
+
+          Bitmap_.Unmap( B );
+     end;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxRGBAxUInt32_FMX
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
-
-function TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
-begin
-     Result := CL_BGRA;
-end;
-
-function TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
-begin
-     Result := CL_UNORM_INT8;
-end;
-
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyTo( const Bitmap_:TBitmap );
+procedure TCLStream2DxRGBAxUInt32_FMX.CopyTo( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
-     Bitmap_.SetSize( CountX, CountY );
-
-     Data.Map;
-
-     Bitmap_.Map( TMapAccess.Write, B );
-
-     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     with _Imager do
      begin
-          Move( Data.ValueP[ 0, Y ]^,
-                B.GetScanline( Y )^,
-                B.BytesPerLine );
-     end );
+          Bitmap_.SetSize( CountX, CountY );
 
-     Bitmap_.Unmap( B );
+          Data.Map;
 
-     Data.Unmap;
+          Bitmap_.Map( TMapAccess.Write, B );
+
+          TParallel.For( 0, CountY-1, procedure( Y:Integer )
+          var
+             X :Integer;
+          begin
+               for X := 0 to CountX-1 do
+               begin
+                    B.SetPixel( X, Y, TByteRGBA( Data[ X, Y ] ) );
+               end;
+          end );
+
+          Bitmap_.Unmap( B );
+
+          Data.Unmap;
+     end;
 end;
 
-procedure TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Bitmap_:TBitmap );
+procedure TCLStream2DxRGBAxUInt32_FMX.CopyFrom( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
-     CountX := Bitmap_.Width ;
-     CountY := Bitmap_.Height;
-
-     Bitmap_.Map( TMapAccess.Read, B );
-
-     Data.Map;
-
-     TParallel.For( 0, CountY-1, procedure( Y:Integer )
+     with _Imager do
      begin
-          Move( B.GetScanline( Y )^,
-                Data.ValueP[ 0, Y ]^,
-                B.BytesPerLine );
-     end );
+          CountX := Bitmap_.Width ;
+          CountY := Bitmap_.Height;
 
-     Data.Unmap;
+          Bitmap_.Map( TMapAccess.Read, B );
 
-     Bitmap_.Unmap( B );
+          Data.Map;
+
+          TParallel.For( 0, CountY-1, procedure( Y:Integer )
+          var
+             X :Integer;
+          begin
+               for X := 0 to CountX-1 do
+               begin
+                    Data[ X, Y ] := B.GetPixel( X, Y );
+               end;
+          end );
+
+          Data.Unmap;
+
+          Bitmap_.Unmap( B );
+     end;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxRGBAxSFlo32_FMX
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
-
-function TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
-begin
-     Result := CL_RGBA;
-end;
-
-function TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
-begin
-     Result := CL_UNSIGNED_INT32;
-end;
-
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyTo( const Bitmap_:TBitmap );
+procedure TCLStream2DxRGBAxSFlo32_FMX.CopyTo( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
-     Bitmap_.SetSize( CountX, CountY );
-
-     Data.Map;
-
-     Bitmap_.Map( TMapAccess.Write, B );
-
-     TParallel.For( 0, CountY-1, procedure( Y:Integer )
-     var
-        X :Integer;
+     with _Imager do
      begin
-          for X := 0 to CountX-1 do
+          Bitmap_.SetSize( CountX, CountY );
+
+          Data.Map;
+
+          Bitmap_.Map( TMapAccess.Write, B );
+
+          TParallel.For( 0, CountY-1, procedure( Y:Integer )
+          var
+             X :Integer;
           begin
-               B.SetPixel( X, Y, TByteRGBA( Data[ X, Y ] ) );
-          end;
-     end );
+               for X := 0 to CountX-1 do
+               begin
+                    B.SetPixel( X, Y, TByteRGBA( Data[ X, Y ] ) );
+               end;
+          end );
 
-     Bitmap_.Unmap( B );
+          Bitmap_.Unmap( B );
 
-     Data.Unmap;
+          Data.Unmap;
+     end;
 end;
 
-procedure TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Bitmap_:TBitmap );
+procedure TCLStream2DxRGBAxSFlo32_FMX.CopyFrom( const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
-     CountX := Bitmap_.Width ;
-     CountY := Bitmap_.Height;
-
-     Bitmap_.Map( TMapAccess.Read, B );
-
-     Data.Map;
-
-     TParallel.For( 0, CountY-1, procedure( Y:Integer )
-     var
-        X :Integer;
+     with _Imager do
      begin
-          for X := 0 to CountX-1 do
+          CountX := Bitmap_.Width ;
+          CountY := Bitmap_.Height;
+
+          Bitmap_.Map( TMapAccess.Read, B );
+
+          Data.Map;
+
+          TParallel.For( 0, CountY-1, procedure( Y:Integer )
+          var
+             X :Integer;
           begin
-               Data[ X, Y ] := B.GetPixel( X, Y );
-          end;
-     end );
+               for X := 0 to CountX-1 do
+               begin
+                    Data[ X, Y ] := B.GetPixel( X, Y );
+               end;
+          end );
 
-     Data.Unmap;
+          Data.Unmap;
 
-     Bitmap_.Unmap( B );
-end;
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
-
-/////////////////////////////////////////////////////////////////////// アクセス
-
-function TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
-begin
-     Result := CL_RGBA;
-end;
-
-function TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
-begin
-     Result := CL_FLOAT;
-end;
-
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
-
-/////////////////////////////////////////////////////////////////////// メソッド
-
-procedure TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyTo( const Bitmap_:TBitmap );
-var
-   B :TBitmapData;
-begin
-     Bitmap_.SetSize( CountX, CountY );
-
-     Data.Map;
-
-     Bitmap_.Map( TMapAccess.Write, B );
-
-     TParallel.For( 0, CountY-1, procedure( Y:Integer )
-     var
-        X :Integer;
-     begin
-          for X := 0 to CountX-1 do
-          begin
-               B.SetPixel( X, Y, TByteRGBA( Data[ X, Y ] ) );
-          end;
-     end );
-
-     Bitmap_.Unmap( B );
-
-     Data.Unmap;
-end;
-
-procedure TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Bitmap_:TBitmap );
-var
-   B :TBitmapData;
-begin
-     CountX := Bitmap_.Width ;
-     CountY := Bitmap_.Height;
-
-     Bitmap_.Map( TMapAccess.Read, B );
-
-     Data.Map;
-
-     TParallel.For( 0, CountY-1, procedure( Y:Integer )
-     var
-        X :Integer;
-     begin
-          for X := 0 to CountX-1 do
-          begin
-               Data[ X, Y ] := B.GetPixel( X, Y );
-          end;
-     end );
-
-     Data.Unmap;
-
-     Bitmap_.Unmap( B );
-end;
-
-//------------------------------------------------------------------------------
-
-procedure TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.CopyFrom( const Grid_:TCellColorGrid2D_TByteRGBE );
-begin
-     CountX := Grid_.CellsX;
-     CountY := Grid_.CellsY;
-
-     Data.Map;
-
-     TParallel.For( 0, CountY-1, procedure( Y:Integer )
-     var
-        X :Integer;
-     begin
-          for X := 0 to CountX-1 do
-          begin
-               Data[ X, Y ] := TSingleRGBA( TSingleRGB( Grid_[ X, Y ] ) );
-          end;
-     end );
-
-     Data.Unmap;
-end;
-
-procedure TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.LoadFromFileHDR( const FileName_:String );
-var
-   F :TFileHDR;
-begin
-     F := TFileHDR.Create;
-     F.LoadFromFile( FileName_ );
-
-     CopyFrom( F.Grid );
-
-     F.Free;
+          Bitmap_.Unmap( B );
+     end;
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
