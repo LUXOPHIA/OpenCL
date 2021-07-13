@@ -49,18 +49,15 @@ uses
   LUX.Data.Grid.T1.D1 in '_LIBRARY\LUXOPHIA\LUX\Data\Grid\LUX.Data.Grid.T1.D1.pas',
   LUX.Data.Grid.T1 in '_LIBRARY\LUXOPHIA\LUX\Data\Grid\LUX.Data.Grid.T1.pas',
   LUX.D2 in '_LIBRARY\LUXOPHIA\LUX\LUX.D2.pas',
-  LUX.D3 in '_LIBRARY\LUXOPHIA\LUX\LUX.D3.pas',
-  LUX.D4x4 in '_LIBRARY\LUXOPHIA\LUX\LUX.D4x4.pas',
-  LUX.D4 in '_LIBRARY\LUXOPHIA\LUX\LUX.D4.pas',
-  LUX.D3x3 in '_LIBRARY\LUXOPHIA\LUX\LUX.D3x3.pas',
   LUX.D2x2 in '_LIBRARY\LUXOPHIA\LUX\LUX.D2x2.pas',
+  LUX.D3 in '_LIBRARY\LUXOPHIA\LUX\LUX.D3.pas',
+  LUX.D3x3 in '_LIBRARY\LUXOPHIA\LUX\LUX.D3x3.pas',
+  LUX.D4 in '_LIBRARY\LUXOPHIA\LUX\LUX.D4.pas',
+  LUX.D4x4 in '_LIBRARY\LUXOPHIA\LUX\LUX.D4x4.pas',
   LUX.Curve.BSpline in '_LIBRARY\LUXOPHIA\LUX\Curve\LUX.Curve.BSpline.pas',
   LUX.Curve.BSpline.D2 in '_LIBRARY\LUXOPHIA\LUX\Curve\LUX.Curve.BSpline.D2.pas',
   LUX.Curve in '_LIBRARY\LUXOPHIA\LUX\Curve\LUX.Curve.pas',
-  LUX.Curve.CatRom in '_LIBRARY\LUXOPHIA\LUX\Curve\LUX.Curve.CatRom.pas',
-  LUX.GPU.OpenCL.Argume.Memory.Imager.D1.Seeder in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Argume.Memory.Imager.D1.Seeder.pas',
-  LUX.GPU.OpenCL.Argume.Memory.Imager.D2.Seeder in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Argume.Memory.Imager.D2.Seeder.pas',
-  LUX.GPU.OpenCL.Argume.Memory.Imager.D3.Seeder in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.Argume.Memory.Imager.D3.Seeder.pas';
+  LUX.Curve.CatRom in '_LIBRARY\LUXOPHIA\LUX\Curve\LUX.Curve.CatRom.pas';
 
 {$R *.res}
 
