@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Argume.Memory.Imager.D1.Seeder;
+﻿unit LUX.GPU.OpenCL.Argume.Seeder.D1;
 
 interface //#################################################################### ■
 
