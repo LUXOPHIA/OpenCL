@@ -221,6 +221,8 @@ end;
 
 destructor TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
+     Clear;
+
      _DevQues.Free;
 
      inherited;

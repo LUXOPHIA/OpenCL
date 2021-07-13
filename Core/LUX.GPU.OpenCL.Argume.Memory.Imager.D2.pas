@@ -5,6 +5,7 @@ interface //####################################################################
 uses cl_version, cl_platform, cl,
      LUX,
      LUX.Code.C,
+     LUX.Color,
      LUX.GPU.OpenCL.core,
      LUX.GPU.OpenCL.Argume.Memory,
      LUX.GPU.OpenCL.Argume.Memory.Imager.D1;
@@ -14,6 +15,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
 
      TCLImaDat2D<TCLSystem_,TCLPlatfo_,TCLContex_:class;TValue_:record> = class;
+
+     TCLImager2DxBGRAxUInt8 <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+     TCLImager2DxBGRAxUFix8 <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+     TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+     TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
@@ -58,6 +64,50 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Imager                        :TCLImager_ read GetImager                ;
        property ValueP[ const X_,Y_:Integer ] :PByte      read GetValueP                ;
        property Values[ const X_,Y_:Integer ] :TValue_    read GetValues write SetValues; default;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>
+
+     TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TByteRGBA> )
+     private
+     protected
+       ///// アクセス
+       function GetPixCha :T_cl_channel_order; override;
+       function GetPixTyp :T_cl_channel_type; override;
+     public
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>
+
+     TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TByteRGBA> )
+     private
+     protected
+       ///// アクセス
+       function GetPixCha :T_cl_channel_order; override;
+       function GetPixTyp :T_cl_channel_type; override;
+     public
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>
+
+     TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TUInt32xRGBA> )
+     private
+     protected
+       ///// アクセス
+       function GetPixCha :T_cl_channel_order; override;
+       function GetPixTyp :T_cl_channel_type; override;
+     public
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>
+
+     TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TSingleRGBA> )
+     private
+     protected
+       ///// アクセス
+       function GetPixCha :T_cl_channel_order; override;
+       function GetPixTyp :T_cl_channel_type; override;
+     public
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -155,6 +205,86 @@ end;
 procedure TCLImaDat2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetValues( const X_,Y_:Integer; const Values_:TValue_ );
 begin
      PValue_( ValueP[ X_, Y_ ] )^ := Values_;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
+begin
+     Result := CL_BGRA;
+end;
+
+function TCLImager2DxBGRAxUInt8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
+begin
+     Result := CL_UNSIGNED_INT8;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
+begin
+     Result := CL_BGRA;
+end;
+
+function TCLImager2DxBGRAxUFix8<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
+begin
+     Result := CL_UNORM_INT8;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
+begin
+     Result := CL_RGBA;
+end;
+
+function TCLImager2DxRGBAxUInt32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
+begin
+     Result := CL_UNSIGNED_INT32;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+/////////////////////////////////////////////////////////////////////// アクセス
+
+function TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixCha :T_cl_channel_order;
+begin
+     Result := CL_RGBA;
+end;
+
+function TCLImager2DxRGBAxSFlo32<TCLSystem_,TCLPlatfo_,TCLContex_>.GetPixTyp :T_cl_channel_type;
+begin
+     Result := CL_FLOAT;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
