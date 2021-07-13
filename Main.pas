@@ -10,7 +10,8 @@ uses
   LUX,
   LUX.Complex,
   LUX.GPU.OpenCL,
-  LUX.GPU.OpenCL.FMX;
+  LUX.GPU.OpenCL.Stream.FMX.D1,
+  LUX.GPU.OpenCL.Stream.FMX.D2;
 
 type
   TForm1 = class(TForm)
@@ -45,9 +46,11 @@ type
     _Contex :TCLContex;
     _Queuer :TCLQueuer;
     _Buffer :TCLBuffer<TDoubleC>;
-    _Imager :TCLImager2DxBGRAxUFix8;
     _Textur :TCLImager1DxBGRAxUFix8;
+    _TexFMX :ICLStream1DxBGRAxUFix8_FMX;
     _Samplr :TCLSamplr;
+    _Imager :TCLImager2DxBGRAxUFix8;
+    _ImaFMX :ICLStream2DxBGRAxUFix8_FMX;
     _Librar :TCLLibrar;
     _Execut :TCLExecut;
     _Buildr :TCLBuildr;
@@ -135,6 +138,24 @@ begin
      _Buffer.Data[ 1 ] := _AreaC.Max;                                           // 書き込み
      _Buffer.Data.Unmap;                                                        // 同期
 
+     ////////// テクスチャ
+
+     _Textur := TCLImager1DxBGRAxUFix8.Create( _Contex, _Queuer );              // 生成
+
+     Assert( Assigned( _Textur.Handle ), '_Textur is Error!' );                 // 検証
+
+     _TexFMX := TCLStream1DxBGRAxUFix8_FMX.Create( _Textur );                   // ストリームの生成
+
+     _TexFMX.LoadFromFile( '..\..\_DATA\Textur.png' );                          // 画像のロード
+
+     _TexFMX.CopyTo( ImageT.Bitmap );                                           // 画像の表示
+
+     ////////// サンプラー
+
+     _Samplr := TCLSamplr.Create( _Contex );                                    // 生成
+
+     Assert( Assigned( _Samplr.Handle ), '_Samplr is Error!' );                 // 検証
+
      ////////// イメージ
 
      _Imager := TCLImager2DxBGRAxUFix8.Create( _Contex, _Queuer );              // 生成
@@ -144,21 +165,7 @@ begin
      _Imager.CountX := 500;                                                     // 横ピクセル数の設定
      _Imager.CountY := 500;                                                     // 縦ピクセル数の設定
 
-     ////////// テクスチャ
-
-     _Textur := TCLImager1DxBGRAxUFix8.Create( _Contex, _Queuer );              // 生成
-
-     Assert( Assigned( _Textur.Handle ), '_Textur is Error!' );                 // 検証
-
-     _Textur.LoadFromFile( '..\..\_DATA\Textur.png' );                          // 画像のロード
-
-     _Textur.CopyTo( ImageT.Bitmap );                                           // 画像の表示
-
-     ////////// サンプラー
-
-     _Samplr := TCLSamplr.Create( _Contex );                                    // 生成
-
-     Assert( Assigned( _Samplr.Handle ), '_Samplr is Error!' );                 // 検証
+     _ImaFMX := TCLStream2DxBGRAxUFix8_FMX.Create( _Imager );                   // ストリームの生成
 end;
 
 //------------------------------------------------------------------------------
@@ -201,9 +208,9 @@ begin
      _Kernel.GloSizY := _Imager.CountY;                                         // Ｙ方向ループ回数の設定
 
      _Kernel.Parames['Buffer'] := _Buffer;                                      // バッファーの登録
-     _Kernel.Parames['Imager'] := _Imager;                                      // イメージ　の登録
      _Kernel.Parames['Textur'] := _Textur;                                      // テクスチャの登録
      _Kernel.Parames['Samplr'] := _Samplr;                                      // サンプラーの登録
+     _Kernel.Parames['Imager'] := _Imager;                                      // イメージ　の登録
 
      Assert( _Kernel.Parames.FindsOK, '_Kernel.Parames.FindsOK is Error!' );    // 仮引数の照合
      Assert( _Kernel.Parames.BindsOK, '_Kernel.Parames.BindsOK is Error!' );    // 実引数の接続
@@ -243,7 +250,7 @@ begin
 
      ////////// イメージ
 
-     _Imager.CopyTo( ImageR.Bitmap );                                           // 画像表示
+     _ImaFMX.CopyTo( ImageR.Bitmap );                                           // 画像の表示
 end;
 
 procedure TForm1.ImageRMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
