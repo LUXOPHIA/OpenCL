@@ -15,11 +15,8 @@ uses System.Classes,
      LUX.GPU.OpenCL.Argume.Memory.Buffer,
      LUX.GPU.OpenCL.Argume.Memory.Imager,
      LUX.GPU.OpenCL.Argume.Memory.Imager.D1,
-     LUX.GPU.OpenCL.Argume.Memory.Imager.D1.Seeder,
      LUX.GPU.OpenCL.Argume.Memory.Imager.D2,
-     LUX.GPU.OpenCL.Argume.Memory.Imager.D2.Seeder,
      LUX.GPU.OpenCL.Argume.Memory.Imager.D3,
-     LUX.GPU.OpenCL.Argume.Memory.Imager.D3.Seeder,
      LUX.GPU.OpenCL.Progra,
      LUX.GPU.OpenCL.Kernel;
 
@@ -53,10 +50,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                          TCLParame = TCLParame <TCLSystem,TCLPlatfo,TCLContex,TCLExecut>;
 
      TCLBuffer<TValue_:record> = class( TCLBuffer<TCLSystem,TCLPlatfo,TCLContex,TValue_> );
-
-     TCLSeeder1D = TCLSeeder1D<TCLSystem,TCLPlatfo,TCLContex>;
-     TCLSeeder2D = TCLSeeder2D<TCLSystem,TCLPlatfo,TCLContex>;
-     TCLSeeder3D = TCLSeeder3D<TCLSystem,TCLPlatfo,TCLContex>;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
