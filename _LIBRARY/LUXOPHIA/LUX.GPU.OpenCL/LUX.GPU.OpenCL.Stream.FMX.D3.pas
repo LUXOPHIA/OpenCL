@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Argume.Memory.Imager.D2.FMX;
+﻿unit LUX.GPU.OpenCL.Stream.FMX.D3;
 
 interface //#################################################################### ■
 
@@ -6,84 +6,90 @@ uses System.UITypes,
      FMX.Graphics,
      LUX.Color,
      LUX.GPU.OpenCL,
-     LUX.GPU.OpenCL.Argume.Memory.Imager.D1.FMX;
+     LUX.GPU.OpenCL.Stream.FMX.D2;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
 
-     TCLStream2D_FMX<TCLImager_:class> = class;
-       TCLStream2DxBGRAxUInt8_FMX      = class;
-       TCLStream2DxBGRAxUFix8_FMX      = class;
-       TCLStream2DxRGBAxUInt32_FMX     = class;
-       TCLStream2DxRGBAxSFlo32_FMX     = class;
+     TCLStream3D_FMX<TCLImager_:class> = class;
+       TCLStream3DxBGRAxUInt8_FMX      = class;
+       TCLStream3DxBGRAxUFix8_FMX      = class;
+       TCLStream3DxRGBAxUInt32_FMX     = class;
+       TCLStream3DxRGBAxSFlo32_FMX     = class;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2D_FMX<TCLImager_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream3D_FMX<TCLImager_>
 
-     ICLStream2D_FMX<TCLImager_:class> = interface( ICLStream1D_FMX<TCLImager_> )
-     ['{49DD70F5-843E-4267-B948-8F80034B7567}']
+     ICLStream3D_FMX<TCLImager_:class> = interface( ICLStream2D_FMX<TCLImager_> )
+     ['{C78BBF2F-7207-49D2-BA4D-B5B955687593}']
      {protected}
      {public}
+       ///// メソッド
+       procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
+       procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
      end;
 
-     TCLStream2D_FMX<TCLImager_:class> = class( TCLStream1D_FMX<TCLImager_>, ICLStream2D_FMX<TCLImager_> )
-     private
-     protected
-     public
-     end;
-
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxBGRAxUInt8_FMX
-
-     ICLStream2DxBGRAxUInt8_FMX = ICLStream2D_FMX<TCLImager2DxBGRAxUInt8>;
-
-     TCLStream2DxBGRAxUInt8_FMX = class( TCLStream2D_FMX<TCLImager2DxBGRAxUInt8>, ICLStream2DxBGRAxUInt8_FMX )
+     TCLStream3D_FMX<TCLImager_:class> = class( TCLStream2D_FMX<TCLImager_>, ICLStream3D_FMX<TCLImager_> )
      private
      protected
      public
        ///// メソッド
-       procedure CopyTo( const Bitmap_:TBitmap ); override;
-       procedure CopyFrom( const Bitmap_:TBitmap ); override;
+       procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); overload; virtual; abstract;
+       procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); overload; virtual; abstract;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxBGRAxUFix8_FMX
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream3DxBGRAxUInt8_FMX
 
-     ICLStream2DxBGRAxUFix8_FMX = ICLStream2D_FMX<TCLImager2DxBGRAxUFix8>;
+     ICLStream3DxBGRAxUInt8_FMX = ICLStream3D_FMX<TCLImager3DxBGRAxUInt8>;
 
-     TCLStream2DxBGRAxUFix8_FMX = class( TCLStream2D_FMX<TCLImager2DxBGRAxUFix8>, ICLStream2DxBGRAxUFix8_FMX )
+     TCLStream3DxBGRAxUInt8_FMX = class( TCLStream3D_FMX<TCLImager3DxBGRAxUInt8>, ICLStream3DxBGRAxUInt8_FMX )
      private
      protected
      public
        ///// メソッド
-       procedure CopyTo( const Bitmap_:TBitmap ); override;
-       procedure CopyFrom( const Bitmap_:TBitmap ); override;
+       procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
+       procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxRGBAxUInt32_FMX
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream3DxBGRAxUFix8_FMX
 
-     ICLStream2DxRGBAxUInt32_FMX = ICLStream2D_FMX<TCLImager2DxRGBAxUInt32>;
+     ICLStream3DxBGRAxUFix8_FMX = ICLStream3D_FMX<TCLImager3DxBGRAxUFix8>;
 
-     TCLStream2DxRGBAxUInt32_FMX = class( TCLStream2D_FMX<TCLImager2DxRGBAxUInt32>, ICLStream2DxRGBAxUInt32_FMX )
+     TCLStream3DxBGRAxUFix8_FMX = class( TCLStream3D_FMX<TCLImager3DxBGRAxUFix8>, ICLStream3DxBGRAxUFix8_FMX )
      private
      protected
      public
        ///// メソッド
-       procedure CopyTo( const Bitmap_:TBitmap ); override;
-       procedure CopyFrom( const Bitmap_:TBitmap ); override;
+       procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
+       procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); override;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxRGBAxSFlo32_FMX
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream3DxRGBAxUInt32_FMX
 
-     ICLStream2DxRGBAxSFlo32_FMX = ICLStream2D_FMX<TCLImager2DxRGBAxSFlo32>;
+     ICLStream3DxRGBAxUInt32_FMX = ICLStream3D_FMX<TCLImager3DxRGBAxUInt32>;
 
-     TCLStream2DxRGBAxSFlo32_FMX = class( TCLStream2D_FMX<TCLImager2DxRGBAxSFlo32>, ICLStream2DxRGBAxSFlo32_FMX )
+     TCLStream3DxRGBAxUInt32_FMX = class( TCLStream3D_FMX<TCLImager3DxRGBAxUInt32>, ICLStream3DxRGBAxUInt32_FMX )
      private
      protected
      public
        ///// メソッド
-       procedure CopyTo( const Bitmap_:TBitmap ); override;
-       procedure CopyFrom( const Bitmap_:TBitmap ); override;
+       procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
+       procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); override;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream3DxRGBAxSFlo32_FMX
+
+     ICLStream3DxRGBAxSFlo32_FMX = ICLStream3D_FMX<TCLImager3DxRGBAxSFlo32>;
+
+     TCLStream3DxRGBAxSFlo32_FMX = class( TCLStream3D_FMX<TCLImager3DxRGBAxSFlo32>, ICLStream3DxRGBAxSFlo32_FMX )
+     private
+     protected
+     public
+       ///// メソッド
+       procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
+       procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); override;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
@@ -100,7 +106,7 @@ uses System.Threading;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2D_FMX<TCLImager_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream3D_FMX<TCLImager_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -108,7 +114,7 @@ uses System.Threading;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxBGRAxUInt8_FMX
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream3DxBGRAxUInt8_FMX
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -118,7 +124,7 @@ uses System.Threading;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLStream2DxBGRAxUInt8_FMX.CopyTo( const Bitmap_:TBitmap );
+procedure TCLStream3DxBGRAxUInt8_FMX.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -132,7 +138,7 @@ begin
 
           TParallel.For( 0, CountY-1, procedure( Y:Integer )
           begin
-               Move( Data.ValueP[ 0, Y ]^,
+               Move( Data.ValueP[ 0, Y, Z_ ]^,
                      B.GetScanline( Y )^,
                      B.BytesPerLine );
           end );
@@ -143,7 +149,7 @@ begin
      end;
 end;
 
-procedure TCLStream2DxBGRAxUInt8_FMX.CopyFrom( const Bitmap_:TBitmap );
+procedure TCLStream3DxBGRAxUInt8_FMX.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -159,7 +165,7 @@ begin
           TParallel.For( 0, CountY-1, procedure( Y:Integer )
           begin
                Move( B.GetScanline( Y )^,
-                     Data.ValueP[ 0, Y ]^,
+                     Data.ValueP[ 0, Y, Z_ ]^,
                      B.BytesPerLine );
           end );
 
@@ -169,7 +175,7 @@ begin
      end;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxBGRAxUFix8_FMX
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream3DxBGRAxUFix8_FMX
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -179,7 +185,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLStream2DxBGRAxUFix8_FMX.CopyTo( const Bitmap_:TBitmap );
+procedure TCLStream3DxBGRAxUFix8_FMX.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -193,7 +199,7 @@ begin
 
           TParallel.For( 0, CountY-1, procedure( Y:Integer )
           begin
-               Move( Data.ValueP[ 0, Y ]^,
+               Move( Data.ValueP[ 0, Y, Z_ ]^,
                      B.GetScanline( Y )^,
                      B.BytesPerLine );
           end );
@@ -204,7 +210,7 @@ begin
      end;
 end;
 
-procedure TCLStream2DxBGRAxUFix8_FMX.CopyFrom( const Bitmap_:TBitmap );
+procedure TCLStream3DxBGRAxUFix8_FMX.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -220,7 +226,7 @@ begin
           TParallel.For( 0, CountY-1, procedure( Y:Integer )
           begin
                Move( B.GetScanline( Y )^,
-                     Data.ValueP[ 0, Y ]^,
+                     Data.ValueP[ 0, Y, Z_ ]^,
                      B.BytesPerLine );
           end );
 
@@ -230,7 +236,7 @@ begin
      end;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxRGBAxUInt32_FMX
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream3DxRGBAxUInt32_FMX
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -240,7 +246,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLStream2DxRGBAxUInt32_FMX.CopyTo( const Bitmap_:TBitmap );
+procedure TCLStream3DxRGBAxUInt32_FMX.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -258,7 +264,7 @@ begin
           begin
                for X := 0 to CountX-1 do
                begin
-                    B.SetPixel( X, Y, TByteRGBA( Data[ X, Y ] ) );
+                    B.SetPixel( X, Y, TByteRGBA( Data[ X, Y, Z_ ] ) );
                end;
           end );
 
@@ -268,7 +274,7 @@ begin
      end;
 end;
 
-procedure TCLStream2DxRGBAxUInt32_FMX.CopyFrom( const Bitmap_:TBitmap );
+procedure TCLStream3DxRGBAxUInt32_FMX.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -287,7 +293,7 @@ begin
           begin
                for X := 0 to CountX-1 do
                begin
-                    Data[ X, Y ] := B.GetPixel( X, Y );
+                    Data[ X, Y, Z_ ] := B.GetPixel( X, Y );
                end;
           end );
 
@@ -297,7 +303,7 @@ begin
      end;
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream2DxRGBAxSFlo32_FMX
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream3DxRGBAxSFlo32_FMX
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -307,7 +313,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// メソッド
 
-procedure TCLStream2DxRGBAxSFlo32_FMX.CopyTo( const Bitmap_:TBitmap );
+procedure TCLStream3DxRGBAxSFlo32_FMX.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -325,7 +331,7 @@ begin
           begin
                for X := 0 to CountX-1 do
                begin
-                    B.SetPixel( X, Y, TByteRGBA( Data[ X, Y ] ) );
+                    B.SetPixel( X, Y, TAlphaColor( TByteRGBA( Data[ X, Y, Z_ ] ) ) );
                end;
           end );
 
@@ -335,7 +341,7 @@ begin
      end;
 end;
 
-procedure TCLStream2DxRGBAxSFlo32_FMX.CopyFrom( const Bitmap_:TBitmap );
+procedure TCLStream3DxRGBAxSFlo32_FMX.CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
 var
    B :TBitmapData;
 begin
@@ -354,7 +360,7 @@ begin
           begin
                for X := 0 to CountX-1 do
                begin
-                    Data[ X, Y ] := B.GetPixel( X, Y );
+                    Data[ X, Y, Z_ ] := B.GetPixel( X, Y );
                end;
           end );
 
