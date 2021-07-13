@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Argume.Memory.Imager.D1.FMX;
+﻿unit LUX.GPU.OpenCL.Stream.FMX.D1;
 
 interface //#################################################################### ■
 
