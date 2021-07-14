@@ -160,7 +160,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetPROGRAM_SCOPE_GLOBAL_DTORS_PRESENT :T_cl_bool ;
        {$ENDIF}
        ///// メソッド
-       function CreateHandle :T_cl_int; virtual;
+       function CreateHandle :T_cl_int;
        function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; override;
@@ -220,7 +220,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// メソッド
        function DestroHandle :T_cl_int; override;
      public
-       constructor Create; override;
+       constructor Create; overload; override;
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
