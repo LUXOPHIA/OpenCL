@@ -42,6 +42,8 @@ procedure AssertCL( const Error_:T_cl_int; const Comment_:String = '' );
 
 implementation //############################################################### ■
 
+uses System.SysUtils;
+
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLVersion
@@ -163,6 +165,7 @@ begin
        CL_INVALID_SPEC_ID                           : Result := 'INVALID_SPEC_ID';
        CL_MAX_SIZE_RESTRICTION_EXCEEDED             : Result := 'MAX_SIZE_RESTRICTION_EXCEEDED';
 {$ENDIF}
+     else                                             Result := 'UNKNOWN:' + Error_.ToString;
      end;
 end;
 

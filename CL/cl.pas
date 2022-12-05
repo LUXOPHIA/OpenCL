@@ -142,6 +142,10 @@ type T_cl_image_desc = record
 #pragma warning( push )
 #pragma warning( disable : 4201 )   (* Prevents warning about nameless struct/union in /W4 builds *)
 {$ENDIF}
+{$IFDEF __clang__ }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc11-extensions" (* Prevents warning about nameless union being C11 extension*)
+{$ENDIF}
 {$IF Defined(_MSC_VER) and Defined(__STDC__) }
     /* Anonymous unions are not supported in /Za builds */
 {$ELSE}
@@ -158,6 +162,9 @@ type T_cl_image_desc = record
 {$ENDIF}
 {$IF Defined(_MSC_VER) and not Defined(__STDC__) }
 #pragma warning( pop )
+{$ENDIF}
+{$IFDEF __clang__ }
+#pragma clang diagnostic pop
 {$ENDIF}
 {$ENDIF}
      end;
