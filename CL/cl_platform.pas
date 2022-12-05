@@ -137,6 +137,11 @@ uses LUX.Code.C,
 
 {$IF defined( _WIN32 ) and defined( _MSC_VER ) }
 
+{$IF Defined( __clang__ ) }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wlanguage-extension-token"
+{$ENDIF}
+
 (* intptr_t is used in cl.h and provided by stddef.h in Visual C++, but not in clang *)
 (* stdint.h was missing before Visual Studio 2010, include it for later versions and for clang *)
 //#if defined(__clang__) || _MSC_VER >= 1600
@@ -156,6 +161,10 @@ type T_cl_ulong  = T_unsigned___int64;
 type T_cl_half   = T_unsigned___int16;
 type T_cl_float  = T_float;
 type T_cl_double = T_double;
+
+{$IF Defined( __clang__ ) }
+#pragma clang diagnostic pop
+{$ENDIF}
 
 (* Macro names and corresponding values defined by OpenCL *)
 const CL_CHAR_BIT         = 8;
@@ -500,26 +509,27 @@ type T_cl_GLenum = T_unsigned_int;
 {$ENDIF}
 
 (* Define capabilities for anonymous struct members. *)
-//{$IF not defined( __cplusplus ) and defined( __STDC_VERSION__ ) and ( __STDC_VERSION__ >= 201112 ) }  //[dcc64 警告] cl_platform.pas(485): W1021 比較結果は常に False になります
-//const __CL_HAS_ANON_STRUCT__ = 1;
-//#define  __CL_ANON_STRUCT__
-{$IF defined( __GNUC__ ) and not defined( __STRICT_ANSI__ ) }
+{$IF not Defined( __cplusplus ) and Defined( __STDC_VERSION__ ) {and ( __STDC_VERSION__ >= 201112 )} }  //[dcc64 警告] cl_platform.pas(485): W1021 比較結果は常に False になります
 const __CL_HAS_ANON_STRUCT__ = 1;
-#define  __CL_ANON_STRUCT__ __extension__
-{$ELSEIF defined( _WIN32 ) and defined( _MSC_VER ) and not defined(__STDC__) }
-//    {$IF _MSC_VER >= 1500 }
-//   (* Microsoft Developer Studio 2008 supports anonymous structs, but
-//    * complains by default. *)
-//    const __CL_HAS_ANON_STRUCT__ = 1;
-//    #define  __CL_ANON_STRUCT__
-//   (* Disable warning C4201: nonstandard extension used : nameless
-//    * struct/union *)
-//    #pragma warning( push )
-//    #pragma warning( disable : 4201 )
-//    {$ENDIF}
+//#define  __CL_ANON_STRUCT__
+{$ELSEIF Defined( _WIN32 ) and Defined( _MSC_VER ) and not Defined( __STDC__ ) }
+const __CL_HAS_ANON_STRUCT__ = 1;
+//#define  __CL_ANON_STRUCT__
+{$ELSEIF Defined( __GNUC__ ) and not defined( __STRICT_ANSI__ ) }
+const __CL_HAS_ANON_STRUCT__ = 1;
+//#define  __CL_ANON_STRUCT__ __extension__
+{$ELSEIF Defined( __clang__ ) }
+const __CL_HAS_ANON_STRUCT__ = 1;
+//#define  __CL_ANON_STRUCT__ __extension__
 {$ELSE}
 const __CL_HAS_ANON_STRUCT__ = 0;
 //#define  __CL_ANON_STRUCT__
+{$ENDIF}
+
+{$IF Defined( _WIN32 ) and Defined( _MSC_VER ) and ( __CL_HAS_ANON_STRUCT__ <> 0 ) }
+//   (* Disable warning C4201: nonstandard extension used : nameless struct/union *)
+//    #pragma warning( push )
+//    #pragma warning( disable : 4201 )
 {$ENDIF}
 
 (* Define alignment keys *)
@@ -1397,10 +1407,8 @@ type T_cl_double16 = record
 //}
 //#endif
 
-//#if defined( _WIN32) && defined(_MSC_VER) && ! defined(__STDC__)
-//    #if _MSC_VER >=1500
+//#if defined( _WIN32) && defined(_MSC_VER) && __CL_HAS_ANON_STRUCT__
 //    #pragma warning( pop )
-//    #endif
 //#endif
 
 implementation //############################################################### ■

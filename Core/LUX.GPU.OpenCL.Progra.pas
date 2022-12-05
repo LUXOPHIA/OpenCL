@@ -46,6 +46,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _Handle        :T_cl_program;
        _Device        :TCLDevice_;
+       _Version       :TCLVersion;
        _CompileStatus :T_cl_build_status;
        _CompileLog    :String;
        _LinkStatus    :T_cl_build_status;
@@ -55,6 +56,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetHandle( const Handle_:T_cl_program ); virtual;
        function GetDevice :TCLDevice_; virtual;
        procedure SetDevice( const Device_:TCLDevice_ ); virtual;
+       function GetVersion :TCLVersion; virtual;
+       procedure SetVersion( const Version_:TCLVersion ); virtual;
        ///// メソッド
        function Compile :T_cl_int;
        function Link :T_cl_int;
@@ -66,14 +69,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Execut_:TCLExecut_; const Device_:TCLDevice_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
-       property Execut        :TCLExecut_        read GetOwnere                       ;
-       property Buildrs       :TCLBuildrs_       read GetParent                       ;
-       property Handle        :T_cl_program      read GetHandle        write SetHandle;
-       property Device        :TCLDevice_        read GetDevice        write SetDevice;
-       property CompileStatus :T_cl_build_status read   _CompileStatus                ;
-       property CompileLog    :String            read   _CompileLog                   ;
-       property LinkStatus    :T_cl_build_status read   _LinkStatus                   ;
-       property LinkLog       :String            read   _LinkLog                      ;
+       property Execut        :TCLExecut_        read GetOwnere                        ;
+       property Buildrs       :TCLBuildrs_       read GetParent                        ;
+       property Handle        :T_cl_program      read GetHandle        write SetHandle ;
+       property Device        :TCLDevice_        read GetDevice        write SetDevice ;
+       property Version       :TCLVersion        read GetVersion       write SetVersion;
+       property CompileStatus :T_cl_build_status read   _CompileStatus                 ;
+       property CompileLog    :String            read   _CompileLog                    ;
+       property LinkStatus    :T_cl_build_status read   _LinkStatus                    ;
+       property LinkLog       :String            read   _LinkLog                       ;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>
@@ -160,7 +164,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetPROGRAM_SCOPE_GLOBAL_DTORS_PRESENT :T_cl_bool ;
        {$ENDIF}
        ///// メソッド
-       function CreateHandle :T_cl_int; virtual;
+       function CreateHandle :T_cl_int;
        function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; override;
@@ -220,7 +224,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// メソッド
        function DestroHandle :T_cl_int; override;
      public
-       constructor Create; override;
+       constructor Create; overload; override;
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        destructor Destroy; override;
        ///// プロパティ
@@ -342,6 +346,18 @@ begin
      Handle := nil;
 end;
 
+//------------------------------------------------------------------------------
+
+function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetVersion :TCLVersion;
+begin
+     Result := _Version;
+end;
+
+procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetVersion( const Version_:TCLVersion );
+begin
+     _Version := Version_;
+end;
+
 /////////////////////////////////////////////////////////////////////// メソッド
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.Compile :T_cl_int;
@@ -349,23 +365,24 @@ var
    DH :T_cl_device_id;
    Os :String;
    LHs :TArray<T_cl_program>;
-   LNs :TArray<P_char>;
+   LNs :TArray<AnsiString>;
    Ls :TCLLibrars_;
-   L :TCLLibrar_;
+   I :Integer;
 begin
      inherited;
 
      DH := Device.Handle;
 
-     Os := '-cl-kernel-arg-info';
-     if Ord( Device.LanVer ) > 100 then Os := Os + ' -cl-std=CL' + Device.LanVer.ToString;
+     Os := '-cl-kernel-arg-info -cl-std=CL' + _Version.ToString;
 
      Ls := TCLLibrars_( TCLContex<TCLSystem_,TCLPlatfo_>( Execut.Contex ).Librars );
 
-     for L in Ls do
+     SetLength( LHs, Ls.Count );
+     SetLength( LNs, Ls.Count );
+     for I := 0 to Ls.Count-1 do
      begin
-          LHs := LHs + [ L.Handle ];
-          LNs := LNs + [ System.AnsiStrings.StrNew( P_char( AnsiString( L.Name ) ) ) ];
+          LHs[ I ] := Ls[ I ].Handle;
+          LNs[ I ] := AnsiString( Ls[ I ].Name );
      end;
 
      Result := clCompileProgram( Execut.Handle,
@@ -432,6 +449,7 @@ begin
 
      _Handle := nil;
 
+     _Version       := TCLVersion.From( '3.0' );
      _CompileStatus := CL_BUILD_NONE;
      _CompileLog    := '';
      _LinkStatus    := CL_BUILD_NONE;
@@ -707,7 +725,7 @@ function TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
      _Buildrs.Clear;
 
-     inherited;
+     Result := inherited;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
