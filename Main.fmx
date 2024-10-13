@@ -33,6 +33,7 @@ object Form1: TForm1
       CustomIcon = <
         item
         end>
+      TextSettings.Trimming = None
       IsSelected = False
       Size.Width = 58.000000000000000000
       Size.Height = 26.000000000000000000
@@ -64,6 +65,7 @@ object Form1: TForm1
       CustomIcon = <
         item
         end>
+      TextSettings.Trimming = None
       IsSelected = False
       Size.Width = 66.000000000000000000
       Size.Height = 26.000000000000000000
@@ -96,6 +98,7 @@ object Form1: TForm1
           CustomIcon = <
             item
             end>
+          TextSettings.Trimming = None
           IsSelected = False
           Size.Width = 56.000000000000000000
           Size.Height = 26.000000000000000000
@@ -127,6 +130,7 @@ object Form1: TForm1
           CustomIcon = <
             item
             end>
+          TextSettings.Trimming = None
           IsSelected = True
           Size.Width = 77.000000000000000000
           Size.Height = 26.000000000000000000
@@ -158,6 +162,7 @@ object Form1: TForm1
           CustomIcon = <
             item
             end>
+          TextSettings.Trimming = None
           IsSelected = False
           Size.Width = 47.000000000000000000
           Size.Height = 26.000000000000000000
@@ -191,8 +196,9 @@ object Form1: TForm1
       CustomIcon = <
         item
         end>
+      TextSettings.Trimming = None
       IsSelected = True
-      Size.Width = 52.000000000000000000
+      Size.Width = 53.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''

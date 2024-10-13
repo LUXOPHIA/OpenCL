@@ -2,31 +2,31 @@
 #define LIBRAR
 //############################################################################## ■
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
 typedef struct
 {
-  double R;
-  double I;
+  float R;
+  float I;
 }
-TDoubleC;
+TSingleC;
 
 typedef struct
 {
-  TDoubleC Min;
-  TDoubleC Max;
+  TSingleC Min;
+  TSingleC Max;
 }
-TDoubleAreaC;
+TSingleAreaC;
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TDoubleC
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TSingleC
 
 ///////////////////////////////////////////////////////////////////////// 演算子
 
-TDoubleC __attribute__((overloadable)) Add( const TDoubleC A, const TDoubleC B )
+TSingleC __attribute__((overloadable)) Add( const TSingleC A, const TSingleC B )
 {
-  TDoubleC Result;
+  TSingleC Result;
 
   Result.R = A.R + B.R;
   Result.I = A.I + B.I;
@@ -34,9 +34,9 @@ TDoubleC __attribute__((overloadable)) Add( const TDoubleC A, const TDoubleC B )
   return Result;
 }
 
-TDoubleC __attribute__((overloadable)) Sub( const TDoubleC A, const TDoubleC B )
+TSingleC __attribute__((overloadable)) Sub( const TSingleC A, const TSingleC B )
 {
-  TDoubleC Result;
+  TSingleC Result;
 
   Result.R = A.R - B.R;
   Result.I = A.I - B.I;
@@ -44,9 +44,9 @@ TDoubleC __attribute__((overloadable)) Sub( const TDoubleC A, const TDoubleC B )
   return Result;
 }
 
-TDoubleC __attribute__((overloadable)) Mul( const TDoubleC A, const TDoubleC B )
+TSingleC __attribute__((overloadable)) Mul( const TSingleC A, const TSingleC B )
 {
-  TDoubleC Result;
+  TSingleC Result;
 
   Result.R = A.R * B.R - A.I * B.I;
   Result.I = A.R * B.I + A.I * B.R;
@@ -54,17 +54,15 @@ TDoubleC __attribute__((overloadable)) Mul( const TDoubleC A, const TDoubleC B )
   return Result;
 }
 
-TDoubleC __attribute__((overloadable)) Pow2( const TDoubleC C )
+TSingleC __attribute__((overloadable)) Pow2( const TSingleC C )
 {
   return Mul( C, C );
 }
 
-double __attribute__((overloadable)) Abs( const TDoubleC C )
+float __attribute__((overloadable)) Abs( const TSingleC C )
 {
   return sqrt( C.R * C.R + C.I * C.I );
 }
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TDoubleAreaC
 
 //############################################################################## ■
 #endif

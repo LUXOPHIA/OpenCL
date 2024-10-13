@@ -4,38 +4,29 @@
 
 #include<Librar.cl>
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
-TDoubleC ScreenToComplex( const int2 P, const int2 S, const TDoubleAreaC A )
+TSingleC ScreenToComplex( const int2 P, const int2 S, const TSingleAreaC A )
 {
-  TDoubleC Result;
+  TSingleC Result;
 
-  Result.R = ( A.Max.R - A.Min.R ) * ( P.x + 0.5 ) / S.x + A.Min.R;
-  Result.I = ( A.Min.I - A.Max.I ) * ( P.y + 0.5 ) / S.y + A.Max.I;
+  Result.R = ( A.Max.R - A.Min.R ) * ( P.x + 0.5f ) / S.x + A.Min.R;
+  Result.I = ( A.Min.I - A.Max.I ) * ( P.y + 0.5f ) / S.y + A.Max.I;
 
   return Result;
 }
 
-float ComplexToCount( const TDoubleC C, const int MaxN )
+float ComplexToCount( const TSingleC C, const int MaxN )
 {
-  TDoubleC Z = { 0, 0 };
+  TSingleC Z = { 0, 0 };
 
   for ( int N = 1; N < MaxN; N++ )
   {
     Z = Add( Pow2( Z ), C );
 
-    if ( Abs( Z ) > 10 )
-    {
-      N++; Z = Add( Pow2( Z ), C );
-      N++; Z = Add( Pow2( Z ), C );
-      N++; Z = Add( Pow2( Z ), C );
-      N++; Z = Add( Pow2( Z ), C );
-      N++; Z = Add( Pow2( Z ), C );
-
-      return (float)N + 1 - log( log2( Abs( Z ) ) );
-    }
+    if ( Abs( Z ) > 2 ) return (float)N + 1 - log( log2( Abs( Z ) ) );
   }
 
   return MaxN;
@@ -43,17 +34,17 @@ float ComplexToCount( const TDoubleC C, const int MaxN )
 
 //############################################################################## ■
 
-kernel void Main( global     TDoubleC* Buffer,
+kernel void Main( global     TSingleC* Buffer,
                   read_only  image1d_t Textur,
                   const      sampler_t Samplr,
                   write_only image2d_t Imager )
 {
   const int2         P    = { get_global_id  ( 0 ), get_global_id  ( 1 ) };
   const int2         S    = { get_global_size( 0 ), get_global_size( 1 ) };
-  const TDoubleAreaC A    = { Buffer[0], Buffer[1] };
+  const TSingleAreaC A    = { Buffer[0], Buffer[1] };
   const int          MaxN = 1000;
 
-  TDoubleC C = ScreenToComplex( P, S, A );
+  TSingleC C = ScreenToComplex( P, S, A );
 
   float N = ComplexToCount( C, MaxN );
 
