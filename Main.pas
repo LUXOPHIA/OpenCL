@@ -37,7 +37,7 @@ type
   private
     { private 宣言 }
     _AreaC :TSingleAreaC;
-    ///// メソッド
+    ///// M E T H O D
     procedure ShowBuild;
   public
     { public 宣言 }
@@ -55,7 +55,7 @@ type
     _Execut :TCLExecut;
     _Buildr :TCLBuildr;
     _Kernel :TCLKernel;
-    ///// メソッド
+    ///// M E T H O D
     procedure MakeContext;
     procedure MakeArguments;
     procedure MakePrograms;
