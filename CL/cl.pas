@@ -113,8 +113,8 @@ type T_cl_device_atomic_capabilities         = T_cl_bitfield  ;  P_cl_device_ato
 type T_cl_device_device_enqueue_capabilities = T_cl_bitfield  ;  P_cl_device_device_enqueue_capabilities = ^T_cl_device_device_enqueue_capabilities;
 type T_cl_khronos_vendor_id                  = T_cl_uint      ;  P_cl_khronos_vendor_id                  = ^T_cl_khronos_vendor_id                 ;
 type T_cl_mem_properties                     = T_cl_properties;  P_cl_mem_properties                     = ^T_cl_mem_properties                    ;
-type T_cl_version                            = T_cl_uint      ;  P_cl_version                            = ^T_cl_version                           ;
 {$ENDIF}
+type T_cl_version                            = T_cl_uint      ;  P_cl_version                            = ^T_cl_version                           ;
 
 type T_cl_image_format = record
        image_channel_order     :T_cl_channel_order;
@@ -572,11 +572,8 @@ const CL_Rx                                        = $10BA;
 const CL_RGx                                       = $10BB;
 const CL_RGBx                                      = $10BC;
 {$ENDIF}
-{$IF CL_VERSION_1_2 <> 0 }
-const CL_DEPTH                                     = $10BD;
-const CL_DEPTH_STENCIL                             = $10BE;
-{$ENDIF}
 {$IF CL_VERSION_2_0 <> 0 }
+const CL_DEPTH                                     = $10BD;
 const CL_sRGB                                      = $10BF;
 const CL_sRGBx                                     = $10C0;
 const CL_sRGBA                                     = $10C1;
@@ -600,9 +597,6 @@ const CL_UNSIGNED_INT16                            = $10DB;
 const CL_UNSIGNED_INT32                            = $10DC;
 const CL_HALF_FLOAT                                = $10DD;
 const CL_FLOAT                                     = $10DE;
-{$IF CL_VERSION_1_2 <> 0 }
-const CL_UNORM_INT24                               = $10DF;
-{$ENDIF}
 {$IF CL_VERSION_2_1 <> 0 }
 const CL_UNORM_INT_101010_2                        = $10E0;
 {$ENDIF}
@@ -925,8 +919,6 @@ const CL_DEVICE_QUEUE_REPLACEABLE_DEFAULT          = 1 shl 1;
 (* cl_khronos_vendor_id *)
 const CL_KHRONOS_VENDOR_ID_CODEPLAY                = $10004;
 
-{$IF CL_VERSION_3_0 <> 0 }
-
 (* cl_version *)
 const CL_VERSION_MAJOR_BITS                        = 10;
 const CL_VERSION_MINOR_BITS                        = 10;
@@ -950,9 +942,14 @@ const CL_VERSION_PATCH_MASK                        = ( 1 shl CL_VERSION_PATCH_BI
 //   (((minor) & CL_VERSION_MINOR_MASK) << CL_VERSION_PATCH_BITS) | \
 //   ((patch) & CL_VERSION_PATCH_MASK))
 
+(********************************************************************************************************)
+
+(* CL_NO_PROTOTYPES implies CL_NO_CORE_PROTOTYPES: *)
+{$IF Defined( CL_NO_PROTOTYPES ) and not Defined( CL_NO_CORE_PROTOTYPES ) }
+{$DEFINE CL_NO_CORE_PROTOTYPES }
 {$ENDIF}
 
-(********************************************************************************************************)
+{$IF not Defined( CL_NO_CORE_PROTOTYPES ) }
 
 (* Platform API *)
 function
@@ -1956,6 +1953,8 @@ clEnqueueTask(       command_queue_           :T_cl_command_queue;
                      num_events_in_wait_list_ :T_cl_uint;
                const event_wait_list_         :P_cl_event;
                      event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2_DEPRECATED}
+
+{$ENDIF} (* !defined(CL_NO_CORE_PROTOTYPES) *)
 
 implementation //############################################################### ■
 
