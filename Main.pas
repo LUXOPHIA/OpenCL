@@ -36,7 +36,7 @@ type
     procedure ImageRMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
   private
     { private 宣言 }
-    _AreaC :TDoubleAreaC;
+    _AreaC :TSingleAreaC;
     ///// メソッド
     procedure ShowBuild;
   public
@@ -45,7 +45,7 @@ type
     _Device :TCLDevice;
     _Contex :TCLContex;
     _Queuer :TCLQueuer;
-    _Buffer :TCLBuffer<TDoubleC>;
+    _Buffer :TCLBuffer<TSingleC>;
     _Textur :TCLImager1DxBGRAxUFix8;
     _TexFMX :ICLStream1DxBGRAxUFix8_FMX;
     _Samplr :TCLSamplr;
@@ -72,7 +72,7 @@ uses System.Math;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TForm1.ShowBuild;
 begin
@@ -95,7 +95,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TForm1.MakeContext;
 begin
@@ -125,13 +125,13 @@ procedure TForm1.MakeArguments;
 begin
      ////////// バッファー
 
-     _Buffer := TCLBuffer<TDoubleC>.Create( _Contex, _Queuer );                 // 生成
+     _Buffer := TCLBuffer<TSingleC>.Create( _Contex, _Queuer );                 // 生成
 
      Assert( Assigned( _Buffer.Handle ), '_Buffer is Error!' );                 // 検証
 
      _Buffer.Count := 2;                                                        // 要素数の設定
 
-     _AreaC := TDoubleAreaC.Create( -2, -2, +2, +2 );
+     _AreaC := TSingleAreaC.Create( -2, -2, +2, +2 );
 
      _Buffer.Data.Map;                                                          // 展開
      _Buffer.Data[ 0 ] := _AreaC.Min;                                           // 書き込み
@@ -256,8 +256,8 @@ end;
 procedure TForm1.ImageRMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
 var
    P :TPointF;
-   C :TDoubleC;
-   S :Double;
+   C :TSingleC;
+   S :Single;
 begin
      P := ImageR.AbsoluteToLocal( ScreenToClient( Screen.MousePos ) );
 
