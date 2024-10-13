@@ -21,14 +21,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLDevice<TCLSystem_,TCLPlatfo_:class> = class( TListChildr<TCLPlatfo_,TCLDevices<TCLSystem_,TCLPlatfo_>> )
      private
        type TCLDevices_ = TCLDevices<TCLSystem_,TCLPlatfo_>;
-       ///// メソッド
+       ///// M E T H O D
        function GetInfo<_TYPE_>( const Name_:T_cl_device_info ) :_TYPE_;
        function GetInfoSize( const Name_:T_cl_device_info ) :T_size_t;
        function GetInfos<_TYPE_>( const Name_:T_cl_device_info ) :TArray<_TYPE_>;
        function GetInfoString( const Name_:T_cl_device_info ) :String;
      protected
        _Handle :T_cl_device_id;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetLanVer :TCLVersion;
        (* cl_device_info *)
        function GetDEVICE_TYPE :T_cl_device_type;
@@ -157,7 +157,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
        constructor Create( const Devices_:TCLDevices_; const Handle_:T_cl_device_id ); overload; virtual;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Platfo                                         :TCLPlatfo_                              read GetOwnere;
        property Devices                                        :TCLDevices_                             read GetParent;
        property Handle                                         :T_cl_device_id                          read   _Handle;
@@ -294,12 +294,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLDevice_ = TCLDevice<TCLSystem_,TCLPlatfo_>;
      protected
-       ///// メソッド
+       ///// M E T H O D
        procedure FindDevices;
        ///// イベント
        procedure OnInit; override;
      public
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Platfo :TCLPlatfo_ read GetOwnere;
      end;
 
@@ -322,7 +322,7 @@ uses System.SysUtils, System.RegularExpressions,
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLDevice<TCLSystem_,TCLPlatfo_>.GetInfo<_TYPE_>( const Name_:T_cl_device_info ) :_TYPE_;
 begin
@@ -352,7 +352,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLDevice<TCLSystem_,TCLPlatfo_>.GetLanVer :TCLVersion;
 var
@@ -513,7 +513,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLDevices<TCLSystem_,TCLPlatfo_>.FindDevices;
 const

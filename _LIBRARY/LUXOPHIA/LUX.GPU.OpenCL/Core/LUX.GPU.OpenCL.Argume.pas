@@ -22,17 +22,17 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLArgumes_ = TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
-       ///// アクセス
+       ///// A C C E S S O R
        function GetHanPtr :P_void; virtual; abstract;
        function GetHanSiz :T_size_t; virtual; abstract;
-       ///// メソッド
+       ///// M E T H O D
        function CreateHandle :T_cl_int; virtual; abstract;
        function DestroHandle :T_cl_int; virtual; abstract;
      public
        constructor Create; override;
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Contex  :TCLContex_  read GetOwnere;
        property Argumes :TCLArgumes_ read GetParent;
        property HanPtr  :P_void      read GetHanPtr;
@@ -45,7 +45,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Contex :TCLContex_ read GetOwnere;
      end;
 

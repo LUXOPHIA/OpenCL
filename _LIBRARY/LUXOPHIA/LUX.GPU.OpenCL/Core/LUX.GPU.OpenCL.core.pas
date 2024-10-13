@@ -24,7 +24,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      {private}
      {public}
        class function From( const Value_:String ) :TCLVersion; static;
-       ///// メソッド
+       ///// M E T H O D
        function ToString :String;
      end;
 

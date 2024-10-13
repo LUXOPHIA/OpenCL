@@ -27,7 +27,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLBufDat_ = TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
      protected
        _Count :Integer;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetKind :T_cl_mem_flags; override;
        function NewData :TCLMemDat_; override;
        function GetData :TCLBufDat_; reintroduce; virtual;
@@ -35,12 +35,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetSize :T_size_t; override;
        function GetCount :Integer; virtual;
        procedure SetCount( const Count_:Integer ); virtual;
-       ///// メソッド
+       ///// M E T H O D
        function CreateHandle :T_cl_int; override;
      public
        constructor Create; override;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Data  :TCLBufDat_ read GetData  write SetData ;
        property Count :Integer    read GetCount write SetCount;
      end;
@@ -52,15 +52,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLBuffer_ = TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
             PValue_    = ^TValue_;
      protected
-       ///// アクセス
+       ///// A C C E S S O R
        function GetBuffer :TCLBuffer_; virtual;
        function GetValueP( const I_:Integer ) :PValue_; virtual;
        function GetValues( const I_:Integer ) :TValue_; virtual;
        procedure SetValues( const I_:Integer; const Values_:TValue_ ); virtual;
-       ///// メソッド
+       ///// M E T H O D
        function CreateHandle :T_cl_int; override;
      public
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Buffer                     :TCLBuffer_ read GetBuffer                ;
        property ValueP[ const I_:Integer ] :PValue_    read GetValueP                ;
        property Values[ const I_:Integer ] :TValue_    read GetValues write SetValues; default;
@@ -86,7 +86,7 @@ uses LUX.GPU.OpenCL.Contex;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetKind :T_cl_mem_flags;
 begin
@@ -131,7 +131,7 @@ begin
      _Count := Count_;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
 begin
@@ -158,7 +158,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetBuffer :TCLBuffer_;
 begin
@@ -180,7 +180,7 @@ begin
      ValueP[ I_ ]^ := Values_;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
 begin

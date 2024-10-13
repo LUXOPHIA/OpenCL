@@ -25,7 +25,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLImaDat_ = TCLImaDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
      protected
-       ///// アクセス
+       ///// A C C E S S O R
        function GetKind :T_cl_mem_flags; override;
        function GetData :TCLImaDat_; reintroduce; virtual;
        procedure SetData( const Data_:TCLImaDat_ ); reintroduce; virtual;
@@ -41,10 +41,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetCountZ :Integer; virtual;
        procedure SetCountZ( const CountZ_:Integer ); virtual;
        function GetDescri :T_cl_image_desc; virtual;
-       ///// メソッド
+       ///// M E T H O D
        function CreateHandle :T_cl_int; override;
      public
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Data   :TCLImaDat_           read GetData   write SetData  ;
        property PixCha :T_cl_channel_order   read GetPixCha                ;
        property PixTyp :T_cl_channel_type    read GetPixTyp                ;
@@ -54,7 +54,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property CountY :Integer              read GetCountY write SetCountY;
        property CountZ :Integer              read GetCountZ write SetCountZ;
        property Descri :T_cl_image_desc      read GetDescri                ;
-       ///// メソッド
+       ///// M E T H O D
        procedure Fill( const Value_:TValue_ );
      end;
 
@@ -68,13 +68,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _PitchX :Integer;
        _PitchY :Integer;
        _PitchZ :Integer;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetImager :TCLImager_; virtual;
        function GetValueP :PByte;
-       ///// メソッド
+       ///// M E T H O D
        function CreateHandle :T_cl_int; override;
      public
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Imager :TCLImager_ read GetImager;
      end;
 
@@ -98,7 +98,7 @@ uses LUX.GPU.OpenCL.Contex;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetKind :T_cl_mem_flags;
 begin
@@ -186,7 +186,7 @@ begin
      end;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
 var
@@ -203,7 +203,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.Fill( const Value_:TValue_ );
 var
@@ -226,7 +226,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLImaDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetImager :TCLImager_;
 begin
@@ -238,7 +238,7 @@ begin
      Result := Handle;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLImaDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.CreateHandle :T_cl_int;
 var

@@ -37,17 +37,17 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Argumes :TCLArgumes_;
        _Librars :TCLLibrars_;
        _Executs :TCLExecuts_;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetHandle :T_cl_context;
        procedure SetHandle( const Handle_:T_cl_context );
-       ///// メソッド
+       ///// M E T H O D
        function CreateHandle :T_cl_int; virtual;
        function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; override;
        constructor Create( const Platfo_:TCLPlatfo_ ); overload; virtual;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Platfo  :TCLPlatfo_   read GetOwnere                 ;
        property Contexs :TCLContexs_  read GetParent                 ;
        property Queuers :TCLQueuers_  read   _Queuers                ;
@@ -64,9 +64,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLContex_ = TCLContex<TCLSystem_,TCLPlatfo_>;
      protected
      public
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Platfo :TCLPlatfo_ read GetOwnere;
-       ///// メソッド
+       ///// M E T H O D
        function Add :TCLContex_; overload;
      end;
 
@@ -90,7 +90,7 @@ uses LUX.GPU.OpenCL.Platfo;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLContex<TCLSystem_,TCLPlatfo_>.GetHandle :T_cl_context;
 begin
@@ -106,7 +106,7 @@ begin
      _Handle := Handle_;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLContex<TCLSystem_,TCLPlatfo_>.CreateHandle :T_cl_int;
 var
@@ -171,7 +171,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLContexs<TCLSystem_,TCLPlatfo_>.Add :TCLContex_;
 begin

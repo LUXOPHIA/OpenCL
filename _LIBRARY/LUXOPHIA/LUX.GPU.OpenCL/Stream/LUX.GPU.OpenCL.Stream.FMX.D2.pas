@@ -42,7 +42,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
@@ -55,7 +55,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
@@ -68,7 +68,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
@@ -81,7 +81,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
@@ -116,7 +116,7 @@ uses System.Threading;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream2DxBGRAxUInt8_FMX.CopyTo( const Bitmap_:TBitmap );
 var
@@ -177,7 +177,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream2DxBGRAxUFix8_FMX.CopyTo( const Bitmap_:TBitmap );
 var
@@ -238,7 +238,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream2DxRGBAxUInt32_FMX.CopyTo( const Bitmap_:TBitmap );
 var
@@ -305,7 +305,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream2DxRGBAxSFlo32_FMX.CopyTo( const Bitmap_:TBitmap );
 var
