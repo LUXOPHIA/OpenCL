@@ -79,7 +79,7 @@ uses LUX.Code.C,
 //#ifdef __GNUC__
 //  #define CL_API_SUFFIX_DEPRECATED __attribute__((deprecated))
 //  #define CL_API_PREFIX_DEPRECATED
-//#elif defined(_WIN32)
+//#elif defined(_MSC_VER) && !defined(__clang__)
 //  #define CL_API_SUFFIX_DEPRECATED
 //  #define CL_API_PREFIX_DEPRECATED __declspec(deprecated)
 //#else
@@ -362,11 +362,6 @@ const CL_INFINITY         = CL_HUGE_VALF;
 {$ENDIF}
 
 //#include <stddef.h>
-
-(* Mirror types to GL types. Mirror types allow us to avoid deciding which 87s to load based on whether we are using GL or GLES here. *)
-type T_cl_GLuint = T_unsigned_int;
-type T_cl_GLint  = T_int;
-type T_cl_GLenum = T_unsigned_int;
 
 (*
  * Vector types
