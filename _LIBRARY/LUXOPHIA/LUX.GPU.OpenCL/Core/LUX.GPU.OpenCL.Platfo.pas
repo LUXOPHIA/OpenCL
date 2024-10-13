@@ -37,7 +37,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLExtenss_ = TCLExtenss<TCLSystem_,TCLPlatfo_>;
             TCLDevices_ = TCLDevices<TCLSystem_,TCLPlatfo_>;
             TCLContexs_ = TCLContexs<TCLSystem_,TCLPlatfo_>;
-       ///// メソッド
+       ///// M E T H O D
        function GetInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
        function GetInfoSize( const Name_:T_cl_platform_info ) :T_size_t;
        function GetInfos<_TYPE_>( const Name_:T_cl_platform_info ) :TArray<_TYPE_>;
@@ -47,7 +47,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Extenss :TCLExtenss_;
        _Devices :TCLDevices_;
        _Contexs :TCLContexs_;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetProfile :String;
        function GetVersion :String;
        function GetName :String;
@@ -63,7 +63,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
        constructor Create( const Platfos_:TCLPlatfos_; const Handle_:T_cl_platform_id ); overload; virtual;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property System                :TCLSystem_                read GetOwnere               ;
        property Platfos               :TCLPlatfos_               read GetParent               ;
        property Handle                :T_cl_platform_id          read   _Handle               ;
@@ -89,12 +89,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLPlatfo_ = TCLPlatfo<TCLSystem_>;
      protected
-       ///// メソッド
+       ///// M E T H O D
        procedure FindPlatfos;
        ///// イベント
        procedure OnInit; override;
      public
-       ///// プロパティ
+       ///// P R O P E R T Y
        property System :TCLSystem_ read GetOwnere;
      end;
 
@@ -124,7 +124,7 @@ uses System.SysUtils;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLPlatfo<TCLSystem_>.GetInfo<_TYPE_>( const Name_:T_cl_platform_info ) :_TYPE_;
 begin
@@ -154,7 +154,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLPlatfo<TCLSystem_>.GetProfile :String;
 begin
@@ -232,7 +232,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLPlatfos<TCLSystem_>.FindPlatfos;
 var

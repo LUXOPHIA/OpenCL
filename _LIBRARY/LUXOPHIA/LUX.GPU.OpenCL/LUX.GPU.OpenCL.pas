@@ -76,12 +76,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        _Platfos :TCLPlatfos;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetPlatfos :TCLPlatfos;
      public
        constructor Create;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Platfos :TCLPlatfos read GetPlatfos;
      end;
 
@@ -91,14 +91,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        class var _System :TCLSystem;
      protected
-       ///// アクセス
+       ///// A C C E S S O R
        class function GetPlatfos :TCLPlatfos; static;
      public
        class constructor Create;
        class destructor Destroy;
-       ///// プロパティ
+       ///// P R O P E R T Y
        class property Platfos :TCLPlatfos read GetPlatfos;
-       ///// メソッド
+       ///// M E T H O D
        class procedure Show( const Strings_:TStrings );
      end;
 
@@ -120,7 +120,7 @@ implementation //###############################################################
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLSystem.GetPlatfos :TCLPlatfos;
 begin
@@ -149,7 +149,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 class function TOpenCL.GetPlatfos :TCLPlatfos;
 begin
@@ -168,7 +168,7 @@ begin
      _System.Free;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 class procedure TOpenCL.Show( const Strings_:TStrings );
 begin

@@ -27,19 +27,19 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _Device :TCLDevice_;
        _Handle :T_cl_command_queue;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetHandle :T_cl_command_queue;
        procedure SetHandle( const Handle_:T_cl_command_queue );
        function GetDevice :TCLDevice_;
        procedure SetDevice( const Device_:TCLDevice_ );
-       ///// メソッド
+       ///// M E T H O D
        function CreateHandle :T_cl_int; virtual;
        function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; override;
        constructor Create( const Contex_:TCLContex_; const Device_:TCLDevice_ ); overload; virtual;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Contex  :TCLContex_         read GetOwnere                ;
        property Queuers :TCLQueuers_        read GetParent                ;
        property Handle  :T_cl_command_queue read GetHandle write SetHandle;
@@ -55,7 +55,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLDevQues_ = TDictionary<TCLDevice_,TCLQueuer_>;
      protected
        _DevQues :TCLDevQues_;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetQueuers( const Device_:TCLDevice_ ) :TCLQueuer_;
        procedure SetQueuers( const Device_:TCLDevice_; const Queuer_:TCLQueuer_ );
        ///// イベント
@@ -64,10 +64,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
        constructor Create; override;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Contex                              :TCLContex_ read GetOwnere                  ;
        property Queuers[ const Device_:TCLDevice_ ] :TCLQueuer_ read GetQueuers write SetQueuers; default;
-       ///// メソッド
+       ///// M E T H O D
        function Contains( const Device_:TCLDevice_ ) :Boolean;
        function Add( const Device_:TCLDevice_ ) :TCLQueuer_; overload;
        function GetDeviceIDs :TArray<T_cl_device_id>;
@@ -93,7 +93,7 @@ uses LUX.GPU.OpenCL.Contex;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :T_cl_command_queue;
 begin
@@ -123,7 +123,7 @@ begin
      Handle := nil;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.CreateHandle :T_cl_int;
 begin
@@ -178,7 +178,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.GetQueuers( const Device_:TCLDevice_ ) :TCLQueuer_;
 begin
@@ -228,7 +228,7 @@ begin
      inherited;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.Contains( const Device_:TCLDevice_ ) :Boolean;
 begin

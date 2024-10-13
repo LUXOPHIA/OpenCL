@@ -38,7 +38,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLLibrar_  = TCLLibrar <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLExecut_  = TCLExecut <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuildrs_ = TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>;
-       ///// メソッド
+       ///// M E T H O D
        function GetInfo<_TYPE_>( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :_TYPE_;
        function GetInfoSize( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :T_size_t;
        function GetInfos<_TYPE_>( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :TArray<_TYPE_>;
@@ -51,14 +51,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _CompileLog    :String;
        _LinkStatus    :T_cl_build_status;
        _LinkLog       :String;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetHandle :T_cl_program; virtual;
        procedure SetHandle( const Handle_:T_cl_program ); virtual;
        function GetDevice :TCLDevice_; virtual;
        procedure SetDevice( const Device_:TCLDevice_ ); virtual;
        function GetVersion :TCLVersion; virtual;
        procedure SetVersion( const Version_:TCLVersion ); virtual;
-       ///// メソッド
+       ///// M E T H O D
        function Compile :T_cl_int;
        function Link :T_cl_int;
        function CreateHandle :T_cl_int; virtual;
@@ -68,7 +68,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create( const Buildrs_:TCLBuildrs_; const Device_:TCLDevice_ ); overload; virtual;
        constructor Create( const Execut_:TCLExecut_; const Device_:TCLDevice_ ); overload; virtual;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Execut        :TCLExecut_        read GetOwnere                        ;
        property Buildrs       :TCLBuildrs_       read GetParent                        ;
        property Handle        :T_cl_program      read GetHandle        write SetHandle ;
@@ -91,7 +91,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLDevBuis_ = TDictionary<TCLDevice_,TCLBuildr_>;
      protected
        _DevBuis :TCLDevBuis_;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetBuildrs( const Device_:TCLDevice_ ) :TCLBuildr_; virtual;
        procedure SetBuildrs( const Device_:TCLDevice_; const Buildr_:TCLBuildr_ ); virtual;
        ///// イベント
@@ -100,10 +100,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      public
        constructor Create; override;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Execut                              :TCLExecut_ read GetOwnere                  ;
        property Buildrs[ const Device_:TCLDevice_ ] :TCLBuildr_ read GetBuildrs write SetBuildrs; default;
-       ///// メソッド
+       ///// M E T H O D
        function Contains( const Device_:TCLDevice_ ) :Boolean;
        function Add( const Device_:TCLDevice_ ) :TCLBuildr_; overload;
      end;
@@ -115,14 +115,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLProgra_ = TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>;
      protected
        _Progra :TCLProgra_;
-       ///// メソッド
+       ///// M E T H O D
        procedure Changed; override;
      public
        constructor Create; overload; virtual;
        constructor Create( const Progra_:TCLProgra_ ); overload; virtual;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Progra :TCLProgra_ read _Progra;
-       ///// メソッド
+       ///// M E T H O D
        procedure LoadFromFile( const FileName_:String ); override;
        procedure LoadFromFile( const FileName_:String; Encoding_:TEncoding ); override;
      end;
@@ -132,7 +132,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_:class> = class( TListChildr<TCLContex_,TCLProgras_> )
      private
        type TCLSource_ = TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>;
-       ///// メソッド
+       ///// M E T H O D
        function GetInfo<_TYPE_>( const Name_:T_cl_program_info ) :_TYPE_;
        function GetInfoSize( const Name_:T_cl_program_info ) :T_size_t;
        function GetInfos<_TYPE_>( const Name_:T_cl_program_info ) :TArray<_TYPE_>;
@@ -141,7 +141,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Handle :T_cl_program;
        _Name   :String;
        _Source :TCLSource_;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetHandle :T_cl_program;
        procedure SetHandle( const Handle_:T_cl_program );
        (* cl_program_info *)
@@ -163,13 +163,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetPROGRAM_SCOPE_GLOBAL_CTORS_PRESENT :T_cl_bool ;
        function GetPROGRAM_SCOPE_GLOBAL_DTORS_PRESENT :T_cl_bool ;
        {$ENDIF}
-       ///// メソッド
+       ///// M E T H O D
        function CreateHandle :T_cl_int;
        function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; override;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Contex  :TCLContex_   read GetOwnere                ;
        property Progras :TCLProgras_  read GetParent                ;
        property Handle  :T_cl_program read GetHandle write SetHandle;
@@ -204,7 +204,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
      public
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Librars :TCLLibrars_ read GetParent;
      end;
 
@@ -221,17 +221,17 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        _Buildrs :TCLBuildrs_;
        _Kernels :TCLKernels_;
-       ///// メソッド
+       ///// M E T H O D
        function DestroHandle :T_cl_int; override;
      public
        constructor Create; overload; override;
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Executs :TCLExecuts_ read GetParent ;
        property Buildrs :TCLBuildrs_ read   _Buildrs;
        property Kernels :TCLKernels_ read   _Kernels;
-       ///// メソッド
+       ///// M E T H O D
        function BuildTo( const Device_:TCLDevice_ ) :TCLBuildr_;
      end;
 
@@ -241,7 +241,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Contex :TCLContex_ read GetOwnere;
      end;
 
@@ -252,7 +252,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLLibrar_ = TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        function Add :TCLLibrar_; overload;
      end;
 
@@ -263,7 +263,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLExecut_ = TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        function Add :TCLExecut_; overload;
      end;
 
@@ -286,7 +286,7 @@ uses System.IOUtils, System.AnsiStrings,
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetInfo<_TYPE_>( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :_TYPE_;
 begin
@@ -316,7 +316,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :T_cl_program;
 begin
@@ -358,7 +358,7 @@ begin
      _Version := Version_;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.Compile :T_cl_int;
 var
@@ -481,7 +481,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.GetBuildrs( const Device_:TCLDevice_ ) :TCLBuildr_;
 begin
@@ -531,7 +531,7 @@ begin
      inherited;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.Contains( const Device_:TCLDevice_ ) :Boolean;
 begin
@@ -551,7 +551,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.Changed;
 begin
@@ -575,7 +575,7 @@ begin
      _Progra := Progra_;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLSource<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.LoadFromFile( const FileName_:String );
 begin
@@ -595,7 +595,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.GetInfo<_TYPE_>( const Name_:T_cl_program_info ) :_TYPE_;
 begin
@@ -625,7 +625,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.GetHandle :T_cl_program;
 begin
@@ -662,7 +662,7 @@ function TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.GetPROGRAM_SCOP
 function TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.GetPROGRAM_SCOPE_GLOBAL_DTORS_PRESENT :T_cl_bool; begin Result := GetInfo<T_cl_bool>( CL_PROGRAM_SCOPE_GLOBAL_DTORS_PRESENT ); end;
 {$ENDIF}
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.CreateHandle :T_cl_int;
 var
@@ -719,7 +719,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
@@ -751,7 +751,7 @@ begin
      inherited;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.BuildTo( const Device_:TCLDevice_ ) :TCLBuildr_;
 begin
@@ -774,7 +774,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>.Add :TCLLibrar_;
 begin
@@ -789,7 +789,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>.Add :TCLExecut_;
 begin

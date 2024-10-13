@@ -26,7 +26,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      ['{C78BBF2F-7207-49D2-BA4D-B5B955687593}']
      {protected}
      {public}
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
        procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
      end;
@@ -35,7 +35,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); overload; virtual; abstract;
        procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); overload; virtual; abstract;
      end;
@@ -48,7 +48,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); override;
      end;
@@ -61,7 +61,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); override;
      end;
@@ -74,7 +74,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); override;
      end;
@@ -87,7 +87,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); override;
      end;
@@ -122,7 +122,7 @@ uses System.Threading;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream3DxBGRAxUInt8_FMX.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
 var
@@ -183,7 +183,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream3DxBGRAxUFix8_FMX.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
 var
@@ -244,7 +244,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream3DxRGBAxUInt32_FMX.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
 var
@@ -311,7 +311,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream3DxRGBAxSFlo32_FMX.CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
 var
