@@ -99,19 +99,19 @@ end;
 
 procedure TForm1.MakeContext;
 begin
-     ////////// プラットフォーム
+     ////////// PLATFORM
 
      _Platfo := TOpenCL.Platfos[ 0 ];                                           // 選択
 
-     ////////// デバイス
+     ////////// DEVICE
 
      _Device := _Platfo.Devices[ 0 ];                                           // 選択
 
-     ////////// コンテキスト
+     ////////// CONTEXT
 
      _Contex := TCLContex.Create( _Platfo );                                    // 生成
 
-     ////////// コマンドキュー
+     ////////// COMMAND CUE
 
      _Queuer := TCLQueuer.Create( _Contex, _Device );                           // 生成
 
@@ -123,7 +123,7 @@ end;
 
 procedure TForm1.MakeArguments;
 begin
-     ////////// バッファー
+     ////////// BUFFER
 
      _Buffer := TCLBuffer<TSingleC>.Create( _Contex, _Queuer );                 // 生成
 
@@ -138,7 +138,7 @@ begin
      _Buffer.Data[ 1 ] := _AreaC.Max;                                           // 書き込み
      _Buffer.Data.Unmap;                                                        // 同期
 
-     ////////// テクスチャ
+     ////////// TEXTURE
 
      _Textur := TCLImager1DxBGRAxUFix8.Create( _Contex, _Queuer );              // 生成
 
@@ -150,13 +150,13 @@ begin
 
      _TexFMX.CopyTo( ImageT.Bitmap );                                           // 画像の表示
 
-     ////////// サンプラー
+     ////////// SAMPLER
 
      _Samplr := TCLSamplr.Create( _Contex );                                    // 生成
 
      Assert( Assigned( _Samplr.Handle ), '_Samplr is Error!' );                 // 検証
 
-     ////////// イメージ
+     ////////// IMAGE
 
      _Imager := TCLImager2DxBGRAxUFix8.Create( _Contex, _Queuer );              // 生成
 
@@ -172,7 +172,7 @@ end;
 
 procedure TForm1.MakePrograms;
 begin
-     ////////// ライブラリ
+     ////////// LIBRARY
 
      _Librar := TCLLibrar.Create( _Contex );                                    // 生成
 
@@ -182,7 +182,7 @@ begin
 
      MemoPL.Lines.Assign( _Librar.Source );                                     // ソースコードの表示
 
-     ////////// プログラム
+     ////////// PROGRAM
 
      _Execut := TCLExecut.Create( _Contex );                                    // 生成
 
@@ -192,13 +192,13 @@ begin
 
      MemoPE.Lines.Assign( _Execut.Source );                                     // ソースコードの表示
 
-     ////////// ビルド
+     ////////// BUILD
 
      _Buildr := TCLBuildr.Create( _Execut, _Device );                           // 生成
 
      if not Assigned( _Buildr.Handle ) then Exit; { _Buildr is Error! }         // 検証
 
-     ////////// カーネル
+     ////////// KERNEL
 
      _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );                   // 生成
 
@@ -244,11 +244,11 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-     ////////// カーネル
+     ////////// KERNEL
 
      _Kernel.Run;                                                               // 実行
 
-     ////////// イメージ
+     ////////// IMAGE
 
      _ImaFMX.CopyTo( ImageR.Bitmap );                                           // 画像の表示
 end;
@@ -269,7 +269,7 @@ begin
      _AreaC.Min := ( _AreaC.Min - C ) * S + C;
      _AreaC.Max := ( _AreaC.Max - C ) * S + C;
 
-     ////////// バッファー
+     ////////// BUFFER
 
      _Buffer.Data.Map;                                                          // 展開
      _Buffer.Data[ 0 ] := _AreaC.Min;                                           // 書き込み
