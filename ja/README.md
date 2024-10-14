@@ -6,7 +6,7 @@ permalink: /ja/
 [`［English］`](https://luxophia.github.io/OpenCL/)
 
 # [OpenCL](https://github.com/LUXOPHIA/OpenCL/tree/master/ja)
-[OpenCL](https://ja.wikipedia.org/wiki/OpenCL) を用いたＧＰＵ（やＣＰＵ）での並列計算。  
+[OpenCL](https://ja.wikipedia.org/wiki/OpenCL) を用いたＧＰＵおよびＣＰＵでの並列計算。
 
 ![](https://github.com/LUXOPHIA/OpenCL/raw/master/--------/_SCREENSHOT/OpenCL.png)
 
@@ -47,7 +47,7 @@ permalink: /ja/
 
 ### ⬤ 2.1. プラットフォーム
 “**プラットフォーム**”オブジェクト (`TCLPlatfo`) は、各デバイスベンダーが定義する環境を表します。
-`TCLSystem`クラスは、すべての**プラットフォーム**を自動的に検出し、`Platfors[]`プロパティに列挙します。 
+`TCLSystem`クラスは、すべての**プラットフォーム**を自動的に検出し、`Platfors[]`プロパティに列挙されます。 
 
 > `Object Pascal`
 > ```Delphi
@@ -71,7 +71,7 @@ permalink: /ja/
 
 ### ⬤ 2.2. デバイス
 **デバイス**オブジェクト (`TCLDevice`) は、物理的なＧＰＵやＣＰＵを表します。
-`TCLPlatfo`クラスは、特定の**プラットフォーム**内のすべての**デバイス**を自動的に検出し、`Devices[]`プロパティに列挙します。  
+`TCLPlatfo`クラスは、特定の**プラットフォーム**内のすべての**デバイス**を自動的に検出し、`Devices[]`プロパティに列挙されます。
 > `Object Pascal`
 > ```Delphi
 > _Platfo.Devices.Count :Integer    // デバイスの数
@@ -94,7 +94,7 @@ permalink: /ja/
 > ```
 
 ### ⬤ 2.3. コンテキスト
-“**コンテキスト**” (`TCLContex`) は、関連するデータやプログラムを束ねて管理します。
+“**コンテキスト**” (`TCLContex`) は、関連するデータやプログラムを管理および保持します。
 `TCLContex`クラスは、`TCLPlatfo`クラスを引数として生成できます。  
 > `Object Pascal`
 > ```Delphi
@@ -105,12 +105,12 @@ permalink: /ja/
 > `Object Pascal`  
 > ```Delphi
 > _Platfo.Contexs.Count :Integer    // コンテキストの数
-> _Platfo.Contexs[*]    :TCLQueuer  // コンテキストの配列
+> _Platfo.Contexs[*]    :TCLContex  // コンテキストの配列
 > ``
 
 ### ⬤ 2.4. コマンドキュー
 “**コマンドキュー**”オブジェクト (`TCLQueuer`) は、**デバイス**に送られる命令を管理します。
-つまり、**コンテキスト**と**デバイス**を繋ぐオブジェクトです。
+つまり、**コンテキスト**と**デバイス**間での命令のやり取りを管理します。
 `TCLQueuer`クラスは、`TCLContex`クラスと`TCLDevice`クラスを引数として生成できます。  
 > `Object Pascal`
 > ```Delphi
@@ -126,7 +126,7 @@ permalink: /ja/
 > _Contex.Queuers[*]    :TCLQueuer  // コマンドキューの配列
 > ```
 
-なお、**プラットフォーム**の異なる**コンテキスト**と**デバイス**を繋ぐ**コマンドキュー**は生成できません。
+なお、異なる**プラットフォーム**の**コンテキスト**と**デバイス**を接続する**コマンドキュー**は生成できません。
 > `Object Pascal`  
 > ```Delphi
 > P0 := TOpenCL.Platfors[0];
@@ -163,7 +163,7 @@ permalink: /ja/
 > 　┗[`TCLSamplr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Samplr.pas#L21)  
 
 #### ▼ 2.5.1. メモリー
-“**メモリー**”オブジェクト (`TCLMemory`) は、様々なデータを格納し**デバイス**と共有します。
+“**メモリー**”オブジェクト (`TCLMemory`) は、さまざまなデータを保存し、**デバイス**と共有します。
 `TCLMemory`クラスは、`TCLContex`クラスと`TCLQueuer`クラスを引数として生成できます。
 `TCLMemory`クラスは抽象クラスであり、`TCLBuffer`クラスと`TCLImager`クラスを派生させます。  
 
@@ -195,7 +195,7 @@ permalink: /ja/
 > ```
 
 配列データは、`Data[]`プロパティを通して読み書きします。
-ホストとデバイスを同期させるために、配列データを読み書きする前に“**マップ**”し、使用後に“**アンマップ**”する必要があります。
+ホストとデバイスの同期のため、配列データを使用する前に“**マップ**”し、終了後に“**アンマップ**”する必要があります。
 > `Object Pascal`
 > ```Delphi
 > _Buffer.Count := 3;                          // 要素数の設定
@@ -277,7 +277,7 @@ permalink: /ja/
 ### ⬤ 2.6. プログラム 
 “**プログラム**”オブジェクト (`TCLProgra`) は、ソースコードを読み込んで、実行可能なバイナリへビルドします。
 `TCLProgra`クラスは、'TCLContex'クラスを引数として生成できます。
-`TCLProgra`クラスは抽象クラスであり、ソースコードの種類に応じて、`TCLLibrar`クラスと`TCLExecut`クラスへ派生します。  
+`TCLProgra`クラスは抽象クラスであり、ソースコードの種類に応じて、`TCLLibrar`クラスまたは`TCLExecut`クラスの基底クラスとして機能します。
 
 #### ▼ 2.6.1. ライブラリ
 `TCLLibrar`クラスは、直接実行する関数を含まないプログラムです。  
@@ -298,7 +298,7 @@ permalink: /ja/
 > ```
 
 ### ⬤ 2.7. ビルド
-**ビルド** (`TCLBuildr`) は**プログラム**が行う“行為”ですが、我々のライブラリではクラスとして明示的に表現されます。  
+**ビルド** (`TCLBuildr`) は**プログラム**が行う“行為”ですが、このライブラリでは、ビルドはクラスとして明確に定義されています。
 `TCLBuildr` クラスは、'TCLExecut'クラスと'TCLDevice'クラスを引数として生成できます。
 > `Object Pascal`
 > ```Delphi
@@ -309,7 +309,7 @@ permalink: /ja/
 > _Buildr := _Execut.BuildTo( _Device );
 > ```
 
-**カーネル**オブジェクト（2.8.章参照）は、実行時に`TCLBuildr`クラスを自動生成します。
+**カーネル**オブジェクト（2.8.章参照）は、実行時に`TCLBuildr`クラスを自動的に生成します。
 しかし、カーネルの実行前に`TCLBuildr`クラスを作成することで、コンパイルとリンクのエラーを事前に確認することができます。 
 > `Object Pascal`
 > ```Delphi
@@ -322,7 +322,7 @@ permalink: /ja/
 > ```
 
 ### ⬤ 2.8. カーネル 
-**カーネル**”オブジェクト (`TCLKernel`) は、プログラムの中の実行可能な関数を表します。  
+**カーネル**”オブジェクト (`TCLKernel`) は、プログラム内の実行可能な関数を指します。
 > `OpenCL C`
 > ```C
 > kernel void Main( ･･･ ) {
@@ -330,7 +330,7 @@ permalink: /ja/
 > }
 > ```
 
-`TCLKernel`クラスは、`TCLExecut`クラスと`TCLQueuer`クラスを引数として生成できます。  
+`TCLKernel`クラスは、`TCLExecut`クラスと`TCLQueuer`クラスを引数にして生成できます。  
 > `Object Pascal`
 > ```Delphi
 > _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );
@@ -339,7 +339,7 @@ permalink: /ja/
 > ```
 
 #### ▼ 2.8.1. 仮引数
-**メモリ**オブジェクトは、`TCLKernel`クラスの`Parames[]`プロパティを介して、ソースコードの引数へ接続します。  
+**メモリ**オブジェクトは、`TCLKernel`クラスの`Parames[]`プロパティを介して、ソースコード内の引数に関連付けられます。
 > `Object Pascal`
 > ```Delphi
 > _Kernel.Parames['Buffer'] := _Buffer;  // バッファーの接続
@@ -356,7 +356,7 @@ OpenCL のプログラムは、３重のループ構文のように繰り返し�
 > _Kernel.GloSizZ := 300;  // Ｚ方向のループ回数
 > ```
 
-ループのインデックスの最小値と最大値を指定することもできます。  
+ループの最小および最大インデックスを指定することも可能です。
 > `Object Pascal`
 > ```Delphi
 > _Kernel.GloMinX := 0;      // Ｘ方向の開始インデックス
