@@ -6,7 +6,7 @@ permalink: /
 [`［日本語］`](https://luxophia.github.io/OpenCL/ja/)
 
 # [OpenCL](https://github.com/LUXOPHIA/OpenCL/)
-Parallel computing with [OpenCL](https://en.wikipedia.org/wiki/OpenCL) on the GPU (or CPU).  
+Parallel computing with [OpenCL](https://en.wikipedia.org/wiki/OpenCL) on GPUs and CPUs.
 
 ![](https://github.com/LUXOPHIA/OpenCL/raw/master/--------/_SCREENSHOT/OpenCL.png)
 
@@ -43,12 +43,11 @@ Parallel computing with [OpenCL](https://en.wikipedia.org/wiki/OpenCL) on the GP
 ----
 ## ■ 2. Usage
 The `TOpenCL` class is a singleton of the `TCLSystem` class.
-The `TCLSystem` class automatically detects all **computing devices** on the execution machine.  
+The `TCLSystem` class automatically detects all **computing devices** present on the host machine.
 
 ### ⬤ 2.1. Platform
-The "**platform**" object (`TCLPlatfo`) represents the environment defined by each device vendor. 
-The `TCLSystem` class automatically detects all **platform**s and enumerate them in the `Platfors` property. 
-
+The "**platform**" object (`TCLPlatfo`) represents the environment provided by each device vendor.
+The `TCLSystem` class automatically detects all **platform**s and lists them in the `Platfors` property.
 > `Object Pascal`
 > ```Delphi
 > TOpenCL.Platfors.Count :Integer    // Number of all platforms
@@ -71,14 +70,14 @@ The `TCLPlatfo` class provides information about a specific **platform** as prop
 
 ### ⬤ 2.2. Device
 The "**device**" object (`TCLDevice`) represents a physical GPU or CPU.
-The `TCLPlatfo` class automatically detects all **device** objects in a specific **platform** object and enumerate them in the `Devices` property.  
+The `TCLPlatfo` class automatically detects all **device** objects in a specific **platform** object and enumerates them in the `Devices` property.  
 > `Object Pascal`
 > ```Delphi
 > _Platfo.Devices.Count :Integer    // Number of devices
 > _Platfo.Devices[*]    :TCLDevice  // Array of devices
 > ```
 
-The `TCLDevice` class provides information about a specific **device** as properties.  
+The `TCLDevice` class provides detailed information about each specific **device** through its properties.
 > `Object Pascal`
 > ```Delphi
 > _Device := _Platfo.Devices[0];  // Selecting a specific device
@@ -94,24 +93,26 @@ The `TCLDevice` class provides information about a specific **device** as proper
 > ```
 
 ### ⬤ 2.3. Context
-The "**context**" object (`TCLContex`) manages a bundle of related data and programs.
-The `TCLContex` class is created from the `TCLPlatfo` class.  
+The "**context**" object (`TCLContex`) manages a collection of related data and programs.
+The `TCLContex` class is instantiated from the `TCLPlatfo` class.
 > `Object Pascal`
 > ```Delphi
 > _Contex := TCLContex.Create( _Platfo );
 > ```
 
-The generated `TCLContex` class is registered into the `Contexs[]` property of the `TCLPlatfo` class.
+The generated `TCLContex` class is registered in the `Contexs[]` property of the `TCLPlatfo` class.
 > `Object Pascal`  
 > ```Delphi
 > _Platfo.Contexs.Count :Integer    // Number of contexts
-> _Platfo.Contexs[*]    :TCLQueuer  // Array  of contexts
+> _Platfo.Contexs[*]    :TCLContex  // Array  of contexts
 > ``
 
 ### ⬤ 2.4. Command Queue
 The "**command queue**" object (`TCLQueuer`) manages the commands sent to the device.
-In other words, it is an object that connects **context** and **device**.
-The `TCLQueuer` class is created with the `TCLContex` and the `TCLDevice` classes as arguments.
+In other words, it serves as a bridge between a **context** and a **device**.
+The `TCLQueuer` class is created with the `TCLContex` and `TCLDevice` classes as arguments.
+
+
 > `Object Pascal`
 > ```Delphi
 > _Queuer := TCLQueuer.Create( _Contex, _Device );
@@ -119,7 +120,7 @@ The `TCLQueuer` class is created with the `TCLContex` and the `TCLDevice` classe
 > _Queuer := _Contex.Queuers[ _Device ];
 > ```
 
-The `TCLContex` class registers the `TCLQueuer` class in the `Queuers` property.  
+The `TCLContex` class registers the `TCLQueuer` object in the `Queuers` property.
 > `Object Pascal`  
 > ```Delphi
 > _Contex.Queuers.Count :Integer    // Number of command queue
@@ -163,7 +164,7 @@ Note that **context** and **device** on the different **platforms** cannot gener
 > 　┗[`TCLSamplr`](https://github.com/LUXOPHIA/LUX.GPU.OpenCL/blob/master/LUX.GPU.OpenCL.Argume.Samplr.pas#L21)  
 
 #### ▼ 2.5.1. Memory
-The "**Memory**" object (`TCLMemory`) stores various data and shares it with the **device**.
+The "**memory**" object (`TCLMemory`) stores various data and shares it with the **device**.
 The `TCLMemory` class is created from the `TCLContex` and the `TCLQueuer` classes.
 The `TCLMemory` class is abstract and derives the `TCLBuffer` and `TCLImager` classes.  
 
@@ -275,9 +276,9 @@ The `TCLSamplr` class is generated with the 'TCLContex' class as an argument.
 > ```
 
 ### ⬤ 2.6. Program
-The "**program**" object (`TCLProgra`) reads the source code and builds it into an executable binary.
-The `TCLProgra` class is generated with the 'TCLContex' class as an argument.
-The `TCLProgra` class is abstract and derives the `TCLLibrar` and `TCLExecut` classes, depending on the type of source code. 
+The "**program**" object (`TCLProgra`) reads the source code and compiles it into an executable binary.
+The `TCLProgra` class is created with the `TCLContex` class as an argument.
+The `TCLProgra` class is abstract and serves as the base class for the `TCLLibrar` and `TCLExecut` classes, depending on the type of source code.
 
 #### ▼ 2.6.1. Library
 The `TCLLibrar` class is a program that does not include functions to execute directly is called a library type.  
@@ -309,7 +310,7 @@ A "**build**" (`TCLBuildr`) is an "action" performed by a **program**, but it is
 > ```
 
 The **kernel** object (see chapter 2.8.) automatically creates the `TCLBuildr` class at runtime.
-However, you can check for compiling and linking errors by creating a `TCLBuildr` class before running the kernel.  
+However, you can check for compilation and linking errors by creating a `TCLBuildr` object before running the kernel.
 > `Object Pascal`
 > ```Delphi
 > _Buildr.Handle;  // Run build
@@ -329,7 +330,7 @@ The "**kernel**" object (`TCLKernel`) represents an executable function in a pro
 > }
 > ```
 
-The `TCLKernel` class is created from the `TCLExecut` and `TCLQueuer` classes. 
+The `TCLKernel` class is instantiated from the `TCLExecut` and `TCLQueuer` objects.
 > `Object Pascal`
 > ```Delphi
 > _Kernel := TCLKernel.Create( _Execut, 'Main', _Queuer );
@@ -339,7 +340,7 @@ The `TCLKernel` class is created from the `TCLExecut` and `TCLQueuer` classes.
 
 
 #### ▼ 2.8.1. Parameter
-The **memory** object connects to the parameter in the source code through the "Parames" property of the `TCLKernel` class.  
+The **memory** object is linked to the parameter in the source code through the "Parames" property of the `TCLKernel` class.
 > `Object Pascal`
 > ```Delphi
 > _Kernel.Parames['Buffer'] := _Buffer;  // Connect to buffer
