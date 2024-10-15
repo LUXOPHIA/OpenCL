@@ -47,7 +47,7 @@ The `TCLSystem` class automatically detects all **computing devices** present on
 
 ### ⬤ 2.1. Platform
 The "**platform**" object (`TCLPlatfo`) represents the environment provided by each device vendor.
-The `TCLSystem` class automatically detects all **platform**s and lists them in the `Platfos` property.
+The `TCLSystem` class automatically detects all **platform**s and lists them in the `Platfos[]` property.
 > `Object Pascal`
 > ```Delphi
 > TOpenCL.Platfos.Count :Integer    // Number of all platforms
@@ -70,7 +70,7 @@ The `TCLPlatfo` class provides information about a specific **platform** as prop
 
 ### ⬤ 2.2. Device
 The "**device**" object (`TCLDevice`) represents a physical GPU or CPU.
-The `TCLPlatfo` class automatically detects all **device** objects in a specific **platform** object and enumerates them in the `Devices` property.  
+The `TCLPlatfo` class automatically detects all **device** objects in a specific **platform** object and enumerates them in the `Devices[]` property.  
 > `Object Pascal`
 > ```Delphi
 > _Platfo.Devices.Count :Integer    // Number of devices
@@ -120,7 +120,7 @@ The `TCLQueuer` class is created with the `TCLContex` and `TCLDevice` classes as
 > _Queuer := _Contex.Queuers[ _Device ];
 > ```
 
-The `TCLContex` class registers the `TCLQueuer` object in the `Queuers` property.
+The `TCLContex` class registers the `TCLQueuer` object in the `Queuers[]` property.
 > `Object Pascal`  
 > ```Delphi
 > _Contex.Queuers.Count :Integer    // Number of command queue
