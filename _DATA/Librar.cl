@@ -22,9 +22,9 @@ TSingleAreaC;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TSingleC
 
-///////////////////////////////////////////////////////////////////////// 演算子
+/////////////////////////////////////////////////////////////////////// OPERATOR
 
-TSingleC __attribute__((overloadable)) Add( const TSingleC A, const TSingleC B )
+TSingleC Add( const TSingleC A, const TSingleC B )
 {
   TSingleC Result;
 
@@ -34,7 +34,7 @@ TSingleC __attribute__((overloadable)) Add( const TSingleC A, const TSingleC B )
   return Result;
 }
 
-TSingleC __attribute__((overloadable)) Sub( const TSingleC A, const TSingleC B )
+TSingleC Sub( const TSingleC A, const TSingleC B )
 {
   TSingleC Result;
 
@@ -44,7 +44,7 @@ TSingleC __attribute__((overloadable)) Sub( const TSingleC A, const TSingleC B )
   return Result;
 }
 
-TSingleC __attribute__((overloadable)) Mul( const TSingleC A, const TSingleC B )
+TSingleC Mul( const TSingleC A, const TSingleC B )
 {
   TSingleC Result;
 
@@ -54,12 +54,12 @@ TSingleC __attribute__((overloadable)) Mul( const TSingleC A, const TSingleC B )
   return Result;
 }
 
-TSingleC __attribute__((overloadable)) Pow2( const TSingleC C )
+TSingleC Pow2( const TSingleC C )
 {
   return Mul( C, C );
 }
 
-float __attribute__((overloadable)) Abs( const TSingleC C )
+float Abs( const TSingleC C )
 {
   return sqrt( C.R * C.R + C.I * C.I );
 }
