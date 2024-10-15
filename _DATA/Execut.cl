@@ -26,7 +26,7 @@ float ComplexToCount( const TSingleC C, const int MaxN )
   {
     Z = Add( Pow2( Z ), C );
 
-    if ( Abs( Z ) > 2 ) return (float)N + 1 - log( log2( Abs( Z ) ) );
+    if ( Abs( Z ) > 2 ) return N + 1 - log( log2( Abs( Z ) ) );
   }
 
   return MaxN;
