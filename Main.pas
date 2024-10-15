@@ -111,7 +111,7 @@ begin
 
      _Contex := TCLContex.Create( _Platfo );                                    // 生成
 
-     ////////// COMMAND CUE
+     ////////// COMMAND QUEUE
 
      _Queuer := TCLQueuer.Create( _Contex, _Device );                           // 生成
 
