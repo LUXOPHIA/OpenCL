@@ -47,17 +47,17 @@ The `TCLSystem` class automatically detects all **computing devices** present on
 
 ### ⬤ 2.1. Platform
 The "**platform**" object (`TCLPlatfo`) represents the environment provided by each device vendor.
-The `TCLSystem` class automatically detects all **platform**s and lists them in the `Platfors` property.
+The `TCLSystem` class automatically detects all **platform**s and lists them in the `Platfos` property.
 > `Object Pascal`
 > ```Delphi
-> TOpenCL.Platfors.Count :Integer    // Number of all platforms
-> TOpenCL.Platfors[*]    :TCLPlatfo  // Array of all platforms
+> TOpenCL.Platfos.Count :Integer    // Number of all platforms
+> TOpenCL.Platfos[*]    :TCLPlatfo  // Array of all platforms
 > ```
 
 The `TCLPlatfo` class provides information about a specific **platform** as properties.  
 > `Object Pascal`
 > ```Delphi
-> _Platfo := TOpenCL.Platfors[0];  // Selecting a specific platform
+> _Platfo := TOpenCL.Platfos[0];  // Selecting a specific platform
 > 
 > _Platfo.Handle        :T_cl_platform_id  // Pointer
 > _Platfo.Profile       :String            // Profile
@@ -130,9 +130,9 @@ The `TCLContex` class registers the `TCLQueuer` object in the `Queuers` property
 Note that **context** and **device** on the different **platforms** cannot generate a **command queue**.  
 > `Object Pascal`  
 > ```Delphi
-> P0 := TOpenCL.Platfors[0];
-> P1 := TOpenCL.Platfors[1];
-> P2 := TOpenCL.Platfors[2];
+> P0 := TOpenCL.Platfos[0];
+> P1 := TOpenCL.Platfos[1];
+> P2 := TOpenCL.Platfos[2];
 > 
 > D00 := P0.Devices[0];  D01 := P0.Devices[1];  D02 := P0.Devices[2]; 
 > D10 := P1.Devices[0];
