@@ -47,18 +47,18 @@ permalink: /ja/
 
 ### ⬤ 2.1. プラットフォーム
 “**プラットフォーム**”オブジェクト (`TCLPlatfo`) は、各デバイスベンダーが定義する環境を表します。
-`TCLSystem`クラスは、すべての**プラットフォーム**を自動的に検出し、`Platfors[]`プロパティに列挙されます。 
+`TCLSystem`クラスは、すべての**プラットフォーム**を自動的に検出し、`Platfos[]`プロパティに列挙されます。 
 
 > `Object Pascal`
 > ```Delphi
-> TOpenCL.Platfors.Count :Integer    // 全プラットフォームの数
-> TOpenCL.Platfors[*]    :TCLPlatfo  // 全プラットフォームの配列
+> TOpenCL.Platfos.Count :Integer    // 全プラットフォームの数
+> TOpenCL.Platfos[*]    :TCLPlatfo  // 全プラットフォームの配列
 > ```
 
 特定の**プラットフォーム**に関する情報は、`TCLPlatfo`クラスのプロパティから取得できます。  
 > `Object Pascal`
 > ```Delphi
-> _Platfo := TOpenCL.Platfors[0];  // 特定プラットフォームの選択
+> _Platfo := TOpenCL.Platfos[0];  // 特定プラットフォームの選択
 > 
 > _Platfo.Handle        :T_cl_platform_id  // ポインタ
 > _Platfo.Profile       :String            // プロファイル
@@ -129,9 +129,9 @@ permalink: /ja/
 なお、異なる**プラットフォーム**の**コンテキスト**と**デバイス**を接続する**コマンドキュー**は生成できません。
 > `Object Pascal`  
 > ```Delphi
-> P0 := TOpenCL.Platfors[0];
-> P1 := TOpenCL.Platfors[1];
-> P2 := TOpenCL.Platfors[2];
+> P0 := TOpenCL.Platfos[0];
+> P1 := TOpenCL.Platfos[1];
+> P2 := TOpenCL.Platfos[2];
 > 
 > D00 := P0.Devices[0];  D01 := P0.Devices[1];  D02 := P0.Devices[2]; 
 > D10 := P1.Devices[0];
