@@ -9,15 +9,15 @@ uses cl_version, cl_platform, cl,
      LUX.GPU.OpenCL.Queuer,
      LUX.GPU.OpenCL.Argume;
 
-type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
+type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
      TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
      TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
 
-     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
+     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 
-     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
+     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>
 
@@ -30,7 +30,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Kind   :T_cl_mem_flags;
        _Data   :TCLMemDat_;
        _Queuer :TCLQueuer_;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetHanPtr :P_void; override;
        function GetHanSiz :T_size_t; override;
        function GetHandle :T_cl_mem; virtual;
@@ -43,13 +43,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetSize :T_size_t; virtual; abstract;
        function GetQueuer :TCLQueuer_; virtual;
        procedure SetQueuer( const Queuer_:TCLQueuer_ ); virtual;
-       ///// メソッド
+       ///// M E T H O D
        function DestroHandle :T_cl_int; override;
      public
        constructor Create; override;
        constructor Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ ); overload; virtual;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Handle :T_cl_mem       read GetHandle write SetHandle;
        property Kind   :T_cl_mem_flags read GetKind   write SetKind  ;
        property Data   :TCLMemDat_     read GetData   write SetData  ;
@@ -67,41 +67,41 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        _Memory :TCLMemory_;
        _Mode   :T_cl_map_flags;
        _Handle :P_void;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetQueuer :TCLQueuer_; virtual;
        function GetMemory :TCLMemory_; virtual;
        function GetMode :T_cl_map_flags; virtual;
        procedure SetMode( const Mode_:T_cl_map_flags ); virtual;
        function GetHandle :P_void; virtual;
        procedure SetHandle( const Handle_:P_void ); virtual;
-       ///// メソッド
+       ///// M E T H O D
        function CreateHandle :T_cl_int; virtual; abstract;
        function DestroHandle :T_cl_int; virtual;
      public
        constructor Create; overload; virtual;
        constructor Create( const Memory_:TCLMemory_ ); overload; virtual;
        destructor Destroy; override;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Queuer :TCLQueuer_     read GetQueuer                ;
        property Memory :TCLMemory_     read GetMemory                ;
        property Mode   :T_cl_map_flags read GetMode   write SetMode  ;
        property Handle :P_void         read GetHandle write SetHandle;
-       ///// メソッド
+       ///// M E T H O D
        procedure Map; virtual;
        procedure Unmap; virtual;
      end;
 
-//const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
+//const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C O N S T A N T 】
 
-//var //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【変数】
+//var //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 V A R I A B L E 】
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
 implementation //############################################################### ■
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>
 
@@ -109,7 +109,7 @@ implementation //###############################################################
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHanPtr :P_void;
 begin
@@ -177,7 +177,7 @@ begin
      Data.Handle := nil;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
@@ -219,7 +219,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.GetQueuer :TCLQueuer_;
 begin
@@ -263,7 +263,7 @@ begin
      _Handle := Handle_;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
@@ -298,7 +298,7 @@ begin
      inherited;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.Map;
 begin
@@ -310,6 +310,6 @@ begin
      Handle := nil;
 end;
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
 end. //######################################################################### ■

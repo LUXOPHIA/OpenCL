@@ -7,7 +7,7 @@ uses System.UITypes,
      LUX.Color,
      LUX.GPU.OpenCL;
 
-type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【型】
+type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
      TCLStream1D_FMX<TCLImager_:class> = class;
        TCLStream1DxBGRAxUInt8_FMX      = class;
@@ -15,9 +15,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        TCLStream1DxRGBAxUInt32_FMX     = class;
        TCLStream1DxRGBAxSFlo32_FMX     = class;
 
-     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
+     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 
-     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
+     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream1D_FMX<TCLImager_>
 
@@ -27,9 +27,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetImage :TCLImager_;
        procedure SetImage( const Imager_:TCLImager_ );
      {public}
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Imager :TCLImager_ read GetImage write SetImage;
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Bitmap_:TBitmap ); overload;
        procedure CopyFrom( const Bitmap_:TBitmap ); overload;
        procedure SaveToFile( const FileName_:String );
@@ -40,15 +40,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        _Imager :TCLImager_;
-       ///// アクセス
+       ///// A C C E S S O R
        function GetImage :TCLImager_;
        procedure SetImage( const Imager_:TCLImager_ );
      public
        constructor Create; overload;
        constructor Create( const Imager_:TCLImager_ ); overload;
-       ///// プロパティ
+       ///// P R O P E R T Y
        property Imager :TCLImager_ read GetImage write SetImage;
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Bitmap_:TBitmap ); overload; virtual; abstract;
        procedure CopyFrom( const Bitmap_:TBitmap ); overload; virtual; abstract;
        procedure SaveToFile( const FileName_:String ); virtual;
@@ -63,7 +63,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
@@ -76,7 +76,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
@@ -89,7 +89,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
@@ -102,24 +102,24 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
      public
-       ///// メソッド
+       ///// M E T H O D
        procedure CopyTo( const Bitmap_:TBitmap ); override;
        procedure CopyFrom( const Bitmap_:TBitmap ); override;
      end;
 
-//const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【定数】
+//const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C O N S T A N T 】
 
-//var //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【変数】
+//var //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 V A R I A B L E 】
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
 implementation //############################################################### ■
 
 uses System.Threading;
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【レコード】
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【クラス】
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream1D_FMX<TCLImager_>
 
@@ -127,7 +127,7 @@ uses System.Threading;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
-/////////////////////////////////////////////////////////////////////// アクセス
+//////////////////////////////////////////////////////////////// A C C E S S O R
 
 function TCLStream1D_FMX<TCLImager_>.GetImage :TCLImager_;
 begin
@@ -154,7 +154,7 @@ begin
      Imager := Imager_;
 end;
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream1D_FMX<TCLImager_>.SaveToFile( const FileName_:String );
 var
@@ -190,7 +190,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream1DxBGRAxUInt8_FMX.CopyTo( const Bitmap_:TBitmap );
 var
@@ -244,7 +244,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream1DxBGRAxUFix8_FMX.CopyTo( const Bitmap_:TBitmap );
 var
@@ -298,7 +298,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream1DxRGBAxUInt32_FMX.CopyTo( const Bitmap_:TBitmap );
 var
@@ -350,7 +350,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-/////////////////////////////////////////////////////////////////////// メソッド
+//////////////////////////////////////////////////////////////////// M E T H O D
 
 procedure TCLStream1DxRGBAxSFlo32_FMX.CopyTo( const Bitmap_:TBitmap );
 var
@@ -400,6 +400,6 @@ begin
      end;
 end;
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【ルーチン】
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
 end. //######################################################################### ■
