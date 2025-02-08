@@ -75,7 +75,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TListChildr<TOwnere_,TParent_:class> = class( TListChildr<TParent_> )
      private
-       type TListParent_ = TListParent<TOwnere_,TListChildr<TParent_>>;
      protected
        ///// アクセス
        function GetOwnere :TOwnere_;
@@ -238,6 +237,9 @@ end;
 /////////////////////////////////////////////////////////////////////// アクセス
 
 function TListChildr<TOwnere_,TParent_>.GetOwnere :TOwnere_;
+type
+    TListChildr_ = TListChildr<TOwnere_,TParent_>;
+    TListParent_ = TListParent<TOwnere_,TListChildr_>;
 begin
      Result := TListParent_( Parent ).Ownere;
 end;
