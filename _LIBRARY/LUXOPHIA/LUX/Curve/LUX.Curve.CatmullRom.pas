@@ -1,8 +1,9 @@
-﻿unit LUX.Curve.Bezier;
+﻿unit LUX.Curve.CatmullRom;
 
 interface //#################################################################### ■
 
-uses LUX.Curve;
+uses LUX.D4,
+     LUX.Curve;
 
 //type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
@@ -12,13 +13,10 @@ uses LUX.Curve;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
-function Bezier( const N_,I_:Integer; const T_:Single ) :Single; overload;
-function Bezier( const N_,I_:Integer; const T_:Double ) :Double; overload;
+function CatmullRom( const t:Single ) :TSingle4D; overload;
+function CatmullRom( const t:Double ) :TDouble4D; overload;
 
 implementation //############################################################### ■
-
-uses System.Math,
-     LUX;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 
@@ -26,16 +24,20 @@ uses System.Math,
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
-function Bezier( const N_,I_:Integer; const T_:Single ) :Single;
+function CatmullRom( const t:Single ) :TSingle4D;
 begin
-     Result := Binomial32( N_, I_ ) * IntPower( 1 - T_, N_ - I_ )
-                                    * IntPower(     T_,      I_ );
+     Result[1] := ( ( -0.5 * t + 1.0 ) * t - 0.5 ) * t      ;
+     Result[2] := ( ( +1.5 * t - 2.5 ) * t       ) * t + 1.0;
+     Result[3] := ( ( -1.5 * t + 2.0 ) * t + 0.5 ) * t      ;
+     Result[4] := ( ( +0.5 * t - 0.5 ) * t       ) * t      ;
 end;
 
-function Bezier( const N_,I_:Integer; const T_:Double ) :Double;
+function CatmullRom( const t:Double ) :TDouble4D;
 begin
-     Result := Binomial32( N_, I_ ) * IntPower( 1 - T_, N_ - I_ )
-                                    * IntPower(     T_,      I_ );
+     Result[1] := ( ( -0.5 * t + 1.0 ) * t - 0.5 ) * t      ;
+     Result[2] := ( ( +1.5 * t - 2.5 ) * t       ) * t + 1.0;
+     Result[3] := ( ( -1.5 * t + 2.0 ) * t + 0.5 ) * t      ;
+     Result[4] := ( ( +0.5 * t - 0.5 ) * t       ) * t      ;
 end;
 
 end. //######################################################################### ■
