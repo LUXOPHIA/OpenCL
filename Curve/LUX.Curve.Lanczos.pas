@@ -1,4 +1,4 @@
-﻿unit LUX.Curve.Bezier;
+﻿unit LUX.Curve.Lanczos;
 
 interface //#################################################################### ■
 
@@ -12,13 +12,12 @@ uses LUX.Curve;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
-function Bezier( const N_,I_:Integer; const T_:Single ) :Single; overload;
-function Bezier( const N_,I_:Integer; const T_:Double ) :Double; overload;
+function Sinc( const X_:Single ) :Single; overload;
+function Sinc( const X_:Double ) :Double; overload;
 
 implementation //############################################################### ■
 
-uses System.Math,
-     LUX;
+uses LUX;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 
@@ -26,16 +25,22 @@ uses System.Math,
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
-function Bezier( const N_,I_:Integer; const T_:Single ) :Single;
+function Sinc( const X_:Single ) :Single;
+var
+   X :Single;
 begin
-     Result := Binomial32( N_, I_ ) * IntPower( 1 - T_, N_ - I_ )
-                                    * IntPower(     T_,      I_ );
+     X := Pi * X_;
+     if Abs( X ) < SINGLE_EPS3 then Result := 1
+                               else Result := Sin( X ) / X;
 end;
 
-function Bezier( const N_,I_:Integer; const T_:Double ) :Double;
+function Sinc( const X_:Double ) :Double;
+var
+   X :Double;
 begin
-     Result := Binomial32( N_, I_ ) * IntPower( 1 - T_, N_ - I_ )
-                                    * IntPower(     T_,      I_ );
+     X := Pi * X_;
+     if Abs( X ) < DOUBLE_EPS3 then Result := 1
+                               else Result := Sin( X ) / X;
 end;
 
 end. //######################################################################### ■
