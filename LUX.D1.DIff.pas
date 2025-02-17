@@ -2,7 +2,8 @@
 
 interface //#################################################################### ■
 
-uses LUX;
+uses LUX,
+     LUX.D1;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
@@ -27,6 +28,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        class operator Multiply( const A_,B_:TdSingle ) :TdSingle;
        class operator Divide( const A_:TdSingle; const B_:Single ) :TdSingle;
        class operator Divide( const A_,B_:TdSingle ) :TdSingle;
+       class operator Equal( const A_,B_:TdSingle ) :Boolean;
+       class operator NotEqual( const A_,B_:TdSingle ) :Boolean;
        class operator GreaterThan( const A_,B_:TdSingle ) :Boolean;
        class operator GreaterThanOrEqual( const A_,B_:TdSingle ) :Boolean;
        class operator LessThan( const A_,B_:TdSingle ) :Boolean;
@@ -35,6 +38,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        class operator Implicit( const V_:Integer ) :TdSingle;
        class operator Implicit( const V_:Int64 ) :TdSingle;
        class operator Implicit( const V_:Single ) :TdSingle;
+       ///// M E T H O D
+       class function RandG( const SD_:Single = 1 ) :TdSingle; overload; static;
+       class function RandBS1 :TdSingle; static;
+       class function RandBS2 :TdSingle; static;
+       class function RandBS4 :TdSingle; static;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TdDouble
@@ -56,6 +64,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        class operator Multiply( const A_,B_:TdDouble ) :TdDouble;
        class operator Divide( const A_:TdDouble; const B_:Double ) :TdDouble;
        class operator Divide( const A_,B_:TdDouble ) :TdDouble;
+       class operator Equal( const A_,B_:TdDouble ) :Boolean;
+       class operator NotEqual( const A_,B_:TdDouble ) :Boolean;
        class operator GreaterThan( const A_,B_:TdDouble ) :Boolean;
        class operator GreaterThanOrEqual( const A_,B_:TdDouble ) :Boolean;
        class operator LessThan( const A_,B_:TdDouble ) :Boolean;
@@ -65,7 +75,12 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        class operator Implicit( const V_:Int64 ) :TdDouble;
        class operator Implicit( const V_:Double ) :TdDouble;
        class operator Implicit( const V_:TdSingle ) :TdDouble;
-       class operator Implicit( const V_:TdDouble ) :TdSingle;
+       class operator Explicit( const V_:TdDouble ) :TdSingle;
+       ///// M E T H O D
+       class function RandG( const SD_:Double = 1 ) :TdDouble; overload; static;
+       class function RandBS1 :TdDouble; static;
+       class function RandBS2 :TdDouble; static;
+       class function RandBS4 :TdDouble; static;
      end;
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
@@ -78,11 +93,17 @@ function Pow2( const X_:TdDouble ) :TdDouble; overload;
 function Pow3( const X_:TdSingle ) :TdSingle; overload;
 function Pow3( const X_:TdDouble ) :TdDouble; overload;
 
+function Pow4( const X_:TdSingle ) :TdSingle; overload;
+function Pow4( const X_:TdDouble ) :TdDouble; overload;
+
+function Pow5( const X_:TdSingle ) :TdSingle; overload;
+function Pow5( const X_:TdDouble ) :TdDouble; overload;
+
 function Roo2( const X_:TdSingle ) :TdSingle; overload;
 function Roo2( const X_:TdDouble ) :TdDouble; overload;
 
-function ArcCos( const C_:TdSingle ) :TdSingle; overload;
-function ArcCos( const C_:TdDouble ) :TdDouble; overload;
+function ArcCos( const X_:TdSingle ) :TdSingle; overload;
+function ArcCos( const X_:TdDouble ) :TdDouble; overload;
 
 function Abso( const V_:TdSingle ) :TdSingle; overload;
 function Abso( const V_:TdDouble ) :TdDouble; overload;
@@ -105,6 +126,9 @@ function Tan( const X_:TdDouble ) :TdDouble; overload;
 function ArcTan( const X_:TdSingle ) :TdSingle; overload;
 function ArcTan( const X_:TdDouble ) :TdDouble; overload;
 
+function ArcTan2( const Y_,X_:TdSingle ) :TdSingle; overload;
+function ArcTan2( const Y_,X_:TdDouble ) :TdDouble; overload;
+
 function ArcSin( const X_:TdSingle ) :TdSingle; overload;
 function ArcSin( const X_:TdDouble ) :TdDouble; overload;
 
@@ -126,8 +150,20 @@ function Exp( const X_:TdDouble ) :TdDouble; overload;
 function Ln( const X_:TdSingle ) :TdSingle; overload;
 function Ln( const X_:TdDouble ) :TdDouble; overload;
 
-function Power( const X_,N_:TdSingle ) :TdSingle; overload;
-function Power( const X_,N_:TdDouble ) :TdDouble; overload;
+function Power( const X_:TdSingle; const N_:Single ) :TdSingle; overload;
+function Power( const X_:TdDouble; const N_:Double ) :TdDouble; overload;
+
+function IntPower( const X_:TdSingle; const N_:Integer ) :TdSingle; overload;
+function IntPower( const X_:TdDouble; const N_:Integer ) :TdDouble; overload;
+
+function Power( const X_,N_:TdSingle ) :TdSingle; overload;  // 0 < X
+function Power( const X_,N_:TdDouble ) :TdDouble; overload;  // 0 < X
+
+function Cosh( const X_:TdSingle ) :TdSingle; overload;
+function Cosh( const X_:TdDouble ) :TdDouble; overload;
+
+function Sinh( const X_:TdSingle ) :TdSingle; overload;
+function Sinh( const X_:TdDouble ) :TdDouble; overload;
 
 implementation //############################################################### ■
 
@@ -151,84 +187,77 @@ end;
 
 class operator TdSingle.Positive( const V_:TdSingle ) :TdSingle;
 begin
-     with Result do
-     begin
-          o := +V_.o;
-          d := +V_.d;
-     end;
+     Result.o := +V_.o;
+     Result.d := +V_.d;
 end;
 
 class operator TdSingle.Negative( const V_:TdSingle ) :TdSingle;
 begin
-     with Result do
-     begin
-          o := -V_.o;
-          d := -V_.d;
-     end;
+     Result.o := -V_.o;
+     Result.d := -V_.d;
 end;
+
+//------------------------------------------------------------------------------
 
 class operator TdSingle.Add( const A_,B_:TdSingle ) :TdSingle;
 begin
-     with Result do
-     begin
-          o := A_.o + B_.o;
-          d := A_.d + B_.d;
-     end;
+     Result.o := A_.o + B_.o;
+     Result.d := A_.d + B_.d;
 end;
 
 class operator TdSingle.Subtract( const A_,B_:TdSingle ) :TdSingle;
 begin
-     with Result do
-     begin
-          o := A_.o - B_.o;
-          d := A_.d - B_.d;
-     end;
+     Result.o := A_.o - B_.o;
+     Result.d := A_.d - B_.d;
 end;
+
+//------------------------------------------------------------------------------
 
 class operator TdSingle.Multiply( const A_:Single; const B_:TdSingle ) :TdSingle;
 begin
-     with Result do
-     begin
-          o := A_ * B_.o;
-          d := A_ * B_.d;
-     end;
+     Result.o := A_ * B_.o;
+     Result.d := A_ * B_.d;
 end;
 
 class operator TdSingle.Multiply( const A_:TdSingle; const B_:Single ) :TdSingle;
 begin
-     with Result do
-     begin
-          o := A_.o * B_;
-          d := A_.d * B_;
-     end;
+     Result.o := A_.o * B_;
+     Result.d := A_.d * B_;
 end;
 
 class operator TdSingle.Multiply( const A_,B_:TdSingle ) :TdSingle;
 begin
-     with Result do
-     begin
-          o := A_.o * B_.o;
-          d := A_.d * B_.o + A_.o * B_.d;
-     end;
+     Result.o := A_.o * B_.o;
+     Result.d := A_.d * B_.o + A_.o * B_.d;
 end;
+
+//------------------------------------------------------------------------------
 
 class operator TdSingle.Divide( const A_:TdSingle; const B_:Single ) :TdSingle;    
 begin
-     with Result do
-     begin
-          o := A_.o / B_;
-          d := A_.d / B_;
-     end;
+     Result.o := A_.o / B_;
+     Result.d := A_.d / B_;
 end;
 
 class operator TdSingle.Divide( const A_,B_:TdSingle ) :TdSingle;
 begin
-     with Result do
-     begin
-          o := A_.o / B_.o;
-          d := ( A_.d * B_.o - A_.o * B_.d ) / Pow2( B_.o );
-     end;
+     Result.o := A_.o / B_.o;
+     Result.d := ( A_.d * B_.o - A_.o * B_.d ) / Pow2( B_.o );
 end;
+
+//------------------------------------------------------------------------------
+
+class operator TdSingle.Equal( const A_,B_:TdSingle ) :Boolean;
+begin
+     Result := ( A_.o = B_.o ) and ( A_.d = B_.d );
+end;
+
+class operator TdSingle.NotEqual( const A_,B_:TdSingle ) :Boolean;
+begin
+     Result := not ( A_ = B_ );
+end;
+
+//------------------------------------------------------------------------------
 
 class operator TdSingle.GreaterThan( const A_,B_:TdSingle ) :Boolean;
 begin
@@ -254,29 +283,48 @@ end;
 
 class operator TdSingle.Implicit( const V_:Integer ) :TdSingle;
 begin
-     with Result do
-     begin
-          o := V_;
-          d := 0;
-     end;
+     Result.o := V_;
+     Result.d := 0 ;
 end;
 
 class operator TdSingle.Implicit( const V_:Int64 ) :TdSingle;
 begin
-     with Result do
-     begin
-          o := V_;
-          d := 0;
-     end;
+     Result.o := V_;
+     Result.d := 0 ;
 end;
 
 class operator TdSingle.Implicit( const V_:Single ) :TdSingle;
 begin
-     with Result do
-     begin
-          o := V_;
-          d := 0;
-     end;
+     Result.o := V_;
+     Result.d := 0 ;
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+class function TdSingle.RandG( const SD_:Single = 1 ) :TdSingle;
+begin
+     Result.o := TSingle.RandG( SD_ );
+     Result.d := 0;
+end;
+
+//------------------------------------------------------------------------------
+
+class function TdSingle.RandBS1 :TdSingle;
+begin
+     Result.o := TSingle.RandBS1;
+     Result.d := 0;
+end;
+
+class function TdSingle.RandBS2 :TdSingle;
+begin
+     Result.o := TSingle.RandBS2;
+     Result.d := 0;
+end;
+
+class function TdSingle.RandBS4 :TdSingle;
+begin
+     Result.o := TSingle.RandBS4;
+     Result.d := 0;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TdDouble
@@ -295,84 +343,77 @@ end;
 
 class operator TdDouble.Positive( const V_:TdDouble ) :TdDouble;
 begin
-     with Result do
-     begin
-          o := +V_.o;
-          d := +V_.d;
-     end;
+     Result.o := +V_.o;
+     Result.d := +V_.d;
 end;
 
 class operator TdDouble.Negative( const V_:TdDouble ) :TdDouble;
 begin
-     with Result do
-     begin
-          o := -V_.o;
-          d := -V_.d;
-     end;
+     Result.o := -V_.o;
+     Result.d := -V_.d;
 end;
+
+//------------------------------------------------------------------------------
 
 class operator TdDouble.Add( const A_,B_:TdDouble ) :TdDouble;
 begin
-     with Result do
-     begin
-          o := A_.o + B_.o;
-          d := A_.d + B_.d;
-     end;
+     Result.o := A_.o + B_.o;
+     Result.d := A_.d + B_.d;
 end;
 
 class operator TdDouble.Subtract( const A_,B_:TdDouble ) :TdDouble;
 begin
-     with Result do
-     begin
-          o := A_.o - B_.o;
-          d := A_.d - B_.d;
-     end;
+     Result.o := A_.o - B_.o;
+     Result.d := A_.d - B_.d;
 end;
+
+//------------------------------------------------------------------------------
 
 class operator TdDouble.Multiply( const A_:Double; const B_:TdDouble ) :TdDouble;
 begin
-     with Result do
-     begin
-          o := A_ * B_.o;
-          d := A_ * B_.d;
-     end;
+     Result.o := A_ * B_.o;
+     Result.d := A_ * B_.d;
 end;
 
 class operator TdDouble.Multiply( const A_:TdDouble; const B_:Double ) :TdDouble;
 begin
-     with Result do
-     begin
-          o := A_.o * B_;
-          d := A_.d * B_;
-     end;
+     Result.o := A_.o * B_;
+     Result.d := A_.d * B_;
 end;
 
 class operator TdDouble.Multiply( const A_,B_:TdDouble ) :TdDouble;
 begin
-     with Result do
-     begin
-          o := A_.o * B_.o;
-          d := A_.d * B_.o + A_.o * B_.d;
-     end;
+     Result.o := A_.o * B_.o;
+     Result.d := A_.d * B_.o + A_.o * B_.d;
 end;
+
+//------------------------------------------------------------------------------
 
 class operator TdDouble.Divide( const A_:TdDouble; const B_:Double ) :TdDouble;    
 begin
-     with Result do
-     begin
-          o := A_.o / B_;
-          d := A_.d / B_;
-     end;
+     Result.o := A_.o / B_;
+     Result.d := A_.d / B_;
 end;
 
 class operator TdDouble.Divide( const A_,B_:TdDouble ) :TdDouble;
 begin
-     with Result do
-     begin
-          o := A_.o / B_.o;
-          d := ( A_.d * B_.o - A_.o * B_.d ) / Pow2( B_.o );
-     end;
+     Result.o := A_.o / B_.o;
+     Result.d := ( A_.d * B_.o - A_.o * B_.d ) / Pow2( B_.o );
 end;
+
+//------------------------------------------------------------------------------
+
+class operator TdDouble.Equal( const A_,B_:TdDouble ) :Boolean;
+begin
+     Result := ( A_.o = B_.o ) and ( A_.d = B_.d );
+end;
+
+class operator TdDouble.NotEqual( const A_,B_:TdDouble ) :Boolean;
+begin
+     Result := not ( A_ = B_ );
+end;
+
+//------------------------------------------------------------------------------
 
 class operator TdDouble.GreaterThan( const A_,B_:TdDouble ) :Boolean;
 begin
@@ -398,47 +439,60 @@ end;
 
 class operator TdDouble.Implicit( const V_:Integer ) :TdDouble;
 begin
-     with Result do
-     begin
-          o := V_;
-          d := 0;
-     end;
+     Result.o := V_;
+     Result.d := 0 ;
 end;
 
 class operator TdDouble.Implicit( const V_:Int64 ) :TdDouble;
 begin
-     with Result do
-     begin
-          o := V_;
-          d := 0;
-     end;
+     Result.o := V_;
+     Result.d := 0 ;
 end;
 
 class operator TdDouble.Implicit( const V_:Double ) :TdDouble;
 begin
-     with Result do
-     begin
-          o := V_;
-          d := 0;
-     end;
+     Result.o := V_;
+     Result.d := 0 ;
 end;
 
 class operator TdDouble.Implicit( const V_:TdSingle ) :TdDouble;
 begin
-     with Result do
-     begin
-          o := V_.o;
-          d := V_.d;
-     end;
+     Result.o := V_.o;
+     Result.d := V_.d;
 end;
 
-class operator TdDouble.Implicit( const V_:TdDouble ) :TdSingle;
+class operator TdDouble.Explicit( const V_:TdDouble ) :TdSingle;
 begin
-     with Result do
-     begin
-          o := V_.o;
-          d := V_.d;
-     end;
+     Result.o := V_.o;
+     Result.d := V_.d;
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+class function TdDouble.RandG( const SD_:Double = 1 ) :TdDouble;
+begin
+     Result.o := TDouble.RandG( SD_ );
+     Result.d := 0;
+end;
+
+//------------------------------------------------------------------------------
+
+class function TdDouble.RandBS1 :TdDouble;
+begin
+     Result.o := TDouble.RandBS1;
+     Result.d := 0;
+end;
+
+class function TdDouble.RandBS2 :TdDouble;
+begin
+     Result.o := TDouble.RandBS2;
+     Result.d := 0;
+end;
+
+class function TdDouble.RandBS4 :TdDouble;
+begin
+     Result.o := TDouble.RandBS4;
+     Result.d := 0;
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
@@ -447,80 +501,84 @@ end;
 
 function Pow2( const X_:TdSingle ) :TdSingle;
 begin
-     with X_ do
-     begin
-          Result.o := Pow2( o );
-          Result.d := 2 * o * d;
-     end;
+     Result.o := Pow2( X_.o );
+     Result.d := 2 * X_.o * X_.d;
 end;
 
 function Pow2( const X_:TdDouble ) :TdDouble;
 begin
-     with X_ do
-     begin
-          Result.o := Pow2( o );
-          Result.d := 2 * o * d;
-     end;
+     Result.o := Pow2( X_.o );
+     Result.d := 2 * X_.o * X_.d;
 end;
 
 //------------------------------------------------------------------------------
 
 function Pow3( const X_:TdSingle ) :TdSingle;
 begin
-     with X_ do
-     begin
-          Result.o := Pow3( o );
-          Result.d := 3 * Pow2( o ) * d;
-     end;
+     Result.o :=     Pow3( X_.o )       ;
+     Result.d := 3 * Pow2( X_.o ) * X_.d;
 end;
 
 function Pow3( const X_:TdDouble ) :TdDouble;
 begin
-     with X_ do
-     begin
-          Result.o := Pow3( o );
-          Result.d := 3 * Pow2( o ) * d;
-     end;
+     Result.o :=     Pow3( X_.o )       ;
+     Result.d := 3 * Pow2( X_.o ) * X_.d;
+end;
+
+//------------------------------------------------------------------------------
+
+function Pow4( const X_:TdSingle ) :TdSingle;
+begin
+     Result.o :=     Power( X_.o, 4 )       ;
+     Result.d := 4 * Power( X_.o, 3 ) * X_.d;
+end;
+
+function Pow4( const X_:TdDouble ) :TdDouble;
+begin
+     Result.o :=     Power( X_.o, 4 )       ;
+     Result.d := 4 * Power( X_.o, 3 ) * X_.d;
+end;
+
+//------------------------------------------------------------------------------
+
+function Pow5( const X_:TdSingle ) :TdSingle;
+begin
+     Result.o :=     Power( X_.o, 5 )       ;
+     Result.d := 5 * Power( X_.o, 4 ) * X_.d;
+end;
+
+function Pow5( const X_:TdDouble ) :TdDouble;
+begin
+     Result.o :=     Power( X_.o, 5 )       ;
+     Result.d := 5 * Power( X_.o, 4 ) * X_.d;
 end;
 
 //------------------------------------------------------------------------------
 
 function Roo2( const X_:TdSingle ) :TdSingle;
 begin
-     with X_ do
-     begin
-          Result.o := Roo2( o );
-          Result.d := d / ( 2 * Roo2( o ) );
-     end;
+     Result.o := Roo2( X_.o );
+     Result.d := X_.d / ( 2 * Result.o );
 end;
 
 function Roo2( const X_:TdDouble ) :TdDouble;
 begin
-     with X_ do
-     begin
-          Result.o := Roo2( o );
-          Result.d := d / ( 2 * Roo2( o ) );
-     end;
+     Result.o := Roo2( X_.o );
+     Result.d := X_.d / ( 2 * Result.o );
 end;
 
 //------------------------------------------------------------------------------
 
-function ArcCos( const C_:TdSingle ) :TdSingle;
+function ArcCos( const X_:TdSingle ) :TdSingle;
 begin
-     with C_ do
-     begin
-          Result.o := ArcCos( o );
-          Result.d := -d / Roo2( 1 - Pow2( o ) );
-     end;
+     Result.o := ArcCos( X_.o );
+     Result.d := -X_.d / Roo2( 1 - Pow2( X_.o ) );
 end;
 
-function ArcCos( const C_:TdDouble ) :TdDouble;
+function ArcCos( const X_:TdDouble ) :TdDouble;
 begin
-     with C_ do
-     begin
-          Result.o := ArcCos( o );
-          Result.d := -d / Roo2( 1 - Pow2( o ) );
-     end;
+     Result.o := ArcCos( X_.o );
+     Result.d := -X_.d / Roo2( 1 - Pow2( X_.o ) );
 end;
 
 //------------------------------------------------------------------------------
@@ -539,40 +597,28 @@ end;
 
 function Sin( const X_:TdSingle ) :TdSingle;
 begin
-     with X_ do
-     begin
-          Result.o :=      Sin( o );
-          Result.d := d * +Cos( o );
-     end;
+     Result.o :=         Sin( X_.o );
+     Result.d := X_.d * +Cos( X_.o );
 end;
 
 function Sin( const X_:TdDouble ) :TdDouble;
 begin
-     with X_ do
-     begin
-          Result.o :=      Sin( o );
-          Result.d := d * +Cos( o );
-     end;
+     Result.o :=         Sin( X_.o );
+     Result.d := X_.d * +Cos( X_.o );
 end;
 
 //------------------------------------------------------------------------------
 
 function Cos( const X_:TdSingle ) :TdSingle;
 begin
-     with X_ do
-     begin
-          Result.o :=      Cos( o );
-          Result.d := d * -Sin( o );
-     end;
+     Result.o :=         Cos( X_.o );
+     Result.d := X_.d * -Sin( X_.o );
 end;
 
 function Cos( const X_:TdDouble ) :TdDouble;
 begin
-     with X_ do
-     begin
-          Result.o :=      Cos( o );
-          Result.d := d * -Sin( o );
-     end;
+     Result.o :=         Cos( X_.o );
+     Result.d := X_.d * -Sin( X_.o );
 end;
 
 //------------------------------------------------------------------------------
@@ -581,32 +627,26 @@ procedure CosSin( const X_:TdSingle; out C_,S_:TdSingle );
 var
    S, C :Single;
 begin
-     with X_ do
-     begin
-          SinCos( o, S, C );
+     SinCos( X_.o, S, C );
 
-          S_.o :=      S;
-          S_.d := d * +C;
+     S_.o :=         S;
+     S_.d := X_.d * +C;
 
-          C_.o :=      C;
-          C_.d := d * -S;
-     end;
+     C_.o :=         C;
+     C_.d := X_.d * -S;
 end;
 
 procedure CosSin( const X_:TdDouble; out C_,S_:TdDouble );
 var
    S, C :Double;
 begin
-     with X_ do
-     begin
-          SinCos( o, S, C );
+     SinCos( X_.o, S, C );
 
-          S_.o :=      S;
-          S_.d := d * +C;
+     S_.o :=         S;
+     S_.d := X_.d * +C;
 
-          C_.o :=      C;
-          C_.d := d * -S;
-     end;
+     C_.o :=         C;
+     C_.d := X_.d * -S;
 end;
 
 //------------------------------------------------------------------------------
@@ -615,92 +655,82 @@ procedure SinCos( const X_:TdSingle; out S_,C_:TdSingle );
 var
    S, C :Single;
 begin
-     with X_ do
-     begin
-          SinCos( o, S, C );
+     SinCos( X_.o, S, C );
 
-          S_.o :=      S;
-          S_.d := d * +C;
+     S_.o :=         S;
+     S_.d := X_.d * +C;
 
-          C_.o :=      C;
-          C_.d := d * -S;
-     end;
+     C_.o :=         C;
+     C_.d := X_.d * -S;
 end;
 
 procedure SinCos( const X_:TdDouble; out S_,C_:TdDouble );
 var
    S, C :Double;
 begin
-     with X_ do
-     begin
-          SinCos( o, S, C );
+     SinCos( X_.o, S, C );
 
-          S_.o :=      S;
-          S_.d := d * +C;
+     S_.o :=         S;
+     S_.d := X_.d * +C;
 
-          C_.o :=      C;
-          C_.d := d * -S;
-     end;
+     C_.o :=         C;
+     C_.d := X_.d * -S;
 end;
 
 //------------------------------------------------------------------------------
 
 function Tan( const X_:TdSingle ) :TdSingle;
 begin
-     with X_ do
-     begin
-          Result.o := Tan( o );
-          Result.d := d / Pow2( Cos( o ) );
-     end;
+     Result.o := Tan( X_.o );
+     Result.d := X_.d / Pow2( Cos( X_.o ) );
 end;
 
 function Tan( const X_:TdDouble ) :TdDouble;
 begin
-     with X_ do
-     begin
-          Result.o := Tan( o );
-          Result.d := d / Pow2( Cos( o ) );
-     end;
+     Result.o := Tan( X_.o );
+     Result.d := X_.d / Pow2( Cos( X_.o ) );
 end;
 
 //------------------------------------------------------------------------------
 
 function ArcTan( const X_:TdSingle ) :TdSingle;
 begin
-     with X_ do
-     begin
-          Result.o := ArcTan( o );
-          Result.d := d / ( 1 + Pow2( o ) );
-     end;
+     Result.o := ArcTan( X_.o );
+     Result.d := X_.d / ( 1 + Pow2( X_.o ) );
 end;
 
 function ArcTan( const X_:TdDouble ) :TdDouble;
 begin
-     with X_ do
-     begin
-          Result.o := ArcTan( o );
-          Result.d := d / ( 1 + Pow2( o ) );
-     end;
+     Result.o := ArcTan( X_.o );
+     Result.d := X_.d / ( 1 + Pow2( X_.o ) );
+end;
+
+//------------------------------------------------------------------------------
+
+function ArcTan2( const Y_,X_:TdSingle ) :TdSingle;
+begin
+     Result.o := ArcTan2( Y_.o, X_.o );
+     Result.d := ( X_.o * Y_.d - Y_.o * X_.d ) / ( Pow2( X_.o  ) + Pow2( Y_.o ) );
+end;
+
+function ArcTan2( const Y_,X_:TdDouble ) :TdDouble;
+begin
+     Result.o := ArcTan2( Y_.o, X_.o );
+     Result.d := ( X_.o * Y_.d - Y_.o * X_.d ) / ( Pow2( X_.o  ) + Pow2( Y_.o ) );
 end;
 
 //------------------------------------------------------------------------------
 
 function ArcSin( const X_:TdSingle ) :TdSingle;
 begin
-     with X_ do
-     begin
-          Result.o := ArcSin( o );
-          Result.d := d / Roo2( 1 - Pow2( o ) );
-     end;
+     Result.o := ArcSin( X_.o );
+     Result.d := X_.d / Roo2( 1 - Pow2( X_.o ) );
 end;
 
 function ArcSin( const X_:TdDouble ) :TdDouble;
 begin
-     with X_ do
-     begin
-          Result.o := ArcSin( o );
-          Result.d := d / Roo2( 1 - Pow2( o ) );
-     end;
+     Result.o := ArcSin( X_.o );
+     Result.d := X_.d / Roo2( 1 - Pow2( X_.o ) );
 end;
 
 //------------------------------------------------------------------------------
@@ -797,60 +827,98 @@ end;
 
 function Exp( const X_:TdSingle ) :TdSingle;
 begin
-     with X_ do
-     begin
-          Result.o :=     Exp( o );
-          Result.d := d * Exp( o );
-     end;
+     Result.o :=        Exp( X_.o );
+     Result.d := X_.d * Exp( X_.o );
 end;
 
 function Exp( const X_:TdDouble ) :TdDouble;
 begin
-     with X_ do
-     begin
-          Result.o :=     Exp( o );
-          Result.d := d * Exp( o );
-     end;
+     Result.o :=        Exp( X_.o );
+     Result.d := X_.d * Exp( X_.o );
 end;
 
 //------------------------------------------------------------------------------
 
 function Ln( const X_:TdSingle ) :TdSingle;
 begin
-     with X_ do
-     begin
-          Result.o := Ln( o );
-          Result.d := d / o  ;
-     end;
+     Result.o :=    Ln( X_.o );
+     Result.d := X_.d / X_.o  ;
 end;
 
 function Ln( const X_:TdDouble ) :TdDouble;
 begin
-     with X_ do
-     begin
-          Result.o := Ln( o );
-          Result.d := d / o  ;
-     end;
+     Result.o := Ln( X_.o );
+     Result.d := X_.d / X_.o  ;
+end;
+
+//------------------------------------------------------------------------------
+
+function Power( const X_:TdSingle; const N_:Single ) :TdSingle;
+begin
+     Result.o :=             Power( X_.o, N_     );
+     Result.d := X_.d * N_ * Power( X_.o, N_ - 1 );
+end;
+
+function Power( const X_:TdDouble; const N_:Double ) :TdDouble;
+begin
+     Result.o :=             Power( X_.o, N_     );
+     Result.d := X_.d * N_ * Power( X_.o, N_ - 1 );
+end;
+
+//------------------------------------------------------------------------------
+
+function IntPower( const X_:TdSingle; const N_:Integer ) :TdSingle;
+begin
+     Result.o :=             IntPower( X_.o, N_     );
+     Result.d := X_.d * N_ * IntPower( X_.o, N_ - 1 );
+end;
+
+function IntPower( const X_:TdDouble; const N_:Integer ) :TdDouble;
+begin
+     Result.o :=             IntPower( X_.o, N_     );
+     Result.d := X_.d * N_ * IntPower( X_.o, N_ - 1 );
 end;
 
 //------------------------------------------------------------------------------
 
 function Power( const X_,N_:TdSingle ) :TdSingle;
 begin
-     with Result do
-     begin
-          o :=               Power( X_.o, N_.o     );
-          d := X_.d * N_.o * Power( X_.o, N_.o - 1 );
-     end;
+     Result.o := Power( X_.o, N_.o );
+     Result.d := Result.o * ( N_.d * Ln( X_.o ) + N_.o * X_.d / X_.o );
 end;
 
 function Power( const X_,N_:TdDouble ) :TdDouble;
 begin
-     with Result do
-     begin
-          o :=               Power( X_.o, N_.o     );
-          d := X_.d * N_.o * Power( X_.o, N_.o - 1 );
-     end;
+     Result.o := Power( X_.o, N_.o );
+     Result.d := Result.o * ( N_.d * Ln( X_.o ) + N_.o * X_.d / X_.o );
+end;
+
+//------------------------------------------------------------------------------
+
+function Cosh( const X_:TdSingle ) :TdSingle;
+begin
+     Result.o := Cosh( X_.o );
+     Result.d := X_.d * Sinh( X_.o );
+end;
+
+function Cosh( const X_:TdDouble ) :TdDouble;
+begin
+     Result.o := Cosh( X_.o );
+     Result.d := X_.d * Sinh( X_.o );
+end;
+
+//------------------------------------------------------------------------------
+
+function Sinh( const X_:TdSingle ) :TdSingle;
+begin
+     Result.o := Sinh( X_.o );
+     Result.d := X_.d * Cosh( X_.o );
+end;
+
+function Sinh( const X_:TdDouble ) :TdDouble;
+begin
+     Result.o := Sinh( X_.o );
+     Result.d := X_.d * Cosh( X_.o );
 end;
 
 end. //######################################################################### ■
