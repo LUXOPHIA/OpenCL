@@ -304,9 +304,27 @@ extern "C" {
 %  if shouldGenerate(extension.get('name')):
 <%
     name = extension.get('name')
+
+    # Use re.match to parse semantic major.minor.patch version
+    sem_ver = match('[0-9]+\.[0-9]+\.?[0-9]+', extension.get('revision'))
+    if not sem_ver:
+        raise TypeError(name +
+        ' XML revision field is not semantically versioned as "major.minor.patch"')
+    version = sem_ver[0].split('.')
+    version_major = version[0]
+    version_minor = version[1]
+    version_patch = version[2]
+
+    # Note: when "provisional" is phased out of the XML file, it can be removed here, too
+    is_beta = extension.get('experimental') == 'true' or extension.get('provisional') == 'true'
+    beta_label = ' (beta)' if is_beta else ''
 %>/***************************************************************
-* ${name}
+* ${name}${beta_label}
 ***************************************************************/
+%if is_beta:
+#if defined(CL_ENABLE_BETA_EXTENSIONS)
+
+%endif
 %if extension.get('condition'):
 #if ${extension.get('condition')}
 
@@ -315,18 +333,8 @@ extern "C" {
 #define ${name.upper()}_EXTENSION_NAME ${"\\"}
     "${name}"
 
-<%
-  # Use re.match to parse semantic major.minor.patch version
-  sem_ver = match('[0-9]+\.[0-9]+\.?[0-9]+', extension.get('revision'))
-  if not sem_ver:
-    raise TypeError(name +
-      ' XML revision field is not semantically versioned as "major.minor.patch"')
-  version = sem_ver[0].split('.')
-  major = version[0]
-  minor = version[1]
-  patch = version[2]
-%>
-#define ${name.upper()}_EXTENSION_VERSION CL_MAKE_VERSION(${major}, ${minor}, ${patch})
+
+#define ${name.upper()}_EXTENSION_VERSION CL_MAKE_VERSION(${version_major}, ${version_minor}, ${version_patch})
 
 %for block in extension.findall('require'):
 %  if shouldEmit(block):
@@ -343,7 +351,11 @@ extern "C" {
 %        if type.get('name') in typedefs:
 ${typedefs[type.get('name')].Typedef.ljust(27)} ${type.get('name')};
 %        elif type.get('name') in macros:
+%            if macros[type.get('name')].Macro == '':
+${macros[type.get('name')].Define}
+%            else:
 #define ${type.get('name')}${macros[type.get('name')].Macro}
+%            endif
 %        elif type.get('name') in structs:
 <%
     struct = structs[type.get('name')]
@@ -436,6 +448,10 @@ ${api.Name}(
 %endfor
 %if extension.get('condition'):
 #endif /* ${extension.get('condition')} */
+
+%endif
+%if is_beta:
+#endif /* defined(CL_ENABLE_BETA_EXTENSIONS) */
 
 %endif
 %  endif
