@@ -1934,13 +1934,13 @@ T_clEnqueueBarrierWithWaitList = function(       command_queue_           :T_cl_
 
 type P_CL_CALLBACK_clEnqueueSVMFree = procedure( queue_            :T_cl_command_queue;
                                                  num_svm_pointers_ :T_cl_uint;
-                                                 svm_pointers_     :array of P_void;
+                                                 svm_pointers_     :PP_void;
                                                  user_data_        :P_void );
 
 type
 T_clEnqueueSVMFree = function(       command_queue_           :T_cl_command_queue;
                                      num_svm_pointers_        :T_cl_uint;
-                                     svm_pointers_            :array of P_void;
+                                     svm_pointers_            :PP_void;
                                      pfn_free_func_           :P_CL_CALLBACK_clEnqueueSVMFree;
                                      user_data_               :P_void;
                                      num_events_in_wait_list_ :T_cl_uint;
