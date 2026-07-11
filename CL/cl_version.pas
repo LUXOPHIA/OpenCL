@@ -37,6 +37,11 @@ const CL_TARGET_OPENCL_VERSION = 300;
 
 
 (* OpenCL Version *)
+{$IF ( CL_TARGET_OPENCL_VERSION >= 310 ) and not defined(CL_VERSION_3_1) }
+const CL_VERSION_3_1  = 1;
+{$ELSE}
+const CL_VERSION_3_1  = 0;
+{$ENDIF}
 {$IF ( CL_TARGET_OPENCL_VERSION >= 300 ) and not defined(CL_VERSION_3_0) }
 const CL_VERSION_3_0  = 1;
 {$ENDIF}
