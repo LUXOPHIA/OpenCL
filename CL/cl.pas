@@ -113,6 +113,9 @@ type T_cl_khronos_vendor_id                  = T_cl_uint      ;  P_cl_khronos_ve
 type T_cl_mem_properties                     = T_cl_properties;  P_cl_mem_properties                     = ^T_cl_mem_properties                    ;
 {$ENDIF}
 type T_cl_version                            = T_cl_uint      ;  P_cl_version                            = ^T_cl_version                           ;
+{$IF CL_VERSION_3_1 <> 0 }
+type T_cl_device_integer_dot_product_capabilities = T_cl_bitfield;  P_cl_device_integer_dot_product_capabilities = ^T_cl_device_integer_dot_product_capabilities;
+{$ENDIF}
 
 type T_cl_image_format = record
        image_channel_order     :T_cl_channel_order;
@@ -187,6 +190,19 @@ const CL_NAME_VERSION_MAX_NAME_SIZE = 64;
 type T_cl_name_version = record
        version :T_cl_version              ;
        name    :array [ 0..CL_NAME_VERSION_MAX_NAME_SIZE-1 ] of T_char;
+     end;
+
+{$ENDIF}
+
+{$IF CL_VERSION_3_1 <> 0 }
+
+type T_cl_device_integer_dot_product_acceleration_properties = record
+       signed_accelerated                                   :T_cl_bool;
+       unsigned_accelerated                                 :T_cl_bool;
+       mixed_signedness_accelerated                         :T_cl_bool;
+       accumulating_saturating_signed_accelerated           :T_cl_bool;
+       accumulating_saturating_unsigned_accelerated         :T_cl_bool;
+       accumulating_saturating_mixed_signedness_accelerated :T_cl_bool;
      end;
 
 {$ENDIF}
@@ -311,6 +327,9 @@ const CL_DEVICE_MAX_COMPUTE_UNITS                       = $1002;
 const CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS                = $1003;
 const CL_DEVICE_MAX_WORK_GROUP_SIZE                     = $1004;
 const CL_DEVICE_MAX_WORK_ITEM_SIZES                     = $1005;
+{$IF CL_VERSION_3_1 <> 0 }
+const CL_DEVICE_MAX_WORK_GROUP_SIZES                    = $1005;
+{$ENDIF}
 const CL_DEVICE_PREFERRED_VECTOR_WIDTH_CHAR             = $1006;
 const CL_DEVICE_PREFERRED_VECTOR_WIDTH_SHORT            = $1007;
 const CL_DEVICE_PREFERRED_VECTOR_WIDTH_INT              = $1008;
@@ -424,11 +443,27 @@ const CL_DEVICE_OPENCL_C_ALL_VERSIONS                   = $1066;
 const CL_DEVICE_PREFERRED_WORK_GROUP_SIZE_MULTIPLE      = $1067;
 const CL_DEVICE_WORK_GROUP_COLLECTIVE_FUNCTIONS_SUPPORT = $1068;
 const CL_DEVICE_GENERIC_ADDRESS_SPACE_SUPPORT           = $1069;
-(* 0x106A to 0x106E - Reserved for upcoming KHR extension *)
+{$ENDIF}
+{$IF CL_VERSION_3_1 <> 0 }
+const CL_DEVICE_UUID                                    = $106A;
+const CL_DRIVER_UUID                                    = $106B;
+const CL_DEVICE_LUID_VALID                              = $106C;
+const CL_DEVICE_LUID                                    = $106D;
+const CL_DEVICE_NODE_MASK                               = $106E;
+{$ENDIF}
+{$IF CL_VERSION_3_0 <> 0 }
 const CL_DEVICE_OPENCL_C_FEATURES                       = $106F;
 const CL_DEVICE_DEVICE_ENQUEUE_CAPABILITIES             = $1070;
 const CL_DEVICE_PIPE_SUPPORT                            = $1071;
 const CL_DEVICE_LATEST_CONFORMANCE_VERSION_PASSED       = $1072;
+{$ENDIF}
+{$IF CL_VERSION_3_1 <> 0 }
+const CL_DEVICE_INTEGER_DOT_PRODUCT_CAPABILITIES        = $1073;
+const CL_DEVICE_INTEGER_DOT_PRODUCT_ACCELERATION_PROPERTIES_8BIT = $1074;
+const CL_DEVICE_INTEGER_DOT_PRODUCT_ACCELERATION_PROPERTIES_4x8BIT_PACKED = $1075;
+const CL_DEVICE_SPIRV_EXTENDED_INSTRUCTION_SETS         = $12B9;
+const CL_DEVICE_SPIRV_EXTENSIONS                        = $12BA;
+const CL_DEVICE_SPIRV_CAPABILITIES                      = $12BB;
 {$ENDIF}
 
 (* cl_device_fp_config - bitfield *)
@@ -939,6 +974,18 @@ const CL_VERSION_PATCH_MASK                        = ( 1 shl CL_VERSION_PATCH_BI
 //       << (CL_VERSION_MINOR_BITS + CL_VERSION_PATCH_BITS)) |      \
 //   (((minor) & CL_VERSION_MINOR_MASK) << CL_VERSION_PATCH_BITS) | \
 //   ((patch) & CL_VERSION_PATCH_MASK))
+
+{$IF CL_VERSION_3_1 <> 0 }
+
+(* Size Constants *)
+const CL_UUID_SIZE = 16;
+const CL_LUID_SIZE = 8;
+
+(* cl_device_integer_dot_product_capabilities - bitfield *)
+const CL_DEVICE_INTEGER_DOT_PRODUCT_INPUT_4x8BIT_PACKED = (1 shl 0);
+const CL_DEVICE_INTEGER_DOT_PRODUCT_INPUT_4x8BIT        = (1 shl 1);
+
+{$ENDIF}
 
 (********************************************************************************************************)
 
