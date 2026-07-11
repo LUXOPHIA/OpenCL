@@ -22,8 +22,6 @@ uses LUX.Code.C,
      cl_version,
      cl_platform;
 
-const DLLNAME = 'OpenCL.dll';
-
 (******************************************************************************)
 
 type T_cl_platform_id   = ^T__cl_platform_id  ;  T__cl_platform_id   = record end;  P_cl_platform_id   = ^T_cl_platform_id  ;
@@ -952,65 +950,75 @@ const CL_VERSION_PATCH_MASK                        = ( 1 shl CL_VERSION_PATCH_BI
 {$IF not Defined( CL_NO_CORE_PROTOTYPES ) }
 
 (* Platform API *)
-function
-clGetPlatformIDs( num_entries_   :T_cl_uint;
-                  platforms_     :P_cl_platform_id;
-                  num_platforms_ :P_cl_uint ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetPlatformIDs = function( num_entries_   :T_cl_uint;
+                               platforms_     :P_cl_platform_id;
+                               num_platforms_ :P_cl_uint ) :T_cl_int;
+                     {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clGetPlatformInfo( platform_             :T_cl_platform_id;
-                   param_name_           :T_cl_platform_info;
-                   param_value_size_     :T_size_t;
-                   param_value_          :P_void;
-                   param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetPlatformInfo = function( platform_             :T_cl_platform_id;
+                                param_name_           :T_cl_platform_info;
+                                param_value_size_     :T_size_t;
+                                param_value_          :P_void;
+                                param_value_size_ret_ :P_size_t ) :T_cl_int;
+                      {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 (* Device APIs *)
-function
-clGetDeviceIDs( platform_    :T_cl_platform_id;
-                device_type_ :T_cl_device_type;
-                num_entries_ :T_cl_uint;
-                devices_     :P_cl_device_id;
-                num_devices_ :P_cl_uint ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetDeviceIDs = function( platform_    :T_cl_platform_id;
+                             device_type_ :T_cl_device_type;
+                             num_entries_ :T_cl_uint;
+                             devices_     :P_cl_device_id;
+                             num_devices_ :P_cl_uint ) :T_cl_int;
+                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clGetDeviceInfo( device_               :T_cl_device_id;
-                 param_name_           :T_cl_device_info;
-                 param_value_size_     :T_size_t;
-                 param_value_          :P_void;
-                 param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetDeviceInfo = function( device_               :T_cl_device_id;
+                              param_name_           :T_cl_device_info;
+                              param_value_size_     :T_size_t;
+                              param_value_          :P_void;
+                              param_value_size_ret_ :P_size_t ) :T_cl_int;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_2 <> 0 }
 
-function
-clCreateSubDevices(       in_device_       :T_cl_device_id;
-                    const properties_      :P_cl_device_partition_property;
-                          num_devices_     :T_cl_uint;
-                          out_devices_     :P_cl_device_id;
-                          num_devices_ret_ :P_cl_uint ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clCreateSubDevices = function(       in_device_       :T_cl_device_id;
+                                 const properties_      :P_cl_device_partition_property;
+                                       num_devices_     :T_cl_uint;
+                                       out_devices_     :P_cl_device_id;
+                                       num_devices_ret_ :P_cl_uint ) :T_cl_int;
+                       {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
-function
-clRetainDevice( device_ :T_cl_device_id ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clRetainDevice = function( device_ :T_cl_device_id ) :T_cl_int;
+                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
-function
-clReleaseDevice( device_ :T_cl_device_id ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clReleaseDevice = function( device_ :T_cl_device_id ) :T_cl_int;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
 {$IF CL_VERSION_2_1 <> 0 }
 
-function
-clSetDefaultDeviceCommandQueue( context_       :T_cl_context;
-                                device_        :T_cl_device_id;
-                                command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
+type
+T_clSetDefaultDeviceCommandQueue = function( context_       :T_cl_context;
+                                             device_        :T_cl_device_id;
+                                             command_queue_ :T_cl_command_queue ) :T_cl_int;
+                                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_1}
 
-function
-clGetDeviceAndHostTimer( device_           :T_cl_device_id;
-                         device_timestamp_ :P_cl_ulong;
-                         host_timestamp_   :P_cl_ulong ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
+type
+T_clGetDeviceAndHostTimer = function( device_           :T_cl_device_id;
+                                      device_timestamp_ :P_cl_ulong;
+                                      host_timestamp_   :P_cl_ulong ) :T_cl_int;
+                            {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_1}
 
-function
-clGetHostTimer( device_         :T_cl_device_id;
-                host_timestamp_ :P_cl_ulong ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
+type
+T_clGetHostTimer = function( device_         :T_cl_device_id;
+                             host_timestamp_ :P_cl_ulong ) :T_cl_int;
+                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_1}
 
 {$ENDIF}
 
@@ -1021,48 +1029,54 @@ type P_CL_CALLBACK_clCreateContext = procedure( const errinfo_      :P_char;
                                                       cb_           :T_size_t;
                                                       user_data_    :P_void );
 
-function
-clCreateContext( const properties_  :P_cl_context_properties;
-                       num_devices_ :T_cl_uint;
-                 const devices_     :P_cl_device_id;
-                       pfn_notify_  :P_CL_CALLBACK_clCreateContext;
-                       user_data_   :P_void;
-                       errcode_ret_ :P_cl_int ) :T_cl_context; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clCreateContext = function( const properties_  :P_cl_context_properties;
+                                    num_devices_ :T_cl_uint;
+                              const devices_     :P_cl_device_id;
+                                    pfn_notify_  :P_CL_CALLBACK_clCreateContext;
+                                    user_data_   :P_void;
+                                    errcode_ret_ :P_cl_int ) :T_cl_context;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 type P_CL_CALLBACK_clCreateContextFromType = procedure( const errinfo_      :P_char;
                                                         const private_info_ :P_void;
                                                               cb_           :T_size_t;
                                                               user_data_    :P_void );
 
-function
-clCreateContextFromType( const properties_  :P_cl_context_properties;
-                               device_type_ :T_cl_device_type;
-                               pfn_notify_  :P_CL_CALLBACK_clCreateContextFromType;
-                               user_data_   :P_void;
-                               errcode_ret_ :P_cl_int ) :T_cl_context; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clCreateContextFromType = function( const properties_  :P_cl_context_properties;
+                                            device_type_ :T_cl_device_type;
+                                            pfn_notify_  :P_CL_CALLBACK_clCreateContextFromType;
+                                            user_data_   :P_void;
+                                            errcode_ret_ :P_cl_int ) :T_cl_context;
+                            {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clRetainContext( context_ :T_cl_context ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clRetainContext = function( context_ :T_cl_context ) :T_cl_int;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clReleaseContext( context_ :T_cl_context ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clReleaseContext = function( context_ :T_cl_context ) :T_cl_int;
+                     {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clGetContextInfo( context_              :T_cl_context;
-                  param_name_           :T_cl_context_info;
-                  param_value_size_     :T_size_t;
-                  param_value_          :P_void;
-                  param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetContextInfo = function( context_              :T_cl_context;
+                               param_name_           :T_cl_context_info;
+                               param_value_size_     :T_size_t;
+                               param_value_          :P_void;
+                               param_value_size_ret_ :P_size_t ) :T_cl_int;
+                     {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_3_0 <> 0 }
 
 type T_pfn_notify = procedure ( context_   :T_cl_context;
                                 user_data_ :P_void );
 
-function
-clSetContextDestructorCallback( context_    :T_cl_context;
-                                pfn_notify_ :T_pfn_notify;
-                                user_data_  :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_3_0}
+type
+T_clSetContextDestructorCallback = function( context_    :T_cl_context;
+                                             pfn_notify_ :T_pfn_notify;
+                                             user_data_  :P_void ) :T_cl_int;
+                                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_3_0}
 
 {$ENDIF}
 
@@ -1070,127 +1084,143 @@ clSetContextDestructorCallback( context_    :T_cl_context;
 
 {$IF CL_VERSION_2_0 <> 0 }
 
-function
-clCreateCommandQueueWithProperties(       context_     :T_cl_context;
-                                          device_      :T_cl_device_id;
-                                    const properties_  :P_cl_queue_properties;
-                                          errcode_ret_ :P_cl_int ) :T_cl_command_queue; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clCreateCommandQueueWithProperties = function(       context_     :T_cl_context;
+                                                       device_      :T_cl_device_id;
+                                                 const properties_  :P_cl_queue_properties;
+                                                       errcode_ret_ :P_cl_int ) :T_cl_command_queue;
+                                       {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
-function
-clRetainCommandQueue( command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clRetainCommandQueue = function( command_queue_ :T_cl_command_queue ) :T_cl_int;
+                         {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clReleaseCommandQueue( command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clReleaseCommandQueue = function( command_queue_ :T_cl_command_queue ) :T_cl_int;
+                          {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clGetCommandQueueInfo( command_queue_        :T_cl_command_queue;
-                       param_name_           :T_cl_command_queue_info;
-                       param_value_size_     :T_size_t;
-                       param_value_          :P_void;
-                       param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetCommandQueueInfo = function( command_queue_        :T_cl_command_queue;
+                                    param_name_           :T_cl_command_queue_info;
+                                    param_value_size_     :T_size_t;
+                                    param_value_          :P_void;
+                                    param_value_size_ret_ :P_size_t ) :T_cl_int;
+                          {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 (* Memory Object APIs *)
-function
-clCreateBuffer( context_     :T_cl_context;
-                flags_       :T_cl_mem_flags;
-                size_        :T_size_t;
-                host_ptr_    :P_void;
-                errcode_ret_ :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clCreateBuffer = function( context_     :T_cl_context;
+                             flags_       :T_cl_mem_flags;
+                             size_        :T_size_t;
+                             host_ptr_    :P_void;
+                             errcode_ret_ :P_cl_int ) :T_cl_mem;
+                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_1 <> 0 }
 
-function
-clCreateSubBuffer(       buffer_             :T_cl_mem;
-                         flags_              :T_cl_mem_flags;
-                         buffer_create_type_ :T_cl_buffer_create_type;
-                   const buffer_create_info_ :P_void;
-                         errcode_ret_        :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
+type
+T_clCreateSubBuffer = function(       buffer_             :T_cl_mem;
+                                      flags_              :T_cl_mem_flags;
+                                      buffer_create_type_ :T_cl_buffer_create_type;
+                                const buffer_create_info_ :P_void;
+                                      errcode_ret_        :P_cl_int ) :T_cl_mem;
+                      {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1}
 
 {$ENDIF}
 
 {$IF CL_VERSION_1_2 <> 0 }
 
-function
-clCreateImage(       context_      :T_cl_context;
-                     flags_        :T_cl_mem_flags;
-               const image_format_ :P_cl_image_format;
-               const image_desc_   :P_cl_image_desc;
-                     host_ptr_     :P_void;
-                     errcode_ret_  :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clCreateImage = function(       context_      :T_cl_context;
+                                  flags_        :T_cl_mem_flags;
+                            const image_format_ :P_cl_image_format;
+                            const image_desc_   :P_cl_image_desc;
+                                  host_ptr_     :P_void;
+                                  errcode_ret_  :P_cl_int ) :T_cl_mem;
+                  {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
 {$IF CL_VERSION_2_0 <> 0 }
 
-function
-clCreatePipe(       context_          :T_cl_context;
-                    flags_            :T_cl_mem_flags;
-                    pipe_packet_size_ :T_cl_uint;
-                    pipe_max_packets_ :T_cl_uint;
-              const properties_       :P_cl_pipe_properties;
-                    errcode_ret_      :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clCreatePipe = function(       context_          :T_cl_context;
+                                 flags_            :T_cl_mem_flags;
+                                 pipe_packet_size_ :T_cl_uint;
+                                 pipe_max_packets_ :T_cl_uint;
+                           const properties_       :P_cl_pipe_properties;
+                                 errcode_ret_      :P_cl_int ) :T_cl_mem;
+                 {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
 {$IF CL_VERSION_3_0 <> 0 }
 
-function
-clCreateBufferWithProperties(       context_     :T_cl_context;
-                              const properties_  :P_cl_mem_properties;
-                                    flags_       :T_cl_mem_flags;
-                                    size_        :T_size_t;
-                                    host_ptr_    :P_void;
-                                    errcode_ret_ :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_3_0}
+type
+T_clCreateBufferWithProperties = function(       context_     :T_cl_context;
+                                           const properties_  :P_cl_mem_properties;
+                                                 flags_       :T_cl_mem_flags;
+                                                 size_        :T_size_t;
+                                                 host_ptr_    :P_void;
+                                                 errcode_ret_ :P_cl_int ) :T_cl_mem;
+                                 {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_3_0}
 
-function
-clCreateImageWithProperties( context_ :T_cl_context;
-                             const properties_   :P_cl_mem_properties;
-                                   flags_        :T_cl_mem_flags;
-                             const image_format_ :P_cl_image_format;
-                             const image_desc_   :P_cl_image_desc;
-                                   host_ptr_     :P_void;
-                                   errcode_ret_  :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_3_0}
+type
+T_clCreateImageWithProperties = function( context_ :T_cl_context;
+                                          const properties_   :P_cl_mem_properties;
+                                                flags_        :T_cl_mem_flags;
+                                          const image_format_ :P_cl_image_format;
+                                          const image_desc_   :P_cl_image_desc;
+                                                host_ptr_     :P_void;
+                                                errcode_ret_  :P_cl_int ) :T_cl_mem;
+                                {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_3_0}
 
 {$ENDIF}
 
-function
-clRetainMemObject( memobj_ :T_cl_mem ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clRetainMemObject = function( memobj_ :T_cl_mem ) :T_cl_int;
+                      {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clReleaseMemObject( memobj_ :T_cl_mem ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clReleaseMemObject = function( memobj_ :T_cl_mem ) :T_cl_int;
+                       {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clGetSupportedImageFormats( context_           :T_cl_context;
-                            flags_             :T_cl_mem_flags;
-                            image_type_        :T_cl_mem_object_type;
-                            num_entries_       :T_cl_uint;
-                            image_formats_     :P_cl_image_format;
-                            num_image_formats_ :P_cl_uint ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetSupportedImageFormats = function( context_           :T_cl_context;
+                                         flags_             :T_cl_mem_flags;
+                                         image_type_        :T_cl_mem_object_type;
+                                         num_entries_       :T_cl_uint;
+                                         image_formats_     :P_cl_image_format;
+                                         num_image_formats_ :P_cl_uint ) :T_cl_int;
+                               {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clGetMemObjectInfo( memobj_               :T_cl_mem;
-                    param_name_           :T_cl_mem_info;
-                    param_value_size_     :T_size_t;
-                    param_value_          :P_void;
-                    param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetMemObjectInfo = function( memobj_               :T_cl_mem;
+                                 param_name_           :T_cl_mem_info;
+                                 param_value_size_     :T_size_t;
+                                 param_value_          :P_void;
+                                 param_value_size_ret_ :P_size_t ) :T_cl_int;
+                       {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clGetImageInfo( image_                :T_cl_mem;
-                param_name_           :T_cl_image_info;
-                param_value_size_     :T_size_t;
-                param_value_          :P_void;
-                param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetImageInfo = function( image_                :T_cl_mem;
+                             param_name_           :T_cl_image_info;
+                             param_value_size_     :T_size_t;
+                             param_value_          :P_void;
+                             param_value_size_ret_ :P_size_t ) :T_cl_int;
+                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_2_0 <> 0 }
 
-function
-clGetPipeInfo( pipe_                 :T_cl_mem;
-               param_name_           :T_cl_pipe_info;
-               param_value_size_     :T_size_t;
-               param_value_          :P_void;
-               param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clGetPipeInfo = function( pipe_                 :T_cl_mem;
+                            param_name_           :T_cl_pipe_info;
+                            param_value_size_     :T_size_t;
+                            param_value_          :P_void;
+                            param_value_size_ret_ :P_size_t ) :T_cl_int;
+                  {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
@@ -1199,10 +1229,11 @@ clGetPipeInfo( pipe_                 :T_cl_mem;
 type P_CL_CALLBACK_clSetMemObjectDestructorCallback = procedure( memobj_    :T_cl_mem;
                                                                  user_data_ :P_void );
 
-function
-clSetMemObjectDestructorCallback( memobj_     :T_cl_mem;
-                                  pfn_notify_ :P_CL_CALLBACK_clSetMemObjectDestructorCallback;
-                                  user_data_  :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
+type
+T_clSetMemObjectDestructorCallback = function( memobj_     :T_cl_mem;
+                                               pfn_notify_ :P_CL_CALLBACK_clSetMemObjectDestructorCallback;
+                                               user_data_  :P_void ) :T_cl_int;
+                                     {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1}
 
 {$ENDIF}
 
@@ -1210,15 +1241,17 @@ clSetMemObjectDestructorCallback( memobj_     :T_cl_mem;
 
 {$IF CL_VERSION_2_0 <> 0 }
 
-function
-clSVMAlloc( context_   :T_cl_context;
-            flags_     :T_cl_svm_mem_flags;
-            size_      :T_size_t;
-            alignment_ :T_cl_uint ) :P_void; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clSVMAlloc = function( context_   :T_cl_context;
+                         flags_     :T_cl_svm_mem_flags;
+                         size_      :T_size_t;
+                         alignment_ :T_cl_uint ) :P_void;
+               {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
-procedure
-clSVMFree( context_     :T_cl_context;
-           svm_pointer_ :P_void ); stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clSVMFree = procedure( context_     :T_cl_context;
+                         svm_pointer_ :P_void );
+              {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
@@ -1226,110 +1259,123 @@ clSVMFree( context_     :T_cl_context;
 
 {$IF CL_VERSION_2_0 <> 0 }
 
-function
-clCreateSamplerWithProperties(       context_            :T_cl_context;
-                               const sampler_properties_ :P_cl_sampler_properties;
-                                     errcode_ret_        :P_cl_int ) :T_cl_sampler; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clCreateSamplerWithProperties = function(       context_            :T_cl_context;
+                                            const sampler_properties_ :P_cl_sampler_properties;
+                                                  errcode_ret_        :P_cl_int ) :T_cl_sampler;
+                                  {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
-function
-clRetainSampler( sampler_ :T_cl_sampler ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clRetainSampler = function( sampler_ :T_cl_sampler ) :T_cl_int;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clReleaseSampler( sampler_ :T_cl_sampler ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clReleaseSampler = function( sampler_ :T_cl_sampler ) :T_cl_int;
+                     {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clGetSamplerInfo( sampler_              :T_cl_sampler;
-                  param_name_           :T_cl_sampler_info;
-                  param_value_size_     :T_size_t;
-                  param_value_          :P_void;
-                  param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetSamplerInfo = function( sampler_              :T_cl_sampler;
+                               param_name_           :T_cl_sampler_info;
+                               param_value_size_     :T_size_t;
+                               param_value_          :P_void;
+                               param_value_size_ret_ :P_size_t ) :T_cl_int;
+                     {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 (* Program Object APIs *)
-function
-clCreateProgramWithSource(       context_     :T_cl_context;
-                                 count_       :T_cl_uint;
-                           const strings_     :PP_char;
-                           const lengths_     :P_size_t;
-                                 errcode_ret_ :P_cl_int ) :T_cl_program; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clCreateProgramWithSource = function(       context_     :T_cl_context;
+                                              count_       :T_cl_uint;
+                                        const strings_     :PP_char;
+                                        const lengths_     :P_size_t;
+                                              errcode_ret_ :P_cl_int ) :T_cl_program;
+                              {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clCreateProgramWithBinary(       context_       :T_cl_context;
-                                 num_devices_   :T_cl_uint;
-                           const device_list_   :P_cl_device_id;
-                           const lengths_       :P_size_t;
-                           const binaries_      :PP_unsigned_char;
-                                 binary_status_ :P_cl_int;
-                                 errcode_ret_   :P_cl_int ) :T_cl_program; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clCreateProgramWithBinary = function(       context_       :T_cl_context;
+                                              num_devices_   :T_cl_uint;
+                                        const device_list_   :P_cl_device_id;
+                                        const lengths_       :P_size_t;
+                                        const binaries_      :PP_unsigned_char;
+                                              binary_status_ :P_cl_int;
+                                              errcode_ret_   :P_cl_int ) :T_cl_program;
+                              {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_2 <> 0 }
 
-function
-clCreateProgramWithBuiltInKernels(       context_      :T_cl_context;
-                                         num_devices_  :T_cl_uint;
-                                   const device_list_  :P_cl_device_id;
-                                   const kernel_names_ :P_char;
-                                         errcode_ret_  :P_cl_int ) :T_cl_program; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clCreateProgramWithBuiltInKernels = function(       context_      :T_cl_context;
+                                                      num_devices_  :T_cl_uint;
+                                                const device_list_  :P_cl_device_id;
+                                                const kernel_names_ :P_char;
+                                                      errcode_ret_  :P_cl_int ) :T_cl_program;
+                                      {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
 {$IF CL_VERSION_2_1 <> 0 }
 
-function
-clCreateProgramWithIL(       context_     :T_cl_context;
-                       const il_          :P_void;
-                             length_      :T_size_t;
-                             errcode_ret_ :P_cl_int ) :T_cl_program; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
+type
+T_clCreateProgramWithIL = function(       context_     :T_cl_context;
+                                    const il_          :P_void;
+                                          length_      :T_size_t;
+                                          errcode_ret_ :P_cl_int ) :T_cl_program;
+                          {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_1}
 
 {$ENDIF}
 
-function
-clRetainProgram( program_ :T_cl_program ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clRetainProgram = function( program_ :T_cl_program ) :T_cl_int;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clReleaseProgram( program_ :T_cl_program ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clReleaseProgram = function( program_ :T_cl_program ) :T_cl_int;
+                     {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 type P_CL_CALLBACK_clBuildProgram = procedure( program_   :T_cl_program;
                                                user_data_ :P_void );
 
-function
-clBuildProgram(       program_     :T_cl_program;
-                      num_devices_ :T_cl_uint;
-                const device_list_ :P_cl_device_id;
-                const options_     :P_char;
-                      pfn_notify_  :P_CL_CALLBACK_clBuildProgram;
-                      user_data_   :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clBuildProgram = function(       program_     :T_cl_program;
+                                   num_devices_ :T_cl_uint;
+                             const device_list_ :P_cl_device_id;
+                             const options_     :P_char;
+                                   pfn_notify_  :P_CL_CALLBACK_clBuildProgram;
+                                   user_data_   :P_void ) :T_cl_int;
+                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_2 <> 0 }
 
 type P_CL_CALLBACK_clCompileProgram = procedure( program_   :T_cl_program;
                                                  user_data_ :P_void );
 
-function
-clCompileProgram(       program_              :T_cl_program;
-                        num_devices_          :T_cl_uint;
-                  const device_list_          :P_cl_device_id;
-                  const options_              :P_char;
-                        num_input_headers_    :T_cl_uint;
-                  const input_headers_        :P_cl_program;
-                  const header_include_names_ :PP_char;
-                        pfn_notify_           :P_CL_CALLBACK_clCompileProgram;
-                        user_data_            :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clCompileProgram = function(       program_              :T_cl_program;
+                                     num_devices_          :T_cl_uint;
+                               const device_list_          :P_cl_device_id;
+                               const options_              :P_char;
+                                     num_input_headers_    :T_cl_uint;
+                               const input_headers_        :P_cl_program;
+                               const header_include_names_ :PP_char;
+                                     pfn_notify_           :P_CL_CALLBACK_clCompileProgram;
+                                     user_data_            :P_void ) :T_cl_int;
+                     {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
 type P_CL_CALLBACK_clLinkProgram = procedure( program_   :T_cl_program;
                                               user_data_ :P_void );
 
-function
-clLinkProgram(       context_            :T_cl_context;
-                     num_devices_        :T_cl_uint;
-               const device_list_        :P_cl_device_id;
-               const options_            :P_char;
-                     num_input_programs_ :T_cl_uint;
-               const input_programs_     :P_cl_program;
-                     pfn_notify_         :P_CL_CALLBACK_clLinkProgram;
-                     user_data_          :P_void;
-                     errcode_ret_        :P_cl_int ) :T_cl_program; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clLinkProgram = function(       context_            :T_cl_context;
+                                  num_devices_        :T_cl_uint;
+                            const device_list_        :P_cl_device_id;
+                            const options_            :P_char;
+                                  num_input_programs_ :T_cl_uint;
+                            const input_programs_     :P_cl_program;
+                                  pfn_notify_         :P_CL_CALLBACK_clLinkProgram;
+                                  user_data_          :P_void;
+                                  errcode_ret_        :P_cl_int ) :T_cl_program;
+                  {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
@@ -1338,454 +1384,502 @@ clLinkProgram(       context_            :T_cl_context;
 type P_CL_CALLBACK_clSetProgramReleaseCallback = procedure( program_   :T_cl_program;
                                                             user_data_ :P_void );
 
-function
-clSetProgramReleaseCallback( program_    :T_cl_program;
-                             pfn_notify_ :P_CL_CALLBACK_clSetProgramReleaseCallback;
-                             user_data_  :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_2_DEPRECATED}
+type
+T_clSetProgramReleaseCallback = function( program_    :T_cl_program;
+                                          pfn_notify_ :P_CL_CALLBACK_clSetProgramReleaseCallback;
+                                          user_data_  :P_void ) :T_cl_int;
+                                {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_2_DEPRECATED}
 
-function
-clSetProgramSpecializationConstant(       program_    :T_cl_program;
-                                          spec_id_    :T_cl_uint;
-                                          spec_size_  :T_size_t;
-                                    const spec_value_ :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_2}
+type
+T_clSetProgramSpecializationConstant = function(       program_    :T_cl_program;
+                                                       spec_id_    :T_cl_uint;
+                                                       spec_size_  :T_size_t;
+                                                 const spec_value_ :P_void ) :T_cl_int;
+                                       {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_2}
 
 {$ENDIF}
 
 {$IF CL_VERSION_1_2 <> 0 }
 
-function
-clUnloadPlatformCompiler( platform_ :T_cl_platform_id ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clUnloadPlatformCompiler = function( platform_ :T_cl_platform_id ) :T_cl_int;
+                             {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
-function
-clGetProgramInfo( program_              :T_cl_program;
-                  param_name_           :T_cl_program_info;
-                  param_value_size_     :T_size_t;
-                  param_value_          :P_void;
-                  param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetProgramInfo = function( program_              :T_cl_program;
+                               param_name_           :T_cl_program_info;
+                               param_value_size_     :T_size_t;
+                               param_value_          :P_void;
+                               param_value_size_ret_ :P_size_t ) :T_cl_int;
+                     {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clGetProgramBuildInfo( program_              :T_cl_program;
-                       device_               :T_cl_device_id;
-                       param_name_           :T_cl_program_build_info;
-                       param_value_size_     :T_size_t;
-                       param_value_          :P_void;
-                       param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetProgramBuildInfo = function( program_              :T_cl_program;
+                                    device_               :T_cl_device_id;
+                                    param_name_           :T_cl_program_build_info;
+                                    param_value_size_     :T_size_t;
+                                    param_value_          :P_void;
+                                    param_value_size_ret_ :P_size_t ) :T_cl_int;
+                          {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 (* Kernel Object APIs *)
-function
-clCreateKernel(       program_     :T_cl_program;
-                const kernel_name_ :P_char;
-                      errcode_ret_ :P_cl_int ) :T_cl_kernel; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clCreateKernel = function(       program_     :T_cl_program;
+                             const kernel_name_ :P_char;
+                                   errcode_ret_ :P_cl_int ) :T_cl_kernel;
+                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clCreateKernelsInProgram( program_         :T_cl_program;
-                          num_kernels_     :T_cl_uint;
-                          kernels_         :P_cl_kernel;
-                          num_kernels_ret_ :P_cl_uint ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clCreateKernelsInProgram = function( program_         :T_cl_program;
+                                       num_kernels_     :T_cl_uint;
+                                       kernels_         :P_cl_kernel;
+                                       num_kernels_ret_ :P_cl_uint ) :T_cl_int;
+                             {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_2_1 <> 0 }
 
-function
-clCloneKernel( source_kernel_ :T_cl_kernel;
-               errcode_ret_   :P_cl_int ) :T_cl_kernel; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
+type
+T_clCloneKernel = function( source_kernel_ :T_cl_kernel;
+                            errcode_ret_   :P_cl_int ) :T_cl_kernel;
+                  {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_1}
 
 {$ENDIF}
 
-function
-clRetainKernel( kernel_ :T_cl_kernel ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clRetainKernel = function( kernel_ :T_cl_kernel ) :T_cl_int;
+                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clReleaseKernel( kernel_ :T_cl_kernel ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clReleaseKernel = function( kernel_ :T_cl_kernel ) :T_cl_int;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clSetKernelArg(       kernel_    :T_cl_kernel;
-                      arg_index_ :T_cl_uint;
-                      arg_size_  :T_size_t;
-                const arg_value_ :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clSetKernelArg = function(       kernel_    :T_cl_kernel;
+                                   arg_index_ :T_cl_uint;
+                                   arg_size_  :T_size_t;
+                             const arg_value_ :P_void ) :T_cl_int;
+                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_2_0 <> 0 }
 
-function
-clSetKernelArgSVMPointer(       kernel_    :T_cl_kernel;
-                                arg_index_ :T_cl_uint;
-                          const arg_value_ :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clSetKernelArgSVMPointer = function(       kernel_    :T_cl_kernel;
+                                             arg_index_ :T_cl_uint;
+                                       const arg_value_ :P_void ) :T_cl_int;
+                             {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
-function
-clSetKernelExecInfo(       kernel_           :T_cl_kernel;
-                           param_name_       :T_cl_kernel_exec_info;
-                           param_value_size_ :T_size_t;
-                     const param_value_      :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clSetKernelExecInfo = function(       kernel_           :T_cl_kernel;
+                                        param_name_       :T_cl_kernel_exec_info;
+                                        param_value_size_ :T_size_t;
+                                  const param_value_      :P_void ) :T_cl_int;
+                        {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
-function
-clGetKernelInfo( kernel_               :T_cl_kernel;
-                 param_name_           :T_cl_kernel_info;
-                 param_value_size_     :T_size_t;
-                 param_value_          :P_void;
-                 param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetKernelInfo = function( kernel_               :T_cl_kernel;
+                              param_name_           :T_cl_kernel_info;
+                              param_value_size_     :T_size_t;
+                              param_value_          :P_void;
+                              param_value_size_ret_ :P_size_t ) :T_cl_int;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_2 <> 0 }
 
-function
-clGetKernelArgInfo( kernel_               :T_cl_kernel;
-                    arg_indx_             :T_cl_uint;
-                    param_name_           :T_cl_kernel_arg_info;
-                    param_value_size_     :T_size_t;
-                    param_value_          :P_void;
-                    param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clGetKernelArgInfo = function( kernel_               :T_cl_kernel;
+                                 arg_indx_             :T_cl_uint;
+                                 param_name_           :T_cl_kernel_arg_info;
+                                 param_value_size_     :T_size_t;
+                                 param_value_          :P_void;
+                                 param_value_size_ret_ :P_size_t ) :T_cl_int;
+                       {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
-function
-clGetKernelWorkGroupInfo( kernel_               :T_cl_kernel;
-                          device_               :T_cl_device_id;
-                          param_name_           :T_cl_kernel_work_group_info;
-                          param_value_size_     :T_size_t;
-                          param_value_          :P_void;
-                          param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetKernelWorkGroupInfo = function( kernel_               :T_cl_kernel;
+                                       device_               :T_cl_device_id;
+                                       param_name_           :T_cl_kernel_work_group_info;
+                                       param_value_size_     :T_size_t;
+                                       param_value_          :P_void;
+                                       param_value_size_ret_ :P_size_t ) :T_cl_int;
+                             {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_2_1 <> 0 }
 
-function
-clGetKernelSubGroupInfo(       kernel_               :T_cl_kernel;
-                               device_               :T_cl_device_id;
-                               param_name_           :T_cl_kernel_sub_group_info;
-                               input_value_size_     :T_size_t;
-                         const input_value_          :P_void;
-                               param_value_size_     :T_size_t;
-                               param_value_          :P_void;
-                               param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
+type
+T_clGetKernelSubGroupInfo = function(       kernel_               :T_cl_kernel;
+                                            device_               :T_cl_device_id;
+                                            param_name_           :T_cl_kernel_sub_group_info;
+                                            input_value_size_     :T_size_t;
+                                      const input_value_          :P_void;
+                                            param_value_size_     :T_size_t;
+                                            param_value_          :P_void;
+                                            param_value_size_ret_ :P_size_t ) :T_cl_int;
+                            {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_1}
 
 {$ENDIF}
 
 (* Event Object APIs *)
-function
-clWaitForEvents(       num_events_ :T_cl_uint;
-                 const event_list_ :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clWaitForEvents = function(       num_events_ :T_cl_uint;
+                              const event_list_ :P_cl_event ) :T_cl_int;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clGetEventInfo( event_                :T_cl_event;
-                param_name_           :T_cl_event_info;
-                param_value_size_     :T_size_t;
-                param_value_          :P_void;
-                param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetEventInfo = function( event_                :T_cl_event;
+                             param_name_           :T_cl_event_info;
+                             param_value_size_     :T_size_t;
+                             param_value_          :P_void;
+                             param_value_size_ret_ :P_size_t ) :T_cl_int;
+                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_1 <> 0 }
 
-function
-clCreateUserEvent( context_     :T_cl_context;
-                   errcode_ret_ :P_cl_int ) :T_cl_event; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
+type
+T_clCreateUserEvent = function( context_     :T_cl_context;
+                                errcode_ret_ :P_cl_int ) :T_cl_event;
+                      {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1}
 
 {$ENDIF}
 
-function
-clRetainEvent( event_ :T_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clRetainEvent = function( event_ :T_cl_event ) :T_cl_int;
+                  {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clReleaseEvent( event_ :T_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clReleaseEvent = function( event_ :T_cl_event ) :T_cl_int;
+                   {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_1 <> 0 }
 
-function
-clSetUserEventStatus( event_            :T_cl_event;
-                      execution_status_ :T_cl_int ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
+type
+T_clSetUserEventStatus = function( event_            :T_cl_event;
+                                   execution_status_ :T_cl_int ) :T_cl_int;
+                         {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1}
 
 type P_CL_CALLBACK_clSetEventCallback = procedure( event_                :T_cl_event;
                                                    event_command_status_ :T_cl_int;
                                                    user_data_            :P_void );
 
-function
-clSetEventCallback( event_                      :T_cl_event;
-                    command_exec_callback_type_ :T_cl_int;
-                    pfn_notify_                 :P_CL_CALLBACK_clSetEventCallback;
-                    user_data_                  :P_void ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
+type
+T_clSetEventCallback = function( event_                      :T_cl_event;
+                                 command_exec_callback_type_ :T_cl_int;
+                                 pfn_notify_                 :P_CL_CALLBACK_clSetEventCallback;
+                                 user_data_                  :P_void ) :T_cl_int;
+                       {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1}
 
 {$ENDIF}
 
 (* Profiling APIs *)
-function
-clGetEventProfilingInfo( event_                :T_cl_event;
-                         param_name_           :T_cl_profiling_info;
-                         param_value_size_     :T_size_t;
-                         param_value_          :P_void;
-                         param_value_size_ret_ :P_size_t ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clGetEventProfilingInfo = function( event_                :T_cl_event;
+                                      param_name_           :T_cl_profiling_info;
+                                      param_value_size_     :T_size_t;
+                                      param_value_          :P_void;
+                                      param_value_size_ret_ :P_size_t ) :T_cl_int;
+                            {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 (* Flush and Finish APIs *)
-function
-clFlush( command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clFlush = function( command_queue_ :T_cl_command_queue ) :T_cl_int;
+            {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clFinish( command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clFinish = function( command_queue_ :T_cl_command_queue ) :T_cl_int;
+             {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 (* Enqueued Commands APIs *)
-function
-clEnqueueReadBuffer(       command_queue_           :T_cl_command_queue;
-                           buffer_                  :T_cl_mem;
-                           blocking_read_           :T_cl_bool;
-                           offset_                  :T_size_t;
-                           size_                    :T_size_t;
-                           ptr_                     :P_void;
-                           num_events_in_wait_list_ :T_cl_uint;
-                     const event_wait_list_         :P_cl_event;
-                           event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueReadBuffer = function(       command_queue_           :T_cl_command_queue;
+                                        buffer_                  :T_cl_mem;
+                                        blocking_read_           :T_cl_bool;
+                                        offset_                  :T_size_t;
+                                        size_                    :T_size_t;
+                                        ptr_                     :P_void;
+                                        num_events_in_wait_list_ :T_cl_uint;
+                                  const event_wait_list_         :P_cl_event;
+                                        event_                   :P_cl_event ) :T_cl_int;
+                        {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_1 <> 0 }
 
-function
-clEnqueueReadBufferRect(       command_queue_           :T_cl_command_queue;
-                               buffer_                  :T_cl_mem;
-                               blocking_read_           :T_cl_bool;
-                         const buffer_origin_           :P_size_t;
-                         const host_origin_             :P_size_t;
-                         const region_                  :P_size_t;
-                               buffer_row_pitch_        :T_size_t;
-                               buffer_slice_pitch_      :T_size_t;
-                               host_row_pitch_          :T_size_t;
-                               host_slice_pitch_        :T_size_t;
-                               ptr_                     :P_void;
-                               num_events_in_wait_list_ :T_cl_uint;
-                         const event_wait_list_         :P_cl_event;
-                               event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
+type
+T_clEnqueueReadBufferRect = function(       command_queue_           :T_cl_command_queue;
+                                            buffer_                  :T_cl_mem;
+                                            blocking_read_           :T_cl_bool;
+                                      const buffer_origin_           :P_size_t;
+                                      const host_origin_             :P_size_t;
+                                      const region_                  :P_size_t;
+                                            buffer_row_pitch_        :T_size_t;
+                                            buffer_slice_pitch_      :T_size_t;
+                                            host_row_pitch_          :T_size_t;
+                                            host_slice_pitch_        :T_size_t;
+                                            ptr_                     :P_void;
+                                            num_events_in_wait_list_ :T_cl_uint;
+                                      const event_wait_list_         :P_cl_event;
+                                            event_                   :P_cl_event ) :T_cl_int;
+                            {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1}
 
 {$ENDIF}
 
-function
-clEnqueueWriteBuffer(       command_queue_           :T_cl_command_queue;
-                            buffer_                  :T_cl_mem;
-                            blocking_write_          :T_cl_bool;
-                            offset_                  :T_size_t;
-                            size_                    :T_size_t;
-                      const ptr_                     :P_void;
-                            num_events_in_wait_list_ :T_cl_uint;
-                      const event_wait_list_         :P_cl_event;
-                            event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueWriteBuffer = function(       command_queue_           :T_cl_command_queue;
+                                         buffer_                  :T_cl_mem;
+                                         blocking_write_          :T_cl_bool;
+                                         offset_                  :T_size_t;
+                                         size_                    :T_size_t;
+                                   const ptr_                     :P_void;
+                                         num_events_in_wait_list_ :T_cl_uint;
+                                   const event_wait_list_         :P_cl_event;
+                                         event_                   :P_cl_event ) :T_cl_int;
+                         {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_1 <> 0 }
 
-function
-clEnqueueWriteBufferRect(       command_queue_           :T_cl_command_queue;
-                                buffer_                  :T_cl_mem;
-                                blocking_write_          :T_cl_bool;
-                          const buffer_origin_           :P_size_t;
-                          const host_origin_             :P_size_t;
-                          const region_                  :P_size_t;
-                                buffer_row_pitch_        :T_size_t;
-                                buffer_slice_pitch_      :T_size_t;
-                                host_row_pitch_          :T_size_t;
-                                host_slice_pitch_        :T_size_t;
-                          const ptr_                     :P_void;
-                                num_events_in_wait_list_ :T_cl_uint;
-                          const event_wait_list_         :P_cl_event;
-                                event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
+type
+T_clEnqueueWriteBufferRect = function(       command_queue_           :T_cl_command_queue;
+                                             buffer_                  :T_cl_mem;
+                                             blocking_write_          :T_cl_bool;
+                                       const buffer_origin_           :P_size_t;
+                                       const host_origin_             :P_size_t;
+                                       const region_                  :P_size_t;
+                                             buffer_row_pitch_        :T_size_t;
+                                             buffer_slice_pitch_      :T_size_t;
+                                             host_row_pitch_          :T_size_t;
+                                             host_slice_pitch_        :T_size_t;
+                                       const ptr_                     :P_void;
+                                             num_events_in_wait_list_ :T_cl_uint;
+                                       const event_wait_list_         :P_cl_event;
+                                             event_                   :P_cl_event ) :T_cl_int;
+                             {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1}
 
 {$ENDIF}
 
 {$IF CL_VERSION_1_2 <> 0 }
 
-function
-clEnqueueFillBuffer(       command_queue_           :T_cl_command_queue;
-                           buffer_                  :T_cl_mem;
-                     const pattern_                 :P_void;
-                           pattern_size_            :T_size_t;
-                           offset_                  :T_size_t;
-                           size_                    :T_size_t;
-                           num_events_in_wait_list_ :T_cl_uint;
-                     const event_wait_list_         :P_cl_event;
-                           event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clEnqueueFillBuffer = function(       command_queue_           :T_cl_command_queue;
+                                        buffer_                  :T_cl_mem;
+                                  const pattern_                 :P_void;
+                                        pattern_size_            :T_size_t;
+                                        offset_                  :T_size_t;
+                                        size_                    :T_size_t;
+                                        num_events_in_wait_list_ :T_cl_uint;
+                                  const event_wait_list_         :P_cl_event;
+                                        event_                   :P_cl_event ) :T_cl_int;
+                        {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
-function
-clEnqueueCopyBuffer(       command_queue_           :T_cl_command_queue;
-                           src_buffer_              :T_cl_mem;
-                           dst_buffer_              :T_cl_mem;
-                           src_offset_              :T_size_t;
-                           dst_offset_              :T_size_t;
-                           size_                    :T_size_t;
-                           num_events_in_wait_list_ :T_cl_uint;
-                     const event_wait_list_         :P_cl_event;
-                           event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueCopyBuffer = function(       command_queue_           :T_cl_command_queue;
+                                        src_buffer_              :T_cl_mem;
+                                        dst_buffer_              :T_cl_mem;
+                                        src_offset_              :T_size_t;
+                                        dst_offset_              :T_size_t;
+                                        size_                    :T_size_t;
+                                        num_events_in_wait_list_ :T_cl_uint;
+                                  const event_wait_list_         :P_cl_event;
+                                        event_                   :P_cl_event ) :T_cl_int;
+                        {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_1 <> 0 }
 
-function
-clEnqueueCopyBufferRect(       command_queue_           :T_cl_command_queue;
-                               src_buffer_              :T_cl_mem;
-                               dst_buffer_              :T_cl_mem;
-                         const src_origin_              :P_size_t;
-                         const dst_origin_              :P_size_t;
-                         const region_                  :P_size_t;
-                               src_row_pitch_           :T_size_t;
-                               src_slice_pitch_         :T_size_t;
-                               dst_row_pitch_           :T_size_t;
-                               dst_slice_pitch_         :T_size_t;
-                               num_events_in_wait_list_ :T_cl_uint;
-                         const event_wait_list_         :P_cl_event;
-                               event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1}
+type
+T_clEnqueueCopyBufferRect = function(       command_queue_           :T_cl_command_queue;
+                                            src_buffer_              :T_cl_mem;
+                                            dst_buffer_              :T_cl_mem;
+                                      const src_origin_              :P_size_t;
+                                      const dst_origin_              :P_size_t;
+                                      const region_                  :P_size_t;
+                                            src_row_pitch_           :T_size_t;
+                                            src_slice_pitch_         :T_size_t;
+                                            dst_row_pitch_           :T_size_t;
+                                            dst_slice_pitch_         :T_size_t;
+                                            num_events_in_wait_list_ :T_cl_uint;
+                                      const event_wait_list_         :P_cl_event;
+                                            event_                   :P_cl_event ) :T_cl_int;
+                            {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1}
 
 {$ENDIF}
 
-function
-clEnqueueReadImage(       command_queue_           :T_cl_command_queue;
-                          image_                   :T_cl_mem;
-                          blocking_read_           :T_cl_bool;
-                    const origin_                  :P_size_t;
-                    const region_                  :P_size_t;
-                          row_pitch_               :T_size_t;
-                          slice_pitch_             :T_size_t;
-                          ptr_                     :P_void;
-                          num_events_in_wait_list_ :T_cl_uint;
-                    const event_wait_list_         :P_cl_event;
-                          event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueReadImage = function(       command_queue_           :T_cl_command_queue;
+                                       image_                   :T_cl_mem;
+                                       blocking_read_           :T_cl_bool;
+                                 const origin_                  :P_size_t;
+                                 const region_                  :P_size_t;
+                                       row_pitch_               :T_size_t;
+                                       slice_pitch_             :T_size_t;
+                                       ptr_                     :P_void;
+                                       num_events_in_wait_list_ :T_cl_uint;
+                                 const event_wait_list_         :P_cl_event;
+                                       event_                   :P_cl_event ) :T_cl_int;
+                       {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clEnqueueWriteImage(       command_queue_           :T_cl_command_queue;
-                           image_                   :T_cl_mem;
-                           blocking_write_          :T_cl_bool;
-                     const origin_                  :P_size_t;
-                     const region_                  :P_size_t;
-                           input_row_pitch_         :T_size_t;
-                           input_slice_pitch_       :T_size_t;
-                     const ptr_                     :P_void;
-                           num_events_in_wait_list_ :T_cl_uint;
-                     const event_wait_list_         :P_cl_event;
-                           event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueWriteImage = function(       command_queue_           :T_cl_command_queue;
+                                        image_                   :T_cl_mem;
+                                        blocking_write_          :T_cl_bool;
+                                  const origin_                  :P_size_t;
+                                  const region_                  :P_size_t;
+                                        input_row_pitch_         :T_size_t;
+                                        input_slice_pitch_       :T_size_t;
+                                  const ptr_                     :P_void;
+                                        num_events_in_wait_list_ :T_cl_uint;
+                                  const event_wait_list_         :P_cl_event;
+                                        event_                   :P_cl_event ) :T_cl_int;
+                        {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_2 <> 0 }
 
-function
-clEnqueueFillImage(       command_queue_           :T_cl_command_queue;
-                          image_                   :T_cl_mem;
-                    const fill_color_              :P_void;
-                    const origin_                  :P_size_t;
-                    const region_                  :P_size_t;
-                          num_events_in_wait_list_ :T_cl_uint;
-                    const event_wait_list_         :P_cl_event;
-                          event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clEnqueueFillImage = function(       command_queue_           :T_cl_command_queue;
+                                       image_                   :T_cl_mem;
+                                 const fill_color_              :P_void;
+                                 const origin_                  :P_size_t;
+                                 const region_                  :P_size_t;
+                                       num_events_in_wait_list_ :T_cl_uint;
+                                 const event_wait_list_         :P_cl_event;
+                                       event_                   :P_cl_event ) :T_cl_int;
+                       {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
-function
-clEnqueueCopyImage(       command_queue_           :T_cl_command_queue;
-                          src_image_               :T_cl_mem;
-                          dst_image_               :T_cl_mem;
-                    const src_origin_              :P_size_t;
-                    const dst_origin_              :P_size_t;
-                    const region_                  :P_size_t;
-                          num_events_in_wait_list_ :T_cl_uint;
-                    const event_wait_list_         :P_cl_event;
-                          event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueCopyImage = function(       command_queue_           :T_cl_command_queue;
+                                       src_image_               :T_cl_mem;
+                                       dst_image_               :T_cl_mem;
+                                 const src_origin_              :P_size_t;
+                                 const dst_origin_              :P_size_t;
+                                 const region_                  :P_size_t;
+                                       num_events_in_wait_list_ :T_cl_uint;
+                                 const event_wait_list_         :P_cl_event;
+                                       event_                   :P_cl_event ) :T_cl_int;
+                       {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clEnqueueCopyImageToBuffer(       command_queue_           :T_cl_command_queue;
-                                  src_image_               :T_cl_mem;
-                                  dst_buffer_              :T_cl_mem;
-                            const src_origin_              :P_size_t;
-                            const region_                  :P_size_t;
-                                  dst_offset_              :T_size_t;
-                                  num_events_in_wait_list_ :T_cl_uint;
-                            const event_wait_list_         :P_cl_event;
-                                  event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueCopyImageToBuffer = function(       command_queue_           :T_cl_command_queue;
+                                               src_image_               :T_cl_mem;
+                                               dst_buffer_              :T_cl_mem;
+                                         const src_origin_              :P_size_t;
+                                         const region_                  :P_size_t;
+                                               dst_offset_              :T_size_t;
+                                               num_events_in_wait_list_ :T_cl_uint;
+                                         const event_wait_list_         :P_cl_event;
+                                               event_                   :P_cl_event ) :T_cl_int;
+                               {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clEnqueueCopyBufferToImage(       command_queue_           :T_cl_command_queue;
-                                  src_buffer_              :T_cl_mem;
-                                  dst_image_               :T_cl_mem;
-                                  src_offset_              :T_size_t;
-                            const dst_origin_              :P_size_t;
-                            const region_                  :P_size_t;
-                                  num_events_in_wait_list_ :T_cl_uint;
-                            const event_wait_list_         :P_cl_event;
-                                  event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueCopyBufferToImage = function(       command_queue_           :T_cl_command_queue;
+                                               src_buffer_              :T_cl_mem;
+                                               dst_image_               :T_cl_mem;
+                                               src_offset_              :T_size_t;
+                                         const dst_origin_              :P_size_t;
+                                         const region_                  :P_size_t;
+                                               num_events_in_wait_list_ :T_cl_uint;
+                                         const event_wait_list_         :P_cl_event;
+                                               event_                   :P_cl_event ) :T_cl_int;
+                               {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clEnqueueMapBuffer(       command_queue_           :T_cl_command_queue;
-                          buffer_                  :T_cl_mem;
-                          blocking_map_            :T_cl_bool;
-                          map_flags_               :T_cl_map_flags;
-                          offset_                  :T_size_t;
-                          size_                    :T_size_t;
-                          num_events_in_wait_list_ :T_cl_uint;
-                    const event_wait_list_         :P_cl_event;
-                          event_                   :P_cl_event;
-                          errcode_ret_             :P_cl_int ) :P_void; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueMapBuffer = function(       command_queue_           :T_cl_command_queue;
+                                       buffer_                  :T_cl_mem;
+                                       blocking_map_            :T_cl_bool;
+                                       map_flags_               :T_cl_map_flags;
+                                       offset_                  :T_size_t;
+                                       size_                    :T_size_t;
+                                       num_events_in_wait_list_ :T_cl_uint;
+                                 const event_wait_list_         :P_cl_event;
+                                       event_                   :P_cl_event;
+                                       errcode_ret_             :P_cl_int ) :P_void;
+                       {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clEnqueueMapImage(       command_queue_           :T_cl_command_queue;
-                         image_                   :T_cl_mem;
-                         blocking_map_            :T_cl_bool;
-                         map_flags_               :T_cl_map_flags;
-                   const origin_                  :P_size_t;
-                   const region_                  :P_size_t;
-                         image_row_pitch_         :P_size_t;
-                         image_slice_pitch_       :P_size_t;
-                         num_events_in_wait_list_ :T_cl_uint;
-                   const event_wait_list_         :P_cl_event;
-                         event_                   :P_cl_event;
-                         errcode_ret_             :P_cl_int ) :P_void; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueMapImage = function(       command_queue_           :T_cl_command_queue;
+                                      image_                   :T_cl_mem;
+                                      blocking_map_            :T_cl_bool;
+                                      map_flags_               :T_cl_map_flags;
+                                const origin_                  :P_size_t;
+                                const region_                  :P_size_t;
+                                      image_row_pitch_         :P_size_t;
+                                      image_slice_pitch_       :P_size_t;
+                                      num_events_in_wait_list_ :T_cl_uint;
+                                const event_wait_list_         :P_cl_event;
+                                      event_                   :P_cl_event;
+                                      errcode_ret_             :P_cl_int ) :P_void;
+                      {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
-function
-clEnqueueUnmapMemObject(       command_queue_           :T_cl_command_queue;
-                               memobj_                  :T_cl_mem;
-                               mapped_ptr_              :P_void;
-                               num_events_in_wait_list_ :T_cl_uint;
-                         const event_wait_list_         :P_cl_event;
-                               event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueUnmapMemObject = function(       command_queue_           :T_cl_command_queue;
+                                            memobj_                  :T_cl_mem;
+                                            mapped_ptr_              :P_void;
+                                            num_events_in_wait_list_ :T_cl_uint;
+                                      const event_wait_list_         :P_cl_event;
+                                            event_                   :P_cl_event ) :T_cl_int;
+                            {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_2 <> 0 }
 
-function
-clEnqueueMigrateMemObjects(       command_queue_           :T_cl_command_queue;
-                                  num_mem_objects_         :T_cl_uint;
-                            const mem_objects_             :P_cl_mem;
-                                  flags_                   :T_cl_mem_migration_flags;
-                                  num_events_in_wait_list_ :T_cl_uint;
-                            const event_wait_list_         :P_cl_event;
-                                  event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clEnqueueMigrateMemObjects = function(       command_queue_           :T_cl_command_queue;
+                                               num_mem_objects_         :T_cl_uint;
+                                         const mem_objects_             :P_cl_mem;
+                                               flags_                   :T_cl_mem_migration_flags;
+                                               num_events_in_wait_list_ :T_cl_uint;
+                                         const event_wait_list_         :P_cl_event;
+                                               event_                   :P_cl_event ) :T_cl_int;
+                               {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
-function
-clEnqueueNDRangeKernel(       command_queue_           :T_cl_command_queue;
-                              kernel_                  :T_cl_kernel;
-                              work_dim_                :T_cl_uint;
-                        const global_work_offset_      :P_size_t;
-                        const global_work_size_        :P_size_t;
-                        const local_work_size_         :P_size_t;
-                              num_events_in_wait_list_ :T_cl_uint;
-                        const event_wait_list_         :P_cl_event;
-                              event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueNDRangeKernel = function(       command_queue_           :T_cl_command_queue;
+                                           kernel_                  :T_cl_kernel;
+                                           work_dim_                :T_cl_uint;
+                                     const global_work_offset_      :P_size_t;
+                                     const global_work_size_        :P_size_t;
+                                     const local_work_size_         :P_size_t;
+                                           num_events_in_wait_list_ :T_cl_uint;
+                                     const event_wait_list_         :P_cl_event;
+                                           event_                   :P_cl_event ) :T_cl_int;
+                           {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 type P_CL_CALLBACK_clEnqueueNativeKernel = function :P_void;
 
-function
-clEnqueueNativeKernel(       command_queue_           :T_cl_command_queue;
-                             user_func_               :P_CL_CALLBACK_clEnqueueNativeKernel;
-                             args_                    :P_void;
-                             cb_args_                 :T_size_t;
-                             num_mem_objects_         :T_cl_uint;
-                       const mem_list_                :P_cl_mem;
-                       const args_mem_loc_            :PP_void;
-                             num_events_in_wait_list_ :T_cl_uint;
-                       const event_wait_list_         :P_cl_event;
-                             event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0}
+type
+T_clEnqueueNativeKernel = function(       command_queue_           :T_cl_command_queue;
+                                          user_func_               :P_CL_CALLBACK_clEnqueueNativeKernel;
+                                          args_                    :P_void;
+                                          cb_args_                 :T_size_t;
+                                          num_mem_objects_         :T_cl_uint;
+                                    const mem_list_                :P_cl_mem;
+                                    const args_mem_loc_            :PP_void;
+                                          num_events_in_wait_list_ :T_cl_uint;
+                                    const event_wait_list_         :P_cl_event;
+                                          event_                   :P_cl_event ) :T_cl_int;
+                          {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0}
 
 {$IF CL_VERSION_1_2 <> 0 }
 
-function
-clEnqueueMarkerWithWaitList(       command_queue_           :T_cl_command_queue;
-                                   num_events_in_wait_list_ :T_cl_uint;
-                             const event_wait_list_         :P_cl_event;
-                                   event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clEnqueueMarkerWithWaitList = function(       command_queue_           :T_cl_command_queue;
+                                                num_events_in_wait_list_ :T_cl_uint;
+                                          const event_wait_list_         :P_cl_event;
+                                                event_                   :P_cl_event ) :T_cl_int;
+                                {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
-function
-clEnqueueBarrierWithWaitList(       command_queue_           :T_cl_command_queue;
-                                    num_events_in_wait_list_ :T_cl_uint;
-                              const event_wait_list_         :P_cl_event;
-                                    event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clEnqueueBarrierWithWaitList = function(       command_queue_           :T_cl_command_queue;
+                                                 num_events_in_wait_list_ :T_cl_uint;
+                                           const event_wait_list_         :P_cl_event;
+                                                 event_                   :P_cl_event ) :T_cl_int;
+                                 {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
@@ -1796,66 +1890,85 @@ type P_CL_CALLBACK_clEnqueueSVMFree = procedure( queue_            :T_cl_command
                                                  svm_pointers_     :array of P_void;
                                                  user_data_        :P_void );
 
-function
-clEnqueueSVMFree(       command_queue_           :T_cl_command_queue;
-                        num_svm_pointers_        :T_cl_uint;
-                        svm_pointers_            :array of P_void;
-                        pfn_free_func_           :P_CL_CALLBACK_clEnqueueSVMFree;
-                        user_data_               :P_void;
-                        num_events_in_wait_list_ :T_cl_uint;
-                  const event_wait_list_         :P_cl_event;
-                        event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clEnqueueSVMFree = function(       command_queue_           :T_cl_command_queue;
+                                     num_svm_pointers_        :T_cl_uint;
+                                     svm_pointers_            :array of P_void;
+                                     pfn_free_func_           :P_CL_CALLBACK_clEnqueueSVMFree;
+                                     user_data_               :P_void;
+                                     num_events_in_wait_list_ :T_cl_uint;
+                               const event_wait_list_         :P_cl_event;
+                                     event_                   :P_cl_event ) :T_cl_int;
+                     {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
-function
-clEnqueueSVMMemcpy(       command_queue_           :T_cl_command_queue;
-                          blocking_copy_           :T_cl_bool;
-                          dst_ptr_                 :P_void;
-                    const src_ptr_                 :P_void;
-                          size_                    :T_size_t;
-                          num_events_in_wait_list_ :T_cl_uint;
-                    const event_wait_list_         :P_cl_event;
-                          event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clEnqueueSVMMemcpy = function(       command_queue_           :T_cl_command_queue;
+                                       blocking_copy_           :T_cl_bool;
+                                       dst_ptr_                 :P_void;
+                                 const src_ptr_                 :P_void;
+                                       size_                    :T_size_t;
+                                       num_events_in_wait_list_ :T_cl_uint;
+                                 const event_wait_list_         :P_cl_event;
+                                       event_                   :P_cl_event ) :T_cl_int;
+                       {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
-function
-clEnqueueSVMMemFill(       command_queue_           :T_cl_command_queue;
-                           svm_ptr_                 :P_void;
-                     const pattern_                 :P_void;
-                           pattern_size_            :T_size_t;
-                           size_                    :T_size_t;
-                           num_events_in_wait_list_ :T_cl_uint;
-                     const event_wait_list_         :P_cl_event;
-                           event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clEnqueueSVMMemFill = function(       command_queue_           :T_cl_command_queue;
+                                        svm_ptr_                 :P_void;
+                                  const pattern_                 :P_void;
+                                        pattern_size_            :T_size_t;
+                                        size_                    :T_size_t;
+                                        num_events_in_wait_list_ :T_cl_uint;
+                                  const event_wait_list_         :P_cl_event;
+                                        event_                   :P_cl_event ) :T_cl_int;
+                        {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
-function
-clEnqueueSVMMap(       command_queue_           :T_cl_command_queue;
-                       blocking_map_            :T_cl_bool;
-                       flags_                   :T_cl_map_flags;
-                       svm_ptr_                 :P_void;
-                       size_                    :T_size_t;
-                       num_events_in_wait_list_ :T_cl_uint;
-                 const event_wait_list_         :P_cl_event;
-                       event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clEnqueueSVMMap = function(       command_queue_           :T_cl_command_queue;
+                                    blocking_map_            :T_cl_bool;
+                                    flags_                   :T_cl_map_flags;
+                                    svm_ptr_                 :P_void;
+                                    size_                    :T_size_t;
+                                    num_events_in_wait_list_ :T_cl_uint;
+                              const event_wait_list_         :P_cl_event;
+                                    event_                   :P_cl_event ) :T_cl_int;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
-function
-clEnqueueSVMUnmap(       command_queue_           :T_cl_command_queue;
-                         svm_ptr_                 :P_void;
-                         num_events_in_wait_list_ :T_cl_uint;
-                   const event_wait_list_         :P_cl_event;
-                         event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_0}
+type
+T_clEnqueueSVMUnmap = function(       command_queue_           :T_cl_command_queue;
+                                      svm_ptr_                 :P_void;
+                                      num_events_in_wait_list_ :T_cl_uint;
+                                const event_wait_list_         :P_cl_event;
+                                      event_                   :P_cl_event ) :T_cl_int;
+                      {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_0}
 
 {$ENDIF}
 
 {$IF CL_VERSION_2_1 <> 0 }
 
-function
-clEnqueueSVMMigrateMem(       command_queue_           :T_cl_command_queue;
-                              num_svm_pointers_        :T_cl_uint;
-                        const svm_pointers_            :PP_void;
-                        const sizes_                   :P_size_t;
-                              flags_                   :T_cl_mem_migration_flags;
-                              num_events_in_wait_list_ :T_cl_uint;
-                        const event_wait_list_         :P_cl_event;
-                              event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_2_1}
+type
+T_clEnqueueSVMMigrateMem = function(       command_queue_           :T_cl_command_queue;
+                                           num_svm_pointers_        :T_cl_uint;
+                                     const svm_pointers_            :PP_void;
+                                     const sizes_                   :P_size_t;
+                                           flags_                   :T_cl_mem_migration_flags;
+                                           num_events_in_wait_list_ :T_cl_uint;
+                                     const event_wait_list_         :P_cl_event;
+                                           event_                   :P_cl_event ) :T_cl_int;
+                           {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_2_1}
+
+{$ENDIF}
+
+{$IF CL_VERSION_3_1 <> 0 }
+
+type
+T_clGetKernelSuggestedLocalWorkSize = function(       command_queue_             :T_cl_command_queue;
+                                                      kernel_                    :T_cl_kernel;
+                                                      work_dim_                  :T_cl_uint;
+                                                const global_work_offset_        :P_size_t;
+                                                const global_work_size_          :P_size_t;
+                                                      suggested_local_work_size_ :P_size_t ) :T_cl_int;
+                                      {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_3_1}
 
 {$ENDIF}
 
@@ -1868,9 +1981,10 @@ clEnqueueSVMMigrateMem(       command_queue_           :T_cl_command_queue;
  * check to make sure the address is not NULL, before using or
  * calling the returned function address.
  *)
-function
-clGetExtensionFunctionAddressForPlatform(       platform_  :T_cl_platform_id;
-                                          const func_name_ :P_char ) :P_void; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2}
+type
+T_clGetExtensionFunctionAddressForPlatform = function(       platform_  :T_cl_platform_id;
+                                                       const func_name_ :P_char ) :P_void;
+                                             {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2}
 
 {$ENDIF}
 
@@ -1885,74 +1999,85 @@ clGetExtensionFunctionAddressForPlatform(       platform_  :T_cl_platform_id;
      *  Software developers previously relying on this API are instructed to set the command queue
      *  properties when creating the queue, instead.
      *)
-    function
-    clSetCommandQueueProperty( command_queue_  :T_cl_command_queue;
-                               properties_     :T_cl_command_queue_properties;
-                               enable_         :T_cl_bool;
-                               old_properties_ :P_cl_command_queue_properties ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_0_DEPRECATED}
+    type
+    T_clSetCommandQueueProperty = function( command_queue_  :T_cl_command_queue;
+                                            properties_     :T_cl_command_queue_properties;
+                                            enable_         :T_cl_bool;
+                                            old_properties_ :P_cl_command_queue_properties ) :T_cl_int;
+                                  {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_0_DEPRECATED}
 {$ENDIF} (* CL_USE_DEPRECATED_OPENCL_1_0_APIS *)
 
 (* Deprecated OpenCL 1.1 APIs *)
-function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
-clCreateImage2D(       context_         :T_cl_context;
-                       flags_           :T_cl_mem_flags;
-                 const image_format_    :P_cl_image_format;
-                       image_width_     :T_size_t;
-                       image_height_    :T_size_t;
-                       image_row_pitch_ :T_size_t;
-                       host_ptr_        :P_void;
-                       errcode_ret_     :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
+type {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
+T_clCreateImage2D = function(       context_         :T_cl_context;
+                                    flags_           :T_cl_mem_flags;
+                              const image_format_    :P_cl_image_format;
+                                    image_width_     :T_size_t;
+                                    image_height_    :T_size_t;
+                                    image_row_pitch_ :T_size_t;
+                                    host_ptr_        :P_void;
+                                    errcode_ret_     :P_cl_int ) :T_cl_mem;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
-function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
-clCreateImage3D(       context_           :T_cl_context;
-                       flags_             :T_cl_mem_flags;
-                 const image_format_      :P_cl_image_format;
-                       image_width_       :T_size_t;
-                       image_height_      :T_size_t;
-                       image_depth_       :T_size_t;
-                       image_row_pitch_   :T_size_t;
-                       image_slice_pitch_ :T_size_t;
-                       host_ptr_          :P_void;
-                       errcode_ret_       :P_cl_int ) :T_cl_mem; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
+type {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
+T_clCreateImage3D = function(       context_           :T_cl_context;
+                                    flags_             :T_cl_mem_flags;
+                              const image_format_      :P_cl_image_format;
+                                    image_width_       :T_size_t;
+                                    image_height_      :T_size_t;
+                                    image_depth_       :T_size_t;
+                                    image_row_pitch_   :T_size_t;
+                                    image_slice_pitch_ :T_size_t;
+                                    host_ptr_          :P_void;
+                                    errcode_ret_       :P_cl_int ) :T_cl_mem;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
-function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
-clEnqueueMarker( command_queue_ :T_cl_command_queue;
-                 event_         :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
+type {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
+T_clEnqueueMarker = function( command_queue_ :T_cl_command_queue;
+                              event_         :P_cl_event ) :T_cl_int;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
-function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
-clEnqueueWaitForEvents(       command_queue_ :T_cl_command_queue;
-                              num_events_    :T_cl_uint;
-                        const event_list_    :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
+type {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
+T_clEnqueueWaitForEvents = function(       command_queue_ :T_cl_command_queue;
+                                           num_events_    :T_cl_uint;
+                                     const event_list_    :P_cl_event ) :T_cl_int;
+                           {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
-function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
-clEnqueueBarrier( command_queue_ :T_cl_command_queue ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
+type {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
+T_clEnqueueBarrier = function( command_queue_ :T_cl_command_queue ) :T_cl_int;
+                     {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
-function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
-clUnloadCompiler :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
+type {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
+T_clUnloadCompiler = function :T_cl_int;
+                     {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
-function {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
-clGetExtensionFunctionAddress( const func_name_ :P_char ) :P_void; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
+type {CL_EXT_PREFIX__VERSION_1_1_DEPRECATED}
+T_clGetExtensionFunctionAddress = function( const func_name_ :P_char ) :P_void;
+                                  {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_1_DEPRECATED}
 
 (* Deprecated OpenCL 2.0 APIs *)
-function {CL_EXT_PREFIX__VERSION_1_2_DEPRECATED}
-clCreateCommandQueue( context_     :T_cl_context;
-                      device_      :T_cl_device_id;
-                      properties_  :T_cl_command_queue_properties;
-                      errcode_ret_ :P_cl_int ) :T_cl_command_queue; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2_DEPRECATED}
+type {CL_EXT_PREFIX__VERSION_1_2_DEPRECATED}
+T_clCreateCommandQueue = function( context_     :T_cl_context;
+                                   device_      :T_cl_device_id;
+                                   properties_  :T_cl_command_queue_properties;
+                                   errcode_ret_ :P_cl_int ) :T_cl_command_queue;
+                         {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2_DEPRECATED}
 
-function {CL_EXT_PREFIX__VERSION_1_2_DEPRECATED}
-clCreateSampler( context_           :T_cl_context;
-                 normalized_coords_ :T_cl_bool;
-                 addressing_mode_   :T_cl_addressing_mode;
-                 filter_mode_       :T_cl_filter_mode;
-                 errcode_ret_       :P_cl_int ) :T_cl_sampler; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2_DEPRECATED}
+type {CL_EXT_PREFIX__VERSION_1_2_DEPRECATED}
+T_clCreateSampler = function( context_           :T_cl_context;
+                              normalized_coords_ :T_cl_bool;
+                              addressing_mode_   :T_cl_addressing_mode;
+                              filter_mode_       :T_cl_filter_mode;
+                              errcode_ret_       :P_cl_int ) :T_cl_sampler;
+                    {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2_DEPRECATED}
 
-function {CL_EXT_PREFIX__VERSION_1_2_DEPRECATED}
-clEnqueueTask(       command_queue_           :T_cl_command_queue;
-                     kernel_                  :T_cl_kernel;
-                     num_events_in_wait_list_ :T_cl_uint;
-               const event_wait_list_         :P_cl_event;
-                     event_                   :P_cl_event ) :T_cl_int; stdcall; external DLLNAME; {CL_API_SUFFIX__VERSION_1_2_DEPRECATED}
+type {CL_EXT_PREFIX__VERSION_1_2_DEPRECATED}
+T_clEnqueueTask = function(       command_queue_           :T_cl_command_queue;
+                                  kernel_                  :T_cl_kernel;
+                                  num_events_in_wait_list_ :T_cl_uint;
+                            const event_wait_list_         :P_cl_event;
+                                  event_                   :P_cl_event ) :T_cl_int;
+                  {$IFDEF MSWINDOWS} stdcall; {$ELSE} cdecl; {$ENDIF} {CL_API_SUFFIX__VERSION_1_2_DEPRECATED}
 
 {$ENDIF} (* !defined(CL_NO_CORE_PROTOTYPES) *)
 
