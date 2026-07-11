@@ -326,12 +326,12 @@ uses System.SysUtils, System.RegularExpressions,
 
 function TCLDevice<TCLSystem_,TCLPlatfo_>.GetInfo<_TYPE_>( const Name_:T_cl_device_info ) :_TYPE_;
 begin
-     AssertCL( clGetDeviceInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLDevice.GetInfo is Error!' );
+     CheckCL( clGetDeviceInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLDevice.GetInfo is Error!' );
 end;
 
 function TCLDevice<TCLSystem_,TCLPlatfo_>.GetInfoSize( const Name_:T_cl_device_info ) :T_size_t;
 begin
-     AssertCL( clGetDeviceInfo( Handle, Name_, 0, nil, @Result ), 'TCLDevice.GetInfoSize is Error!' );
+     CheckCL( clGetDeviceInfo( Handle, Name_, 0, nil, @Result ), 'TCLDevice.GetInfoSize is Error!' );
 end;
 
 function TCLDevice<TCLSystem_,TCLPlatfo_>.GetInfos<_TYPE_>( const Name_:T_cl_device_info ) :TArray<_TYPE_>;
@@ -342,7 +342,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetDeviceInfo( Handle, Name_, S, @Result[ 0 ], nil ), 'TCLDevice.GetInfos is Error!' );
+     CheckCL( clGetDeviceInfo( Handle, Name_, S, @Result[ 0 ], nil ), 'TCLDevice.GetInfos is Error!' );
 end;
 
 function TCLDevice<TCLSystem_,TCLPlatfo_>.GetInfoString( const Name_:T_cl_device_info ) :String;
@@ -523,11 +523,11 @@ var
    Ds :TArray<T_cl_device_id>;
    D :T_cl_device_id;
 begin
-     AssertCL( clGetDeviceIDs( TCLPlatfo<TCLSystem_>( Platfo ).Handle, DEVICETYPE, 0, nil, @DsN ), 'TCLDevices.FindDevices is Error!' );
+     CheckCL( clGetDeviceIDs( TCLPlatfo<TCLSystem_>( Platfo ).Handle, DEVICETYPE, 0, nil, @DsN ), 'TCLDevices.FindDevices is Error!' );
 
      SetLength( Ds, DsN );
 
-     AssertCL( clGetDeviceIDs( TCLPlatfo<TCLSystem_>( Platfo ).Handle, DEVICETYPE, DsN, @Ds[0], nil ), 'TCLDevices.FindDevices is Error!' );
+     CheckCL( clGetDeviceIDs( TCLPlatfo<TCLSystem_>( Platfo ).Handle, DEVICETYPE, DsN, @Ds[0], nil ), 'TCLDevices.FindDevices is Error!' );
 
      for D in Ds do TCLDevice_.Create( Self, D );
 end;

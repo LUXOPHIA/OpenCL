@@ -206,6 +206,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property KERNEL_ARG_TYPE_QUALIFIER[ const I_:T_cl_uint ]    :T_cl_kernel_arg_type_qualifier    read GetKERNEL_ARG_TYPE_QUALIFIER;
        property KERNEL_ARG_NAME[ const I_:T_cl_uint ]              :String                            read GetKERNEL_ARG_NAME;
        ///// M E T H O D
+       procedure FreeHandle;
        procedure Run;
      end;
 
@@ -478,12 +479,12 @@ end;
 
 function TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetInfo<_TYPE_>( const Name_:T_cl_kernel_info ) :_TYPE_;
 begin
-     AssertCL( clGetKernelInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLKernel.GetInfo is Error!' );
+     CheckCL( clGetKernelInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLKernel.GetInfo is Error!' );
 end;
 
 function TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetInfoSize( const Name_:T_cl_kernel_info ) :T_size_t;
 begin
-     AssertCL( clGetKernelInfo( Handle, Name_, 0, nil, @Result ), 'TCLKernel.GetInfoSize is Error!' );
+     CheckCL( clGetKernelInfo( Handle, Name_, 0, nil, @Result ), 'TCLKernel.GetInfoSize is Error!' );
 end;
 
 function TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetInfos<_TYPE_>( const Name_:T_cl_kernel_info ) :TArray<_TYPE_>;
@@ -494,7 +495,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetKernelInfo( Handle, Name_, S, @Result[ 0 ], nil ), 'TCLKernel.GetInfos is Error!' );
+     CheckCL( clGetKernelInfo( Handle, Name_, S, @Result[ 0 ], nil ), 'TCLKernel.GetInfos is Error!' );
 end;
 
 function TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetInfoString( const Name_:T_cl_kernel_info ) :String;
@@ -506,12 +507,12 @@ end;
 
 function TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetArgInfo<_TYPE_>( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :_TYPE_;
 begin
-     AssertCL( clGetKernelArgInfo( Handle, I_, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLKernel.GetArgInfo is Error!' );
+     CheckCL( clGetKernelArgInfo( Handle, I_, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLKernel.GetArgInfo is Error!' );
 end;
 
 function TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetArgInfoSize( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :T_size_t;
 begin
-     AssertCL( clGetKernelArgInfo( Handle, I_, Name_, 0, nil, @Result ), 'TCLKernel.GetArgInfoSize is Error!' );
+     CheckCL( clGetKernelArgInfo( Handle, I_, Name_, 0, nil, @Result ), 'TCLKernel.GetArgInfoSize is Error!' );
 end;
 
 function TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetArgInfos<_TYPE_>( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :TArray<_TYPE_>;
@@ -522,7 +523,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetKernelArgInfo( Handle, I_, Name_, S, @Result[ 0 ], nil ), 'TCLKernel.GetArgInfos is Error!' );
+     CheckCL( clGetKernelArgInfo( Handle, I_, Name_, S, @Result[ 0 ], nil ), 'TCLKernel.GetArgInfos is Error!' );
 end;
 
 function TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetArgInfoString( const I_:T_cl_uint; const Name_:T_cl_kernel_arg_info ) :String;
@@ -543,7 +544,7 @@ end;
 
 procedure TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.SetHandle( const Handle_:T_cl_kernel );
 begin
-     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLKernel.DestroHandle is Error!' );
+     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLKernel.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -794,22 +795,27 @@ destructor TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Destroy;
 begin
      _Parames.Free;
 
-      Handle := nil;
+     FreeHandle;
 
      inherited;
 end;
 
 //////////////////////////////////////////////////////////////////// M E T H O D
 
+procedure TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.FreeHandle;
+begin
+     if Assigned( _Handle ) then DestroHandle;
+end;
+
 procedure TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Run;
 begin
-     Assert( Parames.BindsOK, 'TCLKernel.Parames.BindsOK = False' );
+     if not Parames.BindsOK then raise ECLError.Create( CL_INVALID_KERNEL_ARGS, 'TCLKernel.Parames.BindsOK = False' );
 
-     AssertCL( clEnqueueNDRangeKernel( Queuer.Handle, Handle,
+     CheckCL( clEnqueueNDRangeKernel( Queuer.Handle, Handle,
                                        GloDimN, @_GloMin, @_GloSiz, nil,
                                        0, nil, nil ), 'TCLKernel.Run is Error!' );
 
-     AssertCL( clFinish( Queuer.Handle ), 'TCLKernel.Run is Error!' );
+     CheckCL( clFinish( Queuer.Handle ), 'TCLKernel.Run is Error!' );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLKernels<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>

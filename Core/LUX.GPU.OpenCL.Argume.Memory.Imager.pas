@@ -215,9 +215,9 @@ begin
      O.Y := 0;  R.Y := CountY;
      O.Z := 0;  R.Z := CountZ;
 
-     AssertCL( clEnqueueFillImage( Queuer.Handle, Handle,
-                                   @Value_, @O, @R,
-                                   0, nil, nil ), 'TCLImager.Fill is Error!' );
+     CheckCL( clEnqueueFillImage( Queuer.Handle, Handle,
+                                  @Value_, @O, @R,
+                                  0, nil, nil ), 'TCLImager.Fill is Error!' );
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLImaDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>

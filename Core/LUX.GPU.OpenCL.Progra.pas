@@ -78,6 +78,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property CompileLog    :String            read   _CompileLog                    ;
        property LinkStatus    :T_cl_build_status read   _LinkStatus                    ;
        property LinkLog       :String            read   _LinkLog                       ;
+       ///// M E T H O D
+       procedure FreeHandle;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>
@@ -194,6 +196,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property PROGRAM_SCOPE_GLOBAL_CTORS_PRESENT :T_cl_bool               read GetPROGRAM_SCOPE_GLOBAL_CTORS_PRESENT;
        property PROGRAM_SCOPE_GLOBAL_DTORS_PRESENT :T_cl_bool               read GetPROGRAM_SCOPE_GLOBAL_DTORS_PRESENT;
        {$ENDIF}
+       ///// M E T H O D
+       procedure FreeHandle;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_>
@@ -290,12 +294,12 @@ uses System.IOUtils, System.AnsiStrings,
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetInfo<_TYPE_>( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :_TYPE_;
 begin
-     AssertCL( clGetProgramBuildInfo( Handle_, Device.Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLBuildr.GetInfo is Error!' );
+     CheckCL( clGetProgramBuildInfo( Handle_, Device.Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLBuildr.GetInfo is Error!' );
 end;
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetInfoSize( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :T_size_t;
 begin
-     AssertCL( clGetProgramBuildInfo( Handle_, Device.Handle, Name_, 0, nil, @Result ), 'TCLBuildr.GetInfoSize is Error!' );
+     CheckCL( clGetProgramBuildInfo( Handle_, Device.Handle, Name_, 0, nil, @Result ), 'TCLBuildr.GetInfoSize is Error!' );
 end;
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetInfos<_TYPE_>( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :TArray<_TYPE_>;
@@ -306,7 +310,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetProgramBuildInfo( Handle_, Device.Handle, Name_, S, @Result[ 0 ], nil ), 'TCLBuildr.GetInfos is Error!' );
+     CheckCL( clGetProgramBuildInfo( Handle_, Device.Handle, Name_, S, @Result[ 0 ], nil ), 'TCLBuildr.GetInfos is Error!' );
 end;
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetInfoString( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :String;
@@ -327,7 +331,7 @@ end;
 
 procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T_cl_program );
 begin
-     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLBuildr.DestroHandle is Error!' );
+     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLBuildr.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -470,9 +474,16 @@ end;
 
 destructor TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
-      Handle := nil;
+     FreeHandle;
 
      inherited;
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.FreeHandle;
+begin
+     if Assigned( _Handle ) then DestroHandle;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>
@@ -599,12 +610,12 @@ end;
 
 function TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.GetInfo<_TYPE_>( const Name_:T_cl_program_info ) :_TYPE_;
 begin
-     AssertCL( clGetProgramInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLProgra.GetInfo is Error!' );
+     CheckCL( clGetProgramInfo( Handle, Name_, SizeOf( _TYPE_ ), @Result, nil ), 'TCLProgra.GetInfo is Error!' );
 end;
 
 function TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.GetInfoSize( const Name_:T_cl_program_info ) :T_size_t;
 begin
-     AssertCL( clGetProgramInfo( Handle, Name_, 0, nil, @Result ), 'TCLProgra.GetInfoSize is Error!' );
+     CheckCL( clGetProgramInfo( Handle, Name_, 0, nil, @Result ), 'TCLProgra.GetInfoSize is Error!' );
 end;
 
 function TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.GetInfos<_TYPE_>( const Name_:T_cl_program_info ) :TArray<_TYPE_>;
@@ -615,7 +626,7 @@ begin
 
      SetLength( Result, S div Cardinal( SizeOf( _TYPE_ ) ) );
 
-     AssertCL( clGetProgramInfo( Handle, Name_, S, @Result[ 0 ], nil ), 'TCLProgra.GetInfos is Error!' );
+     CheckCL( clGetProgramInfo( Handle, Name_, S, @Result[ 0 ], nil ), 'TCLProgra.GetInfos is Error!' );
 end;
 
 function TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.GetInfoString( const Name_:T_cl_program_info ) :String;
@@ -636,7 +647,7 @@ end;
 
 procedure TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.SetHandle( const Handle_:T_cl_program );
 begin
-     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLProgra.DestroHandle is Error!' );
+     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLProgra.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -693,11 +704,18 @@ end;
 
 destructor TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.Destroy;
 begin
-      Handle := nil;
+     FreeHandle;
 
      _Source.Free;
 
      inherited;
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+procedure TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.FreeHandle;
+begin
+     if Assigned( _Handle ) then DestroHandle;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_>
