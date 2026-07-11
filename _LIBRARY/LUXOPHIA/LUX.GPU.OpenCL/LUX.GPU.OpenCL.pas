@@ -92,12 +92,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        class var _System :TCLSystem;
      protected
        ///// A C C E S S O R
+       class function GetAvailable :Boolean; static;
        class function GetPlatfos :TCLPlatfos; static;
      public
        class constructor Create;
        class destructor Destroy;
        ///// P R O P E R T Y
-       class property Platfos :TCLPlatfos read GetPlatfos;
+       class property Available :Boolean     read GetAvailable;
+       class property Platfos   :TCLPlatfos  read GetPlatfos  ;
        ///// M E T H O D
        class procedure Show( const Strings_:TStrings );
      end;
@@ -109,6 +111,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
 implementation //############################################################### ■
+
+uses cl_functions;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 
@@ -151,6 +155,11 @@ end;
 
 //////////////////////////////////////////////////////////////// A C C E S S O R
 
+class function TOpenCL.GetAvailable :Boolean;
+begin
+     Result := LoadFunctions;
+end;
+
 class function TOpenCL.GetPlatfos :TCLPlatfos;
 begin
      Result := _System.Platfos;
@@ -160,6 +169,8 @@ end;
 
 class constructor TOpenCL.Create;
 begin
+     LoadFunctions;
+
      _System := TCLSystem.Create;
 end;
 
