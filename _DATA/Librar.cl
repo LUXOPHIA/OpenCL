@@ -11,13 +11,6 @@ typedef struct
 }
 TSingleC;
 
-typedef struct
-{
-  TSingleC Min;
-  TSingleC Max;
-}
-TSingleAreaC;
-
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TSingleC

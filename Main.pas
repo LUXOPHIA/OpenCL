@@ -36,7 +36,10 @@ type
     procedure ImageRMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean);
   private
     { private 宣言 }
-    _AreaC :TSingleAreaC;
+    _Cent0 :TSingleC;
+    _Cent1 :TSingleC;
+    _Size0 :TSingleC;
+    _Size1 :TSingleC;
     ///// M E T H O D
     procedure ShowBuild;
   public
@@ -86,8 +89,8 @@ begin
           Add( '' );
      end;
 
-     if ( _Buildr.CompileLog = '' ) and
-        ( _Buildr.LinkLog    = '' ) then Exit;
+     if ( _Buildr.CompileStatus = CL_BUILD_SUCCESS ) and
+        ( _Buildr.LinkStatus    = CL_BUILD_SUCCESS ) then Exit;
 
      TabControl1.ActiveTab := TabItemP;
      TabControlP.ActiveTab := TabItemPB;
@@ -131,12 +134,11 @@ begin
 
      _Buffer.Count := 2;                                                        // 要素数の設定
 
-     _AreaC := TSingleAreaC.Create( -2, -2, +2, +2 );
+     _Cent0 := TSingleC.Create( 0, 0 );                                         // 表示領域の中心
+     _Size0 := TSingleC.Create( 2, 2 );                                         // 表示領域のサイズ(中心から端まで)
 
-     _Buffer.Data.Map;                                                          // 展開
-     _Buffer.Data[ 0 ] := _AreaC.Min;                                           // 書き込み
-     _Buffer.Data[ 1 ] := _AreaC.Max;                                           // 書き込み
-     _Buffer.Data.Unmap;                                                        // 同期
+     _Cent1 := _Cent0;                                                          // 目標領域の中心
+     _Size1 := _Size0;                                                          // 目標領域のサイズ
 
      ////////// TEXTURE
 
@@ -222,6 +224,13 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+     if not TOpenCL.Available or ( TOpenCL.Platfos.Count = 0 ) then
+     begin
+          MemoS.Lines.Add( 'OpenCL is not available.' );                        // OpenCL が利用できない環境
+
+          Exit;
+     end;
+
      MakeContext;                                                               // コンテキストの生成
 
      MakeArguments;                                                             // 実引数の生成
@@ -243,7 +252,21 @@ end;
 ////////////////////////////////////////////////////////////////////////////////
 
 procedure TForm1.Timer1Timer(Sender: TObject);
+const
+     L = 0.25;
 begin
+     ////////// AREA
+
+     _Cent0 := _Cent0 + ( _Cent1 - _Cent0 ) * L;                                // 目標領域へ補間
+     _Size0 := _Size0 + ( _Size1 - _Size0 ) * L;
+
+     ////////// BUFFER
+
+     _Buffer.Data.Map;                                                          // 展開
+     _Buffer.Data[ 0 ] := _Cent0;                                               // 中心の書き込み
+     _Buffer.Data[ 1 ] := _Size0;                                               // サイズの書き込み
+     _Buffer.Data.Unmap;                                                        // 同期
+
      ////////// KERNEL
 
      _Kernel.Run;                                                               // 実行
@@ -261,20 +284,13 @@ var
 begin
      P := ImageR.AbsoluteToLocal( ScreenToClient( Screen.MousePos ) );
 
-     C.R := _AreaC.Min.R + _AreaC.SizeR * P.X / ImageR.Width ;
-     C.I := _AreaC.Max.I - _AreaC.SizeI * P.Y / ImageR.Height;
+     C.R := _Cent1.R + _Size1.R * ( 2 * P.X / ImageR.Width  - 1 );              // カーソル位置の複素座標
+     C.I := _Cent1.I - _Size1.I * ( 2 * P.Y / ImageR.Height - 1 );
 
-     S := Power( 1.1, WheelDelta / 120 );
+     S := Power( 1.1, WheelDelta / 120 );                                       // 1ノッチあたりの倍率
 
-     _AreaC.Min := ( _AreaC.Min - C ) * S + C;
-     _AreaC.Max := ( _AreaC.Max - C ) * S + C;
-
-     ////////// BUFFER
-
-     _Buffer.Data.Map;                                                          // 展開
-     _Buffer.Data[ 0 ] := _AreaC.Min;                                           // 書き込み
-     _Buffer.Data[ 1 ] := _AreaC.Max;                                           // 書き込み
-     _Buffer.Data.Unmap;                                                        // 同期
+     _Cent1 := C + ( _Cent1 - C ) * S;                                          // カーソル位置を不動点に拡縮
+     _Size1 := _Size1 * S;
 end;
 
 end. //######################################################################### ■
