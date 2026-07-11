@@ -2,7 +2,8 @@
 
 interface //#################################################################### ■
 
-uses cl_version, cl_platform, cl,
+uses System.SysUtils,
+     cl_version, cl_platform, cl,
      LUX.Code.C;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
@@ -30,6 +31,17 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
 
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ECLError
+
+     ECLError = class( Exception )
+     private
+       _Code :T_cl_int;
+     public
+       constructor Create( const Code_:T_cl_int; const Comment_:String = '' );
+       ///// P R O P E R T Y
+       property Code :T_cl_int read _Code;
+     end;
+
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C O N S T A N T 】
 
 //var //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 V A R I A B L E 】
@@ -38,11 +50,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 function ErrorToMessage( const Error_:T_cl_int ) :String;
 
-procedure AssertCL( const Error_:T_cl_int; const Comment_:String = '' );
+procedure CheckCL( const Error_:T_cl_int; const Comment_:String = '' );
 
 implementation //############################################################### ■
-
-uses System.SysUtils;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 
@@ -84,6 +94,19 @@ begin
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ECLError
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+constructor ECLError.Create( const Code_:T_cl_int; const Comment_:String );
+begin
+     _Code := Code_;
+
+     inherited Create( '【' + ErrorToMessage( Code_ ) + '】' + Comment_ );
+end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
@@ -169,9 +192,9 @@ begin
      end;
 end;
 
-procedure AssertCL( const Error_:T_cl_int; const Comment_:String = '' );
+procedure CheckCL( const Error_:T_cl_int; const Comment_:String = '' );
 begin
-     Assert( Error_ = CL_SUCCESS, '【' + ErrorToMessage( Error_ ) + '】' + Comment_ );
+     if Error_ <> CL_SUCCESS then raise ECLError.Create( Error_, Comment_ );
 end;
 
 end. //######################################################################### ■

@@ -58,6 +58,7 @@ orderedExtensions = [
     'cl_APPLE_SetMemObjectDestructor',
     'cl_APPLE_ContextLoggingFunctions',
     'cl_khr_icd',
+    'cl_khr_icd_unloadable',
     'cl_khr_il_program',
     'cl_khr_image2D_from_buffer',   # incorrect name
     'cl_khr_image2d_from_buffer',
@@ -251,7 +252,7 @@ def isDuplicateName(name):
     return False
 
 %>/*******************************************************************************
- * Copyright (c) 2008-2023 The Khronos Group Inc.
+ * Copyright (c) 2008-2026 The Khronos Group Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -306,7 +307,7 @@ extern "C" {
     name = extension.get('name')
 
     # Use re.match to parse semantic major.minor.patch version
-    sem_ver = match('[0-9]+\.[0-9]+\.?[0-9]+', extension.get('revision'))
+    sem_ver = match(r'[0-9]+\.[0-9]+\.?[0-9]+', extension.get('revision'))
     if not sem_ver:
         raise TypeError(name +
         ' XML revision field is not semantically versioned as "major.minor.patch"')
