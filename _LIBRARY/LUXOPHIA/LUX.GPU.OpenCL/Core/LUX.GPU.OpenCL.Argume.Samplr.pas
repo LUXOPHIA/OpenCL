@@ -38,6 +38,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Contex  :TCLContex_   read GetOwnere                ;
        property Argumes :TCLArgumes_  read GetParent                ;
        property Handle  :T_cl_sampler read GetHandle write SetHandle;
+       ///// M E T H O D
+       procedure FreeHandle;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C O N S T A N T 】
@@ -81,7 +83,7 @@ end;
 
 procedure TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T_cl_sampler );
 begin
-     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLSamplr.DestroHandle is Error!' );
+     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLSamplr.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -131,9 +133,16 @@ end;
 
 destructor TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
-      Handle := nil;
+     FreeHandle;
 
      inherited;
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+procedure TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.FreeHandle;
+begin
+     if Assigned( _Handle ) then DestroHandle;
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】

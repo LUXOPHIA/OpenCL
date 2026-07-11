@@ -149,7 +149,7 @@ end;
 
 destructor TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.Destroy;
 begin
-      Handle := nil;
+     FreeHandle;
 
      inherited;
 end;

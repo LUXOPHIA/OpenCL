@@ -55,6 +55,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Argumes :TCLArgumes_  read   _Argumes                ;
        property Librars :TCLLibrars_  read   _Librars                ;
        property Executs :TCLExecuts_  read   _Executs                ;
+       ///// M E T H O D
+       procedure FreeHandle;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLSystem_,TCLPlatfo_>
@@ -101,7 +103,7 @@ end;
 
 procedure TCLContex<TCLSystem_,TCLPlatfo_>.SetHandle( const Handle_:T_cl_context );
 begin
-     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLContex.DestroHandle is Error!' );
+     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLContex.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -158,9 +160,16 @@ begin
      _Argumes.Free;
      _Queuers.Free;
 
-      Handle := nil;
+     FreeHandle;
 
      inherited;
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+procedure TCLContex<TCLSystem_,TCLPlatfo_>.FreeHandle;
+begin
+     if Assigned( _Handle ) then DestroHandle;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLSystem_,TCLPlatfo_>
