@@ -8,12 +8,12 @@
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
 
-TSingleC ScreenToComplex( const int2 P, const int2 S, const TSingleAreaC A )
+TSingleC ScreenToComplex( const int2 P, const int2 S, const TSingleC Cent, const TSingleC Size )
 {
   TSingleC Result;
 
-  Result.R = ( A.Max.R - A.Min.R ) * ( P.x + 0.5f ) / S.x + A.Min.R;
-  Result.I = ( A.Min.I - A.Max.I ) * ( P.y + 0.5f ) / S.y + A.Max.I;
+  Result.R = Cent.R + Size.R * ( 2 * ( P.x + 0.5f ) / S.x - 1 );
+  Result.I = Cent.I - Size.I * ( 2 * ( P.y + 0.5f ) / S.y - 1 );
 
   return Result;
 }
@@ -39,12 +39,13 @@ kernel void Main( global     TSingleC* Buffer,
                   const      sampler_t Samplr,
                   write_only image2d_t Imager )
 {
-  const int2         P    = { get_global_id  ( 0 ), get_global_id  ( 1 ) };
-  const int2         S    = { get_global_size( 0 ), get_global_size( 1 ) };
-  const TSingleAreaC A    = { Buffer[0], Buffer[1] };
-  const int          MaxN = 1000;
+  const int2     P    = { get_global_id  ( 0 ), get_global_id  ( 1 ) };
+  const int2     S    = { get_global_size( 0 ), get_global_size( 1 ) };
+  const TSingleC Cent = Buffer[0];
+  const TSingleC Size = Buffer[1];
+  const int      MaxN = 1000;
 
-  TSingleC C = ScreenToComplex( P, S, A );
+  TSingleC C = ScreenToComplex( P, S, Cent, Size );
 
   float N = ComplexToCount( C, MaxN );
 
