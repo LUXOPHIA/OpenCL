@@ -3,7 +3,7 @@
 interface //#################################################################### ■
 
 uses System.Classes,
-     cl_version, cl_platform, cl,
+     cl_version, cl_platform, cl, cl_functions,
      LUX.Data.List,
      LUX.Code.C,
      LUX.GPU.OpenCL.core,
@@ -240,6 +240,8 @@ var
    Ps :TArray<T_cl_platform_id>;
    P :T_cl_platform_id;
 begin
+     if not Assigned( clGetPlatformIDs ) then Exit;
+
      CheckCL( clGetPlatformIDs( 0, nil, @PsN ), 'TCLPlatfos.FindPlatfos is Error!' );
 
      SetLength( Ps, PsN );

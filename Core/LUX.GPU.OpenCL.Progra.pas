@@ -3,7 +3,7 @@
 interface //#################################################################### ■
 
 uses System.SysUtils, System.Classes, System.Generics.Collections,
-     cl_version, cl_platform, cl,
+     cl_version, cl_platform, cl, cl_functions,
      LUX.Data.List,
      LUX.Code.C,
      LUX.GPU.OpenCL.core,

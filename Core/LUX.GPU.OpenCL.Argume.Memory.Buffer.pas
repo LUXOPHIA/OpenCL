@@ -2,7 +2,7 @@
 
 interface //#################################################################### ■
 
-uses cl_version, cl_platform, cl,
+uses cl_version, cl_platform, cl, cl_functions,
      LUX,
      LUX.Code.C,
      LUX.GPU.OpenCL.core,
