@@ -44,6 +44,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Queuers :TCLQueuers_        read GetParent                ;
        property Handle  :T_cl_command_queue read GetHandle write SetHandle;
        property Device  :TCLDevice_         read GetDevice write SetDevice;
+       ///// M E T H O D
+       procedure FreeHandle;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>
@@ -104,7 +106,7 @@ end;
 
 procedure TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T_cl_command_queue );
 begin
-     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLQueuer.DestroHandle is Error!' );
+     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLQueuer.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -165,11 +167,18 @@ end;
 
 destructor TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
-      Handle := nil;
+     FreeHandle;
 
-     TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle := nil;
+     TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).FreeHandle;
 
      inherited;
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+procedure TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.FreeHandle;
+begin
+     if Assigned( _Handle ) then DestroHandle;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>

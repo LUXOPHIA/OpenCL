@@ -55,6 +55,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Data   :TCLMemDat_     read GetData   write SetData  ;
        property Size   :T_size_t       read GetSize                  ;
        property Queuer :TCLQueuer_     read GetQueuer write SetQueuer;
+       ///// M E T H O D
+       procedure FreeHandle;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>
@@ -87,6 +89,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Mode   :T_cl_map_flags read GetMode   write SetMode  ;
        property Handle :P_void         read GetHandle write SetHandle;
        ///// M E T H O D
+       procedure FreeHandle;
        procedure Map; virtual;
        procedure Unmap; virtual;
      end;
@@ -132,7 +135,7 @@ end;
 
 procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T_cl_mem );
 begin
-     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLMemory.DestroHandle is Error!' );
+     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLMemory.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -210,9 +213,16 @@ destructor TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
      _Data.Free;
 
-      Handle := nil;
+     FreeHandle;
 
      inherited;
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.FreeHandle;
+begin
+     if Assigned( _Handle ) then DestroHandle;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>
@@ -258,7 +268,7 @@ end;
 
 procedure TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:P_void );
 begin
-     if Assigned( _Handle ) then AssertCL( DestroHandle, 'TCLMemoryIter.DestroHandle is Error!' );
+     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLMemoryIter.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
@@ -293,12 +303,17 @@ end;
 
 destructor TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
-      Handle := nil;
+     FreeHandle;
 
      inherited;
 end;
 
 //////////////////////////////////////////////////////////////////// M E T H O D
+
+procedure TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.FreeHandle;
+begin
+     if Assigned( _Handle ) then DestroHandle;
+end;
 
 procedure TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.Map;
 begin
