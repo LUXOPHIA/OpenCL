@@ -36,7 +36,8 @@ uses
   LUX.GPU.OpenCL in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\LUX.GPU.OpenCL.pas',
   LUX.GPU.OpenCL.Stream.FMX.D1 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Stream\LUX.GPU.OpenCL.Stream.FMX.D1.pas',
   LUX.GPU.OpenCL.Stream.FMX.D2 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Stream\LUX.GPU.OpenCL.Stream.FMX.D2.pas',
-  LUX.GPU.OpenCL.Stream.FMX.D3 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Stream\LUX.GPU.OpenCL.Stream.FMX.D3.pas';
+  LUX.GPU.OpenCL.Stream.FMX.D3 in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\Stream\LUX.GPU.OpenCL.Stream.FMX.D3.pas',
+  cl_functions in '_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL\CL\cl_functions.pas';
 
 {$R *.res}
 
