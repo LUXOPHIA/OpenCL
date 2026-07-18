@@ -97,8 +97,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetBuildrs( const Device_:TCLDevice_ ) :TCLBuildr_; virtual;
        procedure SetBuildrs( const Device_:TCLDevice_; const Buildr_:TCLBuildr_ ); virtual;
        ///// イベント
-       procedure OnInsertChild( const Childr_:TCLBuildr_ ); override;
-       procedure OnRemoveChild( const Childr_:TCLBuildr_ ); override;
+       procedure OnInsertChildr( const Childr_:TCLBuildr_ ); override;
+       procedure OnRemoveChildr( const Childr_:TCLBuildr_ ); override;
      public
        constructor Create; override;
        destructor Destroy; override;
@@ -508,7 +508,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// イベント
 
-procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChild( const Childr_:TCLBuildr_ );
+procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChildr( const Childr_:TCLBuildr_ );
 begin
      inherited;
 
@@ -517,7 +517,7 @@ begin
      _DevBuis.Add( Childr_.Device, Childr_ );
 end;
 
-procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChild( const Childr_:TCLBuildr_ );
+procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChildr( const Childr_:TCLBuildr_ );
 begin
      inherited;
 

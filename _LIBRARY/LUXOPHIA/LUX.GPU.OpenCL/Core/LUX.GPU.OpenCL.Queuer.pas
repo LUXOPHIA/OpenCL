@@ -61,8 +61,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetQueuers( const Device_:TCLDevice_ ) :TCLQueuer_;
        procedure SetQueuers( const Device_:TCLDevice_; const Queuer_:TCLQueuer_ );
        ///// イベント
-       procedure OnInsertChild( const Childr_:TCLQueuer_ ); override;
-       procedure OnRemoveChild( const Childr_:TCLQueuer_ ); override;
+       procedure OnInsertChildr( const Childr_:TCLQueuer_ ); override;
+       procedure OnRemoveChildr( const Childr_:TCLQueuer_ ); override;
      public
        constructor Create; override;
        destructor Destroy; override;
@@ -203,7 +203,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// イベント
 
-procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChild( const Childr_:TCLQueuer_ );
+procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChildr( const Childr_:TCLQueuer_ );
 begin
      inherited;
 
@@ -212,7 +212,7 @@ begin
      _DevQues.Add( Childr_.Device, Childr_ );
 end;
 
-procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChild( const Childr_:TCLQueuer_ );
+procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChildr( const Childr_:TCLQueuer_ );
 begin
      inherited;
 
