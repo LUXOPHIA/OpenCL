@@ -1,16 +1,16 @@
-﻿unit LUX.Data.Model.TriFlip.D2;
+﻿unit LUX.Data.Model.TetraFlip.D3;
 
-// TriFlip の型付け層（2D 特殊化）
+// TetraFlip の型付け層（3D 特殊化）
 //
-// ・LUX.Data.Model.TriFlip の型付け層の TPos_ を TSingle2D に固定したもの。
+// ・LUX.Data.Model.TetraFlip の型付け層の TPos_ を TSingle3D に固定したもの。
 //   利用側は自分の派生クラスを型引数に与えるだけでよい（自己再帰・相互再帰可）。
-//     TMyPoin = class( TTriPoin2D<TMyFace> )
-//     TMyFace = class( TTriFace2D<TMyPoin,TMyFace> )
+//     TMyPoin = class( TTetraPoin3D<TMyCell> )
+//     TMyCell = class( TTetraCell3D<TMyPoin,TMyCell> )
 
 interface //#################################################################### ■
 
-uses LUX.D2,
-     LUX.Data.Model.TriFlip;
+uses LUX.D3,
+     LUX.Data.Model.TetraFlip;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
@@ -18,33 +18,33 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriPoin2D<TFace_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraPoin3D<TCell_>
 
-     TTriPoin2D<TFace_:class> = class( TTriPoin<TSingle2D,TFace_> )
+     TTetraPoin3D<TCell_:class> = class( TTetraPoin<TSingle3D,TCell_> )
      private
      protected
      public
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriPoinSet2D<TPoin_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraPoinSet3D<TPoin_>
 
-     TTriPoinSet2D<TPoin_:class> = class( TTriPoinSet<TSingle2D,TPoin_> )
+     TTetraPoinSet3D<TPoin_:class> = class( TTetraPoinSet<TSingle3D,TPoin_> )
      private
      protected
      public
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriFace2D<TPoin_,TFace_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraCell3D<TPoin_,TCell_>
 
-     TTriFace2D<TPoin_,TFace_:class> = class( TTriFace<TSingle2D,TPoin_,TFace_> )
+     TTetraCell3D<TPoin_,TCell_:class> = class( TTetraCell<TSingle3D,TPoin_,TCell_> )
      private
      protected
      public
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriFaceSet2D<TFace_,TPoinSet_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraCellSet3D<TCell_,TPoinSet_>
 
-     TTriFaceSet2D<TFace_:class;TPoinSet_:class,constructor> = class( TTriFaceSet<TSingle2D,TFace_,TPoinSet_> )
+     TTetraCellSet3D<TCell_:class;TPoinSet_:class,constructor> = class( TTetraCellSet<TSingle3D,TCell_,TPoinSet_> )
      private
      protected
      public
@@ -58,7 +58,7 @@ implementation //###############################################################
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriPoin2D<TFace_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraPoin3D<TCell_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -66,7 +66,7 @@ implementation //###############################################################
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriPoinSet2D<TPoin_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraPoinSet3D<TPoin_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -74,7 +74,7 @@ implementation //###############################################################
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriFace2D<TPoin_,TFace_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraCell3D<TPoin_,TCell_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
@@ -82,7 +82,7 @@ implementation //###############################################################
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriFaceSet2D<TFace_,TPoinSet_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraCellSet3D<TCell_,TPoinSet_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 

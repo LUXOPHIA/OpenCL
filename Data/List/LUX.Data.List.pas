@@ -23,6 +23,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// A C C E S S O R
        function GetCurrent :TChildr_; inline;
      public
+       constructor Create( const Enumer_:TListEnumer );  // 派生リストが列挙子を型付けし直すために使う
        ///// P R O P E R T Y
        property Current :TChildr_ read GetCurrent;
        ///// M E T H O D
@@ -33,12 +34,14 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TListChildr<TParent_>
 
+     // 核（TListChildr）のアクセサは GetParent0 / SetParent0 なので、
+     // ここは reintroduce なしで素直に同名を名乗れる。
      TListChildr<TParent_:class> = class( TListChildr )
      private
      protected
        ///// A C C E S S O R
-       function GetParent :TParent_; reintroduce; virtual;
-       procedure SetParent( const Parent_:TParent_ ); reintroduce; virtual;
+       function GetParent :TParent_;
+       procedure SetParent( const Parent_:TParent_ );
      public
        constructor Create( const Parent_:TParent_ ); overload; virtual;
        ///// P R O P E R T Y
@@ -80,9 +83,15 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
      protected
        ///// A C C E S S O R
+       // 上位と同じものを、この層でも名乗り直して転送する。派生クラスが
+       // `property Xxxs :T… read GetParent` と書けるようにするためであり、
+       // ジェネリックを 2 段またいで指名すると dcc64 が読み取りを見失う（E2130）。
+       function GetParent :TParent_; reintroduce;
+       procedure SetParent( const Parent_:TParent_ ); reintroduce;
        function GetOwnere :TOwnere_;
      public
        ///// P R O P E R T Y
+       property Parent :TParent_ read GetParent write SetParent;
        property Ownere :TOwnere_ read GetOwnere;
      end;
 
@@ -120,6 +129,11 @@ begin
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+constructor TListEnumer<TChildr_>.Create( const Enumer_:TListEnumer );
+begin
+     _Enumer := Enumer_;
+end;
 
 //////////////////////////////////////////////////////////////////// M E T H O D
 
@@ -234,6 +248,18 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 //////////////////////////////////////////////////////////////// A C C E S S O R
+
+function TListChildr<TOwnere_,TParent_>.GetParent :TParent_;
+begin
+     Result := inherited GetParent;
+end;
+
+procedure TListChildr<TOwnere_,TParent_>.SetParent( const Parent_:TParent_ );
+begin
+     inherited SetParent( Parent_ );
+end;
+
+//------------------------------------------------------------------------------
 
 function TListChildr<TOwnere_,TParent_>.GetOwnere :TOwnere_;
 begin

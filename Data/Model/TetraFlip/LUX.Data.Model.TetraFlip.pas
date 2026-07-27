@@ -1,16 +1,16 @@
-﻿unit LUX.Data.Model.TriFlip;
+﻿unit LUX.Data.Model.TetraFlip;
 
-// TriFlip の型付け層
+// TetraFlip の型付け層
 //
-// ・LUX.Data.List / LUX.Data.Tree の型付け層と同じ流儀で、点・面・集合の相互参照
-//   プロパティを派生クラスの型へ付け替えるためのジェネリッククラス群。
-//     TTriPoin   <TPos_;TFace_>            … Face を TFace_ に
-//     TTriPoinSet<TPos_;TPoin_>            … Childrs / 列挙を TPoin_ に
-//     TTriFace   <TPos_;TPoin_,TFace_>     … Poin / Face を TPoin_ / TFace_ に
-//     TTriFaceSet<TPos_;TFace_,TPoinSet_>  … 列挙を TFace_ に、PoinSet を TPoinSet_ に
+// ・LUX.Data.Model.TriFlip の型付け層と同じ流儀で、点・胞・集合の相互参照プロパティを
+//   派生クラスの型へ付け替えるためのジェネリッククラス群。
+//     TTetraPoin   <TPos_;TCell_>              … Cell を TCell_ に
+//     TTetraPoinSet<TPos_;TPoin_>              … Childrs / 列挙を TPoin_ に
+//     TTetraCell   <TPos_;TPoin_,TCell_>       … Poin / Cell を TPoin_ / TCell_ に
+//     TTetraCellSet<TPos_;TCell_,TPoinSet_>    … 列挙を TCell_ に、PoinSet を TPoinSet_ に
 //   利用側は自分の派生クラスを型引数に与えるだけでよい（自己再帰・相互再帰可）。
-//     TMyPoin = class( TTriPoin<TSingle2D,TMyFace> )
-//     TMyFace = class( TTriFace<TSingle2D,TMyPoin,TMyFace> )
+//     TMyPoin = class( TTetraPoin<TSingle3D,TMyCell> )
+//     TMyCell = class( TTetraCell<TSingle3D,TMyPoin,TMyCell> )
 //
 //【実装注意】型引数は class 制約のため基底の型とキャスト互換ではない。実装内の
 // 相互変換は TObject 経由の二段キャストで行っている。直接キャストに簡略化しないこと。
@@ -21,7 +21,7 @@ interface //####################################################################
 
 uses LUX.Data.List.core,
      LUX.Data.List,
-     LUX.Data.Model.TriFlip.core;
+     LUX.Data.Model.TetraFlip.core;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
@@ -29,22 +29,22 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriPoin<TPos_,TFace_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraPoin<TPos_,TCell_>
 
-     TTriPoin<TPos_;TFace_:class> = class( TTriPoin<TPos_> )
+     TTetraPoin<TPos_;TCell_:class> = class( TTetraPoin<TPos_> )
      private
      protected
        ///// A C C E S S O R
-       function GetFace :TFace_; reintroduce;
-       procedure SetFace( const Face_:TFace_ ); reintroduce;
+       function GetCell :TCell_; reintroduce;
+       procedure SetCell( const Cell_:TCell_ ); reintroduce;
      public
        ///// P R O P E R T Y
-       property Face :TFace_ read GetFace write SetFace;  // 所属先の面（アンカー）
+       property Cell :TCell_ read GetCell write SetCell;  // 所属先の胞（アンカー）
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriPoinSet<TPos_,TPoin_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraPoinSet<TPos_,TPoin_>
 
-     TTriPoinSet<TPos_;TPoin_:class> = class( TTriPoinSet<TPos_> )
+     TTetraPoinSet<TPos_;TPoin_:class> = class( TTetraPoinSet<TPos_> )
      private
      protected
        ///// A C C E S S O R
@@ -56,37 +56,37 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetEnumerator :TListEnumer<TPoin_>;
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriFace<TPos_,TPoin_,TFace_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraCell<TPos_,TPoin_,TCell_>
 
-     TTriFace<TPos_;TPoin_,TFace_:class> = class( TTriFace<TPos_> )
+     TTetraCell<TPos_;TPoin_,TCell_:class> = class( TTetraCell<TPos_> )
      private
      protected
        ///// A C C E S S O R
        function GetPoin( const I_:Byte ) :TPoin_; reintroduce;
        procedure SetPoin( const I_:Byte; const Poin_:TPoin_ ); reintroduce;
-       function GetFace( const I_:Byte ) :TFace_; reintroduce;
-       procedure SetFace( const I_:Byte; const Face_:TFace_ ); reintroduce;
+       function GetCell( const I_:Byte ) :TCell_; reintroduce;
+       procedure SetCell( const I_:Byte; const Cell_:TCell_ ); reintroduce;
      public
        ///// P R O P E R T Y
        property Poin[ const I_:Byte ] :TPoin_ read GetPoin write SetPoin;  // 頂点
-       property Face[ const I_:Byte ] :TFace_ read GetFace write SetFace;  // 隣接面
+       property Cell[ const I_:Byte ] :TCell_ read GetCell write SetCell;  // 隣接胞
      end;
 
-     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriFaceSet<TPos_,TFace_,TPoinSet_>
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraCellSet<TPos_,TCell_,TPoinSet_>
 
-     TTriFaceSet<TPos_;TFace_:class;TPoinSet_:class,constructor> = class( TTriFaceSet<TPos_> )
+     TTetraCellSet<TPos_;TCell_:class;TPoinSet_:class,constructor> = class( TTetraCellSet<TPos_> )
      private
      protected
        ///// A C C E S S O R
        function GetPoinSet :TPoinSet_; reintroduce;
        procedure SetPoinSet( const PoinSet_:TPoinSet_ ); reintroduce;
        ///// M E T H O D
-       function NewPoinSet :TTriPoinSet<TPos_>; override;  // 点集合を TPoinSet_ として生成する
+       function NewPoinSet :TTetraPoinSet<TPos_>; override;  // 点集合を TPoinSet_ として生成する
      public
        ///// P R O P E R T Y
        property PoinSet :TPoinSet_ read GetPoinSet write SetPoinSet;
        ///// M E T H O D
-       function GetEnumerator :TListEnumer<TFace_>;
+       function GetEnumerator :TListEnumer<TCell_>;
      end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
@@ -97,29 +97,29 @@ implementation //###############################################################
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriPoin<TPos_,TFace_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraPoin<TPos_,TCell_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 //////////////////////////////////////////////////////////////// A C C E S S O R
 
-function TTriPoin<TPos_,TFace_>.GetFace :TFace_;
+function TTetraPoin<TPos_,TCell_>.GetCell :TCell_;
 begin
-     Result := TFace_( TObject( inherited GetFace ) );
+     Result := TCell_( TObject( inherited GetCell ) );
 end;
 
-procedure TTriPoin<TPos_,TFace_>.SetFace( const Face_:TFace_ );
+procedure TTetraPoin<TPos_,TCell_>.SetCell( const Cell_:TCell_ );
 begin
-     inherited SetFace( TTriFace<TPos_>( TObject( Face_ ) ) );
+     inherited SetCell( TTetraCell<TPos_>( TObject( Cell_ ) ) );
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriPoinSet<TPos_,TPoin_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraPoinSet<TPos_,TPoin_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 //////////////////////////////////////////////////////////////// A C C E S S O R
 
-function TTriPoinSet<TPos_,TPoin_>.GetChildrs( const I_:Integer ) :TPoin_;
+function TTetraPoinSet<TPos_,TPoin_>.GetChildrs( const I_:Integer ) :TPoin_;
 begin
      Result := TPoin_( TObject( inherited GetChildrs( I_ ) ) );
 end;
@@ -128,67 +128,67 @@ end;
 
 //////////////////////////////////////////////////////////////////// M E T H O D
 
-function TTriPoinSet<TPos_,TPoin_>.GetEnumerator :TListEnumer<TPoin_>;
+function TTetraPoinSet<TPos_,TPoin_>.GetEnumerator :TListEnumer<TPoin_>;
 begin
      Result := TListEnumer<TPoin_>.Create( TListParent( Self ).GetEnumerator );
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriFace<TPos_,TPoin_,TFace_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraCell<TPos_,TPoin_,TCell_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 //////////////////////////////////////////////////////////////// A C C E S S O R
 
-function TTriFace<TPos_,TPoin_,TFace_>.GetPoin( const I_:Byte ) :TPoin_;
+function TTetraCell<TPos_,TPoin_,TCell_>.GetPoin( const I_:Byte ) :TPoin_;
 begin
      Result := TPoin_( TObject( inherited GetPoin( I_ ) ) );
 end;
 
-procedure TTriFace<TPos_,TPoin_,TFace_>.SetPoin( const I_:Byte; const Poin_:TPoin_ );
+procedure TTetraCell<TPos_,TPoin_,TCell_>.SetPoin( const I_:Byte; const Poin_:TPoin_ );
 begin
-     inherited SetPoin( I_, TTriPoin<TPos_>( TObject( Poin_ ) ) );
+     inherited SetPoin( I_, TTetraPoin<TPos_>( TObject( Poin_ ) ) );
 end;
 
-function TTriFace<TPos_,TPoin_,TFace_>.GetFace( const I_:Byte ) :TFace_;
+function TTetraCell<TPos_,TPoin_,TCell_>.GetCell( const I_:Byte ) :TCell_;
 begin
-     Result := TFace_( TObject( inherited GetFace( I_ ) ) );
+     Result := TCell_( TObject( inherited GetCell( I_ ) ) );
 end;
 
-procedure TTriFace<TPos_,TPoin_,TFace_>.SetFace( const I_:Byte; const Face_:TFace_ );
+procedure TTetraCell<TPos_,TPoin_,TCell_>.SetCell( const I_:Byte; const Cell_:TCell_ );
 begin
-     inherited SetFace( I_, TTriFace<TPos_>( TObject( Face_ ) ) );
+     inherited SetCell( I_, TTetraCell<TPos_>( TObject( Cell_ ) ) );
 end;
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTriFaceSet<TPos_,TFace_,TPoinSet_>
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TTetraCellSet<TPos_,TCell_,TPoinSet_>
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 //////////////////////////////////////////////////////////////// A C C E S S O R
 
-function TTriFaceSet<TPos_,TFace_,TPoinSet_>.GetPoinSet :TPoinSet_;
+function TTetraCellSet<TPos_,TCell_,TPoinSet_>.GetPoinSet :TPoinSet_;
 begin
      Result := TPoinSet_( TObject( inherited GetPoinSet ) );
 end;
 
-procedure TTriFaceSet<TPos_,TFace_,TPoinSet_>.SetPoinSet( const PoinSet_:TPoinSet_ );
+procedure TTetraCellSet<TPos_,TCell_,TPoinSet_>.SetPoinSet( const PoinSet_:TPoinSet_ );
 begin
-     inherited SetPoinSet( TTriPoinSet<TPos_>( TObject( PoinSet_ ) ) );
+     inherited SetPoinSet( TTetraPoinSet<TPos_>( TObject( PoinSet_ ) ) );
 end;
 
 //////////////////////////////////////////////////////////////////// M E T H O D
 
-function TTriFaceSet<TPos_,TFace_,TPoinSet_>.NewPoinSet :TTriPoinSet<TPos_>;
+function TTetraCellSet<TPos_,TCell_,TPoinSet_>.NewPoinSet :TTetraPoinSet<TPos_>;
 begin
-     Result := TTriPoinSet<TPos_>( TObject( TPoinSet_.Create ) );
+     Result := TTetraPoinSet<TPos_>( TObject( TPoinSet_.Create ) );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 //////////////////////////////////////////////////////////////////// M E T H O D
 
-function TTriFaceSet<TPos_,TFace_,TPoinSet_>.GetEnumerator :TListEnumer<TFace_>;
+function TTetraCellSet<TPos_,TCell_,TPoinSet_>.GetEnumerator :TListEnumer<TCell_>;
 begin
-     Result := TListEnumer<TFace_>.Create( TListParent( Self ).GetEnumerator );
+     Result := TListEnumer<TCell_>.Create( TListParent( Self ).GetEnumerator );
 end;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
