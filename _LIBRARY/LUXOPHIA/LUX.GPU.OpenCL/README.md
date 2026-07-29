@@ -114,7 +114,7 @@ end;
 If a kernel fails to build, the compiler log is available per device:
 
 ```pascal
-ShowMessage( E.BuildTo( D ).CompileLog );
+ShowMessage( E.BuildTo( D ).BuildLog );
 ```
 
 To display the whole platform/device tree for diagnostics:
