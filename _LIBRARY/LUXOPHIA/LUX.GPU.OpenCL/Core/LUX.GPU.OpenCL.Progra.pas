@@ -58,6 +58,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetDevice( const Device_:TCLDevice_ ); virtual;
        function GetVersion :TCLVersion; virtual;
        procedure SetVersion( const Version_:TCLVersion ); virtual;
+       function GetBuildOK :Boolean; virtual;
+       function GetBuildLog :String; virtual;
        ///// M E T H O D
        function Compile :T_cl_int;
        function Link :T_cl_int;
@@ -74,10 +76,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Handle        :T_cl_program      read GetHandle        write SetHandle ;
        property Device        :TCLDevice_        read GetDevice        write SetDevice ;
        property Version       :TCLVersion        read GetVersion       write SetVersion;
-       property CompileStatus :T_cl_build_status read   _CompileStatus                 ;
-       property CompileLog    :String            read   _CompileLog                    ;
-       property LinkStatus    :T_cl_build_status read   _LinkStatus                    ;
-       property LinkLog       :String            read   _LinkLog                       ;
+       property BuildOK       :Boolean           read GetBuildOK                       ;  // コンパイルとリンクの両方が成功したか
+       property BuildLog      :String            read GetBuildLog                      ;  // コンパイルとリンクのログ
        ///// M E T H O D
        procedure FreeHandle;
      end;
@@ -360,6 +360,24 @@ end;
 procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetVersion( const Version_:TCLVersion );
 begin
      _Version := Version_;
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetBuildOK :Boolean;
+begin
+     Handle;  // 必要ならビルドを実行する
+
+     Result := ( _CompileStatus = CL_BUILD_SUCCESS ) and ( _LinkStatus = CL_BUILD_SUCCESS );
+end;
+
+function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetBuildLog :String;
+begin
+     Handle;  // 必要ならビルドを実行する
+
+     Result := _CompileLog;
+
+     if _LinkLog <> '' then Result := Result + sLineBreak + _LinkLog;
 end;
 
 //////////////////////////////////////////////////////////////////// M E T H O D

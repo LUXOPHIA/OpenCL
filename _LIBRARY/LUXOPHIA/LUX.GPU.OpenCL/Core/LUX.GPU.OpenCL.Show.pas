@@ -90,8 +90,7 @@ begin
                Add( ' ┃　│　┃　│　┃　│　┣・Buildr[' + B.Order.ToString + '] :TCLBuildr' );
                Add( ' ┃　│　┃　│　┃　│　┃　├ Device       = Platfo[' + B.Device.Platfo.Order.ToString + ']'
                                                                 + '.Device[' + B.Device       .Order.ToString + ']' );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ CompileState = ' + B.CompileStatus.ToString );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ LinkState    = ' + B.LinkStatus.ToString );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ BuildOK      = ' + BoolToStr( B.BuildOK, True ) );
           end;
      end;
 end;

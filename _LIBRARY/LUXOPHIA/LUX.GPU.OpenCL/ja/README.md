@@ -114,7 +114,7 @@ end;
 カーネルのビルドに失敗した場合は、デバイスごとのコンパイルログを確認できます:
 
 ```pascal
-ShowMessage( E.BuildTo( D ).CompileLog );
+ShowMessage( E.BuildTo( D ).BuildLog );
 ```
 
 診断用に、プラットフォーム/デバイスのツリー全体を表示するには:
