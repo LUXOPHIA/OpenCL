@@ -81,16 +81,13 @@ procedure TForm1.ShowBuild;
 begin
      with MemoPB.Lines do
      begin
-          Add( '▼ Compile' );
-          Add( _Buildr.CompileLog );
-          Add( '' );
-          Add( '▼ Link' );
-          Add( _Buildr.LinkLog );
+          Add( '▼ Build' );
+          Add( 'BuildOK = ' + BoolToStr( _Buildr.BuildOK, True ) );
+          Add( _Buildr.BuildLog );
           Add( '' );
      end;
 
-     if ( _Buildr.CompileStatus = CL_BUILD_SUCCESS ) and
-        ( _Buildr.LinkStatus    = CL_BUILD_SUCCESS ) then Exit;
+     if _Buildr.BuildOK then Exit;
 
      TabControl1.ActiveTab := TabItemP;
      TabControlP.ActiveTab := TabItemPB;
@@ -128,46 +125,46 @@ procedure TForm1.MakeArguments;
 begin
      ////////// BUFFER
 
-     _Buffer := TCLBuffer<TSingleC>.Create( _Contex, _Queuer );     // 生成
+     _Buffer := TCLBuffer<TSingleC>.Create( _Queuer );           // 生成（コンテキストはキューから導かれる）
 
-     Assert( Assigned( _Buffer.Handle ), '_Buffer is Error!' );     // 検証
+     Assert( Assigned( _Buffer.Handle ), '_Buffer is Error!' );  // 検証
 
-     _Buffer.Count := 2;                                            // 要素数の設定
+     _Buffer.Count := 2;                                         // 要素数の設定
 
-     _Cent0 := TSingleC.Create( 0, 0 );                             // 表示領域の中心
-     _Size0 := TSingleC.Create( 2, 2 );                             // 表示領域のサイズ(中心から端まで)
+     _Cent0 := TSingleC.Create( 0, 0 );                          // 表示領域の中心
+     _Size0 := TSingleC.Create( 2, 2 );                          // 表示領域のサイズ(中心から端まで)
 
-     _Cent1 := _Cent0;                                              // 目標領域の中心
-     _Size1 := _Size0;                                              // 目標領域のサイズ
+     _Cent1 := _Cent0;                                           // 目標領域の中心
+     _Size1 := _Size0;                                           // 目標領域のサイズ
 
      ////////// TEXTURE
 
-     _Textur := TCLImager1DxBGRAxUFix8.Create( _Contex, _Queuer );  // 生成
+     _Textur := TCLImager1DxBGRAxUFix8.Create( _Queuer );        // 生成
 
-     Assert( Assigned( _Textur.Handle ), '_Textur is Error!' );     // 検証
+     Assert( Assigned( _Textur.Handle ), '_Textur is Error!' );  // 検証
 
-     _TexFMX := TCLStream1DxBGRAxUFix8_FMX.Create( _Textur );       // ストリームの生成
+     _TexFMX := TCLStream1DxBGRAxUFix8_FMX.Create( _Textur );    // ストリームの生成
 
-     _TexFMX.LoadFromFile( '..\..\_DATA\Textur.png' );              // 画像のロード
+     _TexFMX.LoadFromFile( '..\..\_DATA\Textur.png' );           // 画像のロード
 
-     _TexFMX.CopyTo( ImageT.Bitmap );                               // 画像の表示
+     _TexFMX.CopyTo( ImageT.Bitmap );                            // 画像の表示
 
      ////////// SAMPLER
 
-     _Samplr := TCLSamplr.Create( _Contex );                        // 生成
+     _Samplr := TCLSamplr.Create( _Contex );                     // 生成
 
-     Assert( Assigned( _Samplr.Handle ), '_Samplr is Error!' );     // 検証
+     Assert( Assigned( _Samplr.Handle ), '_Samplr is Error!' );  // 検証
 
      ////////// IMAGE
 
-     _Imager := TCLImager2DxBGRAxUFix8.Create( _Contex, _Queuer );  // 生成
+     _Imager := TCLImager2DxBGRAxUFix8.Create( _Queuer );        // 生成
 
-     Assert( Assigned( _Imager.Handle ), '_Imager is Error!' );     // 検証
+     Assert( Assigned( _Imager.Handle ), '_Imager is Error!' );  // 検証
 
-     _Imager.CountX := 500;                                         // 横ピクセル数の設定
-     _Imager.CountY := 500;                                         // 縦ピクセル数の設定
+     _Imager.CountX := 500;                                      // 横ピクセル数の設定
+     _Imager.CountY := 500;                                      // 縦ピクセル数の設定
 
-     _ImaFMX := TCLStream2DxBGRAxUFix8_FMX.Create( _Imager );       // ストリームの生成
+     _ImaFMX := TCLStream2DxBGRAxUFix8_FMX.Create( _Imager );    // ストリームの生成
 end;
 
 //------------------------------------------------------------------------------

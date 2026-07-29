@@ -192,7 +192,7 @@ generate the `TCLBuffer` class as follows.
 >   B :Double;
 > end;
 > 
-> _Buffer := TCLBuffer<TItem>.Create( _Contex, _Queuer );
+> _Buffer := TCLBuffer<TItem>.Create( _Queuer );
 > ```
 
 Read and write array data through the `Data` property.
@@ -260,7 +260,7 @@ The third part of the class name represents the color data type of a image.
 The 'CountX'/'Y'/'Z' property sets the number of pixels in the X/Y/Z direction.
 > `Object Pascal`
 > ```Delphi
-> _Imager := TCLDevIma3DxBGRAxUInt8.Create( _Contex, _Queuer );
+> _Imager := TCLDevIma3DxBGRAxUInt8.Create( _Queuer );
 > _Imager.CountX := 100;  // Number of pixels in the X direction
 > _Imager.CountY := 200;  // Number of pixels in the Y direction
 > _Imager.CountZ := 300;  // Number of pixels in the Z direction
@@ -314,10 +314,8 @@ However, you can check for compilation and linking errors by creating a `TCLBuil
 > ```Delphi
 > _Buildr.Handle;  // Run build
 > 
-> _Buildr.CompileStatus :T_cl_build_status  // Compile status
-> _Buildr.CompileLog    :String             // Compile log
-> _Buildr.LinkStatus    :T_cl_build_status  // Link status
-> _Buildr.LinkLog       :String             // Link log
+> _Buildr.BuildOK  :Boolean  // Whether both compile and link succeeded
+> _Buildr.BuildLog :String   // The compile and link logs
 > ```
 
 ### ⬤ 2.8. Kernel
