@@ -35,7 +35,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// メソッド
        function CreateHandle :T_cl_int; override;
      public
-       constructor Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ ); override;
+       constructor Create( const Queuer_:TCLQueuer_ ); override;
        destructor Destroy; override;
        ///// プロパティ
        property Execut :TCLExecut_ read _Execut;
@@ -91,7 +91,7 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
-constructor TCLSeeder1D<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ );
+constructor TCLSeeder1D<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Queuer_:TCLQueuer_ );
 begin
      inherited;
 
