@@ -191,7 +191,7 @@ permalink: /ja/
 >   B :Double;
 > end;
 > 
-> _Buffer := TCLBuffer<TItem>.Create( _Contex, _Queuer );
+> _Buffer := TCLBuffer<TItem>.Create( _Queuer );
 > ```
 
 配列データは、`Data[]`プロパティを通して読み書きします。
@@ -259,7 +259,7 @@ permalink: /ja/
 Ｘ/Ｙ/Ｚ方向のピクセル数は、'CountX'/'Y'/'Z' プロパティで設定できます。
 > `Object Pascal`
 > ```Delphi
-> _Imager := TCLDevIma3DxBGRAxUInt8.Create( _Contex, _Queuer );
+> _Imager := TCLDevIma3DxBGRAxUInt8.Create( _Queuer );
 > _Imager.CountX := 100;  // Ｘ方向ピクセル数
 > _Imager.CountY := 200;  // Ｙ方向ピクセル数
 > _Imager.CountZ := 300;  // Ｚ方向ピクセル数
@@ -314,10 +314,8 @@ permalink: /ja/
 > ```Delphi
 > _Buildr.Handle;  // ビルドの実行（ハンドルの生成）
 > 
-> _Buildr.CompileStatus :T_cl_build_status  // コンパイルのスタータス
-> _Buildr.CompileLog    :String             // コンパイルのログ
-> _Buildr.LinkStatus    :T_cl_build_status  // リンクのスタータス
-> _Buildr.LinkLog       :String             // リンクのログ
+> _Buildr.BuildOK  :Boolean  // コンパイルとリンクの両方が成功したか
+> _Buildr.BuildLog :String   // コンパイルとリンクのログ
 > ```
 
 ### ⬤ 2.8. カーネル 

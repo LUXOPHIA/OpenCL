@@ -81,16 +81,13 @@ procedure TForm1.ShowBuild;
 begin
      with MemoPB.Lines do
      begin
-          Add( '▼ Compile' );
-          Add( _Buildr.CompileLog );
-          Add( '' );
-          Add( '▼ Link' );
-          Add( _Buildr.LinkLog );
+          Add( '▼ Build' );
+          Add( 'BuildOK = ' + BoolToStr( _Buildr.BuildOK, True ) );
+          Add( _Buildr.BuildLog );
           Add( '' );
      end;
 
-     if ( _Buildr.CompileStatus = CL_BUILD_SUCCESS ) and
-        ( _Buildr.LinkStatus    = CL_BUILD_SUCCESS ) then Exit;
+     if _Buildr.BuildOK then Exit;
 
      TabControl1.ActiveTab := TabItemP;
      TabControlP.ActiveTab := TabItemPB;
@@ -128,7 +125,7 @@ procedure TForm1.MakeArguments;
 begin
      ////////// BUFFER
 
-     _Buffer := TCLBuffer<TSingleC>.Create( _Contex, _Queuer );                 // 生成
+     _Buffer := TCLBuffer<TSingleC>.Create( _Queuer );                          // 生成（コンテキストはキューから導かれる）
 
      Assert( Assigned( _Buffer.Handle ), '_Buffer is Error!' );                 // 検証
 
@@ -142,7 +139,7 @@ begin
 
      ////////// TEXTURE
 
-     _Textur := TCLImager1DxBGRAxUFix8.Create( _Contex, _Queuer );              // 生成
+     _Textur := TCLImager1DxBGRAxUFix8.Create( _Queuer );                       // 生成
 
      Assert( Assigned( _Textur.Handle ), '_Textur is Error!' );                 // 検証
 
@@ -160,7 +157,7 @@ begin
 
      ////////// IMAGE
 
-     _Imager := TCLImager2DxBGRAxUFix8.Create( _Contex, _Queuer );              // 生成
+     _Imager := TCLImager2DxBGRAxUFix8.Create( _Queuer );                       // 生成
 
      Assert( Assigned( _Imager.Handle ), '_Imager is Error!' );                 // 検証
 
