@@ -58,6 +58,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetDevice( const Device_:TCLDevice_ ); virtual;
        function GetVersion :TCLVersion; virtual;
        procedure SetVersion( const Version_:TCLVersion ); virtual;
+       function GetBuildOK :Boolean; virtual;
+       function GetBuildLog :String; virtual;
        ///// M E T H O D
        function Compile :T_cl_int;
        function Link :T_cl_int;
@@ -74,10 +76,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Handle        :T_cl_program      read GetHandle        write SetHandle ;
        property Device        :TCLDevice_        read GetDevice        write SetDevice ;
        property Version       :TCLVersion        read GetVersion       write SetVersion;
-       property CompileStatus :T_cl_build_status read   _CompileStatus                 ;
-       property CompileLog    :String            read   _CompileLog                    ;
-       property LinkStatus    :T_cl_build_status read   _LinkStatus                    ;
-       property LinkLog       :String            read   _LinkLog                       ;
+       property BuildOK       :Boolean           read GetBuildOK                       ;  // コンパイルとリンクの両方が成功したか
+       property BuildLog      :String            read GetBuildLog                      ;  // コンパイルとリンクのログ
        ///// M E T H O D
        procedure FreeHandle;
      end;
@@ -97,8 +97,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetBuildrs( const Device_:TCLDevice_ ) :TCLBuildr_; virtual;
        procedure SetBuildrs( const Device_:TCLDevice_; const Buildr_:TCLBuildr_ ); virtual;
        ///// イベント
-       procedure OnInsertChild( const Childr_:TCLBuildr_ ); override;
-       procedure OnRemoveChild( const Childr_:TCLBuildr_ ); override;
+       procedure OnInsertChildr( const Childr_:TCLBuildr_ ); override;
+       procedure OnRemoveChildr( const Childr_:TCLBuildr_ ); override;
      public
        constructor Create; override;
        destructor Destroy; override;
@@ -364,6 +364,24 @@ end;
 
 //////////////////////////////////////////////////////////////////// M E T H O D
 
+function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetBuildOK :Boolean;
+begin
+     Handle;  // 必要ならビルドを実行する
+
+     Result := ( _CompileStatus = CL_BUILD_SUCCESS ) and ( _LinkStatus = CL_BUILD_SUCCESS );
+end;
+
+function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetBuildLog :String;
+begin
+     Handle;  // 必要ならビルドを実行する
+
+     Result := _CompileLog;
+
+     if _LinkLog <> '' then Result := Result + sLineBreak + _LinkLog;
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.Compile :T_cl_int;
 var
    DH :T_cl_device_id;
@@ -508,7 +526,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// イベント
 
-procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChild( const Childr_:TCLBuildr_ );
+procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChildr( const Childr_:TCLBuildr_ );
 begin
      inherited;
 
@@ -517,7 +535,7 @@ begin
      _DevBuis.Add( Childr_.Device, Childr_ );
 end;
 
-procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChild( const Childr_:TCLBuildr_ );
+procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChildr( const Childr_:TCLBuildr_ );
 begin
      inherited;
 
