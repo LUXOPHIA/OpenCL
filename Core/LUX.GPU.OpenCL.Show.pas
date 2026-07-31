@@ -90,8 +90,7 @@ begin
                Add( ' ┃　│　┃　│　┃　│　┣・Buildr[' + B.Order.ToString + '] :TCLBuildr' );
                Add( ' ┃　│　┃　│　┃　│　┃　├ Device       = Platfo[' + B.Device.Platfo.Order.ToString + ']'
                                                                 + '.Device[' + B.Device       .Order.ToString + ']' );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ CompileState = ' + B.CompileStatus.ToString );
-               Add( ' ┃　│　┃　│　┃　│　┃　├ LinkState    = ' + B.LinkStatus.ToString );
+               Add( ' ┃　│　┃　│　┃　│　┃　├ BuildOK      = ' + BoolToStr( B.BuildOK, True ) );
           end;
      end;
 end;
@@ -211,7 +210,7 @@ begin
           begin
                Add( ' ┃　│　┃' );
                Add( ' ┃　│　┣・Device[' + D.Order.ToString + '] :TCLDevice' );
-               Add( ' ┃　│　┃　├ LanVer                  = '  + D.LanVer.ToString );
+               Add( ' ┃　│　┃　├ DEVICE_OPENCL_C_VERSION = '  + D.LanVer.ToString );
                Add( ' ┃　│　┃　├ DEVICE_TYPE             = '  + D.DEVICE_TYPE.ToString );
                Add( ' ┃　│　┃　├ DEVICE_VENDOR_ID        = '  + D.DEVICE_VENDOR_ID.ToString );
                Add( ' ┃　│　┃　├ DEVICE_NAME             = '  + D.DEVICE_NAME );

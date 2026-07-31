@@ -47,7 +47,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function DestroHandle :T_cl_int; override;
      public
        constructor Create; override;
-       constructor Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ ); overload; virtual;
+       constructor Create( const Queuer_:TCLQueuer_ ); overload; virtual;
        destructor Destroy; override;
        ///// P R O P E R T Y
        property Handle :T_cl_mem       read GetHandle write SetHandle;
@@ -202,9 +202,10 @@ begin
      _Queuer := nil;
 end;
 
-constructor TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Contex_:TCLContex_; const Queuer_:TCLQueuer_ );
+constructor TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Queuer_:TCLQueuer_ );
 begin
-     Create( Contex_ );
+     // コンテキストはキューから導く（キューはコンテキストの子なので、常に一意）
+     Create( TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>( Queuer_ ).Contex );
 
      _Queuer := Queuer_;
 end;

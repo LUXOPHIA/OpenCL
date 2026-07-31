@@ -83,8 +83,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetBindsOK :Boolean; virtual;
        procedure SetBindsOK( const BindsOK_:Boolean ); virtual;
        ///// イベント
-       procedure OnInsertChild( const Childr_:TCLParame_ ); override;
-       procedure OnRemoveChild( const Childr_:TCLParame_ ); override;
+       procedure OnInsertChildr( const Childr_:TCLParame_ ); override;
+       procedure OnRemoveChildr( const Childr_:TCLParame_ ); override;
      public
        constructor Create; override;
        destructor Destroy; override;
@@ -415,7 +415,7 @@ end;
 
 /////////////////////////////////////////////////////////////////////// イベント
 
-procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.OnInsertChild( const Childr_:TCLParame_ );
+procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.OnInsertChildr( const Childr_:TCLParame_ );
 begin
      inherited;
 
@@ -424,7 +424,7 @@ begin
      _NamPars.Add( Childr_.Name, Childr_ );
 end;
 
-procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.OnRemoveChild( const Childr_:TCLParame_ );
+procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.OnRemoveChildr( const Childr_:TCLParame_ );
 begin
      inherited;
 
