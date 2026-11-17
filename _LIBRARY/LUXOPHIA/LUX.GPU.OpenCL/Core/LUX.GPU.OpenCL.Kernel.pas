@@ -254,10 +254,22 @@ begin
 end;
 
 procedure TCLParame<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.SetName( const Name_:String );
+var
+   P :TCLParames_;
 begin
+     if _Name = Name_ then Exit;
+
+     P := Parames;
+
+     if Assigned( P ) then
+     begin
+          P._NamPars.Add( Name_, Self );  // 同じ名前が既にあれば、ここで例外になり、何も変わらない
+          P._NamPars.Remove( _Name );
+     end;
+
      _Name := Name_;
 
-     Parames.FindsOK := False;
+     if Assigned( P ) then P.FindsOK := False;
 end;
 
 //------------------------------------------------------------------------------
