@@ -375,18 +375,16 @@ var
 begin
      if not _FindsOK then
      begin
-          _FindsOK := True;
-
           for I := 0 to Kernel.KERNEL_NUM_ARGS-1 do
           begin
                K := Kernel.KERNEL_ARG_NAME[ I ];
 
-               if Contains( K ) then Items[ K ]._ParameI := I
-               else
-               begin
-                    _FindsOK := False;  Break;
-               end;
+               if not Contains( K ) then Exit( False );
+
+               Items[ K ]._ParameI := I;
           end;
+
+          _FindsOK := True;  // 全部の引数を照合できたときだけ立てる
      end;
 
      Result := _FindsOK;
