@@ -271,7 +271,7 @@ end;
 
 procedure TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:P_void );
 begin
-     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLMemoryIter.DestroHandle is Error!' );
+     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLMemDat.DestroHandle is Error!' );
 
      _Handle := Handle_;
 end;
