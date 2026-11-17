@@ -169,8 +169,6 @@ destructor TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
      FreeHandle;
 
-     TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).FreeHandle;
-
      inherited;
 end;
 
