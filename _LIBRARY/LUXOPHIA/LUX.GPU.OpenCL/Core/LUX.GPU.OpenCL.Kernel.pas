@@ -370,21 +370,21 @@ end;
 
 function TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetFindsOK :Boolean;
 var
-   I :T_cl_uint;
+   I :Integer;
    K :String;
 begin
      if not _FindsOK then
      begin
-          for I := 0 to Kernel.KERNEL_NUM_ARGS-1 do
+          for I := 0 to Integer( Kernel.KERNEL_NUM_ARGS ) - 1 do  // 符号つきにして、0 個なら回らないようにする
           begin
-               K := Kernel.KERNEL_ARG_NAME[ I ];
+               K := Kernel.KERNEL_ARG_NAME[ T_cl_uint( I ) ];
 
                if not Contains( K ) then Exit( False );
 
                Items[ K ]._ParameI := I;
           end;
 
-          _FindsOK := True;  // 全部の引数を照合できたときだけ立てる
+          _FindsOK := True;                                       // 全部の引数を照合できたときだけ立てる
      end;
 
      Result := _FindsOK;
