@@ -255,6 +255,8 @@ end;
 
 procedure TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.SetMode( const Mode_:T_cl_map_flags );
 begin
+     if _Mode = Mode_ then Exit;
+
      _Mode := Mode_;
 
      Handle := nil;

@@ -573,6 +573,8 @@ end;
 
 procedure TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.SetName( const Name_:String );
 begin
+     if _Name = Name_ then Exit;
+
      _Name := Name_;
 
      Handle := nil;

@@ -348,6 +348,8 @@ end;
 
 procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetDevice( const Device_:TCLDevice_ );
 begin
+     if _Device = Device_ then Exit;
+
      _Device := Device_;
 
      Handle := nil;
