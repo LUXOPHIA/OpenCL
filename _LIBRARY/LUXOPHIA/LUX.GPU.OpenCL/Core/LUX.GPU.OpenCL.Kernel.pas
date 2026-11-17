@@ -762,6 +762,8 @@ begin
      Result := clReleaseKernel( _Handle );
 
      _Handle := nil;
+
+     _Parames.FindsOK := False;  // 引数はカーネルのハンドルごとに渡すので、新しいハンドルには渡し直す
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -809,9 +811,9 @@ end;
 
 destructor TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.Destroy;
 begin
-     _Parames.Free;
-
      FreeHandle;
+
+     _Parames.Free;
 
      inherited;
 end;
