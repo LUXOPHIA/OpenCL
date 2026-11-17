@@ -402,17 +402,16 @@ function TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetBindsOK :Boo
 var
    A :TCLParame_;
 begin
-     if FindsOK and not _BindsOK then
-     begin
-          _BindsOK := True;
+     if not FindsOK then Exit( False );
 
+     if not _BindsOK then
+     begin
           for A in Self do
           begin
-               if A.Bind <> CL_SUCCESS then
-               begin
-                    _BindsOK := False;  Break;
-               end;
+               if A.Bind <> CL_SUCCESS then Exit( False );
           end;
+
+          _BindsOK := True;  // 全部の引数を渡せたときだけ立てる
      end;
 
      Result := _BindsOK;
