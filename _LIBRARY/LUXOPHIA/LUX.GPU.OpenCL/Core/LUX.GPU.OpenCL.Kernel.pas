@@ -434,6 +434,8 @@ begin
      if _NamPars.ContainsKey( Childr_.Name ) then _NamPars[ Childr_.Name ].Free;
 
      _NamPars.Add( Childr_.Name, Childr_ );
+
+     FindsOK := False;
 end;
 
 procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.OnRemoveChildr( const Childr_:TCLParame_ );
@@ -441,6 +443,8 @@ begin
      inherited;
 
      _NamPars.Remove( Childr_.Name );
+
+     FindsOK := False;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
