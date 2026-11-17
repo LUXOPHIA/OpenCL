@@ -65,9 +65,9 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLImager_ = TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>;
             PValue_    = ^TValue_;
      protected
-       _PitchX :Integer;
-       _PitchY :Integer;
-       _PitchZ :Integer;
+       _PitchX :T_size_t;
+       _PitchY :T_size_t;
+       _PitchZ :T_size_t;
        ///// A C C E S S O R
        function GetImager :TCLImager_; virtual;
        function GetValueP :PByte;

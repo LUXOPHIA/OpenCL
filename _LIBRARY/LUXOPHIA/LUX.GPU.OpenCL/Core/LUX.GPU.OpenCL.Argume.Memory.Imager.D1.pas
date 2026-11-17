@@ -194,7 +194,7 @@ function TCLImaDat1D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValueP( const 
 begin
      Result := inherited GetValueP;
 
-     Inc( Result, _PitchX * X_ );
+     Inc( Result, _PitchX * T_size_t( X_ ) );
 end;
 
 function TCLImaDat1D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetValues( const X_:Integer ) :TValue_;
