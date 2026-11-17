@@ -76,7 +76,7 @@ end;
 
 function TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :T_cl_sampler;
 begin
-     if not Assigned( _Handle ) then CreateHandle;
+     if not Assigned( _Handle ) then CheckCL( CreateHandle, 'TCLSamplr.CreateHandle is Error!' );
 
      Result := _Handle;
 end;

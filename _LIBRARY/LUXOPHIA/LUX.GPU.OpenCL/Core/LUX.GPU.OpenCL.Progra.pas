@@ -659,7 +659,7 @@ end;
 
 function TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.GetHandle :T_cl_program;
 begin
-     if not Assigned( _Handle ) then CreateHandle;
+     if not Assigned( _Handle ) then CheckCL( CreateHandle, 'TCLProgra.CreateHandle is Error!' );
 
      Result := _Handle;
 end;

@@ -550,7 +550,7 @@ end;
 
 function TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.GetHandle :T_cl_kernel;
 begin
-     if not Assigned( _Handle ) then CreateHandle;
+     if not Assigned( _Handle ) then CheckCL( CreateHandle, 'TCLKernel.CreateHandle is Error!' );
 
      Result := _Handle;
 end;

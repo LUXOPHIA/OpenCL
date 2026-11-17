@@ -128,7 +128,7 @@ end;
 
 function TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :T_cl_mem;
 begin
-     if not Assigned( _Handle ) then CreateHandle;
+     if not Assigned( _Handle ) then CheckCL( CreateHandle, 'TCLMemory.CreateHandle is Error!' );
 
      Result := _Handle;
 end;
@@ -262,7 +262,7 @@ end;
 
 function TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :P_void;
 begin
-     if not Assigned( _Handle ) then CreateHandle;
+     if not Assigned( _Handle ) then CheckCL( CreateHandle, 'TCLMemDat.CreateHandle is Error!' );
 
      Result := _Handle;
 end;

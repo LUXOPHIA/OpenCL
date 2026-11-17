@@ -99,7 +99,7 @@ uses LUX.GPU.OpenCL.Contex;
 
 function TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :T_cl_command_queue;
 begin
-     if not Assigned( _Handle ) then CreateHandle;
+     if not Assigned( _Handle ) then CheckCL( CreateHandle, 'TCLQueuer.CreateHandle is Error!' );
 
      Result := _Handle;
 end;
