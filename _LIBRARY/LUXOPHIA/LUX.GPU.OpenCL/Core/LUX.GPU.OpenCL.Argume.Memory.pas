@@ -135,6 +135,8 @@ end;
 
 procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T_cl_mem );
 begin
+     if _Handle = Handle_ then Exit;
+
      if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLMemory.DestroHandle is Error!' );
 
      _Handle := Handle_;

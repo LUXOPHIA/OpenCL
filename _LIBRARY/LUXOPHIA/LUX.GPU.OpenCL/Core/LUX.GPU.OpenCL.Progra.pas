@@ -332,6 +332,8 @@ end;
 
 procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T_cl_program );
 begin
+     if _Handle = Handle_ then Exit;
+
      if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLBuildr.DestroHandle is Error!' );
 
      _Handle := Handle_;
@@ -666,6 +668,8 @@ end;
 
 procedure TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.SetHandle( const Handle_:T_cl_program );
 begin
+     if _Handle = Handle_ then Exit;
+
      if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLProgra.DestroHandle is Error!' );
 
      _Handle := Handle_;

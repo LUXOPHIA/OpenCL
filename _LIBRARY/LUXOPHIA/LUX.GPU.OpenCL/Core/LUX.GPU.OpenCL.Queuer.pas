@@ -106,6 +106,8 @@ end;
 
 procedure TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T_cl_command_queue );
 begin
+     if _Handle = Handle_ then Exit;
+
      if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLQueuer.DestroHandle is Error!' );
 
      _Handle := Handle_;
