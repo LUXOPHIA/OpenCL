@@ -222,6 +222,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLBuildrs_ = TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuildr_  = TCLBuildr <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLKernels_ = TCLKernels<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
+            TCLKernel_  = TCLKernel <TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
      protected
        _Buildrs :TCLBuildrs_;
        _Kernels :TCLKernels_;
@@ -758,7 +759,11 @@ end;
 //////////////////////////////////////////////////////////////////// M E T H O D
 
 function TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
+var
+   K :TCLKernel_;
 begin
+     for K in _Kernels do K.FreeHandle;  // 古いプログラムから作ったカーネルを残さない
+
      _Buildrs.Clear;
 
      Result := inherited;
@@ -781,10 +786,9 @@ end;
 
 destructor TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
+     FreeHandle;  // DestroHandle が _Kernels と _Buildrs を使うので、両方より先に手放す
+
      _Kernels.Free;
-
-     FreeHandle;  // DestroHandle が _Buildrs を使うので、_Buildrs より先に手放す
-
      _Buildrs.Free;
 
      inherited;
