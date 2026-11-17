@@ -245,7 +245,6 @@ var
    O, R :record
            X, Y, Z :T_size_t;
          end;
-   V :T_cl_event;
 begin
      inherited;
 
@@ -255,7 +254,7 @@ begin
 
      _PitchX := SizeOf( TValue_ );
 
-     _Handle := clEnqueueMapImage( Queuer.Handle, Imager.Handle, CL_TRUE, Mode, @O, @R, @_PitchY, @_PitchZ, 0, nil, @V, @Result );
+     _Handle := clEnqueueMapImage( Queuer.Handle, Imager.Handle, CL_TRUE, Mode, @O, @R, @_PitchY, @_PitchZ, 0, nil, nil, @Result );
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
