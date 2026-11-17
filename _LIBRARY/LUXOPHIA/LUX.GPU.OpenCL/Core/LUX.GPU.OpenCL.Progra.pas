@@ -782,6 +782,9 @@ end;
 destructor TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
      _Kernels.Free;
+
+     FreeHandle;  // DestroHandle が _Buildrs を使うので、_Buildrs より先に手放す
+
      _Buildrs.Free;
 
      inherited;
