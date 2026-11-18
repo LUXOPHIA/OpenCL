@@ -121,12 +121,20 @@ begin
 end;
 
 procedure TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.SetDevice( const Device_:TCLDevice_ );
+var
+   P :TCLQueuers_;
 begin
      if _Device = Device_ then Exit;
 
      Handle := nil;
 
+     P := Queuers;
+
+     Parent := nil;  // 古いデバイスの登録から外す
+
      _Device := Device_;
+
+     Parent := P;    // 新しいデバイスで登録し直す（コンテキストのデバイスの組も変わる）
 end;
 
 //////////////////////////////////////////////////////////////////// M E T H O D
@@ -212,6 +220,8 @@ begin
      if Contains( Childr_.Device ) then _DevQues[ Childr_.Device ].Free;
 
      _DevQues.Add( Childr_.Device, Childr_ );
+
+     TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).FreeHandle;  // デバイスの組が変わったので、コンテキストを作り直させる
 end;
 
 procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChildr( const Childr_:TCLQueuer_ );
