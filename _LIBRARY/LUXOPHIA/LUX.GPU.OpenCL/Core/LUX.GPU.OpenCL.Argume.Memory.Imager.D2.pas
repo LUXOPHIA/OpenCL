@@ -155,6 +155,8 @@ end;
 
 procedure TCLImager2D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetCountY( const CountY_:Integer );
 begin
+     if _CountY = CountY_ then Exit;
+
      inherited;
 
      _CountY := CountY_;

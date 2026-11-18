@@ -155,6 +155,8 @@ end;
 
 procedure TCLImager3D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetCountZ( const CountZ_:Integer );
 begin
+     if _CountZ = CountZ_ then Exit;
+
      inherited;
 
      _CountZ := CountZ_;

@@ -155,6 +155,8 @@ end;
 
 procedure TCLImager1D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetCountX( const CountX_:Integer );
 begin
+     if _CountX = CountX_ then Exit;
+
      inherited;
 
      _CountX := CountX_;

@@ -119,6 +119,8 @@ end;
 
 procedure TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetCount( const Count_:Integer );
 begin
+     if _Count = Count_ then Exit;
+
      Handle := nil;
 
      _Count := Count_;
