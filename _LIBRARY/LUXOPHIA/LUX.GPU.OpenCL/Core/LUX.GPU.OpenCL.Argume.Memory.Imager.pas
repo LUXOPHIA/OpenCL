@@ -28,7 +28,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// A C C E S S O R
        function GetKind :T_cl_mem_flags; override;
        function GetData :TCLImaDat_; reintroduce; virtual;
-       procedure SetData( const Data_:TCLImaDat_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
        function GetPixCha :T_cl_channel_order; virtual; abstract;
        function GetPixTyp :T_cl_channel_type; virtual; abstract;
@@ -45,7 +44,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function CreateHandle :T_cl_int; override;
      public
        ///// P R O P E R T Y
-       property Data   :TCLImaDat_           read GetData   write SetData  ;
+       property Data   :TCLImaDat_           read GetData                  ;
        property PixCha :T_cl_channel_order   read GetPixCha                ;
        property PixTyp :T_cl_channel_type    read GetPixTyp                ;
        property Format :T_cl_image_format    read GetFormat                ;
@@ -110,11 +109,6 @@ end;
 function TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLImaDat_;
 begin
      Result := TCLImaDat_( inherited Data );
-end;
-
-procedure TCLImager<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetData( const Data_:TCLImaDat_ );
-begin
-     inherited Data := Data_;
 end;
 
 //------------------------------------------------------------------------------

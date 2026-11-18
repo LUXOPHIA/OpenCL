@@ -36,14 +36,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// A C C E S S O R
        function NewData :TCLMemDat_; override;
        function GetData :TCLImaDat_; reintroduce; virtual;
-       procedure SetData( const Data_:TCLImaDat_ ); reintroduce; virtual;
        function GetMemTyp :T_cl_mem_object_type; override;
        function GetCountX :Integer; override;
        procedure SetCountX( const CountX_:Integer ); override;
      public
        constructor Create; override;
        ///// P R O P E R T Y
-       property Data   :TCLImaDat_ read GetData   write SetData  ;
+       property Data   :TCLImaDat_ read GetData                  ;
        property CountX :Integer    read GetCountX write SetCountX;
      end;
 
@@ -138,11 +137,6 @@ end;
 function TCLImager1D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLImaDat_;
 begin
      Result := TCLImaDat_( inherited Data );
-end;
-
-procedure TCLImager1D<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetData( const Data_:TCLImaDat_ );
-begin
-     inherited Data := Data_;
 end;
 
 //------------------------------------------------------------------------------

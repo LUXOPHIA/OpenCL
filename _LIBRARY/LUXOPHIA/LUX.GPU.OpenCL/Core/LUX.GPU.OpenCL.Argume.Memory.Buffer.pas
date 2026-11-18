@@ -31,7 +31,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function GetKind :T_cl_mem_flags; override;
        function NewData :TCLMemDat_; override;
        function GetData :TCLBufDat_; reintroduce; virtual;
-       procedure SetData( const Data_:TCLBufDat_ ); reintroduce; virtual;
        function GetSize :T_size_t; override;
        function GetCount :Integer; virtual;
        procedure SetCount( const Count_:Integer ); virtual;
@@ -41,7 +40,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        constructor Create; override;
        destructor Destroy; override;
        ///// P R O P E R T Y
-       property Data  :TCLBufDat_ read GetData  write SetData ;
+       property Data  :TCLBufDat_ read GetData                ;
        property Count :Integer    read GetCount write SetCount;
      end;
 
@@ -103,11 +102,6 @@ end;
 function TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.GetData :TCLBufDat_;
 begin
      Result := TCLBufDat_( inherited Data );
-end;
-
-procedure TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.SetData( const Data_:TCLBufDat_ );
-begin
-     inherited Data := Data_;
 end;
 
 //------------------------------------------------------------------------------

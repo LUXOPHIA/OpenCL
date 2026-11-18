@@ -39,7 +39,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetKind( const Kind_:T_cl_mem_flags ); virtual;
        function NewData :TCLMemDat_; virtual; abstract;
        function GetData :TCLMemDat_; virtual;
-       procedure SetData( const Data_:TCLMemDat_ ); virtual;
        function GetSize :T_size_t; virtual; abstract;
        function GetQueuer :TCLQueuer_; virtual;
        procedure SetQueuer( const Queuer_:TCLQueuer_ ); virtual;
@@ -52,7 +51,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// P R O P E R T Y
        property Handle :T_cl_mem       read GetHandle write SetHandle;
        property Kind   :T_cl_mem_flags read GetKind   write SetKind  ;
-       property Data   :TCLMemDat_     read GetData   write SetData  ;
+       property Data   :TCLMemDat_     read GetData                  ;
        property Size   :T_size_t       read GetSize                  ;
        property Queuer :TCLQueuer_     read GetQueuer write SetQueuer;
        ///// M E T H O D
@@ -159,13 +158,6 @@ end;
 function TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.GetData :TCLMemDat_;
 begin
      Result := _Data;
-end;
-
-procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.SetData( const Data_:TCLMemDat_ );
-begin
-     _Data := Data_;
-
-     Handle := nil;
 end;
 
 //------------------------------------------------------------------------------
