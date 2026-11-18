@@ -336,7 +336,7 @@ end;
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :T_cl_program;
 begin
-     if not Assigned( _Handle ) and ( _CompileStatus = CL_BUILD_NONE ) then CreateHandle;  // 成功も失敗も、作り直しが求められるまで保つ
+     if not BuildOK then raise ECLError.Create( CL_BUILD_PROGRAM_FAILURE, 'TCLBuildr.CreateHandle is Error!' );
 
      Result := _Handle;
 end;
@@ -386,14 +386,14 @@ end;
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetBuildOK :Boolean;
 begin
-     Handle;  // 必要ならビルドを実行する
+     if not Assigned( _Handle ) and ( _CompileStatus = CL_BUILD_NONE ) then CreateHandle;  // まだならビルドする。成功も失敗も、作り直しが求められるまで保つ
 
      Result := ( _CompileStatus = CL_BUILD_SUCCESS ) and ( _LinkStatus = CL_BUILD_SUCCESS );
 end;
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetBuildLog :String;
 begin
-     Handle;  // 必要ならビルドを実行する
+     BuildOK;  // 必要ならビルドを実行する
 
      Result := _CompileLog;
 
