@@ -82,7 +82,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        procedure SetFindsOK( const FindsOK_:Boolean ); virtual;
        function GetBindsOK :Boolean; virtual;
        procedure SetBindsOK( const BindsOK_:Boolean ); virtual;
-       ///// イベント
+       ///// E V E N T
        procedure OnInsertChildr( const Childr_:TCLParame_ ); override;
        procedure OnRemoveChildr( const Childr_:TCLParame_ ); override;
      public
@@ -424,7 +424,7 @@ begin
      _BindsOK := BindsOK_;
 end;
 
-/////////////////////////////////////////////////////////////////////// イベント
+////////////////////////////////////////////////////////////////////// E V E N T
 
 procedure TCLParames<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.OnInsertChildr( const Childr_:TCLParame_ );
 begin

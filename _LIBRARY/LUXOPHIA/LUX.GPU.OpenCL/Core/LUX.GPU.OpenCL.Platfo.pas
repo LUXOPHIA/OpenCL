@@ -91,7 +91,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        ///// M E T H O D
        procedure FindPlatfos;
-       ///// イベント
+       ///// E V E N T
        procedure OnInit; override;
      public
        ///// P R O P E R T Y
@@ -251,7 +251,7 @@ begin
      for P in Ps do TCLPlatfo_.Create( Self, P );
 end;
 
-/////////////////////////////////////////////////////////////////////// イベント
+////////////////////////////////////////////////////////////////////// E V E N T
 
 procedure TCLPlatfos<TCLSystem_>.OnInit;
 begin

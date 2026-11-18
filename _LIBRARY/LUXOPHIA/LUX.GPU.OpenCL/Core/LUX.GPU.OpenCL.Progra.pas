@@ -97,7 +97,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// A C C E S S O R
        function GetBuildrs( const Device_:TCLDevice_ ) :TCLBuildr_; virtual;
        procedure SetBuildrs( const Device_:TCLDevice_; const Buildr_:TCLBuildr_ ); virtual;
-       ///// イベント
+       ///// E V E N T
        procedure OnInsertChildr( const Childr_:TCLBuildr_ ); override;
        procedure OnRemoveChildr( const Childr_:TCLBuildr_ ); override;
      public
@@ -562,7 +562,7 @@ begin
      Buildr_.Parent := Self;
 end;
 
-/////////////////////////////////////////////////////////////////////// イベント
+////////////////////////////////////////////////////////////////////// E V E N T
 
 procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChildr( const Childr_:TCLBuildr_ );
 begin

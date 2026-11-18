@@ -296,7 +296,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
        ///// M E T H O D
        procedure FindDevices;
-       ///// イベント
+       ///// E V E N T
        procedure OnInit; override;
      public
        ///// P R O P E R T Y
@@ -532,7 +532,7 @@ begin
      for D in Ds do TCLDevice_.Create( Self, D );
 end;
 
-/////////////////////////////////////////////////////////////////////// イベント
+////////////////////////////////////////////////////////////////////// E V E N T
 
 procedure TCLDevices<TCLSystem_,TCLPlatfo_>.OnInit;
 begin

@@ -60,7 +60,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        ///// A C C E S S O R
        function GetQueuers( const Device_:TCLDevice_ ) :TCLQueuer_;
        procedure SetQueuers( const Device_:TCLDevice_; const Queuer_:TCLQueuer_ );
-       ///// イベント
+       ///// E V E N T
        procedure OnInsertChildr( const Childr_:TCLQueuer_ ); override;
        procedure OnRemoveChildr( const Childr_:TCLQueuer_ ); override;
      public
@@ -209,7 +209,7 @@ begin
      Queuer_.Parent := Self;
 end;
 
-/////////////////////////////////////////////////////////////////////// イベント
+////////////////////////////////////////////////////////////////////// E V E N T
 
 procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChildr( const Childr_:TCLQueuer_ );
 begin
