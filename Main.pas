@@ -195,7 +195,7 @@ begin
 
      _Buildr := TCLBuildr.Create( _Execut, _Device );                         // 生成
 
-     if not Assigned( _Buildr.Handle ) then Exit; { _Buildr is Error! }       // 検証
+     if not _Buildr.BuildOK then Exit; { _Buildr is Error! }                  // 検証
 
      ////////// KERNEL
 
