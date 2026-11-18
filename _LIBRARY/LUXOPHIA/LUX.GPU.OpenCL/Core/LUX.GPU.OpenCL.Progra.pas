@@ -335,18 +335,18 @@ end;
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :T_cl_program;
 begin
-     if not Assigned( _Handle ) then CreateHandle;
+     if not Assigned( _Handle ) and ( _CompileStatus = CL_BUILD_NONE ) then CreateHandle;  // 成功も失敗も、作り直しが求められるまで保つ
 
      Result := _Handle;
 end;
 
 procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T_cl_program );
 begin
-     if _Handle = Handle_ then Exit;
-
-     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLBuildr.DestroHandle is Error!' );
+     if Assigned( _Handle ) and ( _Handle <> Handle_ ) then CheckCL( DestroHandle, 'TCLBuildr.DestroHandle is Error!' );
 
      _Handle := Handle_;
+
+     if not Assigned( _Handle ) then _CompileStatus := CL_BUILD_NONE;  // 作り直しが求められたので、失敗の結果も捨てる
 end;
 
 //------------------------------------------------------------------------------
