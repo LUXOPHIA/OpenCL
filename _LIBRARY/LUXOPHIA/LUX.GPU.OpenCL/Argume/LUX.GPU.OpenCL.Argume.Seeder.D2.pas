@@ -183,14 +183,13 @@ begin
           Add( '}' );
      end;
 
-     //with _Execut.BuildTo( Queuer.Device ) do Assert( Assigned( Handle ), CompileLog );
-
      _MakerY.Parames['Seeder'] := Self;
      _MakerX.Parames['Seeder'] := Self;
 end;
 
 destructor TCLSeeder2D<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
+     _Execut.Free;  // 種を作るための実行プログラム（カーネルは、その持ち物）
 
      inherited;
 end;

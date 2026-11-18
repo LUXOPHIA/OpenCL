@@ -188,14 +188,13 @@ begin
           Add( '}' );
      end;
 
-     //with _Execut.BuildTo( Queuer.Device ) do Assert( Assigned( Handle ), CompileLog );
-
      _MakerZ .Parames['Seeder'] := Self;
      _MakerYX.Parames['Seeder'] := Self;
 end;
 
 destructor TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
+     _Execut.Free;  // 種を作るための実行プログラム（カーネルは、その持ち物）
 
      inherited;
 end;
