@@ -82,6 +82,8 @@ function TCLSeeder3D<TCLSystem_,TCLPlatfo_,TCLContex_>.CreateHandle :T_cl_int;
 begin
      Result := inherited;
 
+     if Result <> CL_SUCCESS then Exit;
+
      Fill( TUInt32xRGBA.Create( Random( Int32.MaxValue ) + 1,
                                 Random( Int32.MaxValue ) + 1,
                                 Random( Int32.MaxValue ) + 1,
