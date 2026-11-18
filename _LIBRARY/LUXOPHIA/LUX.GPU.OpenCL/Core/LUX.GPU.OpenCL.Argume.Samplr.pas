@@ -123,7 +123,7 @@ begin
 
      Result := clReleaseSampler( _Handle );
 
-     if Result = CL_SUCCESS then _Handle := nil;
+     _Handle := nil;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public

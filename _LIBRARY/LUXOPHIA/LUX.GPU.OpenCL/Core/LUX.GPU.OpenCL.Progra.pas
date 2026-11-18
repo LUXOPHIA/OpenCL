@@ -496,7 +496,7 @@ begin
 
      Result := clReleaseProgram( _Handle );
 
-     if Result = CL_SUCCESS then _Handle := nil;
+     _Handle := nil;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -746,7 +746,7 @@ function TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.DestroHandle :T
 begin
      Result := clReleaseProgram( _Handle );
 
-     if Result = CL_SUCCESS then _Handle := nil;
+     _Handle := nil;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public

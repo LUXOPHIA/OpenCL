@@ -192,7 +192,7 @@ begin
 
      Result := clReleaseMemObject( _Handle );
 
-     if Result = CL_SUCCESS then _Handle := nil;
+     _Handle := nil;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -290,7 +290,7 @@ function TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
      Result := clEnqueueUnmapMemObject( Queuer.Handle, Memory.Handle, _Handle, 0, nil, nil );
 
-     if Result = CL_SUCCESS then _Handle := nil;  // 解除できたときだけ、マップしていない状態にする
+     _Handle := nil;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
