@@ -467,22 +467,24 @@ end;
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.CreateHandle :T_cl_int;
 begin
+     _LinkStatus := CL_BUILD_NONE;
+     _LinkLog    := '';
+
      Result := Compile;
 
-     if Result = CL_SUCCESS then
-     begin
-          Result := Link;
+     if Result <> CL_SUCCESS then Exit;
 
-          if Result = CL_SUCCESS then
-          begin
-               _LinkStatus := GetInfo<T_cl_build_status>( _Handle, CL_PROGRAM_BUILD_STATUS );
-               _LinkLog    := GetInfoString             ( _Handle, CL_PROGRAM_BUILD_LOG    );
-          end
-          else
-          begin
-               _LinkStatus := CL_BUILD_NONE;
-               _LinkLog    := '';
-          end;
+     Result := Link;
+
+     if Assigned( _Handle ) then  // 失敗しても、プログラムが返れば、ログを読める
+     begin
+          _LinkStatus := GetInfo<T_cl_build_status>( _Handle, CL_PROGRAM_BUILD_STATUS );
+          _LinkLog    := GetInfoString             ( _Handle, CL_PROGRAM_BUILD_LOG    );
+     end
+     else
+     begin
+          _LinkStatus := CL_BUILD_ERROR;
+          _LinkLog    := ErrorToMessage( Result );
      end;
 end;
 
