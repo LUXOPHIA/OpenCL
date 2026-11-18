@@ -39,7 +39,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Argumes :TCLArgumes_  read GetParent                ;
        property Handle  :T_cl_sampler read GetHandle write SetHandle;
        ///// M E T H O D
-       procedure FreeHandle;
+       procedure FreeHandle; override;
      end;
 
 //const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C O N S T A N T 】

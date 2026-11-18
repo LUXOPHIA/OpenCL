@@ -55,7 +55,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Size   :T_size_t       read GetSize                  ;
        property Queuer :TCLQueuer_     read GetQueuer write SetQueuer;
        ///// M E T H O D
-       procedure FreeHandle;
+       procedure FreeHandle; override;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>

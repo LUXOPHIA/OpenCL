@@ -37,6 +37,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Argumes :TCLArgumes_ read GetParent;
        property HanPtr  :P_void      read GetHanPtr;
        property HanSiz  :T_size_t    read GetHanSiz;
+       ///// M E T H O D
+       procedure FreeHandle; virtual; abstract;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>

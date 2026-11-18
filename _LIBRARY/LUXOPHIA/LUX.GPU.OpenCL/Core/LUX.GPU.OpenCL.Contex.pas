@@ -28,9 +28,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLContexs_ = TCLContexs<TCLSystem_,TCLPlatfo_>;
             TCLContex_  = TCLContex <TCLSystem_,TCLPlatfo_>;
             TCLQueuers_ = TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLQueuer_  = TCLQueuer <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLArgumes_ = TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLArgume_  = TCLArgume <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLLibrars_ = TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLLibrar_  = TCLLibrar <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLExecuts_ = TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLExecut_  = TCLExecut <TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
        _Queuers :TCLQueuers_;
        _Handle  :T_cl_context;
@@ -130,7 +134,17 @@ begin
 end;
 
 function TCLContex<TCLSystem_,TCLPlatfo_>.DestroHandle :T_cl_int;
+var
+   E :TCLExecut_;
+   L :TCLLibrar_;
+   A :TCLArgume_;
+   Q :TCLQueuer_;
 begin
+     for E in _Executs do E.FreeHandle;  // 子は親のハンドルの上に作られているので、親より先に手放す
+     for L in _Librars do L.FreeHandle;
+     for A in _Argumes do A.FreeHandle;  // マップの解除にキューを使うので、キューより先
+     for Q in _Queuers do Q.FreeHandle;
+
      Result := clReleaseContext( _Handle );
 
      if Result = CL_SUCCESS then _Handle := nil;
@@ -157,12 +171,12 @@ end;
 
 destructor TCLContex<TCLSystem_,TCLPlatfo_>.Destroy;
 begin
+     FreeHandle;  // DestroHandle が子の一覧を使うので、一覧より先に手放す
+
      _Executs.Free;
      _Librars.Free;
      _Argumes.Free;
      _Queuers.Free;
-
-     FreeHandle;
 
      inherited;
 end;
