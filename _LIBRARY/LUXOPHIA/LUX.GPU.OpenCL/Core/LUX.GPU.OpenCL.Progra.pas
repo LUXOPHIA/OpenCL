@@ -38,6 +38,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             TCLLibrar_  = TCLLibrar <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLExecut_  = TCLExecut <TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLBuildrs_ = TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLKernel_  = TCLKernel <TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
        ///// M E T H O D
        function GetInfo<_TYPE_>( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :_TYPE_;
        function GetInfoSize( const Handle_:T_cl_program; const Name_:T_cl_program_build_info ) :T_size_t;
@@ -373,6 +374,10 @@ end;
 
 procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetVersion( const Version_:TCLVersion );
 begin
+     if _Version = Version_ then Exit;
+
+     Handle := nil;
+
      _Version := Version_;
 end;
 
@@ -471,7 +476,11 @@ begin
 end;
 
 function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
+var
+   K :TCLKernel_;
 begin
+     for K in Execut.Kernels do K.FreeHandle;  // このビルドから作ったカーネルを残さない
+
      Result := clReleaseProgram( _Handle );
 
      if Result = CL_SUCCESS then _Handle := nil;
@@ -812,10 +821,10 @@ end;
 
 destructor TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
-     FreeHandle;  // DestroHandle が _Kernels と _Buildrs を使うので、両方より先に手放す
+     FreeHandle;     // DestroHandle が _Kernels と _Buildrs を使うので、両方より先に手放す
 
+     _Buildrs.Free;  // ビルドを手放すときにカーネルを使うので、カーネルより先に解放する
      _Kernels.Free;
-     _Buildrs.Free;
 
      inherited;
 end;
