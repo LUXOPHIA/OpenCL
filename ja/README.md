@@ -35,9 +35,7 @@ OpenCL [1][2] は異種混在の計算資源を厳密な階層構造として編
 
 カーネルは **NDRange**、すなわち最大３次元の**ワークアイテム**格子として実行され、各ワークアイテムは自分の座標に対して同じカーネル関数を実行します。格子は**ワークグループ**に分割されます。次元 $d \in \{0,1,2\}$ におけるグローバルサイズを $G_d$、ワークグループサイズを $L_d$、ワークグループ番号を $w_d$、ローカル番号を $l_d$ とすると、ワークアイテムのグローバル番号は
 
-```math
-g_d = w_d \cdot L_d + l_d , \qquad 0 \le g_d < G_d .
-```
+$$g_d = w_d \cdot L_d + l_d , \qquad 0 \le g_d < G_d .$$
 
 カーネル内では $g_d$ と $G_d$ を `get_global_id(d)` と `get_global_size(d)` で取得します。ラッパーはグローバルサイズを `TCLKernel` の `GloSizX`/`GloSizY`/`GloSizZ` プロパティとして公開しており、概念的には「全反復が並列に走る三重ループ」に相当します。本デモでは NDRange を出力画像の解像度 $G = (500, 500)$ に設定するため、各ワークアイテムがちょうど１ピクセルを計算します。
 
@@ -53,28 +51,19 @@ g_d = w_d \cdot L_d + l_d , \qquad 0 \le g_d < G_d .
 
 カーネル `Main`（[`_DATA/Execut.cl`](../_DATA/Execut.cl)、複素数演算ライブラリ [`_DATA/Librar.cl`](../_DATA/Librar.cl) を使用）はマンデルブロ集合を描画します。各ワークアイテムはまず、格子サイズ $s = (s_x, s_y)$ 内の自ピクセル座標 $p = (p_x, p_y)$ を、表示領域の中心 $C$ と半径サイズ $S$ を用いて複素平面上の点 $c$ へ写像します。
 
-```math
-c_R = C_R + S_R \left( \frac{2\,(p_x + 0.5)}{s_x} - 1 \right), \qquad
-c_I = C_I - S_I \left( \frac{2\,(p_y + 0.5)}{s_y} - 1 \right).
-```
+$$c_R = C_R + S_R \left( \frac{2 (p_x + 0.5)}{s_x} - 1 \right), \qquad c_I = C_I - S_I \left( \frac{2 (p_y + 0.5)}{s_y} - 1 \right).$$
 
 次に２次写像
 
-```math
-z_{n+1} = z_n^2 + c , \qquad z_0 = 0
-```
+$$z_{n+1} = z_n^2 + c , \qquad z_0 = 0$$
 
 を、$\lvert z_n \rvert > 2$（発散）または反復上限 $N_{\max} = 1000$ に達するまで反復します。縞模様（バンディング）を避けるため、発散回数は連続値へ平滑化されます。
 
-```math
-\nu = n + 1 - \log \left( \log_2 \lvert z_n \rvert \right).
-```
+$$\nu = n + 1 - \log \left( \log_2 \lvert z_n \rvert \right).$$
 
 ピクセル色は、正規化座標
 
-```math
-t = \sqrt{ \nu / N_{\max} }
-```
+$$t = \sqrt{ \nu / N_{\max} }$$
 
 を用いて 1D グラデーションテクスチャ（`_DATA/Textur.png`）から `read_imagef( Textur, Samplr, t )` で取得され、`write_imagef` で出力イメージへ書き込まれます。
 

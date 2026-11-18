@@ -35,9 +35,7 @@ OpenCL [1][2] organizes heterogeneous computing resources into a strict hierarch
 
 A kernel is executed as an **NDRange**: an up to 3-dimensional grid of **work-items**, each running the same kernel function on its own coordinates. The grid is partitioned into **work-groups**. With global size $G_d$, work-group size $L_d$, work-group index $w_d$ and local index $l_d$ in dimension $d \in \{0,1,2\}$, the global index of a work-item is
 
-```math
-g_d = w_d \cdot L_d + l_d , \qquad 0 \le g_d < G_d .
-```
+$$g_d = w_d \cdot L_d + l_d , \qquad 0 \le g_d < G_d .$$
 
 Inside the kernel, $g_d$ and $G_d$ are obtained via `get_global_id(d)` and `get_global_size(d)`. The wrapper exposes the global size as the properties `GloSizX`/`GloSizY`/`GloSizZ` of `TCLKernel` — conceptually a triple loop whose iterations all run in parallel. In this demo the NDRange is set to the output image resolution, $G = (500, 500)$, so each work-item computes exactly one pixel.
 
@@ -53,28 +51,19 @@ Host and device have separate memories. The library wraps the three OpenCL argum
 
 The kernel `Main` in [`_DATA/Execut.cl`](_DATA/Execut.cl) (using the complex-arithmetic library [`_DATA/Librar.cl`](_DATA/Librar.cl)) renders the Mandelbrot set. Each work-item first maps its pixel coordinate $p = (p_x, p_y)$ within the grid $s = (s_x, s_y)$ to a point $c$ of the complex plane, given the view center $C$ and half-size $S$:
 
-```math
-c_R = C_R + S_R \left( \frac{2\,(p_x + 0.5)}{s_x} - 1 \right), \qquad
-c_I = C_I - S_I \left( \frac{2\,(p_y + 0.5)}{s_y} - 1 \right).
-```
+$$c_R = C_R + S_R \left( \frac{2 (p_x + 0.5)}{s_x} - 1 \right), \qquad c_I = C_I - S_I \left( \frac{2 (p_y + 0.5)}{s_y} - 1 \right).$$
 
 It then iterates the quadratic map
 
-```math
-z_{n+1} = z_n^2 + c , \qquad z_0 = 0
-```
+$$z_{n+1} = z_n^2 + c , \qquad z_0 = 0$$
 
 until $\lvert z_n \rvert > 2$ (escape) or the iteration limit $N_{\max} = 1000$ is reached. To avoid banding, the escape count is smoothed to a continuous value
 
-```math
-\nu = n + 1 - \log \left( \log_2 \lvert z_n \rvert \right),
-```
+$$\nu = n + 1 - \log \left( \log_2 \lvert z_n \rvert \right),$$
 
 and the pixel color is fetched from a 1D gradient texture (`_DATA/Textur.png`) at the normalized coordinate
 
-```math
-t = \sqrt{ \nu / N_{\max} }
-```
+$$t = \sqrt{ \nu / N_{\max} }$$
 
 via `read_imagef( Textur, Samplr, t )`, then written to the output image with `write_imagef`.
 
