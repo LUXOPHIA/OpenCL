@@ -797,10 +797,11 @@ end;
 function TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 var
    K :TCLKernel_;
+   B :TCLBuildr_;
 begin
-     for K in _Kernels do K.FreeHandle;  // 古いプログラムから作ったカーネルを残さない
+     for K in _Kernels do K.FreeHandle;     // 古いプログラムから作ったカーネルを残さない
 
-     _Buildrs.Clear;
+     for B in _Buildrs do B.Handle := nil;  // ビルドの結果だけを捨てる（オブジェクトと、その設定は残す）
 
      Result := inherited;
 end;
