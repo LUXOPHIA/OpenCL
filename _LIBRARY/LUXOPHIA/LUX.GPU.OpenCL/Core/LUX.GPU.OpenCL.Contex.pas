@@ -171,10 +171,10 @@ end;
 
 destructor TCLContex<TCLSystem_,TCLPlatfo_>.Destroy;
 begin
-     FreeHandle;  // DestroHandle が子の一覧を使うので、一覧より先に手放す
+     FreeHandle;     // DestroHandle が子の一覧を使うので、一覧より先に手放す
 
+     _Librars.Free;  // ライブラリを外す通知が実行プログラムを使うので、先に解放する
      _Executs.Free;
-     _Librars.Free;
      _Argumes.Free;
      _Queuers.Free;
 

@@ -205,7 +205,11 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
        type TCLLibrars_ = TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLExecuts_ = TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLExecut_  = TCLExecut <TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
+       ///// M E T H O D
+       function DestroHandle :T_cl_int; override;
      public
        constructor Create( const Contex_:TCLContex_ ); overload; virtual;
        ///// P R O P E R T Y
@@ -254,8 +258,13 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TCLProgras<TCLSystem_,TCLPlatfo_,TCLContex_,TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
-       type TCLLibrar_ = TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_>;
+       type TCLLibrar_  = TCLLibrar <TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLExecuts_ = TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLExecut_  = TCLExecut <TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
+       ///// E V E N T
+       procedure OnInsertChildr( const Childr_:TCLLibrar_ ); override;
+       procedure OnRemoveChildr( const Childr_:TCLLibrar_ ); override;
      public
        ///// M E T H O D
        function Add :TCLLibrar_; overload;
@@ -749,6 +758,17 @@ end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+function TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
+var
+   E :TCLExecut_;
+begin
+     for E in TCLExecuts_( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Executs ) do E.FreeHandle;  // このライブラリをリンクしたビルドとカーネルを作り直させる
+
+     Result := inherited;
+end;
+
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
 constructor TCLLibrar<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Contex_:TCLContex_ );
@@ -820,6 +840,26 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+////////////////////////////////////////////////////////////////////// E V E N T
+
+procedure TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChildr( const Childr_:TCLLibrar_ );
+var
+   E :TCLExecut_;
+begin
+     inherited;
+
+     for E in TCLExecuts_( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Executs ) do E.FreeHandle;  // ライブラリの組が変わったので、ビルドし直させる
+end;
+
+procedure TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChildr( const Childr_:TCLLibrar_ );
+var
+   E :TCLExecut_;
+begin
+     inherited;
+
+     for E in TCLExecuts_( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Executs ) do E.FreeHandle;  // ライブラリの組が変わったので、ビルドし直させる
+end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 
