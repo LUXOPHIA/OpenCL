@@ -178,6 +178,8 @@ end;
 
 function TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
+     _Data.Unmap;  // マップは本体の上に乗っているので、本体より先に解除する
+
      Result := clReleaseMemObject( _Handle );
 
      _Handle := nil;
@@ -206,9 +208,9 @@ end;
 
 destructor TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
 begin
-     _Data.Free;
-
      FreeHandle;
+
+     _Data.Free;
 
      inherited;
 end;

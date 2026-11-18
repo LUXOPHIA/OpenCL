@@ -38,7 +38,6 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        function CreateHandle :T_cl_int; override;
      public
        constructor Create; override;
-       destructor Destroy; override;
        ///// P R O P E R T Y
        property Data  :TCLBufDat_ read GetData                ;
        property Count :Integer    read GetCount write SetCount;
@@ -139,13 +138,6 @@ begin
      inherited;
 
      _Count := 1;
-end;
-
-destructor TCLBuffer<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>.Destroy;
-begin
-     FreeHandle;
-
-     inherited;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBufDat<TCLSystem_,TCLPlatfo_,TCLContex_,TValue_>
