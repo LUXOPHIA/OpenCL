@@ -304,7 +304,7 @@ The argument classes form the following inheritance tree:
 
 ##### 4.2.5.1. Memory
 
-The "**memory**" object (`TCLMemory`) stores various data and shares it with the **device**. The `TCLMemory` class is created from the `TCLContex` and the `TCLQueuer` classes. The `TCLMemory` class is abstract and derives the `TCLBuffer` and `TCLImager` classes.
+The "**memory**" object (`TCLMemory`) stores various data and shares it with the **device**. The `TCLMemory` class is created with the `TCLQueuer` class as an argument, and belongs to the **context** of that **command queue**. The `TCLMemory` class is abstract and derives the `TCLBuffer` and `TCLImager` classes.
 
 **Buffer**: The `TCLBuffer` class stores an array of any "simple type" or "record type."
 
@@ -334,7 +334,7 @@ generate the `TCLBuffer` class as follows.
 > _Buffer := TCLBuffer<TItem>.Create( _Queuer );
 > ```
 
-Read and write array data through the `Data` property. The array data must be "**map**ped" to synchronize with the host before reading or writing, and "**unmap**ped" to synchronize with the device after use.
+Read and write array data through the `Data` property. The array data must be "**map**ped" to synchronize with the host before reading or writing, and "**unmap**ped" to synchronize with the device after use. The `Data` property itself is read-only: the data view belongs to the **buffer** and is never replaced.
 
 > `Object Pascal`
 > ```Delphi
@@ -439,15 +439,15 @@ A "**build**" (`TCLBuildr`) is an "action" performed by a **program**, but it is
 > _Buildr := _Execut.BuildTo( _Device );
 > ```
 
-The **kernel** object (see section 4.2.8.) automatically creates the `TCLBuildr` class at runtime. However, you can check for compilation and linking errors by creating a `TCLBuildr` object before running the kernel.
+The **kernel** object (see section 4.2.8.) automatically creates the `TCLBuildr` class at runtime. However, you can check for compilation and linking errors before running the kernel, by reading the `BuildOK` property of a `TCLBuildr` object. Reading it runs the build if it has not been run yet.
 
 > `Object Pascal`
 > ```Delphi
-> _Buildr.Handle;  // Run build
->
-> _Buildr.BuildOK  :Boolean  // Whether both compile and link succeeded
+> _Buildr.BuildOK  :Boolean  // Whether both compile and link succeeded (runs the build)
 > _Buildr.BuildLog :String   // The compile and link logs
 > ```
+
+If the build has failed, reading the `Handle` property of the `TCLBuildr` class, or running the **kernel**, raises the `ECLError` exception.
 
 #### 4.2.8. Kernel
 
@@ -478,6 +478,14 @@ The `TCLKernel` class is instantiated from the `TCLExecut` and `TCLQueuer` objec
 > _Kernel.Parames['Samplr'] := _Samplr;  // Connect to sampler
 > ```
 
+Whether the parameters agree with the source code can be checked with the `FindsOK` and `BindsOK` properties.
+
+> `Object Pascal`
+> ```Delphi
+> _Kernel.Parames.FindsOK :Boolean  // Whether every argument of the kernel has a parameter of the same name
+> _Kernel.Parames.BindsOK :Boolean  // Whether every argument has been passed to the kernel
+> ```
+
 **Loop Count**: The OpenCL program repeatedly runs like a triple loop-statement.
 
 > `Object Pascal`
@@ -506,6 +514,20 @@ You can also specify the minimum and maximum loop indices.
 > ```Delphi
 > _Kernel.Run;  // Run
 > ```
+
+#### 4.2.9. Handle
+
+Each object creates its OpenCL handle when the `Handle` property is first read, and releases it when a property it was created from is changed. The handles created from it are released together, and are created again when they are needed. Therefore, the properties can be set in any order and changed at any time.
+
+> `Object Pascal`
+> ```Delphi
+> _Buffer.Count := 1000;                    // The buffer is released
+> _Execut.Source.LoadFromFile( 'New.cl' );  // The program, its builds and its kernels are released
+>
+> _Kernel.Run;                              // Everything is created again, and then run
+> ```
+
+If a handle cannot be created, the `ECLError` exception (declared in the `LUX.GPU.OpenCL.core` unit) is raised with the reason.
 
 ## 5. Building
 
