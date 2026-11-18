@@ -138,7 +138,7 @@ procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T
 begin
      if _Handle = Handle_ then Exit;
 
-     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLMemory.DestroHandle is Error!' );
+     FreeHandle;
 
      _Handle := Handle_;
 end;
@@ -279,7 +279,7 @@ procedure TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:P
 begin
      if _Handle = Handle_ then Exit;
 
-     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLMemDat.DestroHandle is Error!' );
+     FreeHandle;
 
      _Handle := Handle_;
 end;

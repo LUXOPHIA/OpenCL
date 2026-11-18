@@ -110,7 +110,7 @@ procedure TCLContex<TCLSystem_,TCLPlatfo_>.SetHandle( const Handle_:T_cl_context
 begin
      if _Handle = Handle_ then Exit;
 
-     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLContex.DestroHandle is Error!' );
+     FreeHandle;
 
      _Handle := Handle_;
 end;

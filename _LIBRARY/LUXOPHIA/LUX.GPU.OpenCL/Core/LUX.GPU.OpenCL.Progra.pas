@@ -345,11 +345,11 @@ end;
 
 procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T_cl_program );
 begin
-     if Assigned( _Handle ) and ( _Handle <> Handle_ ) then CheckCL( DestroHandle, 'TCLBuildr.DestroHandle is Error!' );
+     if _Handle = Handle_ then Exit;
+
+     FreeHandle;
 
      _Handle := Handle_;
-
-     if not Assigned( _Handle ) then _CompileStatus := CL_BUILD_NONE;  // 作り直しが求められたので、失敗の結果も捨てる
 end;
 
 //------------------------------------------------------------------------------
@@ -365,7 +365,7 @@ var
 begin
      if _Device = Device_ then Exit;
 
-     Handle := nil;
+     FreeHandle;
 
      P := Buildrs;
 
@@ -387,7 +387,7 @@ procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetVersion( const Version_
 begin
      if _Version = Version_ then Exit;
 
-     Handle := nil;
+     FreeHandle;
 
      _Version := Version_;
 end;
@@ -538,6 +538,8 @@ end;
 procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.FreeHandle;
 begin
      if Assigned( _Handle ) then DestroHandle;
+
+     _CompileStatus := CL_BUILD_NONE;  // 失敗の結果も捨てて、次に読まれたときにビルドし直させる
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>
@@ -575,7 +577,7 @@ procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChildr( const Chi
 begin
      inherited;
 
-     Childr_.Handle := nil;  // ハンドルは親の上に作られているので、外れる前に手放す
+     Childr_.FreeHandle;  // ハンドルは親の上に作られているので、外れる前に手放す
 
      _DevBuis.Remove( Childr_.Device );
 end;
@@ -705,7 +707,7 @@ procedure TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.SetHandle( con
 begin
      if _Handle = Handle_ then Exit;
 
-     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLProgra.DestroHandle is Error!' );
+     FreeHandle;
 
      _Handle := Handle_;
 end;
@@ -813,9 +815,9 @@ var
    K :TCLKernel_;
    B :TCLBuildr_;
 begin
-     for K in _Kernels do K.FreeHandle;     // 古いプログラムから作ったカーネルを残さない
+     for K in _Kernels do K.FreeHandle;  // 古いプログラムから作ったカーネルを残さない
 
-     for B in _Buildrs do B.Handle := nil;  // ビルドの結果だけを捨てる（オブジェクトと、その設定は残す）
+     for B in _Buildrs do B.FreeHandle;  // ビルドの結果だけを捨てる（オブジェクトと、その設定は残す）
 
      Result := inherited;
 end;

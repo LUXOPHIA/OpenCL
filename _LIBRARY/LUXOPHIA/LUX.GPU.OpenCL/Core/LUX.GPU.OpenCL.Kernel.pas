@@ -561,7 +561,7 @@ procedure TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.SetHandle( cons
 begin
      if _Handle = Handle_ then Exit;
 
-     if Assigned( _Handle ) then CheckCL( DestroHandle, 'TCLKernel.DestroHandle is Error!' );
+     FreeHandle;
 
      _Handle := Handle_;
 end;
