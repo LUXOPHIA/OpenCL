@@ -169,9 +169,11 @@ end;
 
 procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.SetQueuer( const Queuer_:TCLQueuer_ );
 begin
-     _Queuer := Queuer_;
+     if _Queuer = Queuer_ then Exit;
 
      Data.Handle := nil;
+
+     _Queuer := Queuer_;
 end;
 
 //////////////////////////////////////////////////////////////////// M E T H O D
@@ -251,9 +253,9 @@ procedure TCLMemDat<TCLSystem_,TCLPlatfo_,TCLContex_>.SetMode( const Mode_:T_cl_
 begin
      if _Mode = Mode_ then Exit;
 
-     _Mode := Mode_;
-
      Handle := nil;
+
+     _Mode := Mode_;
 end;
 
 //------------------------------------------------------------------------------
