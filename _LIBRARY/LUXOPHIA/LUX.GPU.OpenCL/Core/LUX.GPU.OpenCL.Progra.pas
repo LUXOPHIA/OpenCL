@@ -358,12 +358,20 @@ begin
 end;
 
 procedure TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.SetDevice( const Device_:TCLDevice_ );
+var
+   P :TCLBuildrs_;
 begin
      if _Device = Device_ then Exit;
 
      Handle := nil;
 
+     P := Buildrs;
+
+     Parent := nil;  // 古いデバイスの登録から外す
+
      _Device := Device_;
+
+     Parent := P;    // 新しいデバイスで登録し直す
 end;
 
 //------------------------------------------------------------------------------
