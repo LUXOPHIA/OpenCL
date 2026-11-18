@@ -78,7 +78,7 @@ end;
 
 function TCLSeeder1D<TCLSystem_,TCLPlatfo_,TCLContex_>.CreateHandle :T_cl_int;
 begin
-     inherited;
+     Result := inherited;
 
      Fill( TUInt32xRGBA.Create( Random( Int32.MaxValue ) + 1,
                                 Random( Int32.MaxValue ) + 1,
