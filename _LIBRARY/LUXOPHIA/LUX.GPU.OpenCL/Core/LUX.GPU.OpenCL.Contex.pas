@@ -133,7 +133,7 @@ function TCLContex<TCLSystem_,TCLPlatfo_>.DestroHandle :T_cl_int;
 begin
      Result := clReleaseContext( _Handle );
 
-     _Handle := nil;
+     if Result = CL_SUCCESS then _Handle := nil;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public

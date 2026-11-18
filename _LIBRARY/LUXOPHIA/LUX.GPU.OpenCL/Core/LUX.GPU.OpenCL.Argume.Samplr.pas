@@ -121,7 +121,7 @@ function TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
      Result := clReleaseSampler( _Handle );
 
-     _Handle := nil;
+     if Result = CL_SUCCESS then _Handle := nil;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public

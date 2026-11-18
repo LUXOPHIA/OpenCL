@@ -465,7 +465,7 @@ function TCLBuildr<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
      Result := clReleaseProgram( _Handle );
 
-     _Handle := nil;
+     if Result = CL_SUCCESS then _Handle := nil;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -713,7 +713,7 @@ function TCLProgra<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgras_>.DestroHandle :T
 begin
      Result := clReleaseProgram( _Handle );
 
-     _Handle := nil;
+     if Result = CL_SUCCESS then _Handle := nil;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public

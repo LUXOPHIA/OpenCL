@@ -762,7 +762,7 @@ function TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.DestroHandle :T_
 begin
      Result := clReleaseKernel( _Handle );
 
-     _Handle := nil;
+     if Result = CL_SUCCESS then _Handle := nil;
 
      _Parames.FindsOK := False;  // 引数はカーネルのハンドルごとに渡すので、新しいハンドルには渡し直す
 end;

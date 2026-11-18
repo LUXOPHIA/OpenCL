@@ -182,7 +182,7 @@ begin
 
      Result := clReleaseMemObject( _Handle );
 
-     _Handle := nil;
+     if Result = CL_SUCCESS then _Handle := nil;
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
