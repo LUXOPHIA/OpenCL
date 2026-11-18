@@ -119,6 +119,8 @@ end;
 
 function TCLSamplr<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
+     TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).FreeBinds;  // このサンプラーを渡したカーネルに、渡し直させる
+
      Result := clReleaseSampler( _Handle );
 
      if Result = CL_SUCCESS then _Handle := nil;

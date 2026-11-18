@@ -243,6 +243,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Kernels :TCLKernels_ read   _Kernels;
        ///// M E T H O D
        function BuildTo( const Device_:TCLDevice_ ) :TCLBuildr_;
+       procedure FreeBinds;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgras<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgra_>
@@ -834,6 +835,13 @@ end;
 function TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.BuildTo( const Device_:TCLDevice_ ) :TCLBuildr_;
 begin
      Result := Buildrs[ Device_ ];
+end;
+
+procedure TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>.FreeBinds;
+var
+   K :TCLKernel_;
+begin
+     for K in _Kernels do K.Parames.BindsOK := False;  // 次に実行するときに、今のハンドルで引数を渡し直させる
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLProgras<TCLSystem_,TCLPlatfo_,TCLContex_,TCLProgra_>

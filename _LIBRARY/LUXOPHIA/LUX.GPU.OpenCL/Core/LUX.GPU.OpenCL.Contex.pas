@@ -61,6 +61,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        property Executs :TCLExecuts_  read   _Executs                ;
        ///// M E T H O D
        procedure FreeHandle;
+       procedure FreeBinds;
      end;
 
      //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLSystem_,TCLPlatfo_>
@@ -186,6 +187,13 @@ end;
 procedure TCLContex<TCLSystem_,TCLPlatfo_>.FreeHandle;
 begin
      if Assigned( _Handle ) then DestroHandle;
+end;
+
+procedure TCLContex<TCLSystem_,TCLPlatfo_>.FreeBinds;
+var
+   E :TCLExecut_;
+begin
+     for E in _Executs do E.FreeBinds;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLContexs<TCLSystem_,TCLPlatfo_>

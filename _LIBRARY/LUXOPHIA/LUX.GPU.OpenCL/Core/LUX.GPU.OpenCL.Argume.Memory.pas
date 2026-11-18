@@ -101,6 +101,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
+uses LUX.GPU.OpenCL.Contex;
+
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
@@ -184,7 +186,9 @@ end;
 
 function TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
 begin
-     _Data.Unmap;  // マップは本体の上に乗っているので、本体より先に解除する
+     _Data.Unmap;                                           // マップは本体の上に乗っているので、本体より先に解除する
+
+     TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).FreeBinds;  // このメモリを渡したカーネルに、渡し直させる
 
      Result := clReleaseMemObject( _Handle );
 
