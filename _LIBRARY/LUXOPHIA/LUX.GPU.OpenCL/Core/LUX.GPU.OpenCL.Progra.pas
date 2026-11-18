@@ -278,6 +278,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      private
        type TCLExecut_ = TCLExecut<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
+       ///// E V E N T
+       procedure OnRemoveChildr( const Childr_:TCLExecut_ ); override;
      public
        ///// M E T H O D
        function Add :TCLExecut_; overload;
@@ -570,6 +572,8 @@ end;
 procedure TCLBuildrs<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChildr( const Childr_:TCLBuildr_ );
 begin
      inherited;
+
+     Childr_.Handle := nil;  // ハンドルは親の上に作られているので、外れる前に手放す
 
      _DevBuis.Remove( Childr_.Device );
 end;
@@ -879,12 +883,10 @@ begin
 end;
 
 procedure TCLLibrars<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChildr( const Childr_:TCLLibrar_ );
-var
-   E :TCLExecut_;
 begin
      inherited;
 
-     for E in TCLExecuts_( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Executs ) do E.FreeHandle;  // ライブラリの組が変わったので、ビルドし直させる
+     Childr_.FreeHandle;  // ハンドルは親の上に作られているので、外れる前に手放す（リンクしたビルドにも、そこから伝わる）
 end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
@@ -901,6 +903,15 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+////////////////////////////////////////////////////////////////////// E V E N T
+
+procedure TCLExecuts<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChildr( const Childr_:TCLExecut_ );
+begin
+     inherited;
+
+     Childr_.FreeHandle;  // ハンドルは親の上に作られているので、外れる前に手放す
+end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 

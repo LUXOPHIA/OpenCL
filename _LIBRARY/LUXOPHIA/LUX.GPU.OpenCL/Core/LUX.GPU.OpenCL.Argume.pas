@@ -45,7 +45,10 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
      TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TListParent<TCLContex_,TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_>> )
      private
+       type TCLArgume_ = TCLArgume<TCLSystem_,TCLPlatfo_,TCLContex_>;
      protected
+       ///// E V E N T
+       procedure OnRemoveChildr( const Childr_:TCLArgume_ ); override;
      public
        ///// P R O P E R T Y
        property Contex :TCLContex_ read GetOwnere;
@@ -95,6 +98,15 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+////////////////////////////////////////////////////////////////////// E V E N T
+
+procedure TCLArgumes<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChildr( const Childr_:TCLArgume_ );
+begin
+     inherited;
+
+     Childr_.FreeHandle;  // ハンドルは親の上に作られているので、外れる前に手放す
+end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 

@@ -217,6 +217,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        type TCLQueuer_ = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
             TCLKernel_ = TCLKernel<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>;
      protected
+       ///// E V E N T
+       procedure OnRemoveChildr( const Childr_:TCLKernel_ ); override;
      public
        ///// P R O P E R T Y
        property Execut :TCLExecut_ read GetOwnere;
@@ -842,6 +844,15 @@ end;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+////////////////////////////////////////////////////////////////////// E V E N T
+
+procedure TCLKernels<TCLSystem_,TCLPlatfo_,TCLContex_,TCLExecut_>.OnRemoveChildr( const Childr_:TCLKernel_ );
+begin
+     inherited;
+
+     Childr_.FreeHandle;  // ハンドルは親の上に作られているので、外れる前に手放す
+end;
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
 

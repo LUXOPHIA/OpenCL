@@ -226,6 +226,8 @@ procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChildr( const Chi
 begin
      inherited;
 
+     TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).FreeHandle;  // デバイスの組が変わるので、コンテキストを作り直させる（このキューのハンドルも、そこで手放される）
+
      _DevQues.Remove( Childr_.Device );
 end;
 
