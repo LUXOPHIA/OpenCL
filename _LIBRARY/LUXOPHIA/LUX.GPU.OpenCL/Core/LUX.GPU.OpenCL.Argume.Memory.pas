@@ -150,6 +150,10 @@ end;
 
 procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.SetKind( const Kind_:T_cl_mem_flags );
 begin
+     if _Kind = Kind_ then Exit;
+
+     Handle := nil;
+
      _Kind := Kind_;
 end;
 
