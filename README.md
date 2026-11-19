@@ -516,7 +516,7 @@ Each object creates its OpenCL handle when the `Handle` property is first read, 
 > _Kernel.Run;                              // Everything is created again, and then run
 > ```
 
-If a handle cannot be created, the `ECLError` exception (declared in the `LUX.GPU.OpenCL.core` unit) is raised with the reason.
+If a handle cannot be created, the `ECLError` exception is raised with the reason.
 
 ## 5. Building
 
