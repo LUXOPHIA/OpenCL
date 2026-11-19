@@ -27,8 +27,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      {protected}
      {public}
        ///// M E T H O D
-       procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap );
-       procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap );
+       procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); overload;
+       procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); overload;
      end;
 
      TCLStream3D_FMX<TCLImager_:class> = class( TCLStream2D_FMX<TCLImager_>, ICLStream3D_FMX<TCLImager_> )
@@ -36,6 +36,8 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      protected
      public
        ///// M E T H O D
+       procedure CopyTo( const Bitmap_:TBitmap ); overload; override;    // Z = 0 の層
+       procedure CopyFrom( const Bitmap_:TBitmap ); overload; override;  // Z = 0 の層
        procedure CopyTo( const Z_:Integer; const Bitmap_:TBitmap ); overload; virtual; abstract;
        procedure CopyFrom( const Z_:Integer; const Bitmap_:TBitmap ); overload; virtual; abstract;
      end;
@@ -113,6 +115,18 @@ uses System.Threading;
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+procedure TCLStream3D_FMX<TCLImager_>.CopyTo( const Bitmap_:TBitmap );
+begin
+     CopyTo( 0, Bitmap_ );
+end;
+
+procedure TCLStream3D_FMX<TCLImager_>.CopyFrom( const Bitmap_:TBitmap );
+begin
+     CopyFrom( 0, Bitmap_ );
+end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream3DxBGRAxUInt8_FMX
 
