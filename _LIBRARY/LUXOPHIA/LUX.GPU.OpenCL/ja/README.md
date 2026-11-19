@@ -286,10 +286,10 @@ end;
 
 ### 4.2 エラー処理と診断
 
-ハンドルを作れなかったときは、それが最初に必要になった時点で `ECLError` 例外を送出します。`Message` に OpenCL のエラー名が入り、`Code` プロパティで生のエラーコードを取得できます。`ECLError` は、ユニット `LUX.GPU.OpenCL.core` で宣言されています。
+ハンドルを作れなかったときは、それが最初に必要になった時点で `ECLError` 例外を送出します。`Message` に OpenCL のエラー名が入り、`Code` プロパティで生のエラーコードを取得できます。
 
 ```pascal
-uses LUX.GPU.OpenCL, LUX.GPU.OpenCL.core;
+uses LUX.GPU.OpenCL;
 
 try
    K.Run;

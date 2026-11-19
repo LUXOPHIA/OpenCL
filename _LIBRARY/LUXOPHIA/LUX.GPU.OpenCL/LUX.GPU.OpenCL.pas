@@ -22,6 +22,8 @@ uses System.Classes,
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
+     ECLError = LUX.GPU.OpenCL.core.ECLError;
+
      TOpenCL                       = class;
 
      TCLSystem                     = class;

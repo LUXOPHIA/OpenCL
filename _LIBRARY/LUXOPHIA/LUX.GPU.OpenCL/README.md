@@ -286,10 +286,10 @@ The compilation of the program happens lazily, the first time the kernel is actu
 
 ### 4.2 Error Handling and Diagnostics
 
-A handle that cannot be created raises an `ECLError` at the point where it is first needed. Its `Message` contains the OpenCL error name, and its `Code` property holds the raw error code. `ECLError` is declared in the unit `LUX.GPU.OpenCL.core`.
+A handle that cannot be created raises an `ECLError` at the point where it is first needed. Its `Message` contains the OpenCL error name, and its `Code` property holds the raw error code.
 
 ```pascal
-uses LUX.GPU.OpenCL, LUX.GPU.OpenCL.core;
+uses LUX.GPU.OpenCL;
 
 try
    K.Run;
