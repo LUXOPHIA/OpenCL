@@ -161,12 +161,13 @@ var
    B :TBitmap;
 begin
      B := TBitmap.Create;
+     try
+        CopyTo( B );
 
-     CopyTo( B );
-
-     B.SaveToFile( FileName_ );
-
-     B.Free;
+        B.SaveToFile( FileName_ );
+     finally
+        B.Free;
+     end;
 end;
 
 procedure TCLStream1D_FMX<TCLImager_>.LoadFromFile( const FileName_:String );
@@ -174,12 +175,13 @@ var
    B :TBitmap;
 begin
      B := TBitmap.Create;
+     try
+        B.LoadFromFile( FileName_ );
 
-     B.LoadFromFile( FileName_ );
-
-     CopyFrom( B );
-
-     B.Free;
+        CopyFrom( B );
+     finally
+        B.Free;
+     end;
 end;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLStream1DxBGRAxUInt8_FMX
