@@ -2,14 +2,14 @@
 
 [English](README.md) | [日本語](ja/README.md)
 
-An interactive **Mandelbrot set** explorer that demonstrates parallel computing on GPUs and CPUs with [OpenCL](https://registry.khronos.org/OpenCL/) from Delphi. The application is built on the [LUX.GPU.OpenCL](https://github.com/LUXOPHIA/LUX.GPU.OpenCL) wrapper library, which maps the entire OpenCL object model onto an ownership hierarchy of Object Pascal classes.
+An interactive **Mandelbrot set** explorer that demonstrates parallel computing on GPUs and CPUs with [OpenCL](https://registry.khronos.org/OpenCL/) from Delphi. The application is built on the [LUX.OpenCL](https://github.com/LUXOPHIA/LUX.OpenCL) wrapper library, which maps the entire OpenCL object model onto an ownership hierarchy of Object Pascal classes.
 
 ![](--------/_SCREENSHOT/OpenCL.png)
 
 ## 利用ライブラリ
 
 * [**LUX**](https://github.com/LUXOPHIA/LUX) ：Base mathematical utility library for Delphi.
-* [**LUX.GPU.OpenCL**](https://github.com/LUXOPHIA/LUX.GPU.OpenCL) ：OpenCL wrapper library for Delphi.
+* [**LUX.OpenCL**](https://github.com/LUXOPHIA/LUX.OpenCL) ：OpenCL wrapper library for Delphi.
 
 ## 1. Overview
 
@@ -71,7 +71,7 @@ On the host side, `Main.pas` animates the view: a timer interpolates the current
 
 ## 3. Architecture
 
-### 3.1. Class Hierarchy of LUX.GPU.OpenCL
+### 3.1. Class Hierarchy of LUX.OpenCL
 
 The wrapper library models the OpenCL object graph as an ownership tree. Each parent class owns typed lists of its children; creating a child (e.g. `TCLContex.Create( _Platfo )`) automatically registers it with its parent.
 
@@ -143,7 +143,7 @@ Output — kernel result back to the GUI
   ┣・_LIBRARY/
   ┃  ┗・LUXOPHIA/
   ┃     ┣・LUX/            ･･･ base utilities (LUX.Complex, LUX.D1–D4, ...)
-  ┃     ┗・LUX.GPU.OpenCL/ ･･･ OpenCL wrapper (Core/, CL/, Stream/)
+  ┃     ┗・LUX.OpenCL/     ･･･ OpenCL wrapper (Core/, CL/, Stream/)
   ┗・--------/_SCREENSHOT/  ･･･ screenshots
 ```
 
@@ -523,7 +523,7 @@ If a handle cannot be created, the `ECLError` exception is raised with the reaso
 
 * **IDE**: Embarcadero RAD Studio / Delphi (FireMonkey application; project format version 20.4).
 * **Project**: open `OpenCL.dproj` and build. Enabled target platforms: **Win32** and **Win64**.
-* **Dependencies**: the required libraries (`LUX`, `LUX.GPU.OpenCL`, including the Khronos `OpenCL-Headers` translation [4]) are bundled under `_LIBRARY/` and referenced directly by `OpenCL.dpr`; no additional installation is needed.
+* **Dependencies**: the required libraries (`LUX`, `LUX.OpenCL`, including the Khronos `OpenCL-Headers` translation [4]) are bundled under `_LIBRARY/` and referenced directly by `OpenCL.dpr`; no additional installation is needed.
 * **Runtime**: an OpenCL runtime (`OpenCL.dll`) must be present, which is normally installed by the GPU vendor driver (NVIDIA / AMD / Intel). If unavailable, the application reports "OpenCL is not available."
 * **Data files**: kernels and the gradient texture are loaded from `_DATA/` via paths relative to the executable (`..\..\_DATA\`), matching the default output directory layout (e.g. `Win64\Debug\`).
 

@@ -30,7 +30,7 @@ if "%STUDIO:~-1%"=="\" set STUDIO=%STUDIO:~0,-1%
 cd /d "%~dp0" || goto :fail
 
 set LUX=..\_LIBRARY\LUXOPHIA\LUX
-set OCL=..\_LIBRARY\LUXOPHIA\LUX.GPU.OpenCL
+set OCL=..\_LIBRARY\LUXOPHIA\LUX.OpenCL
 
 set OUT=%TEMP%\opencl-app-tests
 set UNITS=%OCL%;%OCL%\CL;%OCL%\Core;%OCL%\Stream;%LUX%;%LUX%\Code;%LUX%\Color;%LUX%\Complex;%LUX%\Data\List

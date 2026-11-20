@@ -2,14 +2,14 @@
 
 [English](../README.md) | [日本語](README.md)
 
-[OpenCL](https://registry.khronos.org/OpenCL/) を用いて GPU / CPU で並列計算を行う、対話的な**マンデルブロ集合**ビューアです。アプリケーションは [LUX.GPU.OpenCL](https://github.com/LUXOPHIA/LUX.GPU.OpenCL) ラッパーライブラリの上に構築されており、OpenCL のオブジェクトモデル全体を Object Pascal クラスの所有階層として表現します。
+[OpenCL](https://registry.khronos.org/OpenCL/) を用いて GPU / CPU で並列計算を行う、対話的な**マンデルブロ集合**ビューアです。アプリケーションは [LUX.OpenCL](https://github.com/LUXOPHIA/LUX.OpenCL) ラッパーライブラリの上に構築されており、OpenCL のオブジェクトモデル全体を Object Pascal クラスの所有階層として表現します。
 
 ![](../--------/_SCREENSHOT/OpenCL.png)
 
 ## 利用ライブラリ
 
 * [**LUX**](https://github.com/LUXOPHIA/LUX) ：Delphi のための基盤数学ライブラリ。
-* [**LUX.GPU.OpenCL**](https://github.com/LUXOPHIA/LUX.GPU.OpenCL) ：Delphi のための OpenCL ラッパーライブラリ。
+* [**LUX.OpenCL**](https://github.com/LUXOPHIA/LUX.OpenCL) ：Delphi のための OpenCL ラッパーライブラリ。
 
 ## 1. 概要
 
@@ -71,7 +71,7 @@ $$t = \sqrt{ \nu / N_{\max} }$$
 
 ## 3. アーキテクチャ
 
-### 3.1. LUX.GPU.OpenCL のクラス階層
+### 3.1. LUX.OpenCL のクラス階層
 
 ラッパーライブラリは OpenCL のオブジェクトグラフを所有ツリーとしてモデル化します。各親クラスは子の型付きリストを所有し、子の生成（例：`TCLContex.Create( _Platfo )`）は自動的に親へ登録されます。
 
@@ -143,7 +143,7 @@ $$t = \sqrt{ \nu / N_{\max} }$$
   ┣・_LIBRARY/
   ┃  ┗・LUXOPHIA/
   ┃     ┣・LUX/            ･･･ 基盤ユーティリティ（LUX.Complex・LUX.D1～D4）
-  ┃     ┗・LUX.GPU.OpenCL/ ･･･ OpenCL ラッパー（Core/・CL/・Stream/）
+  ┃     ┗・LUX.OpenCL/     ･･･ OpenCL ラッパー（Core/・CL/・Stream/）
   ┗・--------/_SCREENSHOT/  ･･･ スクリーンショット
 ```
 
@@ -523,7 +523,7 @@ X/Y/Z 方向のピクセル数は、`CountX`/`CountY`/`CountZ` プロパティ�
 
 * **IDE**：Embarcadero RAD Studio / Delphi（FireMonkey アプリケーション；プロジェクト形式バージョン 20.4）。
 * **プロジェクト**：`OpenCL.dproj` を開いてビルドします。有効なターゲットプラットフォームは **Win32** と **Win64** です。
-* **依存ライブラリ**：必要なライブラリ（`LUX`・`LUX.GPU.OpenCL`・Khronos `OpenCL-Headers` の翻訳 [4] を含む）は `_LIBRARY/` 以下に同梱され、`OpenCL.dpr` から直接参照されるため、追加のインストールは不要です。
+* **依存ライブラリ**：必要なライブラリ（`LUX`・`LUX.OpenCL`・Khronos `OpenCL-Headers` の翻訳 [4] を含む）は `_LIBRARY/` 以下に同梱され、`OpenCL.dpr` から直接参照されるため、追加のインストールは不要です。
 * **ランタイム**：OpenCL ランタイム（`OpenCL.dll`）が必要です。通常は GPU ベンダーのドライバー（NVIDIA / AMD / Intel）と共にインストールされます。利用できない場合、アプリケーションは "OpenCL is not available." と表示します。
 * **データファイル**：カーネルとグラデーションテクスチャは、実行ファイルからの相対パス（`..\..\_DATA\`）で `_DATA/` から読み込まれます。これは既定の出力ディレクトリ構成（例：`Win64\Debug\`）に対応します。
 
