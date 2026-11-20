@@ -213,6 +213,7 @@ The data flow of one launch is:
   ┣・Stream/                                      ･･･ optional I/O utilities
   ┃  ┣・LUX.GPU.OpenCL.Stream.FMX.*              ･･･ FMX TBitmap ↔ imager
   ┃  ┗・LUX.GPU.OpenCL.Stream.HDR.*              ･･･ Radiance HDR ↔ imager
+  ┣・_TEST/                                       ･･･ automated tests (DUnitX)
   ┣・LUX.GPU.OpenCL.pas                           ･･･ entry point, aliases
   ┗・：KhronosGroup/OpenCL-Headers/               ･･･ vendored C headers
 ```
@@ -391,6 +392,18 @@ K.GloSizX := M.CountX;
 K.GloSizY := M.CountY;
 K.Run;
 ```
+
+### 4.5 Tests
+
+The automated tests are in `_TEST/`. They drive the library on a real device (the first device of the first platform) and are written with DUnitX, which ships with Delphi.
+
+```
+_TEST\test.bat
+```
+
+`test.bat` builds the tests for Win64, runs them and removes its output; a failure is returned as exit code 1. The base library LUX is read from `..\..\LUX`, which is where it sits when both libraries are embedded in an application. On a machine without an OpenCL device the tests are not run.
+
+Besides fixed scenarios, the tests perform pseudo-random sequences of operations (resizing, changing sources, releasing handles, adding and freeing objects, ...) and check after each few steps that the kernel still produces the expected result.
 
 ## 5. Requirements
 
