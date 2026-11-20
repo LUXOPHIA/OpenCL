@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Queuer;
+﻿unit LUX.OpenCL.Queuer;
 
 interface //#################################################################### ■
 
@@ -6,8 +6,8 @@ uses System.Generics.Collections,
      cl_version, cl_platform, cl, cl_functions,
      LUX.Data.List,
      LUX.Code.C,
-     LUX.GPU.OpenCL.core,
-     LUX.GPU.OpenCL.Device;
+     LUX.OpenCL.core,
+     LUX.OpenCL.Device;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
@@ -83,7 +83,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL.Contex;
+uses LUX.OpenCL.Contex;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 

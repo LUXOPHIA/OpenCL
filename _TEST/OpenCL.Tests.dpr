@@ -14,7 +14,7 @@ uses
   Winapi.Windows,
   DUnitX.TestFramework,
   DUnitX.Loggers.Console,
-  LUX.GPU.OpenCL,
+  LUX.OpenCL,
   Tests.Mandelbrot in 'Tests.Mandelbrot.pas';
 
 var

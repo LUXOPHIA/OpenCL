@@ -1,4 +1,4 @@
-# LUX.GPU.OpenCL
+# LUX.OpenCL
 [English](README.md) | [日本語](ja/README.md)
 
 An [OpenCL](https://registry.khronos.org/OpenCL/) 3.1 wrapper library for **Delphi**, for parallel computing on GPUs (or CPUs). You write an OpenCL C kernel as a plain string, bind Delphi values to its parameters by name, and run it — no manual handle management, no API boilerplate. The complete Khronos C headers are ported 1:1 and are also usable directly [1][3].
@@ -131,7 +131,7 @@ K.Run;                                          // ... and built again here
 
 ### 3.1 Class Hierarchy
 
-Objects form a tree; each parent creates, owns and frees its children, so no user code ever calls `Free` on them. Plural names (`TCLPlatfos`, `TCLDevices`, …) are the owning list classes; singular names are the elements. `LUX.GPU.OpenCL.pas` publishes non-generic aliases of the generic implementation classes.
+Objects form a tree; each parent creates, owns and frees its children, so no user code ever calls `Free` on them. Plural names (`TCLPlatfos`, `TCLDevices`, …) are the owning list classes; singular names are the elements. `LUX.OpenCL.pas` publishes non-generic aliases of the generic implementation classes.
 
 ```
 ・TOpenCL                                    ･･･ class-static facade, DLL loader
@@ -188,33 +188,33 @@ The data flow of one launch is:
 ### 3.2 File Layout
 
 ```
-・LUX.GPU.OpenCL/
+・LUX.OpenCL/
   ┣・CL/                                          ･･･ 1:1 port of the C headers
   ┃  ┣・cl_platform.pas                          ･･･ basic scalar types
   ┃  ┣・cl_version.pas                           ･･･ CL_TARGET_OPENCL_VERSION
   ┃  ┣・cl.pas                                   ･･･ types, consts, functions
   ┃  ┗・cl_functions.pas                         ･･･ ICD-style loader
   ┣・Core/                                        ･･･ object-oriented wrapper
-  ┃  ┣・LUX.GPU.OpenCL.core.pas                  ･･･ ECLError / CheckCL etc.
-  ┃  ┣・LUX.GPU.OpenCL.Platfo.pas                ･･･ TCLPlatfo, TCLExtenss
-  ┃  ┣・LUX.GPU.OpenCL.Device.pas                ･･･ TCLDevice
-  ┃  ┣・LUX.GPU.OpenCL.Contex.pas                ･･･ TCLContex
-  ┃  ┣・LUX.GPU.OpenCL.Queuer.pas                ･･･ TCLQueuer
-  ┃  ┣・LUX.GPU.OpenCL.Argume.pas                ･･･ TCLArgume (argument base)
-  ┃  ┣・LUX.GPU.OpenCL.Argume.Samplr.pas         ･･･ TCLSamplr
-  ┃  ┣・LUX.GPU.OpenCL.Argume.Memory.pas         ･･･ TCLMemory / TCLMemDat
-  ┃  ┣・LUX.GPU.OpenCL.Argume.Memory.Buffer.pas  ･･･ TCLBuffer<T>/TCLBufDat<T>
-  ┃  ┣・LUX.GPU.OpenCL.Argume.Memory.Imager*.pas ･･･ TCLImager1D/2D/3D
-  ┃  ┣・LUX.GPU.OpenCL.Progra.pas                ･･･ program-related classes
-  ┃  ┣・LUX.GPU.OpenCL.Kernel.pas                ･･･ TCLKernel / TCLParame
-  ┃  ┗・LUX.GPU.OpenCL.Show.pas                  ･･･ diagnostic tree dump
+  ┃  ┣・LUX.OpenCL.core.pas                      ･･･ ECLError / CheckCL etc.
+  ┃  ┣・LUX.OpenCL.Platfo.pas                    ･･･ TCLPlatfo, TCLExtenss
+  ┃  ┣・LUX.OpenCL.Device.pas                    ･･･ TCLDevice
+  ┃  ┣・LUX.OpenCL.Contex.pas                    ･･･ TCLContex
+  ┃  ┣・LUX.OpenCL.Queuer.pas                    ･･･ TCLQueuer
+  ┃  ┣・LUX.OpenCL.Argume.pas                    ･･･ TCLArgume (argument base)
+  ┃  ┣・LUX.OpenCL.Argume.Samplr.pas             ･･･ TCLSamplr
+  ┃  ┣・LUX.OpenCL.Argume.Memory.pas             ･･･ TCLMemory / TCLMemDat
+  ┃  ┣・LUX.OpenCL.Argume.Memory.Buffer.pas      ･･･ TCLBuffer<T>/TCLBufDat<T>
+  ┃  ┣・LUX.OpenCL.Argume.Memory.Imager*.pas     ･･･ TCLImager1D/2D/3D
+  ┃  ┣・LUX.OpenCL.Progra.pas                    ･･･ program-related classes
+  ┃  ┣・LUX.OpenCL.Kernel.pas                    ･･･ TCLKernel / TCLParame
+  ┃  ┗・LUX.OpenCL.Show.pas                      ･･･ diagnostic tree dump
   ┣・Argume/                                      ･･･ optional argument helpers
-  ┃  ┗・LUX.GPU.OpenCL.Argume.Seeder.*           ･･･ TCLSeeder — random seeds
+  ┃  ┗・LUX.OpenCL.Argume.Seeder.*               ･･･ TCLSeeder — random seeds
   ┣・Stream/                                      ･･･ optional I/O utilities
-  ┃  ┣・LUX.GPU.OpenCL.Stream.FMX.*              ･･･ FMX TBitmap ↔ imager
-  ┃  ┗・LUX.GPU.OpenCL.Stream.HDR.*              ･･･ Radiance HDR ↔ imager
+  ┃  ┣・LUX.OpenCL.Stream.FMX.*                  ･･･ FMX TBitmap ↔ imager
+  ┃  ┗・LUX.OpenCL.Stream.HDR.*                  ･･･ Radiance HDR ↔ imager
   ┣・_TEST/                                       ･･･ automated tests (DUnitX)
-  ┣・LUX.GPU.OpenCL.pas                           ･･･ entry point, aliases
+  ┣・LUX.OpenCL.pas                               ･･･ entry point, aliases
   ┗・：KhronosGroup/OpenCL-Headers/               ･･･ vendored C headers
 ```
 
@@ -225,7 +225,7 @@ Add the library folders (and those of `LUX`) to your project's search path, then
 ### 4.1 Quick Start
 
 ```pascal
-uses LUX.GPU.OpenCL;
+uses LUX.OpenCL;
 
 procedure RunAddOne;
 var
@@ -290,7 +290,7 @@ The compilation of the program happens lazily, the first time the kernel is actu
 A handle that cannot be created raises an `ECLError` at the point where it is first needed. Its `Message` contains the OpenCL error name, and its `Code` property holds the raw error code.
 
 ```pascal
-uses LUX.GPU.OpenCL;
+uses LUX.OpenCL;
 
 try
    K.Run;
@@ -325,10 +325,10 @@ A stream copies between an imager and a representation outside OpenCL. It refers
 
 | Units | Classes | Outside representation |
 |:--|:--|:--|
-| `LUX.GPU.OpenCL.Stream.FMX.D1/D2/D3` | `TCLStream{1,2,3}Dx…_FMX` | FMX `TBitmap`, and the image files it reads and writes |
+| `LUX.OpenCL.Stream.FMX.D1/D2/D3` | `TCLStream{1,2,3}Dx…_FMX` | FMX `TBitmap`, and the image files it reads and writes |
 
 ```pascal
-uses LUX.GPU.OpenCL, LUX.GPU.OpenCL.Stream.FMX.D2;
+uses LUX.OpenCL, LUX.OpenCL.Stream.FMX.D2;
 
 var
    M :TCLImager2DxBGRAxUFix8;
@@ -344,7 +344,7 @@ end;
 
 ### 4.4 Random Seeds
 
-`TCLSeeder1D/2D/3D` (unit `LUX.GPU.OpenCL.Argume.Seeder`) is an RGBA `uint32` image in which every pixel holds the 128-bit state of a xoshiro128 generator [6]. When the image is created, one state is drawn from Delphi's `Random`, and the others are derived from it on the device with the jump functions of the generator. In the 2D seeder, neighbouring pixels of a row are $2^{64}$ steps apart and neighbouring rows are $2^{96}$ steps apart, so the sequences of different pixels do not overlap. Call `Randomize` beforehand to obtain different sequences on each run.
+`TCLSeeder1D/2D/3D` (unit `LUX.OpenCL.Argume.Seeder`) is an RGBA `uint32` image in which every pixel holds the 128-bit state of a xoshiro128 generator [6]. When the image is created, one state is drawn from Delphi's `Random`, and the others are derived from it on the device with the jump functions of the generator. In the 2D seeder, neighbouring pixels of a row are $2^{64}$ steps apart and neighbouring rows are $2^{96}$ steps apart, so the sequences of different pixels do not overlap. Call `Randomize` beforehand to obtain different sequences on each run.
 
 A kernel receives the seeder as a `read_write` image (OpenCL 2.0 or later), reads the state of its pixel, draws numbers from it, and writes the advanced state back for the next run:
 
@@ -375,7 +375,7 @@ kernel void Noise( read_write image2d_t Seeder, write_only image2d_t Imager )
 ```
 
 ```pascal
-uses LUX.GPU.OpenCL, LUX.GPU.OpenCL.Argume.Seeder;
+uses LUX.OpenCL, LUX.OpenCL.Argume.Seeder;
 
 M := TCLImager2DxRGBAxSFlo32.Create( Q );
 M.CountX := 640;

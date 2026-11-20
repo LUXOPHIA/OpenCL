@@ -1,13 +1,13 @@
-﻿unit LUX.GPU.OpenCL.Argume.Memory;
+﻿unit LUX.OpenCL.Argume.Memory;
 
 interface //#################################################################### ■
 
 uses cl_version, cl_platform, cl, cl_functions,
      LUX.Data.List,
      LUX.Code.C,
-     LUX.GPU.OpenCL.core,
-     LUX.GPU.OpenCL.Queuer,
-     LUX.GPU.OpenCL.Argume;
+     LUX.OpenCL.core,
+     LUX.OpenCL.Queuer,
+     LUX.OpenCL.Argume;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
@@ -101,7 +101,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL.Contex;
+uses LUX.OpenCL.Contex;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 

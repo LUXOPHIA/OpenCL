@@ -9,9 +9,9 @@ uses
   cl_version, cl_platform, cl,
   LUX,
   LUX.Complex,
-  LUX.GPU.OpenCL,
-  LUX.GPU.OpenCL.Stream.FMX.D1,
-  LUX.GPU.OpenCL.Stream.FMX.D2;
+  LUX.OpenCL,
+  LUX.OpenCL.Stream.FMX.D1,
+  LUX.OpenCL.Stream.FMX.D2;
 
 type
   TForm1 = class(TForm)

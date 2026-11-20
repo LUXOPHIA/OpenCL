@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Platfo;
+﻿unit LUX.OpenCL.Platfo;
 
 interface //#################################################################### ■
 
@@ -6,9 +6,9 @@ uses System.Classes,
      cl_version, cl_platform, cl, cl_functions,
      LUX.Data.List,
      LUX.Code.C,
-     LUX.GPU.OpenCL.core,
-     LUX.GPU.OpenCL.Device,
-     LUX.GPU.OpenCL.Contex;
+     LUX.OpenCL.core,
+     LUX.OpenCL.Device,
+     LUX.OpenCL.Contex;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 

@@ -1,6 +1,6 @@
-﻿program LUX.GPU.OpenCL.Tests;
+﻿program LUX.OpenCL.Tests;
 
-// LUX.GPU.OpenCL の試験
+// LUX.OpenCL の試験
 //
 // ・実際の OpenCL のデバイス（先頭のプラットフォームの、先頭のデバイス）の上で、ライブラリを動かして確かめる。
 //   OpenCL が使えない機械では、試験を走らせずに、その旨を出して、成功として終わる。
@@ -14,7 +14,7 @@ uses
   Winapi.Windows,
   DUnitX.TestFramework,
   DUnitX.Loggers.Console,
-  LUX.GPU.OpenCL,
+  LUX.OpenCL,
   Tests.Base in 'Tests.Base.pas',
   Tests.Handle in 'Tests.Handle.pas',
   Tests.Build in 'Tests.Build.pas',

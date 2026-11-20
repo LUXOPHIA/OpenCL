@@ -1,10 +1,10 @@
-﻿unit LUX.GPU.OpenCL.Stream.HDR.D3;
+﻿unit LUX.OpenCL.Stream.HDR.D3;
 
 interface //#################################################################### ■
 
 uses LUX.Color, LUX.Color.Grid.D2.Preset,
-     LUX.GPU.OpenCL,
-     LUX.GPU.OpenCL.Stream.HDR.D2;
+     LUX.OpenCL,
+     LUX.OpenCL.Stream.HDR.D2;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 

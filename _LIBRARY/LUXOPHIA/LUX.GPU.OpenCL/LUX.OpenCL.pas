@@ -1,28 +1,28 @@
-﻿unit LUX.GPU.OpenCL;
+﻿unit LUX.OpenCL;
 
 interface //#################################################################### ■
 
 uses System.Classes,
-     LUX.GPU.OpenCL.core,
-     LUX.GPU.OpenCL.Show,
-     LUX.GPU.OpenCL.Platfo,
-     LUX.GPU.OpenCL.Device,
-     LUX.GPU.OpenCL.Contex,
-     LUX.GPU.OpenCL.Queuer,
-     LUX.GPU.OpenCL.Argume,
-     LUX.GPU.OpenCL.Argume.Samplr,
-     LUX.GPU.OpenCL.Argume.Memory,
-     LUX.GPU.OpenCL.Argume.Memory.Buffer,
-     LUX.GPU.OpenCL.Argume.Memory.Imager,
-     LUX.GPU.OpenCL.Argume.Memory.Imager.D1,
-     LUX.GPU.OpenCL.Argume.Memory.Imager.D2,
-     LUX.GPU.OpenCL.Argume.Memory.Imager.D3,
-     LUX.GPU.OpenCL.Progra,
-     LUX.GPU.OpenCL.Kernel;
+     LUX.OpenCL.core,
+     LUX.OpenCL.Show,
+     LUX.OpenCL.Platfo,
+     LUX.OpenCL.Device,
+     LUX.OpenCL.Contex,
+     LUX.OpenCL.Queuer,
+     LUX.OpenCL.Argume,
+     LUX.OpenCL.Argume.Samplr,
+     LUX.OpenCL.Argume.Memory,
+     LUX.OpenCL.Argume.Memory.Buffer,
+     LUX.OpenCL.Argume.Memory.Imager,
+     LUX.OpenCL.Argume.Memory.Imager.D1,
+     LUX.OpenCL.Argume.Memory.Imager.D2,
+     LUX.OpenCL.Argume.Memory.Imager.D3,
+     LUX.OpenCL.Progra,
+     LUX.OpenCL.Kernel;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
-     ECLError = LUX.GPU.OpenCL.core.ECLError;
+     ECLError = LUX.OpenCL.core.ECLError;
 
      TOpenCL                       = class;
 

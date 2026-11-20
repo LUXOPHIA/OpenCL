@@ -1,6 +1,6 @@
 ﻿unit Tests.Base;
 
-// LUX.GPU.OpenCL の試験の土台
+// LUX.OpenCL の試験の土台
 //
 //【構成】
 // ・TCLTests ：どの試験にも要る最小の組（コンテキスト・キュー・バッファ・ライブラリ・実行プログラム・カーネル）を、
@@ -17,7 +17,7 @@ interface //####################################################################
 
 uses System.SysUtils,
      DUnitX.TestFramework,
-     LUX.GPU.OpenCL;
+     LUX.OpenCL;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 

@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Kernel;
+﻿unit LUX.OpenCL.Kernel;
 
 interface //#################################################################### ■
 
@@ -6,10 +6,10 @@ uses System.Generics.Collections,
      cl_version, cl_platform, cl, cl_functions,
      LUX.Data.List,
      LUX.Code.C,
-     LUX.GPU.OpenCL.core,
-     LUX.GPU.OpenCL.Device,
-     LUX.GPU.OpenCL.Queuer,
-     LUX.GPU.OpenCL.Argume;
+     LUX.OpenCL.core,
+     LUX.OpenCL.Device,
+     LUX.OpenCL.Queuer,
+     LUX.OpenCL.Argume;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
@@ -236,7 +236,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 implementation //############################################################### ■
 
 uses System.SysUtils,
-     LUX.GPU.OpenCL.Progra;
+     LUX.OpenCL.Progra;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 

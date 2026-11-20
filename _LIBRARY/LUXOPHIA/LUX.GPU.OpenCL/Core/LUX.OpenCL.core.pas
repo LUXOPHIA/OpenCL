@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.core;
+﻿unit LUX.OpenCL.core;
 
 interface //#################################################################### ■
 

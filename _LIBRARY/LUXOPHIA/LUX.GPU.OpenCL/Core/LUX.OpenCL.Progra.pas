@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Progra;
+﻿unit LUX.OpenCL.Progra;
 
 interface //#################################################################### ■
 
@@ -6,9 +6,9 @@ uses System.SysUtils, System.Classes, System.Generics.Collections,
      cl_version, cl_platform, cl, cl_functions,
      LUX.Data.List,
      LUX.Code.C,
-     LUX.GPU.OpenCL.core,
-     LUX.GPU.OpenCL.Device,
-     LUX.GPU.OpenCL.Kernel;
+     LUX.OpenCL.core,
+     LUX.OpenCL.Device,
+     LUX.OpenCL.Kernel;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
@@ -294,7 +294,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 implementation //############################################################### ■
 
 uses System.IOUtils, System.AnsiStrings,
-     LUX.GPU.OpenCL.Contex;
+     LUX.OpenCL.Contex;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 

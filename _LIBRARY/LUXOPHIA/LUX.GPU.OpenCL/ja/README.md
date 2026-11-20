@@ -1,4 +1,4 @@
-# LUX.GPU.OpenCL
+# LUX.OpenCL
 [English](../README.md) | [日本語](README.md)
 
 GPU（または CPU）による並列計算のための、**Delphi** 用 [OpenCL](https://registry.khronos.org/OpenCL/) 3.1 ラッパーライブラリ。OpenCL C のカーネルを文字列として書き、パラメータに名前で Delphi の値を割り当てて、実行する — ハンドル管理も API の決まり文句も不要です。Khronos の C ヘッダーは完全に 1:1 で移植されており、直接呼び出すこともできます [1][3]。
@@ -131,7 +131,7 @@ K.Run;                                          // … ここでビルドし直�
 
 ### 3.1 クラス階層
 
-オブジェクトはツリーを構成し、親が子を生成・所有・解放するため、利用側が `Free` を呼ぶことはありません。複数形の名前（`TCLPlatfos`・`TCLDevices` …）が所有するリストクラス、単数形がその要素です。`LUX.GPU.OpenCL.pas` はジェネリックな実装クラスの非ジェネリックなエイリアスを公開します。
+オブジェクトはツリーを構成し、親が子を生成・所有・解放するため、利用側が `Free` を呼ぶことはありません。複数形の名前（`TCLPlatfos`・`TCLDevices` …）が所有するリストクラス、単数形がその要素です。`LUX.OpenCL.pas` はジェネリックな実装クラスの非ジェネリックなエイリアスを公開します。
 
 ```
 ・TOpenCL                                    ･･･ クラス静的な窓口。DLL をロード
@@ -188,33 +188,33 @@ K.Run;                                          // … ここでビルドし直�
 ### 3.2 ファイル構成
 
 ```
-・LUX.GPU.OpenCL/
+・LUX.OpenCL/
   ┣・CL/                                          ･･･ C ヘッダーの 1:1 移植
   ┃  ┣・cl_platform.pas                          ･･･ 基本スカラー型
   ┃  ┣・cl_version.pas                           ･･･ CL_TARGET_OPENCL_VERSION
   ┃  ┣・cl.pas                                   ･･･ 型・定数・関数型
   ┃  ┗・cl_functions.pas                         ･･･ ICD ローダー相当
   ┣・Core/                                        ･･･ オブジェクト指向ラッパー
-  ┃  ┣・LUX.GPU.OpenCL.core.pas                  ･･･ ECLError / CheckCL ほか
-  ┃  ┣・LUX.GPU.OpenCL.Platfo.pas                ･･･ TCLPlatfo, TCLExtenss
-  ┃  ┣・LUX.GPU.OpenCL.Device.pas                ･･･ TCLDevice
-  ┃  ┣・LUX.GPU.OpenCL.Contex.pas                ･･･ TCLContex
-  ┃  ┣・LUX.GPU.OpenCL.Queuer.pas                ･･･ TCLQueuer
-  ┃  ┣・LUX.GPU.OpenCL.Argume.pas                ･･･ TCLArgume — 引数の基底
-  ┃  ┣・LUX.GPU.OpenCL.Argume.Samplr.pas         ･･･ TCLSamplr
-  ┃  ┣・LUX.GPU.OpenCL.Argume.Memory.pas         ･･･ TCLMemory / TCLMemDat
-  ┃  ┣・LUX.GPU.OpenCL.Argume.Memory.Buffer.pas  ･･･ TCLBuffer<T>/TCLBufDat<T>
-  ┃  ┣・LUX.GPU.OpenCL.Argume.Memory.Imager*.pas ･･･ TCLImager1D/2D/3D
-  ┃  ┣・LUX.GPU.OpenCL.Progra.pas                ･･･ プログラム関連クラス
-  ┃  ┣・LUX.GPU.OpenCL.Kernel.pas                ･･･ TCLKernel / TCLParame
-  ┃  ┗・LUX.GPU.OpenCL.Show.pas                  ･･･ 診断用ツリー出力
+  ┃  ┣・LUX.OpenCL.core.pas                      ･･･ ECLError / CheckCL ほか
+  ┃  ┣・LUX.OpenCL.Platfo.pas                    ･･･ TCLPlatfo, TCLExtenss
+  ┃  ┣・LUX.OpenCL.Device.pas                    ･･･ TCLDevice
+  ┃  ┣・LUX.OpenCL.Contex.pas                    ･･･ TCLContex
+  ┃  ┣・LUX.OpenCL.Queuer.pas                    ･･･ TCLQueuer
+  ┃  ┣・LUX.OpenCL.Argume.pas                    ･･･ TCLArgume — 引数の基底
+  ┃  ┣・LUX.OpenCL.Argume.Samplr.pas             ･･･ TCLSamplr
+  ┃  ┣・LUX.OpenCL.Argume.Memory.pas             ･･･ TCLMemory / TCLMemDat
+  ┃  ┣・LUX.OpenCL.Argume.Memory.Buffer.pas      ･･･ TCLBuffer<T>/TCLBufDat<T>
+  ┃  ┣・LUX.OpenCL.Argume.Memory.Imager*.pas     ･･･ TCLImager1D/2D/3D
+  ┃  ┣・LUX.OpenCL.Progra.pas                    ･･･ プログラム関連クラス
+  ┃  ┣・LUX.OpenCL.Kernel.pas                    ･･･ TCLKernel / TCLParame
+  ┃  ┗・LUX.OpenCL.Show.pas                      ･･･ 診断用ツリー出力
   ┣・Argume/                                      ･･･ 補助的な引数機能
-  ┃  ┗・LUX.GPU.OpenCL.Argume.Seeder.*           ･･･ TCLSeeder — 乱数シード
+  ┃  ┗・LUX.OpenCL.Argume.Seeder.*               ･･･ TCLSeeder — 乱数シード
   ┣・Stream/                                      ･･･ 補助的な入出力機能
-  ┃  ┣・LUX.GPU.OpenCL.Stream.FMX.*              ･･･ FMX TBitmap↔イメージャ
-  ┃  ┗・LUX.GPU.OpenCL.Stream.HDR.*              ･･･ Radiance HDR↔イメージャ
+  ┃  ┣・LUX.OpenCL.Stream.FMX.*                  ･･･ FMX TBitmap↔イメージャ
+  ┃  ┗・LUX.OpenCL.Stream.HDR.*                  ･･･ Radiance HDR↔イメージャ
   ┣・_TEST/                                       ･･･ 自動の試験（DUnitX）
-  ┣・LUX.GPU.OpenCL.pas                           ･･･ エントリポイント・別名
+  ┣・LUX.OpenCL.pas                               ･･･ エントリポイント・別名
   ┗・：KhronosGroup/OpenCL-Headers/               ･･･ 同梱の C ヘッダー
 ```
 
@@ -225,7 +225,7 @@ K.Run;                                          // … ここでビルドし直�
 ### 4.1 クイックスタート
 
 ```pascal
-uses LUX.GPU.OpenCL;
+uses LUX.OpenCL;
 
 procedure RunAddOne;
 var
@@ -290,7 +290,7 @@ end;
 ハンドルを作れなかったときは、それが最初に必要になった時点で `ECLError` 例外を送出します。`Message` に OpenCL のエラー名が入り、`Code` プロパティで生のエラーコードを取得できます。
 
 ```pascal
-uses LUX.GPU.OpenCL;
+uses LUX.OpenCL;
 
 try
    K.Run;
@@ -325,10 +325,10 @@ TOpenCL.Show( Memo1.Lines );
 
 | ユニット | クラス | 外の表現 |
 |:--|:--|:--|
-| `LUX.GPU.OpenCL.Stream.FMX.D1/D2/D3` | `TCLStream{1,2,3}Dx…_FMX` | FMX の `TBitmap` と、それが読み書きする画像ファイル |
+| `LUX.OpenCL.Stream.FMX.D1/D2/D3` | `TCLStream{1,2,3}Dx…_FMX` | FMX の `TBitmap` と、それが読み書きする画像ファイル |
 
 ```pascal
-uses LUX.GPU.OpenCL, LUX.GPU.OpenCL.Stream.FMX.D2;
+uses LUX.OpenCL, LUX.OpenCL.Stream.FMX.D2;
 
 var
    M :TCLImager2DxBGRAxUFix8;
@@ -344,7 +344,7 @@ end;
 
 ### 4.4 乱数の種
 
-`TCLSeeder1D/2D/3D`（ユニット `LUX.GPU.OpenCL.Argume.Seeder`）は、すべての画素が xoshiro128 生成器 [6] の 128 ビットの状態を持つ、RGBA の `uint32` のイメージです。イメージが作られるとき、状態の 1 つを Delphi の `Random` から取り、残りは、生成器のジャンプ関数を使って、デバイスの上でそこから導きます。2D の種では、同じ行の隣の画素どうしは $2^{64}$ ステップ、隣の行どうしは $2^{96}$ ステップ離れているので、異なる画素の列は重なりません。実行のたびに違う列を得るには、先に `Randomize` を呼びます。
+`TCLSeeder1D/2D/3D`（ユニット `LUX.OpenCL.Argume.Seeder`）は、すべての画素が xoshiro128 生成器 [6] の 128 ビットの状態を持つ、RGBA の `uint32` のイメージです。イメージが作られるとき、状態の 1 つを Delphi の `Random` から取り、残りは、生成器のジャンプ関数を使って、デバイスの上でそこから導きます。2D の種では、同じ行の隣の画素どうしは $2^{64}$ ステップ、隣の行どうしは $2^{96}$ ステップ離れているので、異なる画素の列は重なりません。実行のたびに違う列を得るには、先に `Randomize` を呼びます。
 
 カーネルは、種を `read_write` のイメージとして受け取り（OpenCL 2.0 以降）、自分の画素の状態を読み、そこから乱数を引き、進めた状態を、次の実行のために書き戻します。
 
@@ -375,7 +375,7 @@ kernel void Noise( read_write image2d_t Seeder, write_only image2d_t Imager )
 ```
 
 ```pascal
-uses LUX.GPU.OpenCL, LUX.GPU.OpenCL.Argume.Seeder;
+uses LUX.OpenCL, LUX.OpenCL.Argume.Seeder;
 
 M := TCLImager2DxRGBAxSFlo32.Create( Q );
 M.CountX := 640;

@@ -42,10 +42,10 @@ implementation //###############################################################
 uses System.SysUtils, System.UITypes, System.IOUtils,
      FMX.Graphics,
      LUX.Color,
-     LUX.GPU.OpenCL,
-     LUX.GPU.OpenCL.Stream.FMX.D1,
-     LUX.GPU.OpenCL.Stream.FMX.D2,
-     LUX.GPU.OpenCL.Stream.FMX.D3;
+     LUX.OpenCL,
+     LUX.OpenCL.Stream.FMX.D1,
+     LUX.OpenCL.Stream.FMX.D2,
+     LUX.OpenCL.Stream.FMX.D3;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 

@@ -9,7 +9,7 @@ set RESULT=%ERRORLEVEL%
 chcp %CP% >nul
 exit /b %RESULT%
 
-rem 試験（LUX.GPU.OpenCL.Tests）を作って走らせる。
+rem 試験（LUX.OpenCL.Tests）を作って走らせる。
 rem
 rem   test.bat     試験を作り（Win64）、走らせ、出力を消す
 rem
@@ -33,7 +33,7 @@ set LUX=..\..\LUX
 if not exist "%LUX%\LUX.pas" set LUX=..\..\・LUX
 if not exist "%LUX%\LUX.pas" echo 基盤のライブラリ LUX が見つかりません（..\..\LUX にも ..\..\・LUX にも無い）。& exit /b 1
 
-set OUT=%TEMP%\lux-gpu-opencl-tests
+set OUT=%TEMP%\lux-opencl-tests
 set UNITS=..;..\CL;..\Core;..\Argume;..\Stream;%LUX%;%LUX%\Code;%LUX%\Color;%LUX%\Data\List
 set DCC="%STUDIO%\bin\dcc64.exe" -B -Q "-NSSystem;Winapi;System.Win;FMX" "-U%STUDIO%\lib\win64\release;%UNITS%" "-E%OUT%" "-NU%OUT%"
 
@@ -41,8 +41,8 @@ if exist "%OUT%" rmdir /s /q "%OUT%"
 mkdir "%OUT%" || goto :fail
 
 rem 試験を作って走らせる
-%DCC% LUX.GPU.OpenCL.Tests.dpr || goto :fail
-"%OUT%\LUX.GPU.OpenCL.Tests.exe" || goto :fail
+%DCC% LUX.OpenCL.Tests.dpr || goto :fail
+"%OUT%\LUX.OpenCL.Tests.exe" || goto :fail
 
 rmdir /s /q "%OUT%"
 echo 試験は、すべて通りました。

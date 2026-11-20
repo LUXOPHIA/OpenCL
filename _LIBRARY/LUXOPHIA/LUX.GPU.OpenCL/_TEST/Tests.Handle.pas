@@ -46,7 +46,7 @@ implementation //###############################################################
 
 uses System.SysUtils,
      cl_version, cl_platform, cl,
-     LUX.GPU.OpenCL;
+     LUX.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 

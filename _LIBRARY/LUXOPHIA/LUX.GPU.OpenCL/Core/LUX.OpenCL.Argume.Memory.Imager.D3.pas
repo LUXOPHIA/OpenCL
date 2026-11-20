@@ -1,4 +1,4 @@
-﻿unit LUX.GPU.OpenCL.Argume.Memory.Imager.D3;
+﻿unit LUX.OpenCL.Argume.Memory.Imager.D3;
 
 interface //#################################################################### ■
 
@@ -6,9 +6,9 @@ uses cl_version, cl_platform, cl,
      LUX,
      LUX.Code.C,
      LUX.Color,
-     LUX.GPU.OpenCL.core,
-     LUX.GPU.OpenCL.Argume.Memory,
-     LUX.GPU.OpenCL.Argume.Memory.Imager.D2;
+     LUX.OpenCL.core,
+     LUX.OpenCL.Argume.Memory,
+     LUX.OpenCL.Argume.Memory.Imager.D2;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 

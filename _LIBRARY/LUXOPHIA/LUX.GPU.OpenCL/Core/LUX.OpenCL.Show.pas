@@ -1,11 +1,11 @@
-﻿unit LUX.GPU.OpenCL.Show;
+﻿unit LUX.OpenCL.Show;
 
 interface //#################################################################### ■
 
 uses System.Classes,
      cl_version, cl_platform, cl,
      LUX.Code.C,
-     LUX.GPU.OpenCL.core;
+     LUX.OpenCL.core;
 
 //type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
@@ -24,7 +24,7 @@ procedure ShowSystem( const Strings_:TStrings );
 implementation //############################################################### ■
 
 uses System.SysUtils,
-     LUX.GPU.OpenCL;
+     LUX.OpenCL;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 

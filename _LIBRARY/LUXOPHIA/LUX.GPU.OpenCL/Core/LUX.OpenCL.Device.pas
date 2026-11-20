@@ -1,11 +1,11 @@
-﻿unit LUX.GPU.OpenCL.Device;
+﻿unit LUX.OpenCL.Device;
 
 interface //#################################################################### ■
 
 uses cl_version, cl_platform, cl, cl_functions,
      LUX.Data.List,
      LUX.Code.C,
-     LUX.GPU.OpenCL.core;
+     LUX.OpenCL.core;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
@@ -312,7 +312,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 implementation //############################################################### ■
 
 uses System.SysUtils, System.RegularExpressions,
-     LUX.GPU.OpenCL.Platfo;
+     LUX.OpenCL.Platfo;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 

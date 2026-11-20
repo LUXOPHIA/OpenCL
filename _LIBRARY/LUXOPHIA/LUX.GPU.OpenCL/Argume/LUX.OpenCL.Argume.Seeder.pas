@@ -1,11 +1,11 @@
-﻿unit LUX.GPU.OpenCL.Argume.Seeder;
+﻿unit LUX.OpenCL.Argume.Seeder;
 
 interface //#################################################################### ■
 
-uses LUX.GPU.OpenCL,
-     LUX.GPU.OpenCL.Argume.Seeder.D1,
-     LUX.GPU.OpenCL.Argume.Seeder.D2,
-     LUX.GPU.OpenCL.Argume.Seeder.D3;
+uses LUX.OpenCL,
+     LUX.OpenCL.Argume.Seeder.D1,
+     LUX.OpenCL.Argume.Seeder.D2,
+     LUX.OpenCL.Argume.Seeder.D3;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 

@@ -1,15 +1,15 @@
-﻿unit LUX.GPU.OpenCL.Argume.Seeder.D3;
+﻿unit LUX.OpenCL.Argume.Seeder.D3;
 
 interface //#################################################################### ■
 
 uses cl_version, cl_platform, cl,
      LUX, LUX.Color,
      LUX.Code.C,
-     LUX.GPU.OpenCL.core,
-     LUX.GPU.OpenCL.Queuer,
-     LUX.GPU.OpenCL.Argume.Memory.Imager.D3,
-     LUX.GPU.OpenCL.Progra,
-     LUX.GPU.OpenCL.Kernel;
+     LUX.OpenCL.core,
+     LUX.OpenCL.Queuer,
+     LUX.OpenCL.Argume.Memory.Imager.D3,
+     LUX.OpenCL.Progra,
+     LUX.OpenCL.Kernel;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 

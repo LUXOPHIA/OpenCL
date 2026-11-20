@@ -1,15 +1,15 @@
-﻿unit LUX.GPU.OpenCL.Contex;
+﻿unit LUX.OpenCL.Contex;
 
 interface //#################################################################### ■
 
 uses cl_version, cl_platform, cl, cl_functions,
      LUX.Data.List,
      LUX.Code.C,
-     LUX.GPU.OpenCL.core,
-     LUX.GPU.OpenCL.Device,
-     LUX.GPU.OpenCL.Queuer,
-     LUX.GPU.OpenCL.Argume,
-     LUX.GPU.OpenCL.Progra;
+     LUX.OpenCL.core,
+     LUX.OpenCL.Device,
+     LUX.OpenCL.Queuer,
+     LUX.OpenCL.Argume,
+     LUX.OpenCL.Progra;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
@@ -85,7 +85,7 @@ type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 implementation //############################################################### ■
 
-uses LUX.GPU.OpenCL.Platfo;
+uses LUX.OpenCL.Platfo;
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
 

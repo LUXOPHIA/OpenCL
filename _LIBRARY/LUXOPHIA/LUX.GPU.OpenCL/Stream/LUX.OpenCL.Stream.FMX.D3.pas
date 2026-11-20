@@ -1,12 +1,12 @@
-﻿unit LUX.GPU.OpenCL.Stream.FMX.D3;
+﻿unit LUX.OpenCL.Stream.FMX.D3;
 
 interface //#################################################################### ■
 
 uses System.UITypes,
      FMX.Graphics,
      LUX.Color,
-     LUX.GPU.OpenCL,
-     LUX.GPU.OpenCL.Stream.FMX.D2;
+     LUX.OpenCL,
+     LUX.OpenCL.Stream.FMX.D2;
 
 type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
 
