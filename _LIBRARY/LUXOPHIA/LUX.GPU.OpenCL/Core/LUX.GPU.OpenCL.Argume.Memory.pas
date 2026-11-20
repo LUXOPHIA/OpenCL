@@ -152,7 +152,7 @@ end;
 
 procedure TCLMemory<TCLSystem_,TCLPlatfo_,TCLContex_>.SetKind( const Kind_:T_cl_mem_flags );
 begin
-     if _Kind = Kind_ then Exit;
+     if ( _Kind = Kind_ ) or ( Kind = Kind_ ) then Exit;  // 読んだ値を入れ直しても、何もしない
 
      Handle := nil;
 
