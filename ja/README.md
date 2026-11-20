@@ -139,6 +139,7 @@ $$t = \sqrt{ \nu / N_{\max} }$$
   ┃  ┣・Librar.cl          ･･･ ライブラリ：複素数型 TSingleC と演算子
   ┃  ┣・Execut.cl          ･･･ 実行ソース：マンデルブロカーネル 'Main'
   ┃  ┗・Textur.png         ･･･ 滑らかな着色用の 1D グラデーションテクスチャ
+  ┣・_TEST/                 ･･･ カーネルの自動の試験（DUnitX）
   ┣・_LIBRARY/
   ┃  ┗・LUXOPHIA/
   ┃     ┣・LUX/            ･･･ 基盤ユーティリティ（LUX.Complex・LUX.D1～D4）
@@ -525,6 +526,10 @@ X/Y/Z 方向のピクセル数は、`CountX`/`CountY`/`CountZ` プロパティ�
 * **依存ライブラリ**：必要なライブラリ（`LUX`・`LUX.GPU.OpenCL`・Khronos `OpenCL-Headers` の翻訳 [4] を含む）は `_LIBRARY/` 以下に同梱され、`OpenCL.dpr` から直接参照されるため、追加のインストールは不要です。
 * **ランタイム**：OpenCL ランタイム（`OpenCL.dll`）が必要です。通常は GPU ベンダーのドライバー（NVIDIA / AMD / Intel）と共にインストールされます。利用できない場合、アプリケーションは "OpenCL is not available." と表示します。
 * **データファイル**：カーネルとグラデーションテクスチャは、実行ファイルからの相対パス（`..\..\_DATA\`）で `_DATA/` から読み込まれます。これは既定の出力ディレクトリ構成（例：`Win64\Debug\`）に対応します。
+
+### 5.1. 試験
+
+`_TEST\test.bat` で、自動の試験（DUnitX・Win64）をビルドして走らせます。`_DATA/` のカーネルのソースを実際の OpenCL のデバイスでビルドし、描かれる絵を確かめます：集合の中の点が同じ色になること、実軸について上下が対称になること、表示の領域に従うこと。
 
 ## 6. 参考文献
 

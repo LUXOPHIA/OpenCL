@@ -139,6 +139,7 @@ Output — kernel result back to the GUI
   ┃  ┣・Librar.cl          ･･･ library: complex type TSingleC and operators
   ┃  ┣・Execut.cl          ･･･ executable source: Mandelbrot kernel 'Main'
   ┃  ┗・Textur.png         ･･･ 1D color-gradient texture for smooth coloring
+  ┣・_TEST/                 ･･･ automated tests of the kernels (DUnitX)
   ┣・_LIBRARY/
   ┃  ┗・LUXOPHIA/
   ┃     ┣・LUX/            ･･･ base utilities (LUX.Complex, LUX.D1–D4, ...)
@@ -525,6 +526,10 @@ If a handle cannot be created, the `ECLError` exception is raised with the reaso
 * **Dependencies**: the required libraries (`LUX`, `LUX.GPU.OpenCL`, including the Khronos `OpenCL-Headers` translation [4]) are bundled under `_LIBRARY/` and referenced directly by `OpenCL.dpr`; no additional installation is needed.
 * **Runtime**: an OpenCL runtime (`OpenCL.dll`) must be present, which is normally installed by the GPU vendor driver (NVIDIA / AMD / Intel). If unavailable, the application reports "OpenCL is not available."
 * **Data files**: kernels and the gradient texture are loaded from `_DATA/` via paths relative to the executable (`..\..\_DATA\`), matching the default output directory layout (e.g. `Win64\Debug\`).
+
+### 5.1. Tests
+
+`_TEST\test.bat` builds and runs the automated tests (DUnitX, Win64). They build the kernel sources in `_DATA/` on a real OpenCL device and check the rendered picture: points inside the set share one color, the picture is symmetric about the real axis, and it follows the view region.
 
 ## 6. References
 
