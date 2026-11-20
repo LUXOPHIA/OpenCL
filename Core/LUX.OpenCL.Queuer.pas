@@ -1,0 +1,279 @@
+﻿unit LUX.OpenCL.Queuer;
+
+interface //#################################################################### ■
+
+uses System.Generics.Collections,
+     cl_version, cl_platform, cl, cl_functions,
+     LUX.Data.List,
+     LUX.Code.C,
+     LUX.OpenCL.core,
+     LUX.OpenCL.Device;
+
+type //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 T Y P E 】
+
+     TCLQueuers <TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+       TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class;
+
+     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
+
+     //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>
+
+     TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TListChildr<TCLContex_,TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>> )
+     private
+       type TCLDevice_  = TCLDevice <TCLSystem_,TCLPlatfo_>;
+            TCLQueuers_ = TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>;
+     protected
+       _Device :TCLDevice_;
+       _Handle :T_cl_command_queue;
+       ///// A C C E S S O R
+       function GetHandle :T_cl_command_queue;
+       procedure SetHandle( const Handle_:T_cl_command_queue );
+       function GetDevice :TCLDevice_;
+       procedure SetDevice( const Device_:TCLDevice_ );
+       ///// M E T H O D
+       function CreateHandle :T_cl_int; virtual;
+       function DestroHandle :T_cl_int; virtual;
+     public
+       constructor Create; override;
+       constructor Create( const Contex_:TCLContex_; const Device_:TCLDevice_ ); overload; virtual;
+       destructor Destroy; override;
+       ///// P R O P E R T Y
+       property Contex  :TCLContex_         read GetOwnere                ;
+       property Queuers :TCLQueuers_        read GetParent                ;
+       property Handle  :T_cl_command_queue read GetHandle write SetHandle;
+       property Device  :TCLDevice_         read GetDevice write SetDevice;
+       ///// M E T H O D
+       procedure FreeHandle;
+     end;
+
+     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>
+
+     TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_:class> = class( TListParent<TCLContex_,TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>> )
+     private
+       type TCLDevice_  = TCLDevice<TCLSystem_,TCLPlatfo_>;
+            TCLQueuer_  = TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>;
+            TCLDevQues_ = TDictionary<TCLDevice_,TCLQueuer_>;
+     protected
+       _DevQues :TCLDevQues_;
+       ///// A C C E S S O R
+       function GetQueuers( const Device_:TCLDevice_ ) :TCLQueuer_;
+       procedure SetQueuers( const Device_:TCLDevice_; const Queuer_:TCLQueuer_ );
+       ///// E V E N T
+       procedure OnInsertChildr( const Childr_:TCLQueuer_ ); override;
+       procedure OnRemoveChildr( const Childr_:TCLQueuer_ ); override;
+     public
+       constructor Create; override;
+       destructor Destroy; override;
+       ///// P R O P E R T Y
+       property Contex                              :TCLContex_ read GetOwnere                  ;
+       property Queuers[ const Device_:TCLDevice_ ] :TCLQueuer_ read GetQueuers write SetQueuers; default;
+       ///// M E T H O D
+       function Contains( const Device_:TCLDevice_ ) :Boolean;
+       function Add( const Device_:TCLDevice_ ) :TCLQueuer_; overload;
+       function GetDeviceIDs :TArray<T_cl_device_id>;
+     end;
+
+//const //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C O N S T A N T 】
+
+//var //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 V A R I A B L E 】
+
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
+
+implementation //############################################################### ■
+
+uses LUX.OpenCL.Contex;
+
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R E C O R D 】
+
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 C L A S S 】
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+//////////////////////////////////////////////////////////////// A C C E S S O R
+
+function TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.GetHandle :T_cl_command_queue;
+begin
+     if not Assigned( _Handle ) then CheckCL( CreateHandle, 'TCLQueuer.CreateHandle is Error!' );
+
+     Result := _Handle;
+end;
+
+procedure TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.SetHandle( const Handle_:T_cl_command_queue );
+begin
+     if _Handle = Handle_ then Exit;
+
+     FreeHandle;
+
+     _Handle := Handle_;
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.GetDevice :TCLDevice_;
+begin
+     Result := _Device;
+end;
+
+procedure TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.SetDevice( const Device_:TCLDevice_ );
+var
+   P :TCLQueuers_;
+begin
+     if _Device = Device_ then Exit;
+
+     P := Queuers;
+
+     Parent := nil;  // 古いデバイスの登録から外す
+
+     _Device := Device_;
+
+     Parent := P;    // 新しいデバイスで登録し直す（コンテキストが作り直され、このキューのハンドルも、そこで手放される）
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+function TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.CreateHandle :T_cl_int;
+begin
+     {$IF CL_VERSION_2_0 <> 0 }
+     _Handle := clCreateCommandQueueWithProperties( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle,
+                                                    Device.Handle,
+                                                    nil,
+                                                    @Result );
+     {$ELSE}
+     _Handle := clCreateCommandQueue              ( TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).Handle,
+                                                    Device.Handle,
+                                                    nil,
+                                                    @Result );
+     {$ENDIF}
+end;
+
+function TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.DestroHandle :T_cl_int;
+begin
+     Result := clReleaseCommandQueue( _Handle );
+
+     _Handle := nil;
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+constructor TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.Create;
+begin
+     inherited;
+
+     _Handle := nil;
+end;
+
+constructor TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.Create( const Contex_:TCLContex_; const Device_:TCLDevice_ );
+begin
+     inherited Create( TCLContex<TCLSystem_,TCLPlatfo_>( Contex_ ).Queuers );
+
+     _Device := Device_;
+end;
+
+destructor TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
+begin
+     FreeHandle;
+
+     inherited;
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+procedure TCLQueuer<TCLSystem_,TCLPlatfo_,TCLContex_>.FreeHandle;
+begin
+     if Assigned( _Handle ) then DestroHandle;
+end;
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& private
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& protected
+
+//////////////////////////////////////////////////////////////// A C C E S S O R
+
+function TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.GetQueuers( const Device_:TCLDevice_ ) :TCLQueuer_;
+begin
+     if Contains( Device_ ) then Result := _DevQues[ Device_ ]
+                            else Result := Add( Device_ );
+end;
+
+procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.SetQueuers( const Device_:TCLDevice_; const Queuer_:TCLQueuer_ );
+begin
+     Queuer_.Device := Device_;
+     Queuer_.Parent := Self;
+end;
+
+////////////////////////////////////////////////////////////////////// E V E N T
+
+procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.OnInsertChildr( const Childr_:TCLQueuer_ );
+begin
+     inherited;
+
+     if Contains( Childr_.Device ) then _DevQues[ Childr_.Device ].Free;
+
+     _DevQues.Add( Childr_.Device, Childr_ );
+
+     TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).FreeHandle;  // デバイスの組が変わったので、コンテキストを作り直させる
+end;
+
+procedure TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.OnRemoveChildr( const Childr_:TCLQueuer_ );
+begin
+     inherited;
+
+     TCLContex<TCLSystem_,TCLPlatfo_>( Contex ).FreeHandle;  // デバイスの組が変わるので、コンテキストを作り直させる（このキューのハンドルも、そこで手放される）
+
+     _DevQues.Remove( Childr_.Device );
+end;
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& public
+
+constructor TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.Create;
+begin
+     inherited;
+
+     _DevQues := TCLDevQues_.Create;
+end;
+
+destructor TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.Destroy;
+begin
+     Clear;
+
+     _DevQues.Free;
+
+     inherited;
+end;
+
+//////////////////////////////////////////////////////////////////// M E T H O D
+
+function TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.Contains( const Device_:TCLDevice_ ) :Boolean;
+begin
+     Result := _DevQues.ContainsKey( Device_ );
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.Add( const Device_:TCLDevice_ ) :TCLQueuer_;
+begin
+     Result := TCLQueuer_.Create( Contex, Device_ );
+end;
+
+//------------------------------------------------------------------------------
+
+function TCLQueuers<TCLSystem_,TCLPlatfo_,TCLContex_>.GetDeviceIDs :TArray<T_cl_device_id>;
+var
+   I :Integer;
+begin
+     SetLength( Result, Count );
+
+     for I := 0 to Count-1 do Result[ I ] := Items[ I ].Device.Handle;
+end;
+
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$【 R O U T I N E 】
+
+end. //######################################################################### ■
